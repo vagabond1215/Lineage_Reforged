@@ -169,7 +169,7 @@ const report={
     unassignedMacroCells:ownerPlan.unassignedMacroCells,
     assignedMacroCells:ownerPlan.assignedMacroCells},
 };
-function pilotSvg(coasts=pilotCoasts,pad=14,magnification=2){
+function pilotSvg(coasts=pilotCoasts,pad=14,magnification=2,detail=false){
   const pts=coasts.flatMap(c=>c.points);
   const minX=Math.max(0,Math.floor(Math.min(...pts.map(p=>p.x))-pad)),
     maxX=Math.min(WIDTH,Math.ceil(Math.max(...pts.map(p=>p.x))+pad)),
@@ -186,20 +186,29 @@ function pilotSvg(coasts=pilotCoasts,pad=14,magnification=2){
     }
   }
   const shape=p=>p.points.map(q=>q.x+','+q.y).join(' ');
-  const coastLines=coasts.map(p=>'<polygon points="'+shape(p)+'" fill="none" stroke="#f4c35d" stroke-width="1.4"/>').join('');
+  // vector-effect holds strokes to screen-pixel thickness even at 12x.
+  // The old 2.5-reference-pixel white focus border hid most of Coast 40.
+  const thin=' vector-effect="non-scaling-stroke" stroke-linejoin="round"';
+  const coastLines=coasts.map(p=>'<polygon points="'+shape(p)+
+    '" fill="none" stroke="#f4c35d" stroke-width="1.6"'+thin+'/>').join('');
   const regionLines=parts.filter(p=>{
     const m=macroOf(p);return m==='region.kaelvar'||m==='region.serathyl';
   }).map(p=>'<polygon points="'+shape(p)+'" fill="none" stroke="'+
       (macroOf(p)==='region.kaelvar'?'#49a2f2':'#ed7178')+
-      '" stroke-width="0.8" opacity="0.85"/>').join('');
-  const focus=pilotParts.map(id=>'<polygon points="'+shape(retainedById.get(id))+
-    '" fill="none" stroke="#fff" stroke-width="2.5"/>').join('');
+      '" stroke-width="1.5" opacity="0.95"'+thin+'/>').join('');
+  // Keep selected outlines on the broad overview, but omit their white
+  // highlights from the 12x island detail so each land pixel stays visible.
+  const focus=detail?'':pilotParts.map(id=>'<polygon points="'+
+    shape(retainedById.get(id))+
+    '" fill="none" stroke="#fff" stroke-width="2"'+thin+'/>').join('');
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+
     [minX,minY,width,height].join(' ')+'" width="'+width*magnification+'" height="'+height*magnification+
-    '"><rect x="'+minX+'" y="'+minY+'" width="'+width+'" height="'+height+
+    '"><title>First World '+(detail?'Coast 40 island detail':'Coast 10 and 40 overview')+
+    ': source land and current region labels only</title><rect x="'+minX+
+    '" y="'+minY+'" width="'+width+'" height="'+height+
     '" fill="#213d52"/><path d="'+runs.join('')+'" fill="#dae2c9"/>'+
     regionLines+coastLines+focus+'</svg>\n';
 }
 if(args[0]==='--svg-pilot')process.stdout.write(pilotSvg());
-else if(args[0]==='--svg-coast40')process.stdout.write(pilotSvg([pilotCoasts[1]],12,12));
+else if(args[0]==='--svg-coast40')process.stdout.write(pilotSvg([pilotCoasts[1]],12,12,true));
 else process.stdout.write(JSON.stringify(report,null,2)+'\n');
