@@ -13,7 +13,7 @@ import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 import {decodeSourcePng,registeredSourceMask,labelLandComponents,diagonalJoinEvidence}
   from './lib/first-world-source-png.mjs';
-import {planReviewedMacroOwnership} from './lib/first-world-reviewed-macro-planner.mjs';
+import {planReviewedMacroOwnership,rasterizePolygon} from './lib/first-world-reviewed-macro-planner.mjs';
 
 const ROOT=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const WIDTH=2048,HEIGHT=1152;
@@ -37,6 +37,17 @@ if(feature.referenceImageWidthPx!==WIDTH||feature.referenceImageHeightPx!==HEIGH
    world.scaleProfile.referenceImageHeightPx!==HEIGHT)
   throw Error('2048x1152 reference registration mismatch');
 const excluded=new Set(excludes);
+const manifest=load('docs/design/first-world-macro-ownership-review-2026-11-12.json');
+if(manifest.schemaVersion!==1||manifest.auditedCommit!=='41a8ab1dd8c35cae12c8b392fa12da55c74401db'||
+   manifest.referenceGridPx.width!==WIDTH||manifest.referenceGridPx.height!==HEIGHT||
+   manifest.foreignLandmassCandidates.length!==15||
+   manifest.foreignLandmassCandidates.reduce((total,c)=>total+c.sampledOverlapPx2,0)!==74072)
+  throw Error('Audit or boundary decision ledger drifted; manual review required');
+const rawGeometry=readFileSync(resolve(ROOT,'packages/content/base/world/world_map_features.json'));
+const sourceGeometryBlob=createHash('sha1')
+  .update('blob '+rawGeometry.length+'\\0').update(rawGeometry).digest('hex');
+if(sourceGeometryBlob!==manifest.sourceGeometryBlob)
+  throw Error('Geometry blob changed from audited PR #78 head; rebase evidence before proceeding');
 const sourceParts=feature.regionFootprints;
 const parts=sourceParts.filter(p=>!excluded.has(p.id));
 if(parts.length!==159||!([159,201].includes(sourceParts.length))||
@@ -116,13 +127,33 @@ const pilotCoasts=pilotCoastIds.map(id=>feature.coastlines.find(p=>p.id===id));
 if(pilotCoasts.some(x=>!x)||pilotParts.some(id=>!retainedById.has(id)))
   throw Error('Coast 10/40 pilot provenance changed');
 const selected=new Map(pilotParts.map(id=>[id,assess(retainedById.get(id))]));
+const foreignCandidateEvidence=manifest.foreignLandmassCandidates.map(candidate=>{
+  const p=retainedById.get(candidate.sourcePolygonId);
+  if(!p||macroOf(p)!==candidate.currentMacroId||
+     !feature.coastlines.some(c=>c.id==='feature.coastline.first_world.part_'+candidate.coastlinePart))
+    throw Error('Candidate no longer matches source hierarchy: '+candidate.sourcePolygonId);
+  return {...candidate,rasterFootprint:selected.get(p.id)??assess(p)};
+});
+const reviewedMasks=manifest.reviewedDecisions.map(d=>{
+  if(d.status!=='approved')return d;
+  if(d.evidenceSha256!==sources.biome.sha256)
+    throw Error('Approved boundary mask has stale biome raster witness: '+d.id);
+  if(!Array.isArray(d.maskPolygons)||!d.maskPolygons.length)
+    throw Error('Approved boundary lacks explicit spatial shapes: '+d.id);
+  const mask=new Uint8Array(WIDTH*HEIGHT);
+  for(const points of d.maskPolygons){
+    const polygon=rasterizePolygon(points,WIDTH,HEIGHT);
+    for(let i=0;i<mask.length;i++) if(polygon[i])mask[i]=1;
+  }
+  return {...d,mask};
+});
 // Independent pixel truth does not approve a political boundary.
 const ownerPlan=planReviewedMacroOwnership({
   width:WIDTH,height:HEIGHT,landMask,componentByCell:four.labels,
-  regions,decisions:[],anchors:[],
+  regions,decisions:reviewedMasks,anchors:[],
 });
 const report={
-  schemaVersion:1,disposition:'READ_ONLY_RASTER_WITNESS_OWNER_REVIEW_REQUIRED',
+  schemaVersion:1,sourceGeometryBlob,disposition:'READ_ONLY_RASTER_WITNESS_OWNER_REVIEW_REQUIRED',
   baseAuditCommit:'41a8ab1dd8c35cae12c8b392fa12da55c74401db',
   method:'Native source PNG decode; nearest-neighbor reference-cell registration; original RGB water threshold; 4/8 connectivity; no vector-derived terrain',
   registration:{referenceWidth:WIDTH,referenceHeight:HEIGHT,
@@ -141,7 +172,9 @@ const report={
   pilot:{status:'BOUNDARY_NOT_APPROVED',
     coastIds:pilotCoastIds,
     sourcePartEvidence:[...selected.values()],
+    candidateDecisions:manifest.reviewedDecisions.map(({id,macroId,status})=>({id,macroId,status})),
     instruction:'Review PNG crop and 4/8 connectivity in Coast 10 and Coast 40; do not transfer Windward to Kaelvar until spatial macro masks and child split are signed off'},
+  foreignCandidateEvidence,
   ownerPlan:{status:ownerPlan.status,sourceWritable:ownerPlan.sourceWritable,
     unassignedMacroCells:ownerPlan.unassignedMacroCells,
     assignedMacroCells:ownerPlan.assignedMacroCells},
