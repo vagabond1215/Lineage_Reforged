@@ -2,28 +2,28 @@
 
 Date: 2026-11-13
 Status: **PROPOSAL CODE READY; NATIVE TESTS AND SOURCE-IMAGE SVG REVIEW PENDING**
-Parent: accepted planning-only [PR #80](https://github.com/vagabond1215/Lineage_Reforged/pull/80) at \`8731864d809bb8a18d6d74f4003b9cc941eb0e00\` (owner-native Gates 1–3 all passed).
+Parent: accepted planning-only [PR #80](https://github.com/vagabond1215/Lineage_Reforged/pull/80) at `8731864d809bb8a18d6d74f4003b9cc941eb0e00` (owner-native Gates 1–3 all passed).
 Evidence parent: separate, draft, unmerged PR #79. Neither PR #79 nor PR #80 is part of this new draft diff.
 
 ## 1. Exact aim and lane distinction
 
 This segment **actually draws three hand-authored, source-aligned test sketches**. It is deliberately not a redistribution of all Kaelvar land or an approval of any political boundary. The source geometry already contains bad Shattercap mainland and foreign Windward claims; therefore retaining full source polygons as proposed jurisdictions would repeat the original defect. Instead, every test shape is an **explicit polygon** intersected with its historical feature, with independent source-pair candidate-terrain classification and the specific terrain-only four-neighbor physical component.
 
-The proposal derives **no owner from a terrain-only connected component**. Component 30 means a physical observation in the K1 scenario, not a confirmed \`region.kaelvar\` parent. A human-review overlay is allowed before formal parent approval; passing a topology test is not permission to call \`auditProvisionalRegionMasks\` with \`confirmedParentByComponent: {30:'region.kaelvar'}\` or to write a replacement \`world_map_features.json\`. The output explicitly has \`confirmedParentByComponent:null\`.
+The proposal derives **no owner from a terrain-only connected component**. Component 30 means a physical observation in the K1 scenario, not a confirmed `region.kaelvar` parent. A human-review overlay is allowed before formal parent approval; passing a topology test is not permission to call `auditProvisionalRegionMasks` with `confirmedParentByComponent: {30:'region.kaelvar'}` or to write a replacement `world_map_features.json`. The output explicitly has `confirmedParentByComponent:null`.
 
-Three existing child identities only; zero fourth-region identities. The default Layout B stays eligibility-only. The master, source PNGs, source geometry, exclusions, \`regions.json\`, semantic future \`map_features\`, world-generation state, settlements, travel, world hexes, UI, launcher, runtime and Saves are unchanged.
+Three existing child identities only; zero fourth-region identities. The default Layout B stays eligibility-only. The master, source PNGs, source geometry, exclusions, `regions.json`, semantic future `map_features`, world-generation state, settlements, travel, world hexes, UI, launcher, runtime and Saves are unchanged.
 
 ## 2. Explicit sketch windows, not certified borders
 
-Coordinates are in the *audited 2048 × 1152 reference frame*. A cell can join a draft only if (a) inside the explicitly hand-authored sketch polygon, (b) inside the named existing original source footprint, (c) classified \`DIVERGENT_TERRAIN_CANDIDATE\` on the exact source PNG pair, (d) in terrain-only component 30, (e) not multiply claimed by competing original region source footprints, (f) not claimed by another sketch, and (g) one 4-neighbor raster cell away from the edge of its exclusive source-consistent draft. Any failed condition leaves the cell **unassigned**. The extra one-cell guard band is a conservative visual sensitivity margin, **not** an ecotone width or hydrology classification.
+Coordinates are in the *audited 2048 × 1152 reference frame*. A cell can join a draft only if (a) inside the explicitly hand-authored sketch polygon, (b) inside the named existing original source footprint, (c) classified `DIVERGENT_TERRAIN_CANDIDATE` on the exact source PNG pair, (d) in terrain-only component 30, (e) not multiply claimed by competing original region source footprints, (f) not claimed by another sketch, and (g) one 4-neighbor raster cell away from the edge of its exclusive source-consistent draft. Any failed condition leaves the cell **unassigned**. The extra one-cell guard band is a conservative visual sensitivity margin, **not** an ecotone width or hydrology classification.
 
 | Draft preview | Source part and window | Placement intent; unresolved |
 | --- | --- | --- |
-| Auric western core | \`feature.region_auric_marches.part_4\`, window starting (66,146), reaching roughly x234/y352 | Western interior, not a blanket owner of eastern or Shattercap-overlapping terrain; dry steppe/upland compatibility not established |
-| Verdant southern core | \`feature.region_verdant_thalos.part_1\`, window starting (202,313), reaching roughly x411/y451 | Southern peninsula, not automatic recipient of Windward or Coast 40; coastal forest/relief/river suitability not established |
-| Shattercap northern coastal strip | \`feature.region_shattercap_isles.part_7\`, partial sketch from (228,132) through northern y~200 | Northern maritime *hypothesis* only. Entire original Part 7 remains withheld from ownership; this does not validate its older huge mainland area or any offshore island |
+| Auric western core | `feature.region_auric_marches.part_4`, window starting (66,146), reaching roughly x234/y352 | Western interior, not a blanket owner of eastern or Shattercap-overlapping terrain; dry steppe/upland compatibility not established |
+| Verdant southern core | `feature.region_verdant_thalos.part_1`, window starting (202,313), reaching roughly x411/y451 | Southern peninsula, not automatic recipient of Windward or Coast 40; coastal forest/relief/river suitability not established |
+| Shattercap northern coastal strip | `feature.region_shattercap_isles.part_7`, partial sketch from (228,132) through northern y~200 | Northern maritime *hypothesis* only. Entire original Part 7 remains withheld from ownership; this does not validate its older huge mainland area or any offshore island |
 
-Exact vertices, provenance, source integrity and all hold flags live in \`docs/design/first-world-kaelvar-layout-a-r3-sketch-2026-11-13.json\`. The windows were drawn from available original vector bounds and authored region placement qualifiers. **No approved RGB palette, elevation transfer function or coastline/river adjudication currently supports their ecological accuracy**, and they should be corrected visually rather than promoted. Some visual-boundary cells are deliberately lost to the conservative guard band.
+Exact vertices, provenance, source integrity and all hold flags live in `docs/design/first-world-kaelvar-layout-a-r3-sketch-2026-11-13.json`. The windows were drawn from available original vector bounds and authored region placement qualifiers. **No approved RGB palette, elevation transfer function or coastline/river adjudication currently supports their ecological accuracy**, and they should be corrected visually rather than promoted. Some visual-boundary cells are deliberately lost to the conservative guard band.
 
 Original source parts and 42 accepted exclusions remain unchanged. The six original source hold records remain: Shattercap 1 (684 blue, zero source terrain, NOT artifact exclusion #43), Shattercap 7 (whole source part withheld, bounded north test only), Shattercap 15 (southeastern source held), Windward 1 (Serathyl child with 3,661+12 terrain candidates), and distinct Windward 2/Verdant 6 Coast 40 claims.
 
@@ -31,13 +31,13 @@ All 18 Shattercap-overlapping detached physical-terrain components, including co
 
 ## 3. Evidence outputs and visual interpretation
 
-The new read-only entrypoint is \`scripts/first-world-kaelvar-layout-a-r3-sketch.mjs\`:
-- \`--report\`: JSON with original source PNG SHA-256, source geometry Git blob readback, clean 159-footprint / 68-coast / 42-exclusion inventories, preview cells by child/source ID, unassigned original-mainland candidates, conflicts, boundary guard, and full retained 18-island table.
-- \`--svg\`: a self-contained three-panel SVG. Panel 1: original registered biome source. Panel 2: the same original biome with gold (Auric), green (Verdant), orange (Shattercap) **tentative preview**; grey unassigned mainland; pink contested source/sketch cells; cyan detached-island candidates. Panel 3: original registered elevation RGB with pink/amber conflict/guard overlays. Dashed lines are the manually drawn *sketch windows*, never accepted political boundaries.
+The new read-only entrypoint is `scripts/first-world-kaelvar-layout-a-r3-sketch.mjs`:
+- `--report`: JSON with original source PNG SHA-256, source geometry Git blob readback, clean 159-footprint / 68-coast / 42-exclusion inventories, preview cells by child/source ID, unassigned original-mainland candidates, conflicts, boundary guard, and full retained 18-island table.
+- `--svg`: a self-contained three-panel SVG. Panel 1: original registered biome source. Panel 2: the same original biome with gold (Auric), green (Verdant), orange (Shattercap) **tentative preview**; grey unassigned mainland; pink contested source/sketch cells; cyan detached-island candidates. Panel 3: original registered elevation RGB with pink/amber conflict/guard overlays. Dashed lines are the manually drawn *sketch windows*, never accepted political boundaries.
 
-The SVG panels do not certify water, ink, elevation or biome semantics. They are only the first shape review. The original source behind every panel is preserved and embedded locally, with no external URL dependency. All generated files should be written under \`$env:TEMP\`, never added as canonical content.
+The SVG panels do not certify water, ink, elevation or biome semantics. They are only the first shape review. The original source behind every panel is preserved and embedded locally, with no external URL dependency. All generated files should be written under `$env:TEMP`, never added as canonical content.
 
-The pure library \`scripts/lib/first-world-kaelvar-layout-a-r3-sketch.mjs\` also fails closed if a fourth child is added, a source part is missing, a source ID is reassigned, a region parent/position changes, a held original source disposition changes, source island identity/count changes, or an owner approval/ecology flag is prematurely asserted. It never uses nearest-anchor, equal-area or automatic gap filling.
+The pure library `scripts/lib/first-world-kaelvar-layout-a-r3-sketch.mjs` also fails closed if a fourth child is added, a source part is missing, a source ID is reassigned, a region parent/position changes, a held original source disposition changes, source island identity/count changes, or an owner approval/ecology flag is prematurely asserted. It never uses nearest-anchor, equal-area or automatic gap filling.
 
 ## 4. Stage entry, exit and explicit HOLD
 
@@ -53,7 +53,7 @@ The only acceptance available now is **native integrity of the review proposal**
 
 ## 5. Precise PowerShell 7 owner verification
 
-Use **another** detached verification worktree, separate from both the dirty primary \`C:\Codex\EoL\` and the already-accepted R0–R3 witness at \`C:\Codex\EoL-landmass-r0r3-verify\`. The prompt returning this PR must supply the exact full new branch commit SHA to fill into \`$expected\`. No \`git reset\`, \`git clean\` or \`stash\` on either active worktree.
+Use **another** detached verification worktree, separate from both the dirty primary `C:\Codex\EoL` and the already-accepted R0–R3 witness at `C:\Codex\EoL-landmass-r0r3-verify`. The prompt returning this PR must supply the exact full new branch commit SHA to fill into `$expected`. No `git reset`, `git clean` or `stash` on either active worktree.
 
 ~~~powershell
 $ErrorActionPreference = 'Stop'
@@ -144,4 +144,4 @@ $r | Select-Object status,previewCandidateCells,
   Format-List
 ~~~
 
-Use the output's \`layout-a-r3.svg\` as a **visual review artifact** and return both a screenshot and counts before proposing any revised borders. Pixel masks are temporary arrays computed in memory and are never emitted into the canonical source tree.
+Use the output's `layout-a-r3.svg` as a **visual review artifact** and return both a screenshot and counts before proposing any revised borders. Pixel masks are temporary arrays computed in memory and are never emitted into the canonical source tree.
