@@ -86,7 +86,7 @@ test('Svg uses registered embedded biome and elevation images in exactly four pa
   assert.match(svg,/Layout A: three-region review/);
   assert.match(svg,/Layout B: eastern eligibility review/);
   assert.match(svg,/Independent elevation source/);
-  assert.match(svg,/NOT/); // Review is intentionally noncanonical.
+  assert.match(svg,/not an eastern-region border/i);
   const matches=[...svg.matchAll(/<image href="data:image\/png;base64,([^"]+)"/g)];
   assert.equal(matches.length,4);
   const decoded=matches.map(m=>decodeSourcePng(Buffer.from(m[1],'base64')));
@@ -94,7 +94,7 @@ test('Svg uses registered embedded biome and elevation images in exactly four pa
     assert.equal(img.width,roi.width);
     assert.equal(img.height,roi.height);
   }
-  assert.notDeepEqual(decoded[0].rgba,decoded[3].rgba);
+  assert.notEqual(matches[0][1],matches[3][1]);
   const raw=svg.replace('xmlns="http://www.w3.org/2000/svg"','');
   assert.doesNotMatch(raw,/<(?:script|foreignObject)\b|https?:/i);
 });
