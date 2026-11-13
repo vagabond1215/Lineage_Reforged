@@ -12,6 +12,9 @@ const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));
 test('Legacy hex names and reference fields are recognized without matching generic coordinates',()=>{
   const hit='const anchor = settlement.hexAnchorId; const edge = route.orderedHexIds;';
   assert.equal(legacyHexLines(hit).length,1);
+  assert.equal(legacyHexLines('const byId=state.worldHexesById;').length,1);
+  assert.equal(legacyHexLines('let cell: WorldHexContentRecord;').length,1);
+  assert.equal(legacyHexLines('const routeHex=world_hex.kharuun_oasis_chain;').length,1);
   assert.equal(legacyHexLines('const point={x:10,y:30}; const landmass="kaelvar";').length,0);
   assert.equal(legacyHexLines('const route={fromPlaceId:"a",toPlaceId:"b"};').length,0);
 });
