@@ -266,3 +266,124 @@ assignment to Verdant, Auric or a newly invented region.
 **Disposition:** `ISLAND_LOCATOR_RENDER_PASS__UNION_AND_ARTIFACT_REVIEW_HELD`.
 No geography, imagery, routes, Saves, settlements or runtime
 changes authorized.
+
+## Owner-executed exact union acceptance and Part 1 disposition (2026-11-13)
+
+The owner ran the native `--shattercap-union` source-pair audit and
+provided its complete coverage totals and component table.
+These numbers supersede the earlier *pending union arithmetic*
+status. The accompanying screenshot of the all-15-part SVG was
+also visually reviewed. The unit-suite output for the six new
+union tests was **not** separately supplied, so its native test
+status remains unverified.
+
+| Exact source-terrain union field | Observed |
+| --- | ---: |
+| `summedFootprintTerrainCells` | **30,938** |
+| `deduplicatedTerrainCells` | **30,938** |
+| `sourcePolygonOverlapCells` | **0** |
+| `sourcePolygonOverlapExcessMemberships` | **0** |
+| `terrainCellsOnReferenceMainland` | **27,245** |
+| `terrainCellsOffReferenceMainland` | **3,693** |
+| `referenceMainlandShareOfUniqueTerrainPercent` | **88.06%** |
+
+Because the independently sampled source-terrain polygon union
+equals the per-polygon sum and overlap is zero, the mainland
+ratio is an **exact deduplicated share of Shattercap's terrain
+candidates under the existing source-pair classifier**. It is
+not a true political area fraction, square-kilometer measure
+or approved terrestrial segmentation. The mainland represents
+a single terrain-only component **30**; the **18 detached**
+terrain-only components below must remain independent candidates
+for island/shoreline review.
+
+| Terrain-only component ID | Unique Shattercap terrain pixels | Source-pixel centroid (x, y) | Provisional review |
+| --- | ---: | --- | --- |
+| 30 | **27,245** | 382.86, 257.17 | Auric-referenced Kaelvar mainland; placement anomaly |
+| 24 | **1,893** | 536.88, 150.91 | Prominent northern/eastern offshore island |
+| 90 | 1,013 | 582.42, 378.16 | Detached eastern/southeastern island |
+| 91 | 220 | 548.16, 360.81 | Detached eastern/southeastern island |
+| 34 | 118 | 463.84, 149.87 | Northern offshore fragment |
+| 21 | 115 | 298.56, 124.32 | Northern offshore fragment |
+| 25 | 80 | 435.65, 129.26 | Northern offshore fragment |
+| 28 | 64 | 399.89, 134.94 | Shattercap Part 7's non-mainland fragment |
+| 47 | 37 | 558.39, 193.04 | Detached terrain |
+| 38 | 22 | 449.55, 155.36 | Detached terrain |
+| 20 | 20 | 311.75, 110.90 | Northern detached terrain |
+| 71 | 18 | 551.28, 266.67 | Detached terrain |
+| 26 | 17 | 376.56, 129.09 | Northern detached terrain |
+| 55 | 16 | 555.50, 227.50 | Detached terrain |
+| 95 | 16 | 567.31, 354.88 | Eastern/southeastern detached terrain |
+| 35 | 14 | 266.29, 144.71 | Northern detached terrain |
+| 51 | 13 | 468.73, 209.65 | Shattercap Part 7's non-mainland fragment |
+| 96 | 9 | 554.61, 356.94 | Eastern/southeastern detached terrain |
+| 78 | 8 | 511.13, 311.88 | Shattercap Part 7's non-mainland fragment |
+
+IDs are **terrain-only 4-neighbor components**, not the earlier
+ink-inclusive Coast 10/40 component identifiers and not
+political jurisdictions. No island is excluded for being
+small or at a seemingly inconvenient source-grid position.
+
+### Part 1: isolated non-terrain source record
+
+The owner separately inspected the original candidate footprint:
+
+- `feature.region_shattercap_isles.part_1` source polygon covers
+  **684 raster cells**.
+- **0** divergent terrain cells, **0** unresolved shared-ink
+  cells, **684** shared-blue candidate cells, **0** other.
+- Polygon source bounds: `minX=254, maxX=596,
+  minY=0, maxY=2` on the cropped 2048×1152 grid.
+- The numbered-map visual shows a thin upper-border line
+  and label near the preview top. This is consistent with
+  an anomalous top-of-map source polygon over blue
+  background, **not an inhabitable island** under the
+  current independently derived candidate terrain.
+
+**Case disposition:
+`SHATTERCAP_PART_1_PROBABLE_BLUE_EDGE_ARTIFACT_REVIEW_REQUIRED`.**
+Treat it as *not eligible for proposed dry-land political
+ownership*, but preserve the original source record for
+traceability. Before adding it to any approved artifact
+exclusion manifest, independently verify polygon vertices,
+registered source image blue pixels and expected top-of-map
+geometry. An eventual removal would be an explicitly
+reviewed **43rd artifact candidate**, not retroactive
+permission to edit the 42-item approved exclusion manifest.
+Do not classify all blue pixels in other polygons as artifacts.
+
+### Updated region-reconstruction decision
+
+1. **Source-area accounting passed:** no internal Shattercap
+   polygon overlap and exact 27,245 mainland / 3,693
+   detached candidate-terrain counts.
+2. **Part 1 artifact review held:** zero terrain and
+   all-blue top-edge geometry is strong evidence, but
+   no source deletion or exclusion is approved.
+3. **Island preservation mandatory:** all 18 distinct
+   detached components retain their source-pixel
+   provenance; physical detachment does not guarantee
+   northern Shattercap political membership.
+4. **Reconstruction layout A:** preserve the currently
+   authored Auric/Verdant/Shattercap trio, constrain
+   Shattercap to northern maritime terrain/islands and
+   justified coastal access, with the southern/eastern
+   mainland marked unresolved until source ecological
+   compatibility is determined. This is a design option,
+   **not a new polygon or forced Verdant assignment**.
+5. **Reconstruction layout B:** introduce an explicitly
+   pending *eastern-mainland region candidate* only if
+   independent biome, relief, hydrological and authoring
+   evidence shows neither existing regional profile
+   coherently covers it. No name/lore/settlement canon
+   is invented at this stage.
+6. **Hard gates remaining:** land/water coastal ink,
+   original biome RGB legend, actual elevation-color
+   scale/relief, ecotone/transition assessment,
+   candidate boundary pixel masks, existing settlement/
+   travel dependencies and explicit owner approval.
+   Coast 40's distinct island sovereignty remains held.
+
+**Status:** `SHATTERCAP_UNION_PASS__ARTIFACT_AND_ECOLOGY_HOLD`.
+No canonical PNG, region, coastline, biome-zone, route,
+settlement, game or Save changes are authorized.
