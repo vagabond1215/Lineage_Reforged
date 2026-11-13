@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "type": "first-world-reviewed-macro-spatial-masks.v1",
+  "auditDate": "2026-11-12",
+  "auditedCommit": "41a8ab1dd8c35cae12c8b392fa12da55c74401db",
+  "sourceGeometryBlob": "ec59ed66b7eaee4502dc56709a2f266b17b3cb17",
+  "status": "PENDING_NATIVE_RASTER_EVIDENCE_AND_OWNER_APPROVAL",
+  "referenceGridPx": {
+    "width": 2048,
+    "height": 1152
+  },
+  "constraints": {
+    "noAutomaticForeignMajorityTransfer": true,
+    "noUnapprovedMacroMask": true,
+    "noNearestAnchorAcrossMacroOrPhysicalIsland": true,
+    "noCanonicalWrites": true,
+    "keep42ApprovedSquareExclusions": true
+  },
+  "pilot": {
+    "region": "Kaelvar-SE / Serathyl",
+    "coastParts": [
+      10,
+      40
+    ],
+    "sourceParts": [
+      "feature.region_windward_spine.part_1",
+      "feature.region_windward_spine.part_2",
+      "feature.region_verdant_thalos.part_6"
+    ],
+    "status": "HOLD_REVIEW_PENDING_SOURCE_PNG_AND_EXPLICIT_POLITICAL_DIVIDE",
+    "notes": "Coast 10 is a confirmed misplaced Serathyl intrusion. Coast 40 remains a narrow joint-boundary diagnostic; ownership of each native land pixel and a Kaelvar child-region split must be approved before changes."
+  },
+  "reviewedDecisions": [
+    {
+      "id": "kaelvar-se-coast10-mask",
+      "macroId": "region.kaelvar",
+      "status": "pending",
+      "approvalRef": null,
+      "evidenceSha256": null,
+      "maskPolygons": []
+    },
+    {
+      "id": "kaelvar-se-coast40-mask",
+      "macroId": "region.kaelvar",
+      "status": "pending",
+      "approvalRef": null,
+      "evidenceSha256": null,
+      "maskPolygons": []
+    },
+    {
+      "id": "serathyl-coast10-40-remainder-mask",
+      "macroId": "region.serathyl",
+      "status": "pending",
+      "approvalRef": null,
+      "evidenceSha256": null,
+      "maskPolygons": []
+    }
+  ],
+  "foreignLandmassCandidates": [
+    {
+      "rank": 1,
+      "sourcePolygonId": "feature.region_lantern_isles.part_7",
+      "currentMacroId": "region.lantern_isles",
+      "coastlinePart": 51,
+      "provisionalMajorityMacroId": "region.draemor",
+      "sampledOverlapPx2": 16032,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 2,
+      "sourcePolygonId": "feature.region_silver_valleys.part_7",
+      "currentMacroId": "region.talmyra",
+      "coastlinePart": 51,
+      "provisionalMajorityMacroId": "region.draemor",
+      "sampledOverlapPx2": 10208,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 3,
+      "sourcePolygonId": "feature.region_myridian_chain.part_5",
+      "currentMacroId": "region.myridian_chain",
+      "coastlinePart": 3,
+      "provisionalMajorityMacroId": "region.valtherion",
+      "sampledOverlapPx2": 9444,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 4,
+      "sourcePolygonId": "feature.region_lantern_isles.part_5",
+      "currentMacroId": "region.lantern_isles",
+      "coastlinePart": 45,
+      "provisionalMajorityMacroId": "region.serathyl",
+      "sampledOverlapPx2": 7424,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 5,
+      "sourcePolygonId": "feature.region_dawnreach_isles.part_1",
+      "currentMacroId": "region.dawnreach_isles",
+      "coastlinePart": 3,
+      "provisionalMajorityMacroId": "region.valtherion",
+      "sampledOverlapPx2": 5736,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 6,
+      "sourcePolygonId": "feature.region_thorn_peninsula.part_4",
+      "currentMacroId": "region.talmyra",
+      "coastlinePart": 51,
+      "provisionalMajorityMacroId": "region.draemor",
+      "sampledOverlapPx2": 5048,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 7,
+      "sourcePolygonId": "feature.region_serpents_wake.part_3",
+      "currentMacroId": "region.serpents_wake",
+      "coastlinePart": 51,
+      "provisionalMajorityMacroId": "region.draemor",
+      "sampledOverlapPx2": 4712,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 8,
+      "sourcePolygonId": "feature.region_windward_spine.part_1",
+      "currentMacroId": "region.serathyl",
+      "coastlinePart": 10,
+      "provisionalMajorityMacroId": "region.kaelvar",
+      "sampledOverlapPx2": 4404,
+      "classification": "previously_confirmed_owner_intrusion",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 9,
+      "sourcePolygonId": "feature.region_emerald_mantle.part_1",
+      "currentMacroId": "region.draemor",
+      "coastlinePart": 45,
+      "provisionalMajorityMacroId": "region.serathyl",
+      "sampledOverlapPx2": 3640,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 10,
+      "sourcePolygonId": "feature.region_serpents_wake.part_2",
+      "currentMacroId": "region.serpents_wake",
+      "coastlinePart": 58,
+      "provisionalMajorityMacroId": "region.talmyra",
+      "sampledOverlapPx2": 2220,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 11,
+      "sourcePolygonId": "feature.region_lantern_isles.part_1",
+      "currentMacroId": "region.lantern_isles",
+      "coastlinePart": 3,
+      "provisionalMajorityMacroId": "region.valtherion",
+      "sampledOverlapPx2": 1936,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 12,
+      "sourcePolygonId": "feature.region_myridian_chain.part_6",
+      "currentMacroId": "region.myridian_chain",
+      "coastlinePart": 8,
+      "provisionalMajorityMacroId": "region.kaelvar",
+      "sampledOverlapPx2": 1420,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 13,
+      "sourcePolygonId": "feature.region_sapphire_rivers.part_3",
+      "currentMacroId": "region.valtherion",
+      "coastlinePart": 41,
+      "provisionalMajorityMacroId": "region.dawnreach_isles",
+      "sampledOverlapPx2": 1300,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 14,
+      "sourcePolygonId": "feature.region_myridian_chain.part_26",
+      "currentMacroId": "region.myridian_chain",
+      "coastlinePart": 3,
+      "provisionalMajorityMacroId": "region.valtherion",
+      "sampledOverlapPx2": 340,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    },
+    {
+      "rank": 15,
+      "sourcePolygonId": "feature.region_jade_expanse.part_18",
+      "currentMacroId": "region.valtherion",
+      "coastlinePart": 53,
+      "provisionalMajorityMacroId": "region.talmyra",
+      "sampledOverlapPx2": 208,
+      "classification": "requires_independent_raster_review",
+      "decision": "unresolved"
+    }
+  ],
+  "notes": "Vector coastline majority is not a land ownership decision. Keep all 15 cases and small coastal diagnostics visible, including Coast 40, Coast 53 and Coast 64. Raster hashes and spatial masks are authored only after source registration and manual inspection."
+}
