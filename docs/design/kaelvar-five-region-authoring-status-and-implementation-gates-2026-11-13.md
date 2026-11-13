@@ -1,7 +1,7 @@
 # Kaelvar five-region authoring: Kharuun Drylands and Veyrholm Shore
 
 Date: 2026-11-13  
-Status: **MAINLINE AUTHORING COMPLETE / WORLD PUBLICATION HELD**  
+Status: **F5-0 MAINLINE AUTHORING NATIVELY VERIFIED / WORLD PUBLICATION HELD**  
 Authority: Reviewable authored candidate data on `master`, not active `world.regions` or map geometry.
 
 ## Decision and names
@@ -89,3 +89,13 @@ if ($LASTEXITCODE) { throw 'Cross-catalog candidate audit failed' }
 ## No automatic canonical or branch merge
 
 This content is deliberately a *mainline design pack*. The accepted R3 draft remains open and unmerged. No source PNG, existing region ID, old region footprint, ecology legend, Shattercap detached island, Coast 40, foreign Windward parent, existing world hex, settlement, travel route, generation logic or Save has been modified. Later five-region geography should be built from the owner's unequal-size sketch and these profiles, then reviewed before any active content insertion.
+
+## Owner-native F5-0 authoring acceptance, 2026-11-13
+
+Owner executed isolated detached PowerShell 7 verification at the exact mainline content commit `997d2d7b49c592214cf764270dd00e29c42b3eb0`. All **10/10 native unit tests passed**, with no failures, and the read-only five-region CLI invariant audit passed. Native output: `KAELVAR FIVE-REGION PROFILE GATE PASSED`, `CANONICAL GEOGRAPHY STILL HELD`. The checked worktree remained clean and the HEAD matched the pinned commit.
+
+Validated data: two new **candidate** region records, eight candidate region localities, eight unplaced world-hex candidates, eight unplaced settlement concepts, eight complete ecological habitat descriptions, and the five-region population scenario conserving Kaelvar's 40 million people. The audit result was `FIVE_REGION_AUTHORING_COMPLETE_CANONICAL_HELD` with `canonicalWritable:false` and `ownerGeographyApprovalRequired:true`.
+
+**F5-0 exit ACCEPTED.** This supersedes any earlier language in this document that suggests native acceptance is pending. **F5-1 through F5-4 remain unentered or held:** neither actual world source geometry nor biome palette/height semantics are certified for the five-region model, and neither new region is active in `world.regions`. The large northeastern island remains a whole geographical object with pending sovereignty; the 18 Shattercap detached candidates remain unassigned; Windward stays parented to Serathyl; Coast 40 remains disputed. No equal-area partitions and no automatic allocation of previous Layout A's unassigned mainland cells are authorized.
+
+**Next scoped step:** five-region, unequal-area *reversible* spatial overlay comparing the owner's annotated breakup against the registered source PNGs, with explicit five-child presence only in the proposal domain. Report the count and category of unassigned mainland cells separately from non-Kaelvar/foreign land, keep all discrete islands whole, and require owner visual review before candidate masks or content are promoted to canonical gameplay.
