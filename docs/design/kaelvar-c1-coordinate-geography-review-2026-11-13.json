@@ -1,0 +1,384 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1-coordinate-geography-review.v1",
+  "status": "C1_NONCANONICAL_GEOGRAPHY_HELD",
+  "date": "2026-11-13",
+  "coordinateSpace": {
+    "mapId": "world_map.first_world",
+    "coordinateSpaceId": "world_map.first_world.reference",
+    "widthPixels": 2048,
+    "heightPixels": 1152,
+    "kilometersPerPixel": 9.765625,
+    "units": "reference_pixels",
+    "orientation": "top_left_x_east_y_south"
+  },
+  "sourceWitness": {
+    "masterGeometryBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "draftGeometryBlob": "ec59ed66b7eaee4502dc56709a2f266b17b3cb17",
+    "masterFootprints": 201,
+    "draftFootprints": 159,
+    "acceptedDraftExclusionCount": 42,
+    "coastlines": 68,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71a02785ec56d",
+    "sourceWidth": 4096,
+    "sourceHeight": 2355,
+    "crop": {
+      "x": 60,
+      "y": 60,
+      "width": 3976,
+      "height": 2235
+    },
+    "originalGeometryPath": "packages/content/base/world/world_map_features.json",
+    "sourceAssetsFrom": "packages/content/base/world/world_maps.json",
+    "sourceKind": "ORIGINAL_VECTOR_PROVENANCE_PLUS_UNCALIBRATED_BIOME_ELEVATION_IMAGES",
+    "draftSourceNotMerged": true
+  },
+  "physicalComponents": [
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 30,
+      "physicalRole": "MAINLAND_REFERENCE",
+      "candidateCells": 79419,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 24,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 1893,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 90,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 1013,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 91,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 220,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 34,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 118,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 21,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 115,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 25,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 80,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 28,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 64,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 47,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 37,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 38,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 22,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 20,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 20,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 71,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 18,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 26,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 17,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 55,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 16,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 95,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 16,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 35,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 14,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 51,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 13,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 96,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 9,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    },
+    {
+      "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+      "componentId": 78,
+      "physicalRole": "DETACHED_COMPONENT",
+      "candidateCells": 8,
+      "sourceClass": "TERRAIN_CANDIDATE_NOT_CERTIFIED_LAND",
+      "geometryRef": null,
+      "parentContinentId": null,
+      "ownerRegionId": null,
+      "ownershipStatus": "WITHHELD"
+    }
+  ],
+  "regionIntents": [
+    {
+      "id": "region.auric_marches",
+      "kind": "REGION",
+      "mapId": "world_map.first_world",
+      "coordinateSpaceId": "world_map.first_world.reference",
+      "parentContinentId": "region.kaelvar",
+      "geometryStatus": "WITHHELD",
+      "geometryRef": null,
+      "geometryVersion": null,
+      "polygons": null,
+      "sourceFeatureIds": [
+        "feature.region_auric_marches.part_4"
+      ],
+      "ownerApprovalRef": null,
+      "placementQualifier": "western interior / dry steppe / mineral uplands",
+      "description": "Western caravan frontier. Old source shape only a provenance witness.",
+      "sourceFeatureIdsAreProvenanceNotBorders": true
+    },
+    {
+      "id": "region.kharuun_drylands",
+      "kind": "REGION",
+      "mapId": "world_map.first_world",
+      "coordinateSpaceId": "world_map.first_world.reference",
+      "parentContinentId": "region.kaelvar",
+      "geometryStatus": "WITHHELD",
+      "geometryRef": null,
+      "geometryVersion": null,
+      "polygons": null,
+      "sourceFeatureIds": [],
+      "ownerApprovalRef": null,
+      "placementQualifier": "central arid belt / high desert / oases",
+      "description": "No source-approved core or north-south reach; never fill vacant mainland by default.",
+      "sourceFeatureIdsAreProvenanceNotBorders": true
+    },
+    {
+      "id": "region.verdant_thalos",
+      "kind": "REGION",
+      "mapId": "world_map.first_world",
+      "coordinateSpaceId": "world_map.first_world.reference",
+      "parentContinentId": "region.kaelvar",
+      "geometryStatus": "WITHHELD",
+      "geometryRef": null,
+      "geometryVersion": null,
+      "polygons": null,
+      "sourceFeatureIds": [
+        "feature.region_verdant_thalos.part_1"
+      ],
+      "ownerApprovalRef": null,
+      "placementQualifier": "southern peninsula / fertile wooded valleys and ports",
+      "description": "Source Part 1 is evidence, not a border; southeast/Coast 40 withheld.",
+      "sourceFeatureIdsAreProvenanceNotBorders": true
+    },
+    {
+      "id": "region.veyrholm_shore",
+      "kind": "REGION",
+      "mapId": "world_map.first_world",
+      "coordinateSpaceId": "world_map.first_world.reference",
+      "parentContinentId": "region.kaelvar",
+      "geometryStatus": "WITHHELD",
+      "geometryRef": null,
+      "geometryVersion": null,
+      "polygons": null,
+      "sourceFeatureIds": [],
+      "ownerApprovalRef": null,
+      "placementQualifier": "northern mainland littoral / fir ridges / inlets",
+      "description": "Coastal mainland intent is distinct from Shattercap islands; no drawn mask.",
+      "sourceFeatureIdsAreProvenanceNotBorders": true
+    },
+    {
+      "id": "region.shattercap_isles",
+      "kind": "REGION",
+      "mapId": "world_map.first_world",
+      "coordinateSpaceId": "world_map.first_world.reference",
+      "parentContinentId": "region.kaelvar",
+      "geometryStatus": "WITHHELD",
+      "geometryRef": null,
+      "geometryVersion": null,
+      "polygons": null,
+      "sourceFeatureIds": [
+        "feature.region_shattercap_isles.part_7"
+      ],
+      "ownerApprovalRef": null,
+      "placementQualifier": "detached northern islands / maritime communities",
+      "description": "Old Part 7 crosses disputed mainland; 18 components and NE island withheld.",
+      "sourceFeatureIdsAreProvenanceNotBorders": true
+    }
+  ],
+  "ecologicalAreas": [],
+  "componentClaims": [],
+  "holds": {
+    "northeastLargeIsland": {
+      "wholeUnitRequired": true,
+      "componentId": null,
+      "ownerRegionId": null,
+      "status": "IDENTIFICATION_AND_WHOLE_OWNERSHIP_PENDING"
+    },
+    "coast40": {
+      "sourceFeatureIds": [
+        "feature.region_windward_spine.part_2",
+        "feature.region_verdant_thalos.part_6"
+      ],
+      "ownerRegionId": null,
+      "status": "INDEPENDENT_PARENT_AND_CHILD_REVIEW"
+    },
+    "windwardSpine": {
+      "parentContinentId": "region.serathyl",
+      "kaelvarTransferApproved": false,
+      "sourceFeatureIds": [
+        "feature.region_windward_spine.part_1"
+      ],
+      "status": "WITHHELD_FROM_KAELVAR"
+    },
+    "detachedComponents": {
+      "allPending": true,
+      "expectedComponents": 18,
+      "expectedCandidateCells": 3693
+    },
+    "unknownMainland": {
+      "forceFillAllowed": false,
+      "oldThreeRegionUnassignedCandidateCells": 40724,
+      "status": "OLDER_LAYOUT_A_COUNT_NOT_FIVE_REGION_ALLOCATION"
+    },
+    "sourceUncertainty": [
+      "BIOLOGY_COLOR_LEGEND_PENDING",
+      "ELEVATION_RAMP_PENDING",
+      "COAST_RIVER_INK_PENDING",
+      "PARENT_MACRO_SOVEREIGNTY_PENDING"
+    ]
+  },
+  "approval": {
+    "canonicalWritable": false,
+    "parentConfirmed": false,
+    "bordersApproved": false,
+    "ownerApprovalRef": null
+  }
+}
