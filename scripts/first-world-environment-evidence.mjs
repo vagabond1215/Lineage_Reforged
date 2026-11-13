@@ -109,9 +109,9 @@ function swatchesSvg(){
     '<text x="18" y="38" font-size="24" font-family="sans-serif" fill="#142635">'+
     'First World: source-biome RGB swatches</text>'+
     '<text x="18" y="67" font-size="15" font-family="sans-serif" fill="#243949">'+
-    '48 most common 4-bit RGB clusters on raster land. Colors are NOT interpreted biomes.</text>'+
+    '48 most common RGB clusters inside the PROVISIONAL land mask. Not biome labels.</text>'+
     '<text x="18" y="88" font-size="13" font-family="sans-serif" fill="#243949">'+
-    'Review against source image legend before labeling forest / prairie / desert / tundra.</text>'+
+    'Black and blue can be terrain, water or artwork; verify source before border edits.</text>'+
     rows+'</svg>\n';
 }
 const result=buildEnvironmentProfiles({
@@ -138,6 +138,7 @@ process.stdout.write(JSON.stringify({
   reviewGates:{
     independentRgbAndRawHeightEvidence:'MEASURED_ON_EXECUTION',
     labeledBiomeColorLegend:'NOT_PROVIDED_NOT_INTERPRETED',
+    landWaterPalette:'PROVISIONAL_SOURCE_RGB_THRESHOLD_UNREVIEWED',
     elevationEncodingAndPhysicalScale:'NOT_VERIFIED_NOT_INTERPRETED',
     coherentRegionBiomeBoundaries:'NOT_YET_APPROVED',
     historicalEcologyNarratives:'EXPECTATION_ONLY_NOT_OBSERVED',
