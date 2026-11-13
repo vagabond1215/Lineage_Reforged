@@ -11,6 +11,7 @@ import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
+import {verifyAuditedTextBlob} from './lib/first-world-source-identity.mjs';
 import {decodeSourcePng,registeredSourceMask,labelLandComponents,diagonalJoinEvidence}
   from './lib/first-world-source-png.mjs';
 import {planReviewedMacroOwnership,rasterizePolygon} from './lib/first-world-reviewed-macro-planner.mjs';
@@ -44,10 +45,8 @@ if(manifest.schemaVersion!==1||manifest.auditedCommit!=='41a8ab1dd8c35cae12c8b39
    manifest.foreignLandmassCandidates.reduce((total,c)=>total+c.sampledOverlapPx2,0)!==74072)
   throw Error('Audit or boundary decision ledger drifted; manual review required');
 const rawGeometry=readFileSync(resolve(ROOT,'packages/content/base/world/world_map_features.json'));
-const sourceGeometryBlob=createHash('sha1')
-  .update('blob '+rawGeometry.length+String.fromCharCode(0)).update(rawGeometry).digest('hex');
-if(sourceGeometryBlob!==manifest.sourceGeometryBlob)
-  throw Error('Geometry blob changed from audited PR #78 head; rebase evidence before proceeding');
+const geometryVerification=verifyAuditedTextBlob(rawGeometry,manifest.sourceGeometryBlob);
+const sourceGeometryBlob=geometryVerification.verifiedSha;
 const sourceParts=feature.regionFootprints;
 const parts=sourceParts.filter(p=>!excluded.has(p.id));
 if(parts.length!==159||!([159,201].includes(sourceParts.length))||
@@ -153,7 +152,7 @@ const ownerPlan=planReviewedMacroOwnership({
   regions,decisions:reviewedMasks,anchors:[],
 });
 const report={
-  schemaVersion:1,sourceGeometryBlob,disposition:'READ_ONLY_RASTER_WITNESS_OWNER_REVIEW_REQUIRED',
+  schemaVersion:1,sourceGeometryBlob,geometryCheckoutVerification:geometryVerification,disposition:'READ_ONLY_RASTER_WITNESS_OWNER_REVIEW_REQUIRED',
   baseAuditCommit:'41a8ab1dd8c35cae12c8b392fa12da55c74401db',
   method:'Native source PNG decode; nearest-neighbor reference-cell registration; original RGB water threshold; 4/8 connectivity; no vector-derived terrain',
   registration:{referenceWidth:WIDTH,referenceHeight:HEIGHT,
