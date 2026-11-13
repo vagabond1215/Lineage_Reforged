@@ -2,7 +2,7 @@
 
 Date: 2026-11-13  
 Decision: **Coordinate-first for all new geography and spatial authoring. Legacy grid-related authority frozen for migration only.**  
-Implementation status: **Stage C0 foundation and forward gate authored on `master`; full native verification pending.**
+Implementation status: **Stage C0 owner-native ACCEPTED at `831e15f5cf7504a30208daa54949db7789954f81`; C1 geography review and canonical publication remain HELD.**
 
 ## Decision
 
@@ -68,3 +68,9 @@ node scripts/kaelvar-five-region-candidate-audit.mjs --check
 ```
 
 Run in a **clean, exact-HEAD detached worktree** to preserve the primary dirty checkout. The tests and commands are read-only. Full native verification, not just this document, is required before C0 is marked accepted.
+
+## C0 owner-native acceptance evidence (2026-11-13)
+
+At exact detached commit `831e15f5cf7504a30208daa54949db7789954f81`, owner PowerShell 7 verification passed syntax, 234/234 native Node tests, a no-new-legacy-dependency scan of 832 code files with zero added coupling, Kaelvar coordinate-first candidate authoring and protected canonical catalog checks. The detached worktree stayed clean and pinned. Verdict: `COORDINATE-FIRST FOUNDATION NATIVE GATES PASSED`. These are C0 results, not a C1 or geographic-mask approval.
+
+The protected current mainline vector geometry has 201 source region footprints and 68 coastlines (Git blob `9cd6752e9dbca00796e5f7c013066bb0e5a96175`); an unmerged geography draft has 159 after a separate 42-footprint offshore exclusion process (Git blob `ec59ed66b7eaee4502dc56709a2f266b17b3cb17`). Neither source variant authorizes five-region boundaries or a silent source overwrite. Coordinate-first C1 review must crosswalk these source states before publication.

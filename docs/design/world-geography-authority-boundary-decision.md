@@ -1,6 +1,6 @@
 # World Geography Authority Boundary Decision
 
-> **2026-11-13 coordinate-first addendum:** This historical decision remains evidence for existing runtime authority, but does not authorize new hex-based geography, locality, travel or encounter dependencies. Future spatial authoring is coordinate/polygon/place-ID first, with explicit route graphs. Existing hex records are retained temporarily for compatibility only. See [Coordinate-first geography migration contract](coordinate-first-world-geography-migration-contract-2026-11-13.md) and the executable no-new-hex gate. C0 native acceptance is pending. Do not casually reset the frozen pretransition baseline.
+> **2026-11-13 coordinate-first addendum:** This historical decision remains evidence for existing runtime authority, but does not authorize new hex-based geography, locality, travel or encounter dependencies. Future spatial authoring is coordinate/polygon/place-ID first, with explicit route graphs. Existing hex records are retained temporarily for compatibility only. See [Coordinate-first geography migration contract](coordinate-first-world-geography-migration-contract-2026-11-13.md) and the executable no-new-hex gate. C0 owner-native acceptance passed on 2026-11-13 at `831e15f5cf7504a30208daa54949db7789954f81`; this historical contract remains superseded for new spatial authoring. Do not casually reset the frozen pretransition baseline.
 
 Version: `0.5.197 - World Geography Authority Boundary Decision`
 Status: completed documentation-only decision
