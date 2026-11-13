@@ -2,7 +2,7 @@
 
 Date: 2026-11-13
 Branch: `connector/first-world-raster-macro-evidence-pilot-2026-11-12`
-Status: **NATIVE JSON GATE PASSED (51/51 TESTS); FOUR-PANEL SVG VISUAL AND ECOLOGICAL/POLITICAL APPROVAL HELD**
+Status: **NATIVE JSON GATE PASSED (51/51 TESTS); K1 FOUR-PANEL SVG VISUAL PASSED; ECOLOGICAL/POLITICAL APPROVAL HELD**
 PR: #79, draft. Source basis: audited geometry at `41a8ab1d`; 2048×1152 paired original biome/elevation rasters within crop (60,60,3976,2235).
 
 ## Intent and epistemic boundary
@@ -197,18 +197,94 @@ Native PowerShell report from clean detached worktree at implementation commit
 - Layout B's **30,906 mainland terrain cells** are the union of existing Shattercap Parts 7/15 and Windward Part 1 **test windows**, not a fourth-region mask or area. Layout A/B have `proposedPolygons=null`, `approvedUnassignedArea=null`, no owner approval.
 - **PASS:** PowerShell post-run `git status --porcelain` clean and exact implementation HEAD unchanged. Canonical geography, original PNGs, settlements/routes, generator, gameplay, runtime, Saves and master remained untouched.
 
-**Precise gate split:** K1 JSON / native regression **PASS**. K1 four-panel original-source SVG **NOT YET VISUALLY REVIEWED**. E0 shoreline/river ink, E1 biome legend, E2 elevation, E3–E4 ecology/ecotones, E5 dependency review and E6 owner political approvals remain **HOLD**. Do not claim that the native report by itself chooses Layout A or Layout B or authorizes masks.
+**Precise gate split (updated after owner screenshot):** K1 JSON / native regression **PASS**. K1 four-panel original-source SVG visual rendering **PASS**, without semantic ecological or candidate-border approval. E0 shoreline/river ink, E1 biome legend, E2 elevation, E3–E4 ecology/ecotones, E5 dependency review and E6 owner political approvals remain **HOLD**. Do not claim that the native report by itself chooses Layout A or Layout B or authorizes masks.
 
-### Next local action: K1 four-panel render
+### Original K1 four-panel rendering runbook (now completed; preserved for reproducibility)
 
 From the clean detached worktree at the *current* PR #79 head, run
 `node scripts/first-world-kaelvar-candidate-comparison.mjs --svg` to a file
 **outside the repo**, verify all four panels (existing source labels, A review,
 B eligibility review, uncalibrated elevation), inspect source registration and
 the current-footprint dashed outlines against the original coastline artwork,
-and return a screenshot with the legend. If the SVG differs, record a failure
+and return a screenshot with the legend (owner screenshot supplied and visually reviewed). If the SVG differs in later reruns, record a failure
 rather than repairing land colors by hand. Future K2 cannot start until source
 color and height semantics receive independent assessment and approval.
+
+## Owner-rendered K1 SVG: visual disposition (2026-11-13)
+
+The owner supplied a full four-panel Brave screenshot and two enlarged paired
+views of `kaelvar-layout-A-B-source-comparison.svg`, produced from the
+read-only `--svg` command after the earlier native 51-test JSON pass.
+The screenshots visibly contain, left to right, (1) existing source labels,
+(2) Layout A existing three-region review, (3) Layout B eastern eligibility
+review with dashed current-source footprint boundaries, and (4) the
+independent **uncalibrated** source elevation map.
+
+**Visual gate: `SOURCE_RENDER_PASS__REGIONAL_BOUNDARIES_HOLD`.**
+This is visual acceptance of panel rendering, source-image
+correspondence and intelligible provenance/test-window overlay.
+It is not final acceptance of pixel-precise semantic biome assignments,
+a land/water classification, an elevation ramp, a political border or
+region count. The user's screenshot is review evidence, not a new source
+raster or a committed canonical artifact.
+
+### Visual facts and implications
+
+- Coastline ink and islands appear in corresponding positions across all
+  four panels, with no obvious gross crop or alignment defect at the
+  reviewed zoom. This visual check complements, but does not substitute for,
+  prior native registered PNG tests.
+- The western/northern mainland in the source biome image displays
+  large ochre/yellow areas and scattered green areas. The southern
+  peninsula carries a broad green band, with more saturated green
+  concentrations toward the east. This is **unlabeled image color**,
+  not verified steppe, forest, farming, dry grassland or climate.
+- The southeastern mainland including Windward's disputed intrusion
+  borders that green/yellow transition. Original elevation artwork
+  shows stronger peach/salmon tones in the south-central/eastern
+  interior and multiple blue watercourse-like traces. No altitude,
+  catchment divide, waterflow direction, habitable pass or climate
+  mechanism is certified by these colors.
+- Layout A is intentionally nearly visually identical to existing
+  labels: it has **not proposed replacement polygons**. Layout B adds
+  dashed **current** Shattercap 7/15 and Windward 1 outlines; it has
+  **not tested or proven an independent fourth-region boundary**.
+  Some straight/diagonal dashed segments traverse broad source-color
+  fields and approach blue hydrological artwork. They must not be
+  mistaken for landscape edges.
+- Detached eastern/southeastern islands appear separately; the
+  screenshot does not authorize grouping them with a northern
+  Shattercap island fringe. Coast 40, its co-claimed footprints and
+  the Windward secondary terrain component remain separately held.
+- Other off-Kaelvar landmasses are visible at the right and bottom
+  of the crop; these are map context, not part of a proposed Kaelvar
+  mainland transfer.
+
+### Required follow-up / non-pass criteria
+
+1. **K1 render/layout: PASS.** No evidence of a gross visual registration
+   failure in the owner's screenshots; all panel headings and dashed
+   provenance lines are legible. The native JSON/test pass is unchanged.
+2. **K2 source interpretation: HOLD.** Independently resolve shared
+   blue/ink versus actual coast/river/lake, source biome RGB
+   palette categories, source elevation encoding and geological
+   transitions. Inspect exact registered pixel samples/transects
+   in western/northern, green southern, southeast, coast and island
+   zones with source coordinates and color confidence.
+3. **K3 proposed geometry: NOT ENTERED.** Create truly differentiated
+   Layout A/B source-aligned alternative masks **only after**
+   calibration. The current four-panel SVG is a valid *pre-boundary*
+   exploration view and should not be advertised as completed
+   side-by-side reconstruction.
+4. **Approval still withheld.** No region-4 creation, Windward
+   reassignment, forced Verdant extension, Shattercap island transfer,
+   black-ink bridge assumption or original PNG edit. Preserve all
+   18 detached Shattercap components, Coast 40 independent decision,
+   Part 1 source artifact review and 84/88 distinct scenario overlaps.
+
+**Next gate:** K2 E0–E2 independent shoreline/palette/elevation evidence,
+followed by owner review; the code and PR must remain draft/read-only
+until exact accepted candidates exist.
 
 ## Subsequent handoff after native K1 pass
 
