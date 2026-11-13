@@ -15,6 +15,9 @@
     "typecheck:ui": "npm --prefix ./apps/rpg-ui run typecheck",
     "typecheck:ui:node": "npm --prefix ./apps/rpg-ui run typecheck:node",
     "typecheck:workspace": "npm --prefix ./apps/rpg-ui exec -- tsc --noEmit -p tsconfig.json",
-    "test": "node --test"
+    "pretest": "npm run tool:no-new-hex-dependencies",
+    "test": "node --test",
+    "tool:no-new-hex-dependencies": "node ./scripts/check-no-new-hex-dependencies.mjs --check",
+    "test:coordinate-foundation": "node --test ./tests/unit/world-coordinate-geometry.test.mjs ./tests/unit/legacy-hex-forward-gate.test.mjs ./tests/unit/kaelvar-five-region-candidate-audit.test.mjs"
   }
 }
