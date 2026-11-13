@@ -167,7 +167,8 @@ export function validateKaelvarFiveRegionCandidates({
         fail('habitat incomplete: '+h.id);
   }
   if(ecologyPack.publicationHolds?.canonicalRegionCatalogUnchanged!==true||
-     ecologyPack.publicationHolds?.canonicalSettlementsUnchanged!==true)
+     ecologyPack.publicationHolds?.canonicalSettlementsUnchanged!==true||
+     ecologyPack.publicationHolds?.legacyTravelTopologyPreserved!==true)
     fail('active world content publication guard removed');
   return {
     status:'FIVE_REGION_AUTHORING_COMPLETE_CANONICAL_HELD',
