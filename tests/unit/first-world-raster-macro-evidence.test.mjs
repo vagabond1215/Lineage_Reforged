@@ -236,5 +236,8 @@ test('component close-up and exact ownership report are read-only tools',()=>{
   const cli=readFileSync(resolve(root,'scripts/first-world-raster-evidence.mjs'),'utf8');
   assert.match(cli,/--svg-coast40/);
   assert.match(cli,/componentOwnershipEvidence/);
+  assert.match(cli,/non-scaling-stroke/);
+  assert.match(cli,/const focus=detail\?'':pilotParts/);
+  assert.match(cli,/pilotSvg\(\[pilotCoasts\[1\]\],12,12,true\)/);
   assert.doesNotMatch(cli,/writeFileSync|createWriteStream/);
 });
