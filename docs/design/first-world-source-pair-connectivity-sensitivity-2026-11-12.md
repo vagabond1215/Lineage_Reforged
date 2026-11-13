@@ -139,3 +139,85 @@ authored regional profiles with tolerant ecotone margins,
 This tooling does **not** overwrite source rasters, crop settings,
 regional labels, generator, biomes, routes, settlements,
 character/world runtime, or Saves.
+
+## Owner-executed full-resolution acceptance witness (2026-11-12)
+
+**Result: 29 / 29 native Node tests passed, zero failures.**
+The source-pair `--connectivity` report ran successfully on the
+original registered PNGs in the detached test checkout.
+`baselineLegacyReproduced = true`.
+
+| Measurement | Divergent terrain only | Shared nonblue ink included | All unresolved included |
+|---|---:|---:|---:|
+| Candidate raster cells | 525,910 | 585,834 | 585,834 |
+| 4-neighbor connected components | **222** | **167** | **167** |
+| 8-neighbor connected components | **189** | **160** | **160** |
+| Largest 4-connected component cells | 260,371 | 278,543 | 278,543 |
+| Single-cell 4-connected components | 13 | 0 | 0 |
+
+- `joinedFourNeighborComponentCount = 26`: 26
+  ink-inclusive components touch multiple separate terrain-only
+  components. This is an **ambiguity count**, not an inventory of
+  26 erroneous land bridges or 26 proposed political borders.
+- `inkOnlyFourNeighborComponentCount = 0`: no 4-connected component
+  entirely composed of shared nonblue artwork under the
+  ink-inclusive scenario. Does not certify every ink pixel as land.
+- Terrain-only has 55 more 4-connected components and 29 more
+  8-connected components than ink-inclusive. The component-count
+  difference is **not** the number of islands that should be
+  removed, merged or protected.
+- All-unresolved-inclusive equals ink-inclusive here because
+  blue-divergent and alpha-conflict class counts were both zero.
+
+### Prioritized joined components under ink-inclusive IDs
+
+| Ink-inclusive component ID | Total candidate pixels | Separate terrain-only 4-components touched | Included unresolved ink pixels |
+|---|---:| ---: | ---: |
+| 114 | 110,003 | 9 | 9,997 |
+| 1 | 278,543 | 8 | 17,704 |
+| **25** | **86,417** | **6** | **6,839** |
+| 92 | 2,933 | 5 | 1,186 |
+| 128 | 29 | 4 | 25 |
+| 101 | 34,917 | 3 | 4,455 |
+| 136 | 19,684 | 3 | 2,729 |
+
+These are **current ink-inclusive component IDs**. The
+terrain-only ID `114` in the Coast 40 pilot below is not the
+110,003-cell ink-inclusive component `114`. The scenarios
+are separately numbered; never join or transfer by numeric ID alone.
+
+### Coast 10 / Coast 40 per-feature crosswalk
+
+| Source part | Terrain-only 4-component membership | Ink-inclusive 4-component membership |
+| --- | --- | --- |
+| Windward Spine Part 1 | ID 30: **3,661** cells; ID 113: **12** cells | ID 25: **4,326** cells |
+| Windward Spine Part 2 | ID 114: **74** cells | ID 91: **110** cells |
+| Verdant Thalos Part 6 | ID 114: **56** cells | ID 91: **97** cells |
+
+- **Coast 10 / component 25** is confirmed as a large
+  mixed-owner *existing polygon-label* problem on the Kaelvar
+  mainland under the ink-inclusive baseline; the six touched
+  terrain-only components require geographic interpretation
+  of rivers/shoreline ink before a corrected physical boundary.
+  Windward Part 1's 12-cell terrain fragment is held as a
+  separate topology diagnostic, not silently discarded.
+  The 4,326 cells are not automatically assigned to Verdant
+  Thalos or any other Kaelvar child region.
+- **Coast 40 / old component 91:** Windward Part 2 and Verdant
+  Part 6 both intersect **the same terrain-only 4-neighbor
+  component 114**, even with shared-ink excluded. This provides
+  independent candidate-terrain connectivity evidence for a
+  single physically continuous island. The still-unreviewed
+  Serathyl/Kaelvar administrative division needs an explicit
+  political and ecological child-region decision, not a blind
+  whole-island transfer.
+- The earlier 22 unclaimed legacy-mask island cells and
+  1,362 unclaimed legacy-mask mainland cells remain unresolved.
+  Excluding ink changes the physical pixel universe: do not
+  assume those totals carry forward to a new landmask.
+
+**Review gate updated:** native reproducibility and scenario
+crosswalk are now *passed*, but source shoreline/river interpretation,
+source biome legend, colored elevation-ramp calibration, Kaelvar
+child destination and Coast 40 island sovereignty remain *held*.
+No approved macro masks or canonical source changes exist.
