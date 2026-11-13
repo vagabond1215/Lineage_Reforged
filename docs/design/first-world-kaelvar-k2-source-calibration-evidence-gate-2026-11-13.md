@@ -3,7 +3,7 @@
 Date: 2026-11-13
 PR: #79 (draft, unmerged)
 Branch: `connector/first-world-raster-macro-evidence-pilot-2026-11-12`
-Status: **K2 READ-ONLY PROBE CODE COMMITTED; ORIGINAL SOURCE NATIVE REPORT/SVG HELD; ECOLOGICAL CALIBRATION UNAPPROVED**
+Status: **K2 THREE-PANEL OWNER VISUAL REVIEW PASS; NATIVE JSON/TAP RESULTS NOT YET PROVIDED; ECOLOGICAL CALIBRATION UNAPPROVED**
 
 ## Prerequisite and exact scope
 
@@ -200,6 +200,82 @@ all window source-class/ink-contact counts, RGB/elevation diagnostic
 swatches and transect counts from the JSON, and a screenshot of the
 full 3-panel SVG including the legend. If source hashes or baseline
 component identity changed, halt rather than amending the source.
+
+## Owner-rendered K2 source-probe SVG: visual review (2026-11-13)
+
+The owner provided a screenshot of the complete three-panel `--k2-svg`
+source-probe visualization. It visibly shows all nine original
+feature-derived numbered anchors and the straight diagnostic transects
+in (1) original biome RGB, (2) original elevation RGB and
+(3) original biome RGB with magenta highlighted
+`SHARED_NONBLUE_UNRESOLVED` ink. The same coastline silhouettes,
+islands and sampling points occupy corresponding locations in all
+three panels. No gross crop/registration inconsistency is evident at
+the screenshot zoom.
+
+**Visual status: `K2_SOURCE_PROBE_RENDER_PASS__SEMANTIC_CALIBRATION_HOLD`.**
+This is only a rendered-image inspection. The screenshot does **not**
+include native TAP counts, K2 JSON swatches, complete full-path
+source-class counts, raw PNG SHA verification output, nor final clean
+worktree confirmation. Do not claim those gates completed from the
+visual alone.
+
+### Supported visual observations
+
+- Auric west (#1): dominant pale yellow with scattered orange/green
+  original biome-image areas. Not independently verified dry scrub,
+  steppe, soil or altitude.
+- Large Shattercap mainland source part (#2): an extensive yellow
+  and green transition. A source-polygon label does not establish
+  an ecological edge.
+- Verdant south (#3): broad green and darker-green source-image
+  concentrations, with original image watercourse-like markings.
+  These are not yet classified forests, cropland or hydrology.
+- Shattercap southeastern Part 15 (#4): image color transition
+  from darker green toward yellow-green and largely paler
+  elevation-source color at its anchor. Its cold-maritime suitability
+  has **not** been demonstrated by the image.
+- Windward southeastern Part 1 (#5): visibly green source biome
+  image and largely pale elevation-image color near the sample
+  anchor. Earlier red/magenta political overlay was **not**
+  original red surface biome. Nor does the uncalibrated elevation
+  panel independently prove a mountain spine or its absence.
+- Northern detached Shattercap and eastern island cases (#6, #7):
+  visible as distinct island geography. Coast 40's two nearby
+  source claims (#8, #9) remain a separate shared-island review,
+  not approved sovereignty.
+- The greatest conspicuous salmon/peach patches on the elevation
+  source appear across a more central/southern inland band than
+  the Windward southeast anchor. Color cannot be equated with
+  meters, slope, relief, catchment or drainage direction until
+  the elevation-encoding authority is established.
+- Magenta `SHARED_NONBLUE_UNRESOLVED` occurs extensively along
+  shores and island perimeters. Some interior blue river-like lines
+  do not visibly receive the same magenta overlay. Do **not**
+  merge black shoreline art and blue linework into a certified
+  single river/land class.
+- Straight sample transects deliberately cross terrain/water
+  and source-image color transitions. They are **not** ecological,
+  political, transport or river boundaries.
+
+### Remaining evidence needed for next calibration decision
+
+1. Native K2 TAP summary plus `--k2-evidence` JSON including
+   source image SHA-256s, nine anchor coordinates/components,
+   exact source RGB histogram snippets and shared-ink window counts.
+   Do not claim a complete K2.1 native pass without these.
+2. Confirm any original source-map biome legend, elevation-ramp
+   encoding and intent of coast/river art. If absent, retain
+   `SEMANTIC_CALIBRATION_HELD` and prepare the smallest
+   explicitly reviewable sample color/height table for owner
+   classification rather than assigning biomes by screenshot hue.
+3. Preserve all physically detached Shattercap components and
+   Coast 40 review; never infer Shattercap northern sovereignty
+   from source IDs or auto-transfer Windward Part 1 to Verdant.
+4. No A/B candidate political masks, fourth region, source PNG,
+   canonical JSON, route, hex, Save or gameplay changes until
+   ecological, hydrological and owner review gates are independently
+   satisfied.
 
 ## Decision protocol after visual review
 
