@@ -94,7 +94,11 @@ test('source environmental evidence runner has no canonical writes',()=>{
   const runner=readFileSync(resolve(root,'scripts/first-world-environment-evidence.mjs'),'utf8');
   assert.match(runner,/--check/);
   assert.match(runner,/--swatches-svg/);
-  assert.match(runner,/SOURCE_PALETTE/);
+  const profiles=readFileSync(resolve(root,
+    'scripts/lib/first-world-environment-profiles.mjs'),'utf8');
+  assert.match(profiles,/BLOCKED_PENDING_APPROVED_SOURCE_PALETTE/);
+  assert.match(profiles,/BLOCKED_PENDING_APPROVED_HEIGHT_SCALE_AND_ENCODING/);
+  assert.doesNotMatch(profiles,/writeFileSync|createWriteStream/);
   assert.match(runner,/buildEnvironmentProfiles/);
   assert.match(runner,/verifyAuditedTextBlob/);
   assert.doesNotMatch(runner,/writeFileSync|--write|createWriteStream/);
