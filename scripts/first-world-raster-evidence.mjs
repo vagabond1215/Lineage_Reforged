@@ -1,11 +1,12 @@
 #!/usr/bin/env node
 /**
  * First World Pass 0: independent source-raster witness + Coast 10/40 pilot.
- * READ ONLY: --check (JSON stdout), --svg-pilot (SVG stdout).
+ * READ ONLY: --check (JSON stdout), --svg-pilot / --svg-coast40 (SVG stdout).
  * NO --write switch, no canonical polygon, settlement, biome or Save mutation.
  *
  * node scripts/first-world-raster-evidence.mjs --check > evidence.json
  * node scripts/first-world-raster-evidence.mjs --svg-pilot > kaelvar-pilot.svg
+ * node scripts/first-world-raster-evidence.mjs --svg-coast40 > coast40-island.svg
  */
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
@@ -15,12 +16,14 @@ import {verifyAuditedTextBlob} from './lib/first-world-source-identity.mjs';
 import {decodeSourcePng,registeredSourceMask,labelLandComponents,diagonalJoinEvidence}
   from './lib/first-world-source-png.mjs';
 import {planReviewedMacroOwnership,rasterizePolygon} from './lib/first-world-reviewed-macro-planner.mjs';
+import {visitRasterPolygon,buildSelectedComponentReview}
+  from './lib/first-world-component-review.mjs';
 
 const ROOT=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const WIDTH=2048,HEIGHT=1152;
 const args=process.argv.slice(2);
-if(args.length!==1||!['--check','--svg-pilot'].includes(args[0])){
-  console.error('Usage: node scripts/first-world-raster-evidence.mjs --check|--svg-pilot');
+if(args.length!==1||!['--check','--svg-pilot','--svg-coast40'].includes(args[0])){
+  console.error('Usage: node scripts/first-world-raster-evidence.mjs --check|--svg-pilot|--svg-coast40');
   process.exit(2);
 }
 const load=p=>JSON.parse(readFileSync(resolve(ROOT,p),'utf8').replace(/^\uFEFF/,''));
@@ -81,30 +84,10 @@ const macroOf=p=>{
 };
 const macros=new Set(regions.filter(r=>['continent','island_system'].includes(r.regionType)).map(r=>r.id));
 
-/** Visit exact reference pixel centers in a polygon without inferred topology. */
-function visit(points,fn){
-  if(!points||points.length<3)throw Error('Invalid source feature vertices');
-  const minY=Math.max(0,Math.floor(Math.min(...points.map(p=>p.y))-.5));
-  const maxY=Math.min(HEIGHT-1,Math.ceil(Math.max(...points.map(p=>p.y))-.5));
-  for(let y=minY;y<=maxY;y++){
-    const scanY=y+.5,xs=[];
-    for(let i=0,j=points.length-1;i<points.length;j=i++){
-      const a=points[i],b=points[j];
-      if((a.y>scanY)!==(b.y>scanY))
-        xs.push(a.x+(scanY-a.y)*(b.x-a.x)/(b.y-a.y));
-    }
-    xs.sort((a,b)=>a-b);
-    for(let i=0;i+1<xs.length;i+=2){
-      const left=Math.max(0,Math.ceil(xs[i]-.5));
-      const right=Math.min(WIDTH-1,Math.ceil(xs[i+1]-.5)-1);
-      for(let x=left;x<=right;x++)fn(y*WIDTH+x,x,y);
-    }
-  }
-}
 function assess(p) {
   let cells=0,landCells=0,waterCells=0;
   const c4=new Set(),c8=new Set();
-  visit(p.points,i=>{
+  visitRasterPolygon(p.points,WIDTH,HEIGHT,i=>{
     cells++;
     if(landMask[i]){landCells++;c4.add(four.labels[i]);c8.add(eight.labels[i]);}
     else waterCells++;
@@ -126,6 +109,13 @@ const pilotCoasts=pilotCoastIds.map(id=>feature.coastlines.find(p=>p.id===id));
 if(pilotCoasts.some(x=>!x)||pilotParts.some(id=>!retainedById.has(id)))
   throw Error('Coast 10/40 pilot provenance changed');
 const selected=new Map(pilotParts.map(id=>[id,assess(retainedById.get(id))]));
+const pilotFourIds=[...new Set([
+  ...selected.values(),...pilotCoasts.map(p=>coastlineEvidence.find(c=>c.id===p.id)),
+].flatMap(entry=>entry.connectedFourIds))].sort((a,b)=>a-b);
+const componentOwnershipEvidence=buildSelectedComponentReview({
+  width:WIDTH,height:HEIGHT,landMask,fourLabels:four.labels,
+  footprints:parts,regions,selectedComponentIds:pilotFourIds,
+});
 const foreignCandidateEvidence=manifest.foreignLandmassCandidates.map(candidate=>{
   const p=retainedById.get(candidate.sourcePolygonId);
   if(!p||macroOf(p)!==candidate.currentMacroId||
@@ -171,6 +161,7 @@ const report={
   pilot:{status:'BOUNDARY_NOT_APPROVED',
     coastIds:pilotCoastIds,
     sourcePartEvidence:[...selected.values()],
+    componentOwnershipEvidence,
     candidateDecisions:manifest.reviewedDecisions.map(({id,macroId,status})=>({id,macroId,status})),
     instruction:'Review PNG crop and 4/8 connectivity in Coast 10 and Coast 40; do not transfer Windward to Kaelvar until spatial macro masks and child split are signed off'},
   foreignCandidateEvidence,
@@ -178,9 +169,9 @@ const report={
     unassignedMacroCells:ownerPlan.unassignedMacroCells,
     assignedMacroCells:ownerPlan.assignedMacroCells},
 };
-function pilotSvg(){
-  const pts=pilotCoasts.flatMap(c=>c.points);
-  const pad=14,minX=Math.max(0,Math.floor(Math.min(...pts.map(p=>p.x))-pad)),
+function pilotSvg(coasts=pilotCoasts,pad=14,magnification=2){
+  const pts=coasts.flatMap(c=>c.points);
+  minX=Math.max(0,Math.floor(Math.min(...pts.map(p=>p.x))-pad)),
     maxX=Math.min(WIDTH,Math.ceil(Math.max(...pts.map(p=>p.x))+pad)),
     minY=Math.max(0,Math.floor(Math.min(...pts.map(p=>p.y))-pad)),
     maxY=Math.min(HEIGHT,Math.ceil(Math.max(...pts.map(p=>p.y))+pad));
@@ -195,7 +186,7 @@ function pilotSvg(){
     }
   }
   const shape=p=>p.points.map(q=>q.x+','+q.y).join(' ');
-  const coastLines=pilotCoasts.map(p=>'<polygon points="'+shape(p)+'" fill="none" stroke="#f4c35d" stroke-width="1.4"/>').join('');
+  const coastLines=coasts.map(p=>'<polygon points="'+shape(p)+'" fill="none" stroke="#f4c35d" stroke-width="1.4"/>').join('');
   const regionLines=parts.filter(p=>{
     const m=macroOf(p);return m==='region.kaelvar'||m==='region.serathyl';
   }).map(p=>'<polygon points="'+shape(p)+'" fill="none" stroke="'+
@@ -204,10 +195,11 @@ function pilotSvg(){
   const focus=pilotParts.map(id=>'<polygon points="'+shape(retainedById.get(id))+
     '" fill="none" stroke="#fff" stroke-width="2.5"/>').join('');
   return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="'+
-    [minX,minY,width,height].join(' ')+'" width="'+width*2+'" height="'+height*2+
+    [minX,minY,width,height].join(' ')+'" width="'+width*magnification+'" height="'+height*magnification+
     '"><rect x="'+minX+'" y="'+minY+'" width="'+width+'" height="'+height+
     '" fill="#213d52"/><path d="'+runs.join('')+'" fill="#dae2c9"/>'+
     regionLines+coastLines+focus+'</svg>\n';
 }
 if(args[0]==='--svg-pilot')process.stdout.write(pilotSvg());
+else if(args[0]==='--svg-coast40')process.stdout.write(pilotSvg([pilotCoasts[1]],12,12));
 else process.stdout.write(JSON.stringify(report,null,2)+'\n');
