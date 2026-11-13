@@ -1,0 +1,352 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-five-region-candidate-region-records.v1",
+  "status": "MAINLINE_AUTHORED_PROPOSALS_NOT_ACTIVE_REGION_RECORDS",
+  "date": "2026-11-13",
+  "macroRegionId": "region.kaelvar",
+  "existingChildRegionIds": [
+    "region.auric_marches",
+    "region.verdant_thalos",
+    "region.shattercap_isles"
+  ],
+  "newRegionRecords": [
+    {
+      "id": "region.kharuun_drylands",
+      "slug": "kharuun_drylands",
+      "name": "The Kharuun Drylands",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.kaelvar",
+      "mapIds": [
+        "world_map.first_world"
+      ],
+      "positionLabel": "kaelvar_central_arid_interior",
+      "summary": "A central system of arid basins, high-desert escarpments, salt pans and groundwater-fed oasis corridors between the western marches and the greener south.",
+      "tags": [
+        "subregion",
+        "high_desert",
+        "oasis",
+        "arid_basin",
+        "saltpan",
+        "caravan_frontier"
+      ],
+      "environmentProfile": {
+        "dominantBiomeMix": [
+          "dry_scrub",
+          "dry_steppe",
+          "rocky_badlands",
+          "oasis_riparian"
+        ],
+        "elevationProfile": "high_desert_escarpments_and_arid_basins",
+        "climateTendencies": [
+          "arid_continental",
+          "hot_dry_basins",
+          "cool_high_desert_nights",
+          "dust_winds",
+          "episodic_flash_floods"
+        ],
+        "freshwaterAvailability": "scarce_localized_oases",
+        "climateSeverity": "high",
+        "agriculturalPotential": "low_oasis_concentrated",
+        "extractivePotential": "high",
+        "hazardLevel": "high"
+      },
+      "simulationProfile": {
+        "habitationScore": 38,
+        "foodProductionCapacity": 26,
+        "waterAvailability": 19,
+        "climateBurden": 73,
+        "hazardPressure": 65,
+        "infrastructureDifficulty": 73,
+        "populationCapacity": 5000000,
+        "densityBand": "low"
+      },
+      "populationProfile": {
+        "densityBand": "low",
+        "densityNotes": [
+          "Permanent communities concentrate at verified spring and aquifer systems.",
+          "High-desert escarpments support sparse quarry holds and seasonal grazing.",
+          "Waterless salt pans remain almost uninhabited."
+        ],
+        "settlementPattern": "Oasis towns, protected caravan wells, fortified escarpment passes and mineral camps form discontinuous water-dependent settlements.",
+        "estimatedPopulationMillions": 5,
+        "populationCapacityMillions": 5,
+        "urbanPopulationPercent": 12,
+        "ruralPopulationPercent": 88
+      },
+      "economicProfile": {
+        "supplyStrengths": [
+          "salt",
+          "copper",
+          "stone",
+          "glass_sand",
+          "mineral_pigments",
+          "dried_fruit",
+          "desert_herbs",
+          "pack_animal_services"
+        ],
+        "demandPressures": [
+          "grain",
+          "timber",
+          "finished_cloth",
+          "water_storage_equipment",
+          "worked_metal"
+        ],
+        "importBias": 0.82,
+        "exportBias": 0.61,
+        "resourceDiversityBand": "moderate"
+      },
+      "settlementDistributionModel": {
+        "targetCounts": {
+          "city": 1,
+          "town": 4,
+          "village": 10,
+          "outpost": 9,
+          "strategic_site": 7
+        },
+        "generationRules": {
+          "asymmetryMode": "region_locality_weighted",
+          "survivabilityDriver": "simulation_profile",
+          "settlementPattern": "Oasis towns, protected caravan wells, fortified escarpment passes and mineral camps form discontinuous water-dependent settlements."
+        }
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          {
+            "race": "humans",
+            "percentage": 46
+          },
+          {
+            "race": "dwarves",
+            "percentage": 12
+          },
+          {
+            "race": "elves",
+            "percentage": 4
+          },
+          {
+            "race": "halflings",
+            "percentage": 6
+          },
+          {
+            "race": "gnomes",
+            "percentage": 5
+          },
+          {
+            "race": "half_orcs",
+            "percentage": 14
+          },
+          {
+            "race": "half_goblins",
+            "percentage": 10
+          },
+          {
+            "race": "half_trolls",
+            "percentage": 3
+          },
+          {
+            "race": "half_merfolk",
+            "percentage": 0
+          }
+        ]
+      },
+      "civilizationNotes": [
+        "Oasis communities maintain cisterns, irrigation shares, shade markets and water-law agreements.",
+        "Caravan houses and mobile herders link ore and salt production to Kaelvar's grain ports.",
+        "Highland clans guard escarpment passes; drought can turn access to wells into conflict."
+      ],
+      "strategicNotes": [
+        "A dry valley is not a confirmed dry-land boundary: source ink and seasonal channels still require adjudication.",
+        "The region may span the continent's height only if connected arid ecology and hydrography support it.",
+        "A vast empty gap never creates automatic desert ownership."
+      ]
+    },
+    {
+      "id": "region.veyrholm_shore",
+      "slug": "veyrholm_shore",
+      "name": "The Veyrholm Shore",
+      "regionType": "subregion",
+      "aliases": [],
+      "parentRegionId": "region.kaelvar",
+      "mapIds": [
+        "world_map.first_world"
+      ],
+      "positionLabel": "kaelvar_northern_mainland_littoral",
+      "summary": "Kaelvar's northern mainland shore of wind-cut headlands, tidal inlets, fir-covered ridges and storm-ready fishing harbors, separate from the Shattercap offshore island system.",
+      "tags": [
+        "subregion",
+        "northern_mainland",
+        "rocky_coast",
+        "maritime",
+        "headlands",
+        "harbors"
+      ],
+      "environmentProfile": {
+        "dominantBiomeMix": [
+          "coastal_scrub",
+          "cool_coastal_woodland",
+          "conifer_headlands",
+          "estuary_marsh"
+        ],
+        "elevationProfile": "sea_cliffs_coastal_benches_and_fir_ridges",
+        "climateTendencies": [
+          "cool_maritime",
+          "salt_winds",
+          "foggy_inlets",
+          "seasonal_gales",
+          "inland_rain_shadow"
+        ],
+        "freshwaterAvailability": "moderate_stream_and_estuary_dependent",
+        "climateSeverity": "moderate_high",
+        "agriculturalPotential": "moderate_sheltered_valleys",
+        "extractivePotential": "moderate_high",
+        "hazardLevel": "medium_high"
+      },
+      "simulationProfile": {
+        "habitationScore": 65,
+        "foodProductionCapacity": 58,
+        "waterAvailability": 63,
+        "climateBurden": 46,
+        "hazardPressure": 49,
+        "infrastructureDifficulty": 55,
+        "populationCapacity": 4000000,
+        "densityBand": "moderate"
+      },
+      "populationProfile": {
+        "densityBand": "moderate",
+        "densityNotes": [
+          "Protected harbors and estuaries hold the largest settlements.",
+          "Exposed rocky capes support watch stations rather than dense towns.",
+          "Inland stream valleys support timber harvest, limited farms and pasture."
+        ],
+        "settlementPattern": "Port towns, fishing hamlets, cliff watchholds and inland timber villages concentrate at sheltered inlets and guarded road-to-harbor passages.",
+        "estimatedPopulationMillions": 4,
+        "populationCapacityMillions": 4,
+        "urbanPopulationPercent": 22,
+        "ruralPopulationPercent": 78
+      },
+      "economicProfile": {
+        "supplyStrengths": [
+          "cold_fish",
+          "smoked_fish",
+          "ship_timber",
+          "pitch",
+          "rope",
+          "salt",
+          "quarried_stone",
+          "harbor_services"
+        ],
+        "demandPressures": [
+          "grain",
+          "wine",
+          "iron_tools",
+          "finished_cloth",
+          "luxury_goods"
+        ],
+        "importBias": 0.59,
+        "exportBias": 0.68,
+        "resourceDiversityBand": "high"
+      },
+      "settlementDistributionModel": {
+        "targetCounts": {
+          "city": 1,
+          "town": 5,
+          "village": 14,
+          "outpost": 7,
+          "strategic_site": 6
+        },
+        "generationRules": {
+          "asymmetryMode": "region_locality_weighted",
+          "survivabilityDriver": "simulation_profile",
+          "settlementPattern": "Port towns, fishing hamlets, cliff watchholds and inland timber villages concentrate at sheltered inlets and guarded road-to-harbor passages."
+        }
+      },
+      "demographicProfile": {
+        "raceDistribution": [
+          {
+            "race": "humans",
+            "percentage": 44
+          },
+          {
+            "race": "dwarves",
+            "percentage": 12
+          },
+          {
+            "race": "elves",
+            "percentage": 12
+          },
+          {
+            "race": "halflings",
+            "percentage": 6
+          },
+          {
+            "race": "gnomes",
+            "percentage": 6
+          },
+          {
+            "race": "half_orcs",
+            "percentage": 7
+          },
+          {
+            "race": "half_goblins",
+            "percentage": 4
+          },
+          {
+            "race": "half_trolls",
+            "percentage": 1
+          },
+          {
+            "race": "half_merfolk",
+            "percentage": 8
+          }
+        ]
+      },
+      "civilizationNotes": [
+        "Harbor guilds organize fishing seasons, storm repairs, ropeworks and coastal trade.",
+        "Woodland communities manage fir harvest, resin, pitch and ridge pack routes.",
+        "The coast exchanges signals and shipping with the Shattercap Isles without implying unified island sovereignty."
+      ],
+      "strategicNotes": [
+        "The large northeast offshore island must stay a whole physical unit, assigned only after independent parent and child review.",
+        "Do not assign Shattercap's detached components to this region by sea proximity.",
+        "Coastal inlets, foreign-parent claims and mainland-ridge transitions remain unapproved."
+      ]
+    }
+  ],
+  "populationScenario": {
+    "status": "REBALANCE_REQUIRES_LATER_APPROVAL",
+    "macroEstimatedPopulationMillions": 40,
+    "originalThreeRegionMillions": {
+      "region.auric_marches": 10,
+      "region.verdant_thalos": 24,
+      "region.shattercap_isles": 6
+    },
+    "candidateFiveRegionMillions": {
+      "region.auric_marches": 8,
+      "region.kharuun_drylands": 5,
+      "region.verdant_thalos": 19,
+      "region.veyrholm_shore": 4,
+      "region.shattercap_isles": 4
+    },
+    "note": "All active population and settlement figures remain unchanged until integration. Proposed figures sum to the preexisting 40-million parent total."
+  },
+  "geographyHolds": {
+    "sourceGrid": [
+      2048,
+      1152
+    ],
+    "sourceGeometryBlob": "ec59ed66b7eaee4502dc56709a2f266b17b3cb17",
+    "acceptedR3VisualHead": "0db193e3fc30502bbfcd4eb7e8388586aec239a5",
+    "centralAridRegionExtent": "UNRESOLVED_NOT_ALL_UNASSIGNED_MAINLAND",
+    "northernMainlandCoastExtent": "UNRESOLVED",
+    "northeastLargeIsland": "INDIVISIBLE_PARENT_PENDING",
+    "shattercapIslands": "ALL_DETACHED_PENDING",
+    "unresolvedCoast40": "PENDING",
+    "windwardSpineParent": "SERATHYL_UNCHANGED",
+    "biomePalette": "UNCALIBRATED",
+    "elevationRamp": "UNCALIBRATED",
+    "noEqualAreaRequirement": true
+  },
+  "gameplayIntegrationStatus": "PROPOSED_PROFILES_ONLY_NO_WORLD_GENERATION_SPAWN_OR_SAVE_CHANGE",
+  "canonicalWritable": false
+}
