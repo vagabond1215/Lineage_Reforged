@@ -19,7 +19,6 @@ const isInk=v=>v===c.SHARED_NONBLUE_UNRESOLVED;
 const isUncertain=v=>isInk(v)||v===c.BLUE_DIVERGENCE_UNRESOLVED||
   v===c.ALPHA_UNRESOLVED;
 const maxTable=250;
-const counts=arr=>arr.reduce((s,x)=>s+x,0);
 function measure(mask,width,height){
   const four=labelLandComponents(mask,width,height,false);
   const eight=labelLandComponents(mask,width,height,true);
@@ -90,7 +89,7 @@ export function buildSourcePairTopologySensitivity({width,height,classification}
     landCandidatePixels:review.four.components.reduce((s,x)=>s+x.areaPx2,0),
     fourNeighborComponents:review.four.components.length,
     eightNeighborComponents:review.eight.components.length,
-    largestFourNeighborComponentPixels:Math.max(0,...review.four.components.map(x=>x.areaPx2)),
+    largestFourNeighborComponentPixels:review.four.components.reduce((max,x)=>Math.max(max,x.areaPx2),0),
     singletonFourNeighborComponents:review.four.components.filter(x=>x.areaPx2===1).length,
   });
   const output={
