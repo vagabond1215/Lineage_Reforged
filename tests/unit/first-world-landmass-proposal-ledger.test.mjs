@@ -15,9 +15,13 @@ const source = load('packages/content/base/world/world_map_features.json')
 const regions = load('packages/content/base/world/regions.json').records;
 const exclusions = load('docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json').removedSourceFeatureIds;
 const ledgerPath='docs/design/first-world-kaelvar-landmass-reconstruction-ledger-2026-11-13.json';
+// Negative-case tests deliberately mutate inputs. Never hand them references to
+// shared source fixtures or a later test will inherit fabricated source parts.
 const inputs = () => ({
-  ledger:load(ledgerPath),regions,sourceFootprints:source.regionFootprints,
-  approvedExclusionIds:exclusions,
+  ledger:load(ledgerPath),
+  regions:structuredClone(regions),
+  sourceFootprints:structuredClone(source.regionFootprints),
+  approvedExclusionIds:[...exclusions],
 });
 test('Pending Kaelvar ledger preserves parent/child hierarchy, all 18 detached components and no masks',()=>{
   const result=validateLandmassProposalLedger(inputs());
@@ -27,6 +31,28 @@ test('Pending Kaelvar ledger preserves parent/child hierarchy, all 18 detached c
   assert.equal(result.proposedMaskCount,0);
   assert.equal(result.placementApproved,false);
   assert.equal(result.canonicalWritable,false);
+});
+test('Each negative-case fixture is isolated from subsequent inputs',()=>{
+  const first=inputs();
+  const originalCount=source.regionFootprints.length;
+  const originalFirstId=source.regionFootprints[0].id;
+  const originalAuricParent=regions.find(r=>r.id==='region.auric_marches').parentRegionId;
+  first.sourceFootprints.push({id:'feature.fixture_only',regionIds:['region.kaelvar']});
+  first.sourceFootprints[0].id='feature.fixture_overwrite';
+  first.regions.find(r=>r.id==='region.auric_marches').parentRegionId='region.serathyl';
+  first.approvedExclusionIds.push('feature.fixture_unapproved_exclusion');
+  const second=inputs();
+  assert.equal(second.sourceFootprints.length,originalCount);
+  assert.equal(second.sourceFootprints[0].id,originalFirstId);
+  assert.equal(second.regions.find(r=>r.id==='region.auric_marches').parentRegionId,
+    originalAuricParent);
+  assert.equal(second.approvedExclusionIds.length,42);
+  assert.equal(source.regionFootprints.length,originalCount);
+  assert.equal(source.regionFootprints[0].id,originalFirstId);
+  assert.equal(regions.find(r=>r.id==='region.auric_marches').parentRegionId,
+    originalAuricParent);
+  assert.equal(validateLandmassProposalLedger(second).status,
+    'R0_R3_LEDGER_VALID_PLACEMENT_HELD');
 });
 test('Accepted offshore exclusions support either already-clean 159 or historical 201 source without changing the manifest',()=>{
   const clean=inputs();
