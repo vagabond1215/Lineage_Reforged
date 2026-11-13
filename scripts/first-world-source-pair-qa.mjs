@@ -86,10 +86,6 @@ process.stdout.write(JSON.stringify({
   crop,referenceGrid:{width,height},excludedArtifactCount:42,
   retainedFootprints:footprints.length,
   registration:'nearest-source-center using world_maps.json crop',
-  previewValidation:{
-    suppliedHalfResolutionCrop:{x:30,y:30,width:1988,height:1117},
-    applicability:'Preview findings are corroboration only; source PNG hashes and counts are the local acceptance authority.',
-  },
   regionFootprints:rows,
   highestUnresolvedShare:ranking.slice(0,20).map(r=>({
     id:r.id,regionId:r.regionId,footprintCells:r.footprintCells,
