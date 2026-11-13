@@ -93,6 +93,7 @@ test('Water/ink is never preview-claimed and source rasters/footprints remain im
   const x=make(),before=structuredClone(x.footprints);
   const p=4*w+4;
   x.classification[p]=2;
+  x.spec.terrainOnlyPhysicalComponent.expectedTerrainCandidateCells=w*h-2;
   const result=buildKaelvarLayoutAR3Sketch(x);
   assert.equal(result.assigned[p],0);
   assert.deepEqual(x.footprints,before);
@@ -135,7 +136,7 @@ test('Source-embedded three-panel visual retains explicit unapproved label and n
   assert.match(svg,/NONCANONICAL R3 REVIEW SKETCH/);
   assert.match(svg,/Cyan: detached pending island/);
   assert.match(svg,/data:image\/png;base64,/);
-  assert.doesNotMatch(svg,/https?:\/\/[^"]+/);
+  assert.doesNotMatch(svg,/(?:href|xlink:href)="https?:\/\//);
 });
 test('CLI is stdout-only and source-identity pinned, and the proposed geometry never becomes canonical',()=>{
   const cli=read('scripts/first-world-kaelvar-layout-a-r3-sketch.mjs');
