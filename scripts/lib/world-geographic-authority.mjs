@@ -146,7 +146,7 @@ export function validateKaelvarC1ReviewLedger(ledger){
     s?.crop?.x!==60||s?.crop?.y!==60||s?.crop?.width!==3976||
     s?.crop?.height!==2235||
     s?.biomeSha256!=='9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12'||
-    s?.elevationSha256!=='02c3b133f2b3f08aed56f98bde4c846d6e3316c71a02785ec56d')
+    s?.elevationSha256!=='02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d')
     fail('source registration or historical geometry variants changed');
   const ps=ledger.physicalComponents;
   if(!Array.isArray(ps)||ps.length!==19)fail('physical inventory incomplete');

@@ -20,7 +20,7 @@
     "acceptedDraftExclusionCount": 42,
     "coastlines": 68,
     "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
-    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71a02785ec56d",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
     "sourceWidth": 4096,
     "sourceHeight": 2355,
     "crop": {
