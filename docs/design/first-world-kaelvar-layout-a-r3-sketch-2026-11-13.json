@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 1,
+  "type": "first-world-kaelvar-layout-a-r3-sketch.v1",
+  "status": "NONCANONICAL_R3_REVIEW_SKETCH_NOT_PLACEMENT_APPROVAL",
+  "acceptedPlanningHead": "8731864d809bb8a18d6d74f4003b9cc941eb0e00",
+  "parentMacroRegionId": "region.kaelvar",
+  "parentStatus": "CANDIDATE_AWAITING_OWNER_REVIEW",
+  "terrainOnlyPhysicalComponent": {
+    "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+    "componentId": 30,
+    "expectedTerrainCandidateCells": 79419
+  },
+  "sourceIdentity": {
+    "geometryGitBlob": "ec59ed66b7eaee4502dc56709a2f266b17b3cb17",
+    "biomePngSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationPngSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "grid": {
+      "width": 2048,
+      "height": 1152
+    },
+    "crop": {
+      "x": 60,
+      "y": 60,
+      "width": 3976,
+      "height": 2235
+    },
+    "sourceFootprints": 159,
+    "coastlines": 68,
+    "acceptedOffshoreExclusions": 42
+  },
+  "construction": "EXPLICIT_AUTHOR_SKETCH_POLYGON_INTERSECT_ORIGINAL_PROVENANCE_SOURCE_FOOTPRINT_AND_INDEPENDENT_TERRAIN_ONLY_COMPONENT_30; REMOVE_CROSS_REGION_ORIGINAL_SOURCE_CONFLICTS_AND_ONE_CELL_GUARD_BAND; NO_FILL_OR_NEAREST_ANCHOR",
+  "previewRegions": [
+    {
+      "id": "layout-a-auric-west-core-sketch",
+      "regionId": "region.auric_marches",
+      "parentRegionId": "region.kaelvar",
+      "positionLabel": "kaelvar_western_interior",
+      "sourceFeatureIds": [
+        "feature.region_auric_marches.part_4"
+      ],
+      "sourcePartStatus": "SOURCE_ONLY_NOT_BORDER",
+      "sketchPolygon": [
+        {
+          "x": 66,
+          "y": 146
+        },
+        {
+          "x": 230,
+          "y": 146
+        },
+        {
+          "x": 234,
+          "y": 245
+        },
+        {
+          "x": 210,
+          "y": 327
+        },
+        {
+          "x": 95,
+          "y": 352
+        },
+        {
+          "x": 66,
+          "y": 330
+        }
+      ],
+      "rationale": "Conservative western-interior source-aligned sketch; may be revised after steppe, upland and caravan ecology review."
+    },
+    {
+      "id": "layout-a-verdant-south-core-sketch",
+      "regionId": "region.verdant_thalos",
+      "parentRegionId": "region.kaelvar",
+      "positionLabel": "kaelvar_southern_peninsula",
+      "sourceFeatureIds": [
+        "feature.region_verdant_thalos.part_1"
+      ],
+      "sourcePartStatus": "SOURCE_ONLY_NOT_BORDER",
+      "sketchPolygon": [
+        {
+          "x": 202,
+          "y": 313
+        },
+        {
+          "x": 388,
+          "y": 313
+        },
+        {
+          "x": 411,
+          "y": 378
+        },
+        {
+          "x": 404,
+          "y": 451
+        },
+        {
+          "x": 205,
+          "y": 451
+        }
+      ],
+      "rationale": "Conservative southern peninsular source-aligned sketch; not a claim on southeastern Windward or Coast 40."
+    },
+    {
+      "id": "layout-a-shattercap-north-strip-sketch",
+      "regionId": "region.shattercap_isles",
+      "parentRegionId": "region.kaelvar",
+      "positionLabel": "kaelvar_northern_coast",
+      "sourceFeatureIds": [
+        "feature.region_shattercap_isles.part_7"
+      ],
+      "sourcePartStatus": "WHOLE_SOURCE_PART_WITHHELD; PARTIAL_NORTHERN_SKETCH_FOR_REVIEW_ONLY",
+      "sketchPolygon": [
+        {
+          "x": 228,
+          "y": 132
+        },
+        {
+          "x": 532,
+          "y": 132
+        },
+        {
+          "x": 532,
+          "y": 179
+        },
+        {
+          "x": 474,
+          "y": 200
+        },
+        {
+          "x": 392,
+          "y": 199
+        },
+        {
+          "x": 308,
+          "y": 190
+        },
+        {
+          "x": 230,
+          "y": 194
+        }
+      ],
+      "rationale": "Northern section of disputed source Part 7 only. Does not restore its whole-footprint ownership and does not grant island sovereignty."
+    }
+  ],
+  "originalSourceHolds": [
+    {
+      "sourceFeatureId": "feature.region_shattercap_isles.part_1",
+      "disposition": "BLUE_ONLY_684_CELLS_NOT_EXCLUDED_43"
+    },
+    {
+      "sourceFeatureId": "feature.region_shattercap_isles.part_7",
+      "disposition": "WHOLE_SOURCE_PART_WITHHELD; PARTIAL_NORTH_SKETCH_UNAPPROVED"
+    },
+    {
+      "sourceFeatureId": "feature.region_shattercap_isles.part_15",
+      "disposition": "SOUTHEASTERN_SOURCE_FOOTPRINT_WITHHELD"
+    },
+    {
+      "sourceFeatureId": "feature.region_windward_spine.part_1",
+      "disposition": "SERATHYL_CHILD_MISPLACED_SOURCE; NO_KAELVAR_TRANSFER"
+    },
+    {
+      "sourceFeatureId": "feature.region_windward_spine.part_2",
+      "disposition": "COAST40_DISPUTED_PARENT_AND_CHILD"
+    },
+    {
+      "sourceFeatureId": "feature.region_verdant_thalos.part_6",
+      "disposition": "COAST40_DISPUTED_PARENT_AND_CHILD"
+    }
+  ],
+  "detachedTerrainOnlyComponents": "ALL_18_3693_CELLS_RETAINED_AS_UNASSIGNED_PARENT_CHILD_PENDING",
+  "layoutBStatus": "ELIGIBILITY_ONLY_NO_POLYGON_OR_FOURTH_CHILD",
+  "approval": {
+    "parentConfirmed": false,
+    "childBordersApproved": false,
+    "biomeLegendApproved": false,
+    "elevationRampApproved": false,
+    "hydrologyApproved": false,
+    "ownerApprovalRef": null,
+    "canonicalWritable": false
+  },
+  "outputs": "JSON_AGGREGATE_AND_THREE_PANEL_ORIGINAL_SOURCE_SVG_STDOUT_ONLY_NO_FILES_WRITTEN"
+}
