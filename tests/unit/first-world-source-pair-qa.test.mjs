@@ -6,6 +6,8 @@ import {fileURLToPath} from 'node:url';
 import {
   classifySourcePair,sourcePairFootprintRows,sourcePairQaSvg,SourcePairClass,
 } from '../../scripts/lib/first-world-source-pair-qa.mjs';
+import {buildSourcePairTopologySensitivity,summarizeSourcePairPilotFootprints}
+  from '../../scripts/lib/first-world-source-pair-topology.mjs';
 
 const rgb=entries=>Uint8Array.from(entries.flatMap(([r,g,b,a=255])=>[r,g,b,a]));
 const blue=[64,126,255],green=[30,200,80],ink=[0,0,0];
@@ -113,4 +115,87 @@ test('paired source runner only exposes stdout evidence and validates original s
   assert.match(source,/--check/);
   assert.match(source,/--svg-qa/);
   assert.doesNotMatch(source,/writeFileSync|createWriteStream|--write/);
+});
+
+test('ink joins two terrain islands but creates an ink-only component: raw counts alone miss the change',()=>{
+  const classification=Uint8Array.from([
+    1,2,1,0,1,
+    0,0,0,0,0,
+    1,0,2,0,1,
+  ]);
+  const original=Array.from(classification);
+  const sensitivity=buildSourcePairTopologySensitivity({
+    width:5,height:3,classification,
+  });
+  const result=sensitivity.summary;
+  assert.equal(result.terrainOnly.landCandidatePixels,5);
+  assert.equal(result.sharedInkIncluded.landCandidatePixels,7);
+  assert.equal(result.terrainOnly.fourNeighborComponents,5);
+  assert.equal(result.sharedInkIncluded.fourNeighborComponents,5);
+  assert.equal(result.joinedFourNeighborComponentCount,1);
+  assert.equal(result.inkOnlyFourNeighborComponentCount,1);
+  assert.equal(result.joinedFourNeighborComponents[0].terrainOnlyFourComponentCount,2);
+  assert.equal(result.joinedFourNeighborComponents[0].unresolvedPixels,1);
+  assert.equal(result.largestInkOnlyFourNeighborComponents[0].unresolvedPixels,1);
+  assert.equal(result.legacyThresholdReconciliation,
+    'INK_INCLUDED_EQUALS_LEGACY_THRESHOLD_PIXEL_SET');
+  assert.equal(result.sourceWritable,false);
+  assert.deepEqual(Array.from(classification),original);
+});
+
+test('pilot footprint component crosswalk preserves raw pixels and distinguishes stable 4-neighbor IDs',()=>{
+  const classification=Uint8Array.from([
+    1,2,1,0,1,
+    0,0,0,0,0,
+    1,0,2,0,1,
+  ]);
+  const topology=buildSourcePairTopologySensitivity({
+    width:5,height:3,classification,
+  });
+  const footprint=[{id:'feature.region_windward_spine.part_1',
+    points:[{x:0,y:0},{x:3,y:0},{x:3,y:1},{x:0,y:1}]}];
+  const result=summarizeSourcePairPilotFootprints({
+    width:5,height:3,classification,topology,footprints:footprint,
+    selectedIds:['feature.region_windward_spine.part_1'],
+  })[0];
+  assert.equal(result.footprintPixels,3);
+  assert.equal(result.terrainCandidatePixels,2);
+  assert.equal(result.unresolvedSharedInkPixels,1);
+  assert.equal(result.blueCandidatePixels,0);
+  assert.equal(result.terrainOnlyFourComponents.length,2);
+  assert.equal(result.sharedInkIncludedFourComponents.length,1);
+  assert.equal(result.sharedInkIncludedFourComponents[0].pixels,3);
+  assert.equal(result.disposition,'REVIEW_ONLY_NOT_POLITICAL_OWNERSHIP');
+});
+
+test('diagonal-only land contacts remain 4-disconnected even when 8-connected',()=>{
+  const topology=buildSourcePairTopologySensitivity({
+    width:2,height:2,classification:Uint8Array.from([1,0,0,1]),
+  });
+  assert.equal(topology.summary.terrainOnly.fourNeighborComponents,2);
+  assert.equal(topology.summary.terrainOnly.eightNeighborComponents,1);
+  assert.equal(topology.summary.sharedInkIncluded.fourNeighborComponents,2);
+});
+
+test('blue divergence stays in the most permissive scenario and is not silently called terrain',()=>{
+  const topology=buildSourcePairTopologySensitivity({
+    width:3,height:1,classification:Uint8Array.from([1,3,1]),
+  });
+  assert.equal(topology.summary.terrainOnly.fourNeighborComponents,2);
+  assert.equal(topology.summary.sharedInkIncluded.fourNeighborComponents,2);
+  assert.equal(topology.summary.allUnresolvedIncluded.fourNeighborComponents,1);
+  assert.equal(topology.summary.otherUnresolvedPixels,1);
+  assert.match(topology.summary.legacyThresholdReconciliation,/NOT_EQUIVALENT/);
+  assert.throws(()=>buildSourcePairTopologySensitivity({
+    width:1,height:1,classification:Uint8Array.from([255]),
+  }),/Unknown source pair class/);
+});
+
+test('native source-pair topology runner exposes sensitivity diagnostics but no write flag',()=>{
+  const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));
+  const runner=readFileSync(resolve(root,'scripts/first-world-source-pair-qa.mjs'),'utf8');
+  assert.match(runner,/--connectivity/);
+  assert.match(runner,/baselineLegacyReproduced/);
+  assert.match(runner,/summarizeSourcePairPilotFootprints/);
+  assert.doesNotMatch(runner,/writeFileSync|createWriteStream|--write/);
 });
