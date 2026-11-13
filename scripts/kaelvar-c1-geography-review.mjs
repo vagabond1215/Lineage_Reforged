@@ -2,6 +2,8 @@
 /** Read-only C1 geometry intake, original-source crosswalk and SVG evidence. */
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
+import {readPinnedCommittedVectorSource}
+  from './lib/world-source-git-witness.mjs';
 import {resolve} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {validateKaelvarC1ReviewLedger,C1_SOURCE_VARIANTS}
@@ -15,20 +17,20 @@ const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
 const bytes=p=>readFileSync(resolve(root,p));
 const json=p=>JSON.parse(bytes(p).toString('utf8').replace(/^\uFEFF/,''));
 const digest=(buffer,algorithm)=>createHash(algorithm).update(buffer).digest('hex');
-const blobSha=buffer=>createHash('sha1')
-  .update('blob '+buffer.length+'\0').update(buffer).digest('hex');
 const hold=s=>{throw Error('C1 source registration HOLD: '+s);};
 const ledger=json('docs/design/kaelvar-c1-coordinate-geography-review-2026-11-13.json');
 const audit=validateKaelvarC1ReviewLedger(ledger);
 const maps=json('packages/content/base/world/world_maps.json').records;
 const map=maps.find(r=>r.id==='world_map.first_world');
-const sourceBytes=bytes(ledger.sourceWitness.originalGeometryPath);
-const sourceBlob=blobSha(sourceBytes);
+const {sourceBytes,sourceBlob}=readPinnedCommittedVectorSource({
+  repoRoot:root,sourcePath:ledger.sourceWitness.originalGeometryPath,
+  acceptedBlobShas:Object.values(C1_SOURCE_VARIANTS),
+});
 const footprintsExpected=sourceBlob===C1_SOURCE_VARIANTS.master201?201:
   sourceBlob===C1_SOURCE_VARIANTS.draft159?159:null;
 if(footprintsExpected===null)hold('unrecognized original source blob');
-const source=json(ledger.sourceWitness.originalGeometryPath).records
-  .find(r=>r.mapId==='world_map.first_world');
+const source=JSON.parse(sourceBytes.toString('utf8').replace(/^\uFEFF/,''))
+  .records.find(r=>r.mapId==='world_map.first_world');
 if(!map||!source||source.referenceImageWidthPx!==2048||
   source.referenceImageHeightPx!==1152||
   source.regionFootprints?.length!==footprintsExpected||
@@ -74,6 +76,7 @@ const report={
   activeVectorVariant:sourceBlob===C1_SOURCE_VARIANTS.master201?
     'MAINLINE_201_UNFILTERED':'DRAFT_159_EXCLUSIONS_ALREADY_APPLIED',
   activeVectorBlob:sourceBlob,
+  sourceIdentityMode:'PINNED_COMMITTED_GIT_OBJECT_PLUS_CLEAN_WORKTREE',
   sourceFootprints:footprintsExpected,sourceCoastlines:68,
   sourcePngsVerified:true,registeredCrop:rect,
   retainedOriginalSourceIds:heldIds,

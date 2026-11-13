@@ -140,3 +140,41 @@ and draw a five-color original-image comparison. No source-color biome
 assertion, artificial complete coverage, parent transfer, travel path,
 settlement change, save migration or canonical write may occur until
 their later explicit gates.
+
+## Windows native audit correction, 2026-11-13
+
+Owner tested original C1 head `c1624cb07f203aa2015ae92163432fc9bca1b347` under native
+PowerShell 7/Node 24.14.1. **All 28/28 Node tests passed**, candidate
+authoring passed, the frozen dependency gate scanned 835 files and found
+zero additions. The source-intake CLI then stopped at
+`C1 source registration HOLD: unrecognized original source blob` before
+SVG generation. No original geographic data or canonical authority changed.
+
+Cause under investigation was checkout-dependent EOL normalization: a Git
+committed object is immutable, but raw JSON bytes in a Windows working tree
+may carry CRLF rather than the committed blob's LF, while remaining clean
+under Git's standard content filters. GitHub Actions on Linux passed the
+original audit. The original raw-file SHA method was therefore fragile
+across platforms, not proof of changed geographic content.
+
+Corrective behavior in `scripts/lib/world-source-git-witness.mjs`:
+identify the exact file in `HEAD:<path>`, require one of the two frozen source
+blob IDs, require a Git-clean working copy relative to HEAD (including
+staged changes), load *canonical committed bytes* via `git show`, independently
+hash those bytes as a Git object and require the result match the pinned
+blob. Git-aware CRLF checkout conversion no longer causes a false HOLD;
+actual Git-visible source changes still fail. Source provenance and all
+geometry, ownership and no-new-grid hold semantics remain unchanged.
+
+The independent new unit test creates a temporary Git repo with
+`core.autocrlf=true`, rewrites its checked-out fixture to CRLF, verifies
+the committed blob still validates, then rejects a real content edit or
+unknown expected blob. The temporary fixture is outside the project and
+is removed in a `finally` block.
+
+To retest, run the full earlier detached-HEAD PowerShell command with
+the **corrective PR #82 head SHA**, not the failed prior SHA. Include
+`node --test tests/unit/world-source-git-witness.test.mjs`
+in the targeted tests. C1 owner-native approval remains pending that output
+and the visual SVG review. The previous initial failing SHA is preserved
+as historical evidence.

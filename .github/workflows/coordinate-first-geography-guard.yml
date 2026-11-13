@@ -29,6 +29,9 @@ jobs:
         run: node scripts/kaelvar-five-region-candidate-audit.mjs --check
       - name: C1 coordinate registry, whole-component holds and original-source audit
         run: |
+          node --check scripts/lib/world-source-git-witness.mjs
+          node --check tests/unit/world-source-git-witness.test.mjs
+          node --test tests/unit/world-source-git-witness.test.mjs
           node --check scripts/lib/world-geographic-authority.mjs
           node --check scripts/kaelvar-c1-geography-review.mjs
           node --check tests/unit/world-geographic-authority.test.mjs
