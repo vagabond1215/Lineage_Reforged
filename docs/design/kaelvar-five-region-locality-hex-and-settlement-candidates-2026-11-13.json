@@ -1,0 +1,818 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-five-region-locality-hex-candidates.v1",
+  "status": "MAINLINE_DESIGN_ONLY_NOT_ACTIVE_LOCALITY_HEX_OR_SETTLEMENT_CONTENT",
+  "date": "2026-11-13",
+  "parentProfilePath": "docs/design/kaelvar-five-region-candidate-region-records-2026-11-13.json",
+  "localityRecords": [
+    {
+      "id": "region_locality.kharuun_oasis_chain",
+      "slug": "kharuun_oasis_chain",
+      "name": "Kharuun Oasis Chain",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.kharuun_drylands",
+      "localityType": "oasis_chain",
+      "summary": "Groundwater-fed spring settlements, shaded orchards, cistern markets and irrigated gardens form isolated productive nodes in the dry interior.",
+      "habitationScoreModifier": 9,
+      "resourceCatchment": {
+        "arableLand": "moderate",
+        "pasture": "limited",
+        "timber": "scarce",
+        "fishery": "none",
+        "stone": "limited",
+        "ore": "limited",
+        "salt": "limited",
+        "herbs": "moderate",
+        "specialty": "strong"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 1.3,
+        "maxPopulationBand": "large",
+        "strategicSiteWeight": 1.25,
+        "favoredSettlementTypes": [
+          "city",
+          "town",
+          "market_town",
+          "village"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 0.85,
+        "river": 0,
+        "coastal": 0,
+        "caravan": 1.35,
+        "pass": 0.3,
+        "seaLane": 0
+      },
+      "dominantIndustries": [
+        "oasis_irrigation",
+        "date_cultivation",
+        "caravan_trade",
+        "cistern_keeping"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    },
+    {
+      "id": "region_locality.kharuun_salt_basins",
+      "slug": "kharuun_salt_basins",
+      "name": "Kharuun Salt Basins",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.kharuun_drylands",
+      "localityType": "saltpan_basin",
+      "summary": "Seasonal salt pans and mineral flats offer extractive wealth, but most sites need water and food hauled from settled springs.",
+      "habitationScoreModifier": -12,
+      "resourceCatchment": {
+        "arableLand": "none",
+        "pasture": "none",
+        "timber": "none",
+        "fishery": "none",
+        "stone": "strong",
+        "ore": "moderate",
+        "salt": "strong",
+        "herbs": "scarce",
+        "specialty": "moderate"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 0.52,
+        "maxPopulationBand": "modest",
+        "strategicSiteWeight": 1.05,
+        "favoredSettlementTypes": [
+          "outpost",
+          "camp",
+          "fort",
+          "waystation"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 0.35,
+        "river": 0,
+        "coastal": 0,
+        "caravan": 0.75,
+        "pass": 0.2,
+        "seaLane": 0
+      },
+      "dominantIndustries": [
+        "salt_harvest",
+        "salt_trade",
+        "mineral_survey",
+        "caravan_resupply"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    },
+    {
+      "id": "region_locality.kharuun_escarpment_steps",
+      "slug": "kharuun_escarpment_steps",
+      "name": "Kharuun Escarpment Steps",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.kharuun_drylands",
+      "localityType": "high_desert_escarpment",
+      "summary": "Broken mesas, cool upland shelters and narrow pass roads host quarry terraces and caravan protection posts.",
+      "habitationScoreModifier": -5,
+      "resourceCatchment": {
+        "arableLand": "scarce",
+        "pasture": "limited",
+        "timber": "scarce",
+        "fishery": "none",
+        "stone": "strong",
+        "ore": "strong",
+        "salt": "limited",
+        "herbs": "limited",
+        "specialty": "moderate"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 0.72,
+        "maxPopulationBand": "modest",
+        "strategicSiteWeight": 1.3,
+        "favoredSettlementTypes": [
+          "town",
+          "fort",
+          "outpost",
+          "camp"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 0.65,
+        "river": 0,
+        "coastal": 0,
+        "caravan": 0.85,
+        "pass": 1.2,
+        "seaLane": 0
+      },
+      "dominantIndustries": [
+        "quarrying",
+        "mining",
+        "pass_control",
+        "stonework"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    },
+    {
+      "id": "region_locality.kharuun_wadi_fans",
+      "slug": "kharuun_wadi_fans",
+      "name": "Kharuun Wadi Fans",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.kharuun_drylands",
+      "localityType": "seasonal_wadi",
+      "summary": "Intermittent flood channels replenish small garden strips but interrupt crossings with dangerous sudden spates.",
+      "habitationScoreModifier": -3,
+      "resourceCatchment": {
+        "arableLand": "limited",
+        "pasture": "limited",
+        "timber": "scarce",
+        "fishery": "none",
+        "stone": "moderate",
+        "ore": "limited",
+        "salt": "limited",
+        "herbs": "moderate",
+        "specialty": "moderate"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 0.85,
+        "maxPopulationBand": "modest",
+        "strategicSiteWeight": 1.1,
+        "favoredSettlementTypes": [
+          "village",
+          "outpost",
+          "waystation"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 0.65,
+        "river": 0.2,
+        "coastal": 0,
+        "caravan": 1.15,
+        "pass": 0.45,
+        "seaLane": 0
+      },
+      "dominantIndustries": [
+        "floodplain_gardening",
+        "pack_haulage",
+        "water_management"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    },
+    {
+      "id": "region_locality.veyrholm_sheltered_inlets",
+      "slug": "veyrholm_sheltered_inlets",
+      "name": "Veyrholm Sheltered Inlets",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.veyrholm_shore",
+      "localityType": "mainland_harbor_inlet",
+      "summary": "Protected northern bays and short estuary mouths concentrate fish markets, ship repair and storm-safe maritime warehouses.",
+      "habitationScoreModifier": 8,
+      "resourceCatchment": {
+        "arableLand": "limited",
+        "pasture": "limited",
+        "timber": "moderate",
+        "fishery": "strong",
+        "stone": "moderate",
+        "ore": "none",
+        "salt": "moderate",
+        "herbs": "limited",
+        "specialty": "strong"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 1.28,
+        "maxPopulationBand": "major",
+        "strategicSiteWeight": 1.3,
+        "favoredSettlementTypes": [
+          "city",
+          "harbor_town",
+          "port_city",
+          "town"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 1,
+        "river": 0.3,
+        "coastal": 1.4,
+        "caravan": 0.95,
+        "pass": 0.3,
+        "seaLane": 1.35
+      },
+      "dominantIndustries": [
+        "fishing",
+        "ship_support",
+        "maritime_trade",
+        "salt_curing"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    },
+    {
+      "id": "region_locality.veyrholm_firshore_ridges",
+      "slug": "veyrholm_firshore_ridges",
+      "name": "Veyrholm Firshore Ridges",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.veyrholm_shore",
+      "localityType": "coastal_conifer_ridges",
+      "summary": "Wind-bent fir uplands yield timber, pitch and resin, with pack trails descending toward sheltered mainland ports.",
+      "habitationScoreModifier": -2,
+      "resourceCatchment": {
+        "arableLand": "limited",
+        "pasture": "moderate",
+        "timber": "strong",
+        "fishery": "none",
+        "stone": "moderate",
+        "ore": "limited",
+        "salt": "none",
+        "herbs": "moderate",
+        "specialty": "moderate"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 0.83,
+        "maxPopulationBand": "modest",
+        "strategicSiteWeight": 1.06,
+        "favoredSettlementTypes": [
+          "town",
+          "village",
+          "camp"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 0.85,
+        "river": 0,
+        "coastal": 0.25,
+        "caravan": 1,
+        "pass": 0.8,
+        "seaLane": 0.15
+      },
+      "dominantIndustries": [
+        "timber_trade",
+        "resin_work",
+        "woodcraft",
+        "charcoal_burning"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    },
+    {
+      "id": "region_locality.veyrholm_tidal_marshes",
+      "slug": "veyrholm_tidal_marshes",
+      "name": "Veyrholm Tidal Marshes",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.veyrholm_shore",
+      "localityType": "tidal_estuary",
+      "summary": "Brackish marsh margins and tidal channels support shellfish harvest, reed work and carefully sited ferry villages.",
+      "habitationScoreModifier": 0,
+      "resourceCatchment": {
+        "arableLand": "limited",
+        "pasture": "moderate",
+        "timber": "limited",
+        "fishery": "strong",
+        "stone": "limited",
+        "ore": "none",
+        "salt": "strong",
+        "herbs": "moderate",
+        "specialty": "moderate"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 0.9,
+        "maxPopulationBand": "modest",
+        "strategicSiteWeight": 1.15,
+        "favoredSettlementTypes": [
+          "village",
+          "harbor_town",
+          "outpost"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 0.6,
+        "river": 0.65,
+        "coastal": 1.2,
+        "caravan": 0.75,
+        "pass": 0.2,
+        "seaLane": 1.1
+      },
+      "dominantIndustries": [
+        "shellfish_harvest",
+        "salt_curing",
+        "ferry_services",
+        "marsh_grazing"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    },
+    {
+      "id": "region_locality.veyrholm_outer_capes",
+      "slug": "veyrholm_outer_capes",
+      "name": "Veyrholm Outer Capes",
+      "macroRegionId": "region.kaelvar",
+      "regionId": "region.veyrholm_shore",
+      "localityType": "exposed_headlands",
+      "summary": "Storm-cut outer capes carry watchholds, quarries and warning beacons; exposed cliffs rarely support dense farms.",
+      "habitationScoreModifier": -7,
+      "resourceCatchment": {
+        "arableLand": "none",
+        "pasture": "limited",
+        "timber": "scarce",
+        "fishery": "moderate",
+        "stone": "strong",
+        "ore": "limited",
+        "salt": "limited",
+        "herbs": "scarce",
+        "specialty": "limited"
+      },
+      "settlementSuitability": {
+        "settlementWeight": 0.52,
+        "maxPopulationBand": "small",
+        "strategicSiteWeight": 1.15,
+        "favoredSettlementTypes": [
+          "fort",
+          "outpost",
+          "watchpost"
+        ]
+      },
+      "routeAccessModifier": {
+        "road": 0.65,
+        "river": 0,
+        "coastal": 1,
+        "caravan": 0.6,
+        "pass": 0.6,
+        "seaLane": 1.05
+      },
+      "dominantIndustries": [
+        "sea_watch",
+        "quarrying",
+        "coastal_defense"
+      ],
+      "supportedSiteClasses": [
+        "surface"
+      ]
+    }
+  ],
+  "worldHexCandidateRecords": [
+    {
+      "id": "world_hex.kharuun_oasis_chain",
+      "slug": "kharuun_oasis_chain",
+      "regionId": "region.kharuun_drylands",
+      "localityBandId": "region_locality.kharuun_oasis_chain",
+      "biomeFamily": "dry_scrub",
+      "elevationBand": "lowland",
+      "terrainType": "oasis_chain",
+      "freshwaterType": "stream",
+      "habitabilityScore": 67,
+      "frictionByMode": {
+        "foot": 1.05,
+        "horseback": 1.1,
+        "pack_animal": 1.05,
+        "wagon": 1.3,
+        "river_craft": 4,
+        "sea_vessel": 4
+      },
+      "barrierTags": [
+        "pass_country"
+      ],
+      "hazardTags": [
+        "weather_risk",
+        "bandit_risk"
+      ],
+      "resourceAffinityTags": [
+        "herbs",
+        "vegetables",
+        "caravan_trade",
+        "water_security"
+      ],
+      "anchoredSettlementIds": []
+    },
+    {
+      "id": "world_hex.kharuun_salt_basins",
+      "slug": "kharuun_salt_basins",
+      "regionId": "region.kharuun_drylands",
+      "localityBandId": "region_locality.kharuun_salt_basins",
+      "biomeFamily": "dry_scrub",
+      "elevationBand": "lowland",
+      "terrainType": "saltpan_basin",
+      "freshwaterType": "none",
+      "habitabilityScore": 22,
+      "frictionByMode": {
+        "foot": 1.65,
+        "horseback": 1.5,
+        "pack_animal": 1.35,
+        "wagon": 2.3,
+        "river_craft": 4,
+        "sea_vessel": 4
+      },
+      "barrierTags": [],
+      "hazardTags": [
+        "weather_risk",
+        "wildlife_risk"
+      ],
+      "resourceAffinityTags": [
+        "salt",
+        "stone",
+        "salt_harvest",
+        "caravan_support"
+      ],
+      "anchoredSettlementIds": []
+    },
+    {
+      "id": "world_hex.kharuun_escarpment_steps",
+      "slug": "kharuun_escarpment_steps",
+      "regionId": "region.kharuun_drylands",
+      "localityBandId": "region_locality.kharuun_escarpment_steps",
+      "biomeFamily": "dry_steppe",
+      "elevationBand": "highland",
+      "terrainType": "high_desert_escarpment",
+      "freshwaterType": "none",
+      "habitabilityScore": 37,
+      "frictionByMode": {
+        "foot": 1.5,
+        "horseback": 1.7,
+        "pack_animal": 1.45,
+        "wagon": 2.4,
+        "river_craft": 4,
+        "sea_vessel": 4
+      },
+      "barrierTags": [
+        "cliff",
+        "pass_country"
+      ],
+      "hazardTags": [
+        "rockfall",
+        "weather_risk"
+      ],
+      "resourceAffinityTags": [
+        "ore",
+        "stone",
+        "mining",
+        "pass_control"
+      ],
+      "anchoredSettlementIds": []
+    },
+    {
+      "id": "world_hex.kharuun_wadi_fans",
+      "slug": "kharuun_wadi_fans",
+      "regionId": "region.kharuun_drylands",
+      "localityBandId": "region_locality.kharuun_wadi_fans",
+      "biomeFamily": "dry_scrub",
+      "elevationBand": "upland",
+      "terrainType": "seasonal_wadi",
+      "freshwaterType": "stream",
+      "habitabilityScore": 49,
+      "frictionByMode": {
+        "foot": 1.4,
+        "horseback": 1.45,
+        "pack_animal": 1.3,
+        "wagon": 1.8,
+        "river_craft": 4,
+        "sea_vessel": 4
+      },
+      "barrierTags": [
+        "river_crossing"
+      ],
+      "hazardTags": [
+        "weather_risk",
+        "bandit_risk"
+      ],
+      "resourceAffinityTags": [
+        "herbs",
+        "clay",
+        "caravan_trade",
+        "water_security"
+      ],
+      "anchoredSettlementIds": []
+    },
+    {
+      "id": "world_hex.veyrholm_sheltered_inlets",
+      "slug": "veyrholm_sheltered_inlets",
+      "regionId": "region.veyrholm_shore",
+      "localityBandId": "region_locality.veyrholm_sheltered_inlets",
+      "biomeFamily": "cliff_coast",
+      "elevationBand": "lowland",
+      "terrainType": "mainland_harbor_inlet",
+      "freshwaterType": "coast",
+      "habitabilityScore": 73,
+      "frictionByMode": {
+        "foot": 1.05,
+        "horseback": 1.1,
+        "pack_animal": 1.1,
+        "wagon": 1.2,
+        "river_craft": 1.5,
+        "sea_vessel": 0.85
+      },
+      "barrierTags": [
+        "coastal_access"
+      ],
+      "hazardTags": [
+        "weather_risk"
+      ],
+      "resourceAffinityTags": [
+        "fish",
+        "salt",
+        "shipbuilding",
+        "coastal_trade"
+      ],
+      "anchoredSettlementIds": []
+    },
+    {
+      "id": "world_hex.veyrholm_firshore_ridges",
+      "slug": "veyrholm_firshore_ridges",
+      "regionId": "region.veyrholm_shore",
+      "localityBandId": "region_locality.veyrholm_firshore_ridges",
+      "biomeFamily": "taiga",
+      "elevationBand": "upland",
+      "terrainType": "coastal_conifer_ridges",
+      "freshwaterType": "stream",
+      "habitabilityScore": 58,
+      "frictionByMode": {
+        "foot": 1.2,
+        "horseback": 1.35,
+        "pack_animal": 1.2,
+        "wagon": 1.6,
+        "river_craft": 4,
+        "sea_vessel": 4
+      },
+      "barrierTags": [
+        "pass_country"
+      ],
+      "hazardTags": [
+        "wildlife_risk",
+        "weather_risk"
+      ],
+      "resourceAffinityTags": [
+        "timber",
+        "resin",
+        "stone",
+        "timber_trade"
+      ],
+      "anchoredSettlementIds": []
+    },
+    {
+      "id": "world_hex.veyrholm_tidal_marshes",
+      "slug": "veyrholm_tidal_marshes",
+      "regionId": "region.veyrholm_shore",
+      "localityBandId": "region_locality.veyrholm_tidal_marshes",
+      "biomeFamily": "chaparral_coast",
+      "elevationBand": "lowland",
+      "terrainType": "tidal_estuary",
+      "freshwaterType": "marsh",
+      "habitabilityScore": 60,
+      "frictionByMode": {
+        "foot": 1.35,
+        "horseback": 1.5,
+        "pack_animal": 1.3,
+        "wagon": 2.1,
+        "river_craft": 1.4,
+        "sea_vessel": 1.1
+      },
+      "barrierTags": [
+        "marsh",
+        "river_crossing",
+        "coastal_access"
+      ],
+      "hazardTags": [
+        "weather_risk"
+      ],
+      "resourceAffinityTags": [
+        "fish",
+        "salt",
+        "shellfish",
+        "fishing"
+      ],
+      "anchoredSettlementIds": []
+    },
+    {
+      "id": "world_hex.veyrholm_outer_capes",
+      "slug": "veyrholm_outer_capes",
+      "regionId": "region.veyrholm_shore",
+      "localityBandId": "region_locality.veyrholm_outer_capes",
+      "biomeFamily": "cliff_coast",
+      "elevationBand": "highland",
+      "terrainType": "exposed_headlands",
+      "freshwaterType": "coast",
+      "habitabilityScore": 41,
+      "frictionByMode": {
+        "foot": 1.35,
+        "horseback": 1.6,
+        "pack_animal": 1.4,
+        "wagon": 2.2,
+        "river_craft": 4,
+        "sea_vessel": 1.3
+      },
+      "barrierTags": [
+        "cliff",
+        "coastal_access"
+      ],
+      "hazardTags": [
+        "rockfall",
+        "weather_risk"
+      ],
+      "resourceAffinityTags": [
+        "stone",
+        "sea_watch",
+        "coastal_security"
+      ],
+      "anchoredSettlementIds": []
+    }
+  ],
+  "settlementConcepts": [
+    {
+      "candidateId": "settlement_concept.azharin_wells",
+      "suggestedName": "Azharin Wells",
+      "regionId": "region.kharuun_drylands",
+      "localityId": "region_locality.kharuun_oasis_chain",
+      "settlementRole": "oasis_trade_center",
+      "settlementType": "town",
+      "populationBand": "modest",
+      "waterRequirement": "perennial_spring_and_cisterns",
+      "craftingServices": [
+        "wellwright",
+        "potter",
+        "saddler",
+        "herbalist"
+      ],
+      "routeDependency": "two_audited_caravan_well_chains",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    },
+    {
+      "candidateId": "settlement_concept.tirash_saltworks",
+      "suggestedName": "Tirash Saltworks",
+      "regionId": "region.kharuun_drylands",
+      "localityId": "region_locality.kharuun_salt_basins",
+      "settlementRole": "seasonal_salt_extraction",
+      "settlementType": "outpost",
+      "populationBand": "small",
+      "waterRequirement": "imported_water_and_supplies",
+      "craftingServices": [
+        "salt_refiner",
+        "quarry_worker",
+        "caravan_trader"
+      ],
+      "routeDependency": "protected_well_linked_freight",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    },
+    {
+      "candidateId": "settlement_concept.kethra_terraces",
+      "suggestedName": "Kethra Terraces",
+      "regionId": "region.kharuun_drylands",
+      "localityId": "region_locality.kharuun_escarpment_steps",
+      "settlementRole": "high_desert_mine_pass",
+      "settlementType": "town",
+      "populationBand": "modest",
+      "waterRequirement": "protected_upland_cistern",
+      "craftingServices": [
+        "quarry_mason",
+        "ore_surveyor",
+        "pass_guide"
+      ],
+      "routeDependency": "confirmed_escarpment_pass",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    },
+    {
+      "candidateId": "settlement_concept.rillwash_post",
+      "suggestedName": "Rillwash Post",
+      "regionId": "region.kharuun_drylands",
+      "localityId": "region_locality.kharuun_wadi_fans",
+      "settlementRole": "wadi_crossing_watch",
+      "settlementType": "outpost",
+      "populationBand": "small",
+      "waterRequirement": "audited_seasonal_water_storage",
+      "craftingServices": [
+        "cartwright",
+        "waterwarden"
+      ],
+      "routeDependency": "flash_flood_safe_detour",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    },
+    {
+      "candidateId": "settlement_concept.cairnport",
+      "suggestedName": "Cairnport",
+      "regionId": "region.veyrholm_shore",
+      "localityId": "region_locality.veyrholm_sheltered_inlets",
+      "settlementRole": "mainland_harbor",
+      "settlementType": "town",
+      "populationBand": "large",
+      "waterRequirement": "perennial_stream_above_tidal_reach",
+      "craftingServices": [
+        "shipwright",
+        "cooper",
+        "fish_smoker"
+      ],
+      "routeDependency": "sheltered_harbor_and_inland_road",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    },
+    {
+      "candidateId": "settlement_concept.firshore_crossing",
+      "suggestedName": "Firshore Crossing",
+      "regionId": "region.veyrholm_shore",
+      "localityId": "region_locality.veyrholm_firshore_ridges",
+      "settlementRole": "timber_ridge_market",
+      "settlementType": "village",
+      "populationBand": "modest",
+      "waterRequirement": "protected_upland_stream",
+      "craftingServices": [
+        "pitch_maker",
+        "carpenter",
+        "sawmiller"
+      ],
+      "routeDependency": "pack_route_to_mainland_inlet",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    },
+    {
+      "candidateId": "settlement_concept.eldmere_ferry",
+      "suggestedName": "Eldmere Ferry",
+      "regionId": "region.veyrholm_shore",
+      "localityId": "region_locality.veyrholm_tidal_marshes",
+      "settlementRole": "tidal_estuary_ferry",
+      "settlementType": "village",
+      "populationBand": "modest",
+      "waterRequirement": "freshwater_above_brackish_reach",
+      "craftingServices": [
+        "net_mender",
+        "ferryman",
+        "reed_worker"
+      ],
+      "routeDependency": "charted_tidal_ferry",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    },
+    {
+      "candidateId": "settlement_concept.cairnflare_watch",
+      "suggestedName": "Cairnflare Watch",
+      "regionId": "region.veyrholm_shore",
+      "localityId": "region_locality.veyrholm_outer_capes",
+      "settlementRole": "exposed_headland_watchhold",
+      "settlementType": "outpost",
+      "populationBand": "small",
+      "waterRequirement": "rain_cistern_or_inland_supply",
+      "craftingServices": [
+        "beacon_keeper",
+        "stonemason"
+      ],
+      "routeDependency": "ridge_resupply_track",
+      "spatialStatus": "UNPLACED_NO_PIXEL",
+      "canonicalSettlementId": null
+    }
+  ],
+  "semanticNotes": [
+    "Locality records carry the same field set as active world.region_localities; four candidate bands per new region vs two per existing Kaelvar child.",
+    "Hex records carry the same field set as active world.world_hexes but are not spatial raster-hex placements; biomeFamily is nearest existing catalog term, not an approved RGB legend.",
+    "World-hex settlement anchors remain empty; settlement names and crafts are proposals, without coordinates, route lengths, edge IDs or economy links.",
+    "No generated named site, settlement, hex edge or travel lane should be published until the new regions have approved geographical placement."
+  ],
+  "approval": {
+    "parentAndChildMasksApproved": false,
+    "sourceBiomeLegendApproved": false,
+    "settlementCoordinatesApproved": false,
+    "travelConnectivityApproved": false,
+    "canonicalWritable": false
+  }
+}
