@@ -5,6 +5,8 @@
  * node scripts/first-world-source-pair-qa.mjs --check > source-pair-qa.json
  * node scripts/first-world-source-pair-qa.mjs --svg-qa > source-pair-qa.svg
  * node scripts/first-world-source-pair-qa.mjs --connectivity > source-pair-connectivity.json
+ * node scripts/first-world-source-pair-qa.mjs --coast10-review > coast10-ecology.json
+ * node scripts/first-world-source-pair-qa.mjs --svg-coast10 > coast10-source-ecology.svg
  */
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
@@ -17,10 +19,12 @@ import {classifySourcePair,sourcePairFootprintRows,sourcePairQaSvg}
   from './lib/first-world-source-pair-qa.mjs';
 import {buildSourcePairTopologySensitivity,summarizeSourcePairPilotFootprints}
   from './lib/first-world-source-pair-topology.mjs';
+import {coast10ReviewBounds,buildCoast10EnvironmentReview,coast10ReviewSvg}
+  from './lib/first-world-coast10-ecology-review.mjs';
 
 const args=process.argv.slice(2);
-if(args.length!==1 || !['--check','--svg-qa','--connectivity'].includes(args[0])){
-  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa|--connectivity');
+if(args.length!==1 || !['--check','--svg-qa','--connectivity','--coast10-review','--svg-coast10'].includes(args[0])){
+  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa|--connectivity|--coast10-review|--svg-coast10');
   process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -78,6 +82,42 @@ const suspectKeys=[
 ];
 for(const id of suspectKeys)
   if(!rows.some(r=>r.id===id))throw Error('Missing Coast 10/40 candidate: '+id);
+if(args[0]==='--coast10-review'||args[0]==='--svg-coast10'){
+  const focusId='feature.region_windward_spine.part_1';
+  const focus=footprints.find(p=>p.id===focusId);
+  if(!focus)throw Error('Coast 10 focus source polygon missing');
+  const roi=coast10ReviewBounds(focus.points,width,height,38);
+  const topology=buildSourcePairTopologySensitivity({
+    width,height,classification:pair.classification,
+  });
+  const focusTopology=summarizeSourcePairPilotFootprints({
+    width,height,classification:pair.classification,topology,footprints,
+    selectedIds:[focusId],
+  })[0];
+  if(args[0]==='--svg-coast10'){
+    const preview=coast10ReviewSvg({
+      width,height,roi,classification:pair.classification,
+      biomeRgba,elevationRgba,footprints,regions,
+      coastlines:features.coastlines,focusId,
+      terrainFourLabels:topology.grids.terrainOnly.four.labels,
+    });
+    process.stdout.write(preview.svg);
+  }else {
+    const environment=buildCoast10EnvironmentReview({
+      width,height,classification:pair.classification,
+      biomeRgba,elevationRgba,roi,footprints,regions,focusId,
+    });
+    process.stdout.write(JSON.stringify({
+      ...environment,sourceIdentity,sourceImages:metadata,
+      focusTopology,componentIdentityWarning:
+        'Terrain-only IDs and shared-ink-inclusive IDs are different scenario namespaces.',
+      status:'REVIEW_ONLY_SOURCE_ECOLOGY_PALETTE_AND_ELEVATION_UNCALIBRATED',
+      nextGate:'Inspect original biome and elevation colors and shared river ink at Coast 10 before choosing Kaelvar child boundaries.',
+      sourceGeometryWritable:false,
+    },null,2)+'\n');
+  }
+  process.exit(0);
+}
 if(args[0]==='--connectivity'){
   const topology=buildSourcePairTopologySensitivity({
     width,height,classification:pair.classification,
