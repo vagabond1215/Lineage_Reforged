@@ -4,7 +4,6 @@
   "status": "MAINLINE_DESIGN_ONLY_NO_ACTIVE_SPAWNS_ROUTES_OR_CANONICAL_MASKS",
   "date": "2026-11-13",
   "regionRecordPath": "docs/design/kaelvar-five-region-candidate-region-records-2026-11-13.json",
-  "localityAndHexPath": "docs/design/kaelvar-five-region-locality-hex-and-settlement-candidates-2026-11-13.json",
   "sourceReviewOnly": true,
   "profiles": [
     {
@@ -502,12 +501,13 @@
   "publicationHolds": {
     "canonicalRegionCatalogUnchanged": true,
     "canonicalMapSourceUnchanged": true,
-    "canonicalWorldHexesUnchanged": true,
     "canonicalRoutesUnchanged": true,
     "canonicalSettlementsUnchanged": true,
     "ecologicalRgbLegendUnapproved": true,
     "northeastLargeIslandIndivisible": true,
     "shattercapDetachedComponentSovereigntyPending": true,
-    "ownerApprovalRef": null
-  }
+    "ownerApprovalRef": null,
+    "legacyTravelTopologyPreserved": true
+  },
+  "localityAndEnvironmentPath": "docs/design/kaelvar-five-region-locality-environment-and-settlement-candidates-2026-11-13.json"
 }
