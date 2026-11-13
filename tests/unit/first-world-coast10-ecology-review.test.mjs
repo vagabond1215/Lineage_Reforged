@@ -120,6 +120,8 @@ test('new CLI is entirely read only, and requires audited source pair',()=>{
   const runner=readFileSync(resolve(root,'scripts/first-world-source-pair-qa.mjs'),'utf8');
   assert.match(runner,/--coast10-review/);
   assert.match(runner,/--svg-coast10/);
+  assert.match(runner,/neighboringSourceTopologies/);
+  assert.match(runner,/FULL_CANONICAL_FOOTPRINT_NOT_ONLY_REVIEW_CROP/);
   assert.match(runner,/buildSourcePairTopologySensitivity/);
   assert.match(runner,/verifyAuditedTextBlob/);
   assert.doesNotMatch(runner,/writeFileSync|createWriteStream|--write/);
