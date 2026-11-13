@@ -10,11 +10,10 @@ const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));
 const read=path=>JSON.parse(readFileSync(resolve(root,path),'utf8').replace(/^\uFEFF/,''));
 const source={
   regionPack:read('docs/design/kaelvar-five-region-candidate-region-records-2026-11-13.json'),
-  localityPack:read('docs/design/kaelvar-five-region-locality-hex-and-settlement-candidates-2026-11-13.json'),
+  localityPack:read('docs/design/kaelvar-five-region-locality-environment-and-settlement-candidates-2026-11-13.json'),
   ecologyPack:read('docs/design/kaelvar-five-region-ecology-and-generation-candidates-2026-11-13.json'),
   activeRegions:read('packages/content/base/world/regions.json').records,
   activeLocalities:read('packages/content/base/world/region_localities.json').records,
-  activeWorldHexes:read('packages/content/base/world/world_hexes.json').records,
   activeSettlements:read('packages/content/base/world/settlements.json').records,
 };
 const audit=()=>validateKaelvarFiveRegionCandidates(structuredClone(source));
@@ -29,7 +28,7 @@ test('Two proposed regions exceed existing catalog field completeness without ac
   assert.equal(result.status,'FIVE_REGION_AUTHORING_COMPLETE_CANONICAL_HELD');
   assert.equal(result.newRegionCount,2);
   assert.equal(result.newLocalityCount,8);
-  assert.equal(result.candidateHexCount,8);
+  assert.equal(result.candidateEnvironmentZoneCount,8);
   assert.equal(result.unplacedSettlementConceptCount,8);
   assert.equal(result.ecologicalHabitatCount,8);
   assert.equal(result.canonicalWritable,false);
@@ -61,10 +60,12 @@ test('Names cannot silently duplicate active world regions or other settlements'
   assert.throws(bad(x=>{x.regionPack.newRegionRecords[0].name='The Auric Marches';}),/name collision/);
   assert.throws(bad(x=>{x.localityPack.settlementConcepts[0].suggestedName='Aurelis';}),/name collision/);
 });
-test('Eight localities and hexes retain region, locality and unanchored semantics',()=>{
+test('Eight localities and candidate environment zones retain place identity but have no approved geometry',()=>{
   assert.throws(bad(x=>{x.localityPack.localityRecords[0].regionId='region.valtherion';}),/locality fields or parent/);
-  assert.throws(bad(x=>{x.localityPack.worldHexCandidateRecords[0].localityBandId='region_locality.auric_marches_ore_ridges';}),/world hex/);
-  assert.throws(bad(x=>{x.localityPack.worldHexCandidateRecords[0].anchoredSettlementIds.push('settlement.aurelis');}),/world hex/);
+  assert.throws(bad(x=>{x.localityPack.environmentZoneCandidateRecords[0].regionLocalityId='region_locality.auric_marches_ore_ridges';}),/environment zone/);
+  assert.throws(bad(x=>{x.localityPack.environmentZoneCandidateRecords[0].geometryRef='geometry.unreviewed';}),/environment zone/);
+  assert.throws(bad(x=>{x.localityPack.environmentZoneCandidateRecords[0].associatedPhysicalComponentIds.push(24);}),/environment zone/);
+  assert.throws(bad(x=>{x.localityPack.environmentZoneCandidateRecords[0].arbitraryRegionArea=true;}),/environment zone/);
 });
 test('No settlement can acquire coordinates, canonical identity or a different parent',()=>{
   assert.throws(bad(x=>{x.localityPack.settlementConcepts[0].spatialStatus='PLACED';}),/settlement concept/);
@@ -90,7 +91,7 @@ test('Large northeast island, existing Shattercap islands and canonical-publishi
   assert.throws(bad(x=>{x.localityPack.approval.canonicalWritable=true;}),/premature world publication/);
   assert.throws(bad(x=>{x.ecologyPack.publicationHolds.ownerApprovalRef='fake';}),/premature world publication/);
 });
-test('CLI cannot write canonical region/hex/settlement or route content',()=>{
+test('CLI cannot write canonical region, locality, settlement or route content',()=>{
   const cli=readFileSync(resolve(root,'scripts/kaelvar-five-region-candidate-audit.mjs'),'utf8');
   assert.match(cli,/--check/);
   assert.doesNotMatch(cli,/writeFileSync|appendFileSync|renameSync|unlinkSync|execSync|spawnSync/);
