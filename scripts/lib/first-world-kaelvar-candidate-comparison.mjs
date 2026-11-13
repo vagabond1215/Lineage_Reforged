@@ -128,6 +128,7 @@ export function buildKaelvarCandidateComparison(input){
   const authoredExpectations=[A,V,S,W].map(id=>{
     const r=regionById.get(id);
     return {regionId:id,positionLabel:r.positionLabel??null,
+      sampleScope:id===W?'WINDWARD_PARTS_1_AND_2_ONLY':'ALL_RETAINED_AUTHORED_REGION_FOOTPRINTS',
       authoredBiomeExpectation:r.environmentProfile?.dominantBiomeMix??[],
       authoredElevationExpectation:r.environmentProfile?.elevationProfile??null,
       observedSourceRaster:histogramSummary(regionPixels.get(id),biomeRgba,elevationRgba),
