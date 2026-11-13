@@ -207,3 +207,63 @@ hairlines and omits the broad white selection border. Re-generate the SVG
 after fetching the latest draft commit; do not use the earlier white-filled
 preview as proof of source terrain or polygon overlap. The exact component
 ownership matrix remains the required next evidence gate.
+
+## Owner-reported exact native component intersection witness (2026-11-12)
+
+The owner ran the newer per-component evidence report with the original
+`First World Biome.png` and the verified source geometry. The figures below
+are **reference-grid land pixels**, not coordinates, px² or square kilometers.
+These are observations of existing source polygons, not an authorized
+political transfer.
+
+| 4-neighbor component | Land | Footprint-covered union | Unclaimed land | Direct cross-macro overlapping cells |
+| --- | ---: | ---: | ---: | ---: |
+| 25, Kaelvar mainland | 86,417 | 85,055 | 1,362 | **0** |
+| 91, separate Coast 40 island | 229 | 207 | 22 | **0** |
+
+**Component 25 current source assignments (exact per-component raster cells):**
+
+- `feature.region_auric_marches.part_4`: Kaelvar, 26,271
+- `feature.region_shattercap_isles.part_7`: Kaelvar, 25,342
+- `feature.region_verdant_thalos.part_1`: Kaelvar, 24,740
+- `feature.region_shattercap_isles.part_15`: Kaelvar, 4,464
+- `feature.region_windward_spine.part_1`: Serathyl, **4,326**
+
+The feature-cell totals sum to **85,143**, 88 higher than the
+**85,055 unique covered cells**. This is multiple-coverage accounting
+within the current continental labels. The source report records
+`directCrossMacroOverlapLandPixels=0`; examine
+`directSameMacroChildOverlapLandPixels` and
+`anyChildOverlapLandPixels` before treating the 88 as a particular
+pair or number of overlapping cells.
+
+**Component 91 current source assignments:**
+
+- `feature.region_windward_spine.part_2`: Serathyl, **110**
+- `feature.region_verdant_thalos.part_6`: Kaelvar, **97**
+- Exactly **22** currently unclaimed raster-land cells; **0**
+  direct cross-macro overlapping cells.
+
+**Decision classification:**
+
+1. **Coast 10 / component 25:** the previously confirmed geographic
+   Serathyl intrusion is now independently shown to share the large
+   Kaelvar mainland's native 4-neighbor physical component. Prepare
+   the 4,326-pixel Windward Part 1 for *proposed* Kaelvar macro
+   reassignment, but hold exact recipient child-region split between
+   Auric Marches / Verdant Thalos / Shattercap Isles pending geographic
+   evidence and explicit owner approval. Preserve the 1,362 unlabeled
+   cells as a separate coverage-repair gate.
+2. **Coast 40 / component 91:** source ownership is a disjoint 110/97
+   Serathyl–Kaelvar split over continuous island land. Raster
+   connectivity does not establish political jurisdiction. Preserve
+   the coastline and defer whole-island transfer, split-border policy,
+   and allocation of its 22 unlabeled pixels to explicit owner review.
+3. **Component 82:** a separate 68-pixel land component near Coast 10
+   labeled Verdant Thalos in the prior witness; never silently merge
+   it into mainland component 25 or infer marine connectivity.
+
+**Exit still held:** no approved territorial masks, child
+split provenance, island sovereignty decision, or canonical source write.
+The absence of direct cross-macro overlap proves this is an ownership
+partition issue, not simply duplicate overlaid polygon fills.
