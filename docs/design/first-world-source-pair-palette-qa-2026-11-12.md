@@ -183,3 +183,25 @@ for territorial masks or child boundaries is absent.
 
 No changes to canonical PNGs, generated polygons, biomes, routes,
 settlements, Saves, gameplay or main branch are authorized.
+
+## Preliminary Coast 10 biome-color contrast, not a biome classification
+
+The owner's previously generated environment evidence (legacy provisional
+land mask, 2048x1152 reference) shows:
+
+| Footprint | Existing label | Uncalibrated leading source colors |
+| --- | --- | --- |
+| Windward Spine Part 1 | Serathyl intrusion on Kaelvar component 25 | `#50DC1E` 27.53%, `#96E646` 18.47% |
+| Verdant Thalos Part 1 | Kaelvar southern mainland | `#E6DC6E` 33.60%, `#96E646` 8.70% |
+| Auric Marches Part 4 | Kaelvar mainland | `#E6DC6E` 36.43%, `#AAE664` 11.73% |
+| Shattercap Isles Part 7 | Kaelvar component 25 | `#AAE664` 20.88%, `#E6DC6E` 16.60% |
+
+The Windward outlier's dominant sampled color differs noticeably
+from Verdant Thalos's yellow-dominant mainland. Without an approved
+source biome legend, this **does not prove** an ecological mismatch,
+nor select its replacement child region. It specifically **prevents**
+the shortcut of assigning all 4,326 candidate cells to Verdant Thalos
+just because it is nearby. Recompute these comparisons after
+E0 source-ink classification and require E1 palette calibration
+and E2 terrain-height review before drafting the new Kaelvar
+subregional border.
