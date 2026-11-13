@@ -25,9 +25,13 @@ const source = JSON.parse(sourceBytes.toString('utf8').replace(/^\uFEFF/,''))
 const map = load('packages/content/base/world/world_maps.json').records
   .find(r=>r.id === 'world_map.first_world');
 const regions = load('packages/content/base/world/regions.json').records;
-const exclusions = load('docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json').removedSourceFeatureIds;
+const exclusionsPath='docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json';
+const exclusionBytes=read(exclusionsPath);
+const exclusions=JSON.parse(exclusionBytes.toString('utf8').replace(/^\uFEFF/,'')).removedSourceFeatureIds;
+const exclusionManifestIdentity=verifyAuditedTextBlob(
+  exclusionBytes,'e3297ead12a6a5ce045418140b043c3fa2b8fcb3');
 if (!map || !source || source.coastlines?.length !== 68 ||
-    source.regionFootprints?.length !== 201)
+    ![159,201].includes(source.regionFootprints?.length))
   throw Error('First World canonical source geometry inventory drift');
 const sourceIdentity=verifyAuditedTextBlob(sourceBytes,ledger.immutableEvidence.sourceGeometryGitBlob);
 const sourceImages={};
@@ -59,6 +63,7 @@ const verdict = validateLandmassProposalLedger({
 process.stdout.write(JSON.stringify({
   ...verdict,
   sourceIdentity,
+  exclusionManifestIdentity,
   sourceImages,
   registeredCrop:map.assetReferenceRectPx,
   sourceFeatureCount:source.regionFootprints.length,
