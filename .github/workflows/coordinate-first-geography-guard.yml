@@ -1,0 +1,29 @@
+name: Coordinate-first geography guard
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+jobs:
+  forbid-new-hex-coupling:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history for frozen legacy baseline
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Freeze legacy hex coupling
+        run: node scripts/check-no-new-hex-dependencies.mjs --check
+      - name: Coordinate-first geometry, Kaelvar semantic zones and gate tests
+        run: node --test tests/unit/world-coordinate-geometry.test.mjs tests/unit/legacy-hex-forward-gate.test.mjs tests/unit/kaelvar-five-region-candidate-audit.test.mjs
+      - name: Review-only locality and ecology integrity
+        run: node scripts/kaelvar-five-region-candidate-audit.mjs --check
