@@ -40,6 +40,9 @@ test('Disjoint islands can be authored as distinct polygons without forced equal
   assert.equal(coordinateAreaContains([small,large],{x:2,y:2}),true);
   assert.equal(coordinateAreaContains([small,large],{x:30,y:30}),true);
   assert.equal(coordinateAreaContains([small,large],{x:10,y:10}),false);
+  assert.throws(()=>coordinateAreaContains([small,{outer:[
+    {x:1,y:1},{x:2,y:2},{x:3,y:3},
+  ]}],{x:2,y:2}),/zero area/);
 });
 test('Broken rings, zero-area, intersecting holes and out-of-bounds vertices fail closed',()=>{
   const outer=square(1,1,10);
