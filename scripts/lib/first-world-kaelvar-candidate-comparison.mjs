@@ -52,6 +52,53 @@ function histogramSummary(pixels,biomeRgba,elevationRgba){
     sourceElevationUncalibratedLuminance:{p10:q(.1),median:q(.5),p90:q(.9)},
     semanticBiomeClass:null,physicalElevationMeters:null};
 }
+/**
+ * Raw connected image-color patches on independently recognized candidate
+ * terrain. Topology derives from PNG pixels, not region/biomeZone polygons.
+ * 4-bit quantization is a sensitivity diagnostic, NEVER a biome legend.
+ */
+function rawSourceColorPatches({width,height,classification,terrainLabels,
+  biomeRgba,mainlandReferenceId,easternTest}){
+  const n=width*height,visited=new Uint8Array(n),all=[];
+  const code=i=>{const p=i*4;return ((biomeRgba[p]>>4)<<8)|
+    ((biomeRgba[p+1]>>4)<<4)|(biomeRgba[p+2]>>4);};
+  let patchCount=0,cellsSeen=0;
+  for(let seed=0;seed<n;seed++){
+    if(visited[seed]||classification[seed]!==T||
+      terrainLabels[seed]!==mainlandReferenceId)continue;
+    const color=code(seed),queue=[seed];
+    visited[seed]=1;patchCount++;
+    let cells=0,easternCells=0,minX=width,minY=height,maxX=-1,maxY=-1;
+    while(queue.length){
+      const i=queue.pop(),x=i%width,y=(i-x)/width;
+      cells++;cellsSeen++;if(easternTest[i])easternCells++;
+      minX=Math.min(minX,x);maxX=Math.max(maxX,x);
+      minY=Math.min(minY,y);maxY=Math.max(maxY,y);
+      const neighbors=[];
+      if(x>0)neighbors.push(i-1);
+      if(x+1<width)neighbors.push(i+1);
+      if(y>0)neighbors.push(i-width);
+      if(y+1<height)neighbors.push(i+width);
+      for(const k of neighbors)
+        if(!visited[k]&&classification[k]===T&&
+          terrainLabels[k]===mainlandReferenceId&&code(k)===color){
+          visited[k]=1;queue.push(k);
+        }
+    }
+    all.push({patchId:patchCount,sourceRgb4Bin:'#'+color.toString(16)
+      .toUpperCase().padStart(3,'0'),terrainCandidateCells:cells,
+      easternFootprintTestWindowCells:easternCells,
+      bounds:{minX,minY,maxX,maxY}});
+  }
+  all.sort((a,b)=>b.terrainCandidateCells-a.terrainCandidateCells||
+    a.patchId-b.patchId);
+  return {status:'UNLABELED_RAW_PNG_COLOR_CONNECTIVITY_ONLY',
+    quantization:'FOUR_HIGH_BITS_PER_RGB_CHANNEL',
+    physicalReferenceComponentId:mainlandReferenceId,
+    terrainCandidateCellsInReferenceComponent:cellsSeen,
+    connectedSourceColorPatchCount:patchCount,largestRawPatches:all.slice(0,25),
+    caveat:'Color bins and four-neighbor patch boundaries are not approved biomes, land cover, coast, relief, hydrology, political regions, or ecotones.'};
+}
 export function buildKaelvarCandidateComparison(input){
   check(input);
   const {width,height,classification,terrainLabels,footprints,regions,
@@ -125,6 +172,11 @@ export function buildKaelvarCandidateComparison(input){
     }
     if(mainland&&easternTest[i])easternTestMainland++;
   }
+  const independentSourceRgb4Patches=rawSourceColorPatches({
+    width,height,classification,terrainLabels,biomeRgba,mainlandReferenceId,easternTest});
+  if(independentSourceRgb4Patches.terrainCandidateCellsInReferenceComponent!==
+     candidateTerrainMainland)
+    throw Error('Independent source-color patch accounting mismatch');
   const authoredExpectations=[A,V,S,W].map(id=>{
     const r=regionById.get(id);
     return {regionId:id,positionLabel:r.positionLabel??null,
@@ -152,7 +204,7 @@ export function buildKaelvarCandidateComparison(input){
       easternSourceFootprintTestWindowMainlandCells:easternTestMainland,
       warning:'This sampling window is the UNION of existing parts 7, 15 and Windward 1. It includes northern terrain; it is NOT a proposed eastern border or new regional area.',
       test:'Prove contiguous distinctive biome, relief, drainage and coastal fit before proposing a fourth child.'},
-    authoredExpectations,sourcePartProvenance:provenance,
+    authoredExpectations,independentSourceRgb4Patches,sourcePartProvenance:provenance,
     hardHolds:['E0_SHORELINE_RIVERS_INK','E1_SOURCE_BIOME_RGB_LEGEND',
       'E2_ELEVATION_RAMP','E3_ECOLOGICAL_CONTIGUITY',
       'E4_ECOTONE_BANDS','E5_SETTLEMENT_ROUTE_HEX_DEPENDENCIES',
