@@ -107,9 +107,30 @@ if(args[0]==='--coast10-review'||args[0]==='--svg-coast10'){
       width,height,classification:pair.classification,
       biomeRgba,elevationRgba,roi,footprints,regions,focusId,
     });
+    // Independent full-feature crosswalk for other Kaelvar labels touching
+    // the same old component. These are NOT proposed recipient regions.
+    // Shattercap is authored as a northern island fringe, so its mainland
+    // assignments need explicit geographic review, not automatic expansion.
+    const neighborIds=[
+      'feature.region_shattercap_isles.part_7',
+      'feature.region_shattercap_isles.part_15',
+      'feature.region_verdant_thalos.part_1',
+      'feature.region_auric_marches.part_4',
+    ];
+    const neighboringSourceTopologies=summarizeSourcePairPilotFootprints({
+      width,height,classification:pair.classification,topology,footprints,
+      selectedIds:neighborIds,
+    }).map(entry=>{
+      const source=footprints.find(p=>p.id===entry.id);
+      const region=ownerById.get(source.regionIds[0]);
+      return {...entry,regionId:region.id,
+        authoredPositionLabel:region.positionLabel,
+        authoredSummary:region.summary,
+        sourceScope:'FULL_CANONICAL_FOOTPRINT_NOT_ONLY_REVIEW_CROP'};
+    });
     process.stdout.write(JSON.stringify({
       ...environment,sourceIdentity,sourceImages:metadata,
-      focusTopology,componentIdentityWarning:
+      focusTopology,neighboringSourceTopologies,componentIdentityWarning:
         'Terrain-only IDs and shared-ink-inclusive IDs are different scenario namespaces.',
       status:'REVIEW_ONLY_SOURCE_ECOLOGY_PALETTE_AND_ELEVATION_UNCALIBRATED',
       nextGate:'Inspect original biome and elevation colors and shared river ink at Coast 10 before choosing Kaelvar child boundaries.',
