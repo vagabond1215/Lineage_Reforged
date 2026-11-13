@@ -34,7 +34,7 @@ const make=()=>{
     {id:'feature.region_shattercap_isles.part_15',
       regionIds:['region.shattercap_isles'],points:rectangle(14,10,15,11)},
     {id:'feature.region_windward_spine.part_1',
-      regionIds:['region.windward_spine'],points:rectangle(11,8,14,11)},
+      regionIds:['region.windward_spine'],points:rectangle(13,9,15,11)},
     {id:'feature.region_windward_spine.part_2',
       regionIds:['region.windward_spine'],points:rectangle(15,10,16,11)},
     {id:'feature.region_verdant_thalos.part_6',
@@ -84,7 +84,7 @@ test('One-cell guard and source-region conflict prevent claiming nearby gaps, or
   const result=buildKaelvarLayoutAR3Sketch(make());
   assert.equal(result.assigned[2*w+6],0); // Auric/Shattercap sketch overlap
   assert.equal(result.assigned[5*w+8],0); // Original Verdant/Shattercap overlap
-  assert.equal(result.assigned[8*w+12],0); // Foreign Windward source
+  assert.equal(result.assigned[9*w+14],0); // Foreign Windward source
   assert.equal(result.assigned[0],0); // No automatic ocean/edge fill
   assert.ok(result.report.heldOneCellBoundaryGuardCells>0);
   assert.equal(new Set(Array.from(result.assigned).filter(Boolean)).size,3);
