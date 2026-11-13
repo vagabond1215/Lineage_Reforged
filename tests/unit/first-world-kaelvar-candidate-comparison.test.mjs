@@ -123,6 +123,8 @@ test('Runner reuses audited source PNG, 42 exclusions, separate component namesp
   assert.match(script,/verifyAuditedTextBlob/);
   assert.match(script,/source\.coastlines\.length!==68/);
   assert.match(script,/deduplicatedTerrainCells!==30938/);
+  assert.match(script,/windward1.detachedTerrainCells!==12/);
+  assert.match(script,/blueEdge.sharedBlueCandidateCells!==684/);
   assert.match(script,/directSameMacroChildOverlapLandPixels!==88/);
   assert.match(script,/--compare/);
   assert.match(script,/--svg/);
