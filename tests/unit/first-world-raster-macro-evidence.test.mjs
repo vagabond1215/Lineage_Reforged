@@ -144,3 +144,17 @@ test('Pass 0 witness does not expose a canonical source write path',()=>{
   assert.match(cli,/coastline\.first_world\.part_/);
   assert.doesNotMatch(cli,/writeFileSync|createWriteStream/);
 });
+
+test('review ledger retains 15 pending foreign-coast candidates and both pilot coasts',()=>{
+  const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));
+  const doc=JSON.parse(readFileSync(resolve(root,
+    'docs/design/first-world-macro-ownership-review-2026-11-12.json'),'utf8'));
+  assert.equal(doc.foreignLandmassCandidates.length,15);
+  assert.equal(doc.foreignLandmassCandidates.reduce((sum,c)=>sum+c.sampledOverlapPx2,0),74072);
+  assert.deepEqual(doc.pilot.coastParts,[10,40]);
+  assert.ok(doc.foreignLandmassCandidates.some(c=>
+    c.sourcePolygonId==='feature.region_windward_spine.part_1'&&
+    c.classification==='previously_confirmed_owner_intrusion'));
+  assert.ok(doc.reviewedDecisions.every(d=>d.status==='pending'));
+  assert.ok(doc.reviewedDecisions.every(d=>d.maskPolygons.length===0));
+});
