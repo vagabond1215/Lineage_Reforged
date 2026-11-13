@@ -152,7 +152,8 @@ export function buildEnvironmentProfiles({
     if(popcount(mac)>1)crossMacroOverlap++;
     if(popcount(mac)===1&&popcount(ch)>1)sameMacroChildOverlap++;
     for(let j=0;j<primaryIds.length;j++)
-      if(ch & ((1<<j)>>>0))collect(rows.get(primaryIds[j]),i,true,biomeRgba,elevationRgba);
+      if(!macroCode.has(primaryIds[j]) && (ch & ((1<<j)>>>0)))
+        collect(rows.get(primaryIds[j]),i,true,biomeRgba,elevationRgba);
     for(let j=0;j<macros.length;j++)
       if(mac & (1<<j))collect(rows.get(macros[j].id),i,true,biomeRgba,elevationRgba);
   }
