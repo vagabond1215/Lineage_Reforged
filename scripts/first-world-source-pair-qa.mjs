@@ -102,7 +102,7 @@ if(args[0]==='--connectivity'){
       topology.summary.sharedInkIncluded.eightNeighborComponents===160,
     reviewGate:'HOLD: component joins and ink-only artifacts are not political decisions or a certified physical shoreline.',
     sourceGeometryWritable:false,
-  },null,2)+'\\n');
+  },null,2)+'\n');
   process.exit(0);
 }
 const uncertain=row=>row.candidateClasses.SHARED_NONBLUE_UNRESOLVED.pixels+
