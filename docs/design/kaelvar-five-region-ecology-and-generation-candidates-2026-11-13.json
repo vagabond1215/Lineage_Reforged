@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-five-region-ecology-and-local-generation-candidates.v1",
+  "status": "MAINLINE_DESIGN_ONLY_NO_ACTIVE_SPAWNS_ROUTES_OR_CANONICAL_MASKS",
+  "date": "2026-11-13",
+  "regionRecordPath": "docs/design/kaelvar-five-region-candidate-region-records-2026-11-13.json",
+  "localityAndHexPath": "docs/design/kaelvar-five-region-locality-hex-and-settlement-candidates-2026-11-13.json",
+  "sourceReviewOnly": true,
+  "profiles": [
+    {
+      "regionId": "region.kharuun_drylands",
+      "landscape": {
+        "primary": "central arid basins and high-desert steps",
+        "relief": [
+          "stony plateau",
+          "scarp and mesa",
+          "salt flat",
+          "wadi fan",
+          "groundwater oasis"
+        ],
+        "geology": [
+          "sandstone",
+          "caliche",
+          "gravel",
+          "evaporite crust",
+          "ore seam"
+        ],
+        "hydrologyHypotheses": [
+          "closed salt basins",
+          "infrequent flash floods",
+          "localized springs and aquifers"
+        ],
+        "mapUncertainty": "Dryland north-south reach and every river, shoreline and oasis coordinate require separate confirmation."
+      },
+      "ecology": {
+        "temperaturePattern": "hot low-basin days, cool plateau nights, rare upland frost",
+        "seasonality": [
+          {
+            "season": "dry season",
+            "effects": [
+              "dust winds",
+              "water rationing",
+              "nocturnal fauna concentration"
+            ]
+          },
+          {
+            "season": "episodic rains",
+            "effects": [
+              "flash floods",
+              "short herb blooms",
+              "seasonal herding"
+            ]
+          },
+          {
+            "season": "cool season",
+            "effects": [
+              "upland frost",
+              "safer caravan travel"
+            ]
+          }
+        ],
+        "habitats": [
+          {
+            "id": "kharuun.saltpan",
+            "landform": "closed evaporite basin",
+            "water": "brackish_or_absent",
+            "flora": [
+              "saltbush",
+              "halophytic grass",
+              "hardy dwarf scrub"
+            ],
+            "fauna": [
+              "burrowing reptile",
+              "nocturnal rodent",
+              "salt flat insects"
+            ],
+            "monsterArchetypes": [
+              "night scavenger",
+              "salt crust ambusher"
+            ],
+            "resources": [
+              "salt",
+              "mineral pigment",
+              "evaporite stone"
+            ],
+            "hazards": [
+              "heat",
+              "dehydration",
+              "crust collapse"
+            ],
+            "settlementRule": "No permanent town without an imported water source."
+          },
+          {
+            "id": "kharuun.oasis",
+            "landform": "spring-fed garden pocket",
+            "water": "candidate_perennial_spring",
+            "flora": [
+              "reeds",
+              "oasis palms",
+              "fruit orchards"
+            ],
+            "fauna": [
+              "wading birds",
+              "pollinators",
+              "small herbivores"
+            ],
+            "monsterArchetypes": [
+              "waterhole stalker",
+              "abandoned cistern creature"
+            ],
+            "resources": [
+              "dates",
+              "water",
+              "herbs"
+            ],
+            "hazards": [
+              "aquifer drawdown",
+              "flash flood",
+              "water dispute"
+            ],
+            "settlementRule": "Support markets and farms only after water reliability is approved."
+          },
+          {
+            "id": "kharuun.high_desert",
+            "landform": "elevated broken sandstone escarpment",
+            "water": "episodic_seep",
+            "flora": [
+              "thorn scrub",
+              "drought grass",
+              "upland herbs"
+            ],
+            "fauna": [
+              "rock lizards",
+              "raptors",
+              "mountain goats"
+            ],
+            "monsterArchetypes": [
+              "cliff nest predator",
+              "night plateau prowler"
+            ],
+            "resources": [
+              "copper",
+              "stone",
+              "glass sand"
+            ],
+            "hazards": [
+              "rockfall",
+              "cold night",
+              "dust storm"
+            ],
+            "settlementRule": "Allow quarries and guarded passes when supported by springs or cisterns."
+          },
+          {
+            "id": "kharuun.wadi",
+            "landform": "intermittent gravel floodwash",
+            "water": "highly_seasonal",
+            "flora": [
+              "wash reeds",
+              "seasonal grasses",
+              "tamarisk-like shrubs"
+            ],
+            "fauna": [
+              "small reptiles",
+              "seasonal insects",
+              "migrating ungulates"
+            ],
+            "monsterArchetypes": [
+              "floodwash lurker",
+              "seasonal waterhole predator"
+            ],
+            "resources": [
+              "clay",
+              "seasonal pasture",
+              "herbs"
+            ],
+            "hazards": [
+              "flash flood",
+              "washed-out ford",
+              "deceptive dry channel"
+            ],
+            "settlementRule": "Place crossings above flood level and require a seasonal travel fallback."
+          }
+        ]
+      },
+      "cultureAndEconomy": {
+        "civicThemes": [
+          "water-sharing compacts",
+          "irrigation stewardship",
+          "well-guard and caravan contracts",
+          "highland pasture access"
+        ],
+        "resourcesAndCrafts": [
+          "salt extraction and curing",
+          "glass sand and glasswork",
+          "ore and quarrying",
+          "cistern masonry",
+          "water storage pottery",
+          "pack saddle repair",
+          "medicinal herbs"
+        ],
+        "tradeDependencies": [
+          "Auric metal and caravan corridors",
+          "Verdant food and textiles",
+          "possible Veyrholm outlet only if northward continuity is confirmed"
+        ]
+      },
+      "generationAndGameHooks": {
+        "localTerrain": [
+          "basin and plateau variants must share a reproducible registered input",
+          "no procedurally invented lake or oasis",
+          "wadi crossings seasonally hazardous"
+        ],
+        "floraFauna": [
+          "spawns conditioned by water and vegetation",
+          "no uniform desert monster coverage",
+          "day/night and seasonal activity distinct"
+        ],
+        "crafting": [
+          "wellwright",
+          "cistern mason",
+          "glassworker",
+          "salt refiner",
+          "caravan saddler",
+          "quarry mason",
+          "desert herbalist",
+          "ore smelter"
+        ],
+        "routes": [
+          "water-limited caravan legs",
+          "guarded escarpment passes",
+          "flood diversion and ford closures"
+        ],
+        "encounterArchetypes": [
+          "saltpan nocturnal scavenger",
+          "oasis waterhole rival",
+          "mesa cliff predator",
+          "ruin-bound sentinel only where ruins are authored"
+        ],
+        "requiredDependencies": [
+          "source water and dryland ecology audit",
+          "settlement placement",
+          "world hex and route edge approval",
+          "spawn species ID and loot authoring"
+        ]
+      },
+      "unresolved": [
+        "no certified source RGB biome legend",
+        "no calibrated relief heights",
+        "no mapped wells or wadis",
+        "no approved region borders",
+        "no active encounter IDs"
+      ]
+    },
+    {
+      "regionId": "region.veyrholm_shore",
+      "landscape": {
+        "primary": "northern mainland coast with sheltered inlets and fir ridges",
+        "relief": [
+          "rocky headlands",
+          "sea-cut cliffs",
+          "coastal benches",
+          "stream valleys",
+          "tidal marsh"
+        ],
+        "geology": [
+          "hard coastal stone",
+          "alluvial inlet silt",
+          "marsh peat",
+          "pine ridge soil"
+        ],
+        "hydrologyHypotheses": [
+          "short freshwater streams",
+          "brackish estuaries",
+          "storm-surge tidal flats"
+        ],
+        "mapUncertainty": "The large northeast offshore island is ONE physical unit awaiting whole-island sovereignty approval; it cannot be split or annexed by mainland proximity."
+      },
+      "ecology": {
+        "temperaturePattern": "cool maritime winds, foggy coves, storm season and sheltered inland patches",
+        "seasonality": [
+          {
+            "season": "storm months",
+            "effects": [
+              "harbor closures",
+              "fog",
+              "coastal flooding"
+            ]
+          },
+          {
+            "season": "calm fishing season",
+            "effects": [
+              "fish migration",
+              "ship repairs",
+              "sea-lane traffic"
+            ]
+          },
+          {
+            "season": "cool rains",
+            "effects": [
+              "ridge growth",
+              "saturated soil",
+              "slower upland transport"
+            ]
+          }
+        ],
+        "habitats": [
+          {
+            "id": "veyrholm.capes",
+            "landform": "storm-cut rocky headland",
+            "water": "rain_cistern_candidate",
+            "flora": [
+              "coastal heath",
+              "saltgrass",
+              "wind-pruned scrub"
+            ],
+            "fauna": [
+              "seabirds",
+              "rock-nesting birds",
+              "small coastal mammals"
+            ],
+            "monsterArchetypes": [
+              "cliff nest predator",
+              "fog ambusher"
+            ],
+            "resources": [
+              "quarried stone",
+              "sea salt",
+              "beacon fuel"
+            ],
+            "hazards": [
+              "cliff exposure",
+              "rockfall",
+              "gales"
+            ],
+            "settlementRule": "Only watchholds with reliable inland resupply."
+          },
+          {
+            "id": "veyrholm.inlets",
+            "landform": "sheltered tidal cove",
+            "water": "stream_above_tidal_reach",
+            "flora": [
+              "brackish reeds",
+              "seagrass",
+              "sedge"
+            ],
+            "fauna": [
+              "cold-water fish",
+              "shorebirds",
+              "shellfish"
+            ],
+            "monsterArchetypes": [
+              "tidal predator",
+              "harbor scrap scavenger"
+            ],
+            "resources": [
+              "fish",
+              "shellfish",
+              "ship timber"
+            ],
+            "hazards": [
+              "storm surge",
+              "fog",
+              "tidal channel"
+            ],
+            "settlementRule": "Harbors require safe anchorages and drinkable upstream water."
+          },
+          {
+            "id": "veyrholm.firshore",
+            "landform": "conifer-covered coastal ridge",
+            "water": "rainfall_and_stream",
+            "flora": [
+              "fir",
+              "shore pine",
+              "moss and resin shrubs"
+            ],
+            "fauna": [
+              "deer",
+              "woodland foxes",
+              "owls"
+            ],
+            "monsterArchetypes": [
+              "woodland ridge prowler",
+              "fallen-log den creature"
+            ],
+            "resources": [
+              "timber",
+              "resin",
+              "stone"
+            ],
+            "hazards": [
+              "landslide",
+              "winter gale",
+              "wildlife"
+            ],
+            "settlementRule": "Timber towns only on stable terrain connected to the coast."
+          },
+          {
+            "id": "veyrholm.marsh",
+            "landform": "brackish tidal estuary",
+            "water": "not_drinkable_without_freshwater",
+            "flora": [
+              "salt marsh grass",
+              "reeds",
+              "sedges"
+            ],
+            "fauna": [
+              "waterfowl",
+              "wading birds",
+              "crustaceans"
+            ],
+            "monsterArchetypes": [
+              "marsh-edge stalker",
+              "tidal scavenger"
+            ],
+            "resources": [
+              "shellfish",
+              "reeds",
+              "salt"
+            ],
+            "hazards": [
+              "soft ground",
+              "tidal flood",
+              "storm surge"
+            ],
+            "settlementRule": "Raise sites above flood level and validate ferry crossings."
+          }
+        ]
+      },
+      "cultureAndEconomy": {
+        "civicThemes": [
+          "harbor guilds",
+          "storm watches",
+          "coastal timber stewardship",
+          "mainland watchholds"
+        ],
+        "resourcesAndCrafts": [
+          "cold fish smoking and salting",
+          "ship frames",
+          "ropeworks",
+          "resin and pitch",
+          "breakwater stone",
+          "barrels and coopering",
+          "net weaving"
+        ],
+        "tradeDependencies": [
+          "Verdant southern ports via coastal shipping",
+          "Auric upland roads",
+          "Shattercap transfers only as separate sea crossings"
+        ]
+      },
+      "generationAndGameHooks": {
+        "localTerrain": [
+          "distinguish open sea, coast ink and certified dry land",
+          "maintain physical separation from offshore islands",
+          "inlet, cape, ridge and marsh localities vary"
+        ],
+        "floraFauna": [
+          "fish and seabirds follow seasons and tides",
+          "fir fauna only in wooded bands",
+          "marsh species require brackish habitat"
+        ],
+        "crafting": [
+          "shipwright",
+          "net mender",
+          "rope maker",
+          "fish smoker",
+          "cooper",
+          "pitch maker",
+          "quarry stonemason",
+          "beacon keeper"
+        ],
+        "routes": [
+          "mainland harbor roads",
+          "ridge pack trails",
+          "weather-dependent coastal shipping",
+          "island ferry only after ownership review"
+        ],
+        "encounterArchetypes": [
+          "cliff nest predator",
+          "fog cove ambusher",
+          "ridge wildlife",
+          "tidal scavenger"
+        ],
+        "requiredDependencies": [
+          "source coastline ink audit",
+          "freshwater inlet mapping",
+          "approved landmass boundary",
+          "valid sea lane and ferry endpoints",
+          "species and spawn ID authoring"
+        ]
+      },
+      "unresolved": [
+        "no approved shore ownership",
+        "large island must remain whole",
+        "Coast 40 remains independent",
+        "no calibrated biome or elevation transfer function",
+        "no settlement coordinates",
+        "no active encounter IDs"
+      ]
+    }
+  ],
+  "publicationHolds": {
+    "canonicalRegionCatalogUnchanged": true,
+    "canonicalMapSourceUnchanged": true,
+    "canonicalWorldHexesUnchanged": true,
+    "canonicalRoutesUnchanged": true,
+    "canonicalSettlementsUnchanged": true,
+    "ecologicalRgbLegendUnapproved": true,
+    "northeastLargeIslandIndivisible": true,
+    "shattercapDetachedComponentSovereigntyPending": true,
+    "ownerApprovalRef": null
+  }
+}
