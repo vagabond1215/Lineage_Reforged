@@ -49,6 +49,8 @@ Historical K1/K2 notes are not rewritten to pretend old native evidence has been
 - Windward Part 1: 3,661 terrain-only mainland candidates and 12 detached; preserve both. Shattercap Part 1: 684 shared-blue, 0 terrain; hold as source blue-edge artifact candidate.
 - K1 51/51 native tests and original four-panel SVG visual passed. K2 three-panel render visually passed; native K2 TAP/JSON and palette semantics are not claimed.
 
+**Offshore artifact exclusion state:** The approved 42-ID removal manifest is historical source provenance, not a requirement that those 42 features remain in the present `regionFootprints`. The byte-pinned current canonical geometry can already be clean: **159 original source footprints, zero of 42 exclusion IDs present**, status `SOURCE_ALREADY_CLEAN`. The pure compatibility validator also accepts a synthetic/historical **201 source footprints, all 42 exclusion IDs present**, when they are removed only in memory, status `LEGACY_201_SOURCE_FILTERED_IN_MEMORY`. Both produce exactly 159 effective footprints. Mixed/partial restoration, wrong counts, unexpected exclusion manifest bytes or source geometry drift are HARD HOLD. The CLI remains tied to the already-audited current geometry Git blob; it does not reintroduce excluded polygons.
+
 Every new candidate must name source image hashes, geometry blob, classification scenario, grid registration, evidence provenance, reviewer and version. Physical component IDs always require an explicit namespace and source hash; never reuse as political IDs. Candidate cells are not certified physical land until coast/ink judgment.
 
 ## 4. Staged, reversible proposal model
@@ -160,7 +162,11 @@ $branch = 'connector/first-world-landmass-first-kaelvar-r0-r3-plan-2026-11-13'
 $worktree = 'C:\Codex\EoL-landmass-r0r3-verify'
 $out = Join-Path $env:TEMP 'first-world-landmass-r0r3'
 if (-not (Test-Path $repoRoot)) { throw 'Repository clone missing' }
-if (@(git -C $repoRoot status --porcelain).Count) { throw 'Base repository dirty: do not alter' }
+$baseChanges = @(git -C $repoRoot status --porcelain)
+if ($LASTEXITCODE -ne 0) { throw 'Cannot inspect base repository' }
+if ($baseChanges.Count) {
+  Write-Warning "Base repository has $($baseChanges.Count) changed/untracked entries; preserving all"
+}
 $remoteReadback = (git -C $repoRoot ls-remote origin "refs/heads/$branch")
 if ($LASTEXITCODE -ne 0 -or -not $remoteReadback) { throw 'New branch not published' }
 $expectedHead = (($remoteReadback -split "\s+")[0]).Trim()
@@ -215,3 +221,11 @@ Write-Host "OUTPUT=$out"
 ~~~
 
 Do not interpret a local JSON generator passing as source biome/height semantics or approve unresolved islands. Owner to return test totals, ledger audit, K2 output and SVG screenshot; any failure remains HOLD.
+
+## 8. Native test failure and bounded corrective patch, 2026-11-13
+
+The owner ran the first nine-suite verification on isolated detached `e4df13ab` and reported **66 tests total, 61 passing, five failing**. All five new-test failures shared one root cause: `accepted exclusion missing in source`. The new helper incorrectly insisted that all 42 already-excluded source IDs still appear in `world_map_features.json`, contradicting the existing Pass 0 `SOURCE_ALREADY_CLEAN` allowance. Existing K1/K2 suites did not fail in this run.
+
+The corrective draft-only patch accepts either the clean 159 source or a complete historical 201 source, still enforces 159 effective parts, and rejects partially reintroduced accepted exclusions. The CLI also validates the immutable exclusion manifest Git blob `e3297ead12a6a5ce045418140b043c3fa2b8fcb3` and source bytes. New negative and compatibility tests cover these states. The PowerShell handoff now **permits a dirty primary repository** while strictly requiring a clean verification worktree and pinned HEAD, preserving the owner's 45 observed changed/untracked entries.
+
+**Native post-fix tests and CLI report are not yet accepted.** R3 remains unentered and no canonical change is authorized. Re-run at the updated remote PR #80 HEAD (not the prior e4df13ab commit) using the same isolated worktree.
