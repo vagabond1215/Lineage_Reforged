@@ -137,3 +137,61 @@ this session, and it does not execute Node, PowerShell or the Vite viewer.
 Therefore the checked-in source and synthetic test suite are **not**
 proof that the real source rasters have decoded or Coast 10/40 has been
 visually corrected. Keep the PR draft and do not merge.
+
+## Follow-up: native component ownership review (after first local witness)
+
+The first local witness confirmed the geometry checkout differs from the
+audited Git blob only in CRLF-to-LF line endings. Native source-raster evidence
+reported **167 four-neighbor** versus **160 eight-neighbor** land components,
+with **six groups of diagonal-only joins** and **585,834 raster land pixels**.
+
+The owner's read-only component summary showed:
+
+| Native four-component | Native land pixels | Existing labels seen |
+| --- | ---: | --- |
+| **25** | **86,417** | Kaelvar Auric Marches, Shattercap Isles, Verdant Thalos; Serathyl Windward Spine Part 1 |
+| **82** | **68** | Kaelvar Verdant Thalos |
+| **91** | **229** | Kaelvar Verdant Thalos Part 6 and Serathyl Windward Spine Part 2 |
+
+Component 25 is the known southeastern Kaelvar intrusion candidate.
+Component 82 is detached land near Coast 10 and is **not** part of
+component 25. Component 91 is the physically separate Coast 40 island;
+shared 4-neighbor connectivity does **not** confer political ownership.
+The previous report listed whole-footprint totals even in the per-component
+selection, so those values cannot be treated as component-specific areas.
+
+### Next read-only commands
+
+After fetching the latest draft branch in the detached local worktree,
+run the unit tests, then re-run the source witness:
+
+```powershell
+node --test tests/unit/first-world-raster-macro-evidence.test.mjs
+node scripts/first-world-raster-evidence.mjs --check > first-world-pass0-evidence.json
+node scripts/first-world-raster-evidence.mjs --svg-coast40 > first-world-coast40-closeup.svg
+```
+
+The JSON `pilot.componentOwnershipEvidence` now contains exact
+**reference-pixel** intersections of every selected source polygon on
+each Coast 10/40 4-connected land component. It separately identifies:
+
+- Current owner labels per component, with per-feature
+  `landPixelsOnComponent` values.
+- Unique footprint-covered land pixels versus land without any source
+  region footprint.
+- Direct cross-macro polygon overlap and same-macro child-region overlap.
+- Detached land components that must not inherit mainland ownership.
+
+These values are counts of **2048×1152 grid pixels**. Existing names ending
+in `Px2` in legacy report sections are retained for backward compatibility
+but must not be interpreted as physical square kilometers or pixels squared.
+
+The additional `--svg-coast40` output crops and magnifies the Coast 40
+island at 12× using the same independent land/water raster and existing
+region outlines. It is a baseline preview, not an approved boundary
+or a proposal to move all of the island into either macro.
+
+**Gate remains held:** no approved replacement political masks; neither
+the mainland's recovered land nor the island's administrative split has a
+signed destination subregion. Do not treat the owner's component report
+as permission for automatic polygon transfer or overwrite the canonical map.
