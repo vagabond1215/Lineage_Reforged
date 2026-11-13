@@ -134,7 +134,13 @@ export function coordinatePolygonContains(polygon,p,frame=FIRST_WORLD_REFERENCE)
 /** One area's multiple non-overlapping pieces; island group membership requires separate explicit physical-component authority. */
 export function coordinateAreaContains(polygons,p,frame=FIRST_WORLD_REFERENCE) {
   if(!Array.isArray(polygons)||polygons.length===0)fail('area requires polygons');
-  return polygons.some(poly=>coordinatePolygonContains(poly,p,frame));
+  // Validate every piece even if an earlier polygon contains the point.
+  // An invalid detached-island piece must never be silently ignored.
+  for(const poly of polygons)validateCoordinatePolygon(poly,frame);
+  assertCoordinatePoint(p,frame);
+  return polygons.some(poly=>
+    ringRelation(p,poly.outer)!=='outside'&&
+    !(poly.holes??[]).some(hole=>ringRelation(p,hole)!=='outside'));
 }
 export function requireExplicitRouteConnection({
   fromPlaceId,toPlaceId,connections,
