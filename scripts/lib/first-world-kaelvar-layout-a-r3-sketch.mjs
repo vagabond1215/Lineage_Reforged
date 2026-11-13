@@ -29,6 +29,24 @@ const HELD_IDS=[
   'feature.region_windward_spine.part_2',
   'feature.region_verdant_thalos.part_6',
 ];
+const HELD_DISPOSITIONS=[
+  'BLUE_ONLY_684_CELLS_NOT_EXCLUDED_43',
+  'WHOLE_SOURCE_PART_WITHHELD; PARTIAL_NORTH_SKETCH_UNAPPROVED',
+  'SOUTHEASTERN_SOURCE_FOOTPRINT_WITHHELD',
+  'SERATHYL_CHILD_MISPLACED_SOURCE; NO_KAELVAR_TRANSFER',
+  'COAST40_DISPUTED_PARENT_AND_CHILD',
+  'COAST40_DISPUTED_PARENT_AND_CHILD',
+];
+const SKETCH_IDS=[
+  'layout-a-auric-west-core-sketch',
+  'layout-a-verdant-south-core-sketch',
+  'layout-a-shattercap-north-strip-sketch',
+];
+const SOURCE_STATUSES=[
+  'SOURCE_ONLY_NOT_BORDER',
+  'SOURCE_ONLY_NOT_BORDER',
+  'WHOLE_SOURCE_PART_WITHHELD; PARTIAL_NORTHERN_SKETCH_FOR_REVIEW_ONLY',
+];
 const fail=message=>{throw Error('Layout A R3 HOLD: '+message);};
 const sameSet=(a,b)=>a.length===b.length&&new Set(a).size===a.length&&
   a.every(v=>b.includes(v));
@@ -62,11 +80,16 @@ export function buildKaelvarLayoutAR3Sketch({
     spec.layoutBStatus!=='ELIGIBILITY_ONLY_NO_POLYGON_OR_FOURTH_CHILD'||
     spec.approval?.parentConfirmed!==false||
     spec.approval?.childBordersApproved!==false||
+    spec.approval?.biomeLegendApproved!==false||
+    spec.approval?.elevationRampApproved!==false||
+    spec.approval?.hydrologyApproved!==false||
     spec.approval?.ownerApprovalRef!==null||
     spec.approval?.canonicalWritable!==false)
     fail('preview was promoted or source contract changed');
   if(!Array.isArray(spec.originalSourceHolds)||
-    !sameSet(spec.originalSourceHolds.map(v=>v.sourceFeatureId),HELD_IDS))
+    !sameSet(spec.originalSourceHolds.map(v=>v.sourceFeatureId),HELD_IDS)||
+    HELD_IDS.some((id,i)=>spec.originalSourceHolds.find(v=>
+      v.sourceFeatureId===id)?.disposition!==HELD_DISPOSITIONS[i]))
     fail('displaced/Coast 40/blue/source hold inventory drift');
   const byId=new Map(footprints.map(p=>[p.id,p]));
   if(byId.size!==footprints.length)fail('duplicate original source footprints');
@@ -78,14 +101,14 @@ export function buildKaelvarLayoutAR3Sketch({
   const windows=REGION_IDS.map((id,code)=>{
     const s=spec.previewRegions.find(p=>p.regionId===id);
     const region=regionById.get(id);
-    if(!s?.id||s.parentRegionId!=='region.kaelvar'||
+    if(s?.id!==SKETCH_IDS[code]||s.parentRegionId!=='region.kaelvar'||
       s.positionLabel!==POSITIONS[code]||
       region?.regionType!=='subregion'||
       region.parentRegionId!==s.parentRegionId||
       region.positionLabel!==s.positionLabel||
       !countMatches(s.sourceFeatureIds||[],[SOURCE_IDS[code]])||
       !positionsInGrid(s.sketchPolygon,width,height)||
-      s.sourcePartStatus===undefined)
+      s.sourcePartStatus!==SOURCE_STATUSES[code])
       fail('authored source/region/window drift: '+id);
     const source=byId.get(SOURCE_IDS[code]);
     if(!source||!Array.isArray(source.points)||
