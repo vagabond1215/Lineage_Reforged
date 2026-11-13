@@ -1,5 +1,7 @@
 # Map Grid Distance Source Map
 
+> **2026-11-13 coordinate-first addendum:** This historical decision remains evidence for existing runtime authority, but does not authorize new hex-based geography, locality, travel or encounter dependencies. Future spatial authoring is coordinate/polygon/place-ID first, with explicit route graphs. Existing hex records are retained temporarily for compatibility only. See [Coordinate-first geography migration contract](coordinate-first-world-geography-migration-contract-2026-11-13.md) and the executable no-new-hex gate. C0 native acceptance is pending. Do not casually reset the frozen pretransition baseline.
+
 Source route: ChatGPT via GitHub Connector
 Date: 2026-06-05
 Status: connector-only prep for future map scale, grid, route distance, travel-time, and regional population-center expansion work; no source, schema, content JSON, UI implementation, generated output, roadmap advancement, or runtime behavior changes
