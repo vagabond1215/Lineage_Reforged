@@ -98,7 +98,11 @@ test('QA SVG is local and remains clearly marked unapproved',()=>{
   assert.match(markup,/Unapproved two-source/);
   assert.match(markup,/pink shared ink/);
   assert.match(markup,/viewBox="0 0 3 48"/);
-  assert.doesNotMatch(markup,/https?:|<image\b/);
+  // The standard SVG xmlns URI is mandatory, not a network request.
+  // Exclude only that exact declaration before screening for external content.
+  assert.match(markup,/xmlns="http:\/\/www\.w3\.org\/2000\/svg"/);
+  const withoutNamespace=markup.replace('xmlns="http://www.w3.org/2000/svg"','');
+  assert.doesNotMatch(withoutNamespace, /https?:|<(?:image|script|foreignObject)\b|\b(?:href|xlink:href)\s*=|url\s*\(/i);
 });
 
 test('paired source runner only exposes stdout evidence and validates original source identity',()=>{
