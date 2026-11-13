@@ -10,6 +10,8 @@ import {planReviewedMacroOwnership,rasterizePolygon}
   from '../../scripts/lib/first-world-reviewed-macro-planner.mjs';
 import {gitBlobSha,verifyAuditedTextBlob}
   from '../../scripts/lib/first-world-source-identity.mjs';
+import {visitRasterPolygon,buildSelectedComponentReview}
+  from '../../scripts/lib/first-world-component-review.mjs';
 
 function pngRGB(width,height,pixels){
   const signature=Buffer.from([137,80,78,71,13,10,26,10]);
@@ -178,4 +180,61 @@ test('audited geometry identity accepts only exact source or pure platform line-
     /Geometry blob changed/);
   assert.throws(()=>verifyAuditedTextBlob(Buffer.from([0xff,0xfe]),target),
     /non-UTF8/);
+});
+
+test('native per-component ownership ledger counts intersections rather than whole feature totals',()=>{
+  const origin=[
+    {id:'feature.verdant',regionIds:['region.verdant_thalos'],
+      points:[{x:0,y:0},{x:2,y:0},{x:2,y:2},{x:0,y:2}]},
+    {id:'feature.windward',regionIds:['region.windward_spine'],
+      points:[{x:1,y:0},{x:3,y:0},{x:3,y:3},{x:1,y:3}]},
+  ];
+  const snapshot=JSON.stringify(origin);
+  const observed=[];
+  visitRasterPolygon(origin[0].points,3,3,(i)=>observed.push(i));
+  assert.deepEqual(observed,[0,1,3,4]);
+  const review=buildSelectedComponentReview({
+    width:3,height:3,landMask:pixels,fourLabels:comps.labels,
+    footprints:origin,regions,selectedComponentIds:[1,2],
+  });
+  assert.equal(review.length,2);
+  assert.equal(review[0].componentId,1);
+  assert.equal(review[0].landPixels,3);
+  assert.equal(review[0].footprintCoveredLandPixels,3);
+  assert.equal(review[0].unclaimedLandPixels,0);
+  assert.equal(review[0].directCrossMacroOverlapLandPixels,1);
+  assert.deepEqual(review[0].featureRows.map(r=>[r.featureId,r.landPixelsOnComponent]),
+    [['feature.verdant',3],['feature.windward',1]]);
+  assert.equal(review[1].componentId,2);
+  assert.equal(review[1].landPixels,2);
+  assert.equal(review[1].featureRows.length,1);
+  assert.equal(review[1].featureRows[0].landPixelsOnComponent,2);
+  assert.equal(review[1].directCrossMacroOverlapLandPixels,0);
+  assert.equal(JSON.stringify(origin),snapshot);
+});
+
+test('tiny detached island keeps explicit unassigned state and never inherits mainland ownership',()=>{
+  const footprint={id:'feature.verdant',regionIds:['region.verdant_thalos'],
+    points:[{x:0,y:0},{x:2,y:0},{x:2,y:2},{x:0,y:2}]};
+  const review=buildSelectedComponentReview({
+    width:3,height:3,landMask:pixels,fourLabels:comps.labels,
+    footprints:[footprint],regions,selectedComponentIds:[2],
+  });
+  assert.equal(review[0].landPixels,2);
+  assert.equal(review[0].footprintCoveredLandPixels,0);
+  assert.equal(review[0].unclaimedLandPixels,2);
+  assert.equal(review[0].featureRows.length,0);
+  assert.equal(review[0].status,'CURRENT_LABELS_ONLY_NO_PROPOSED_TRANSFER');
+  assert.throws(()=>buildSelectedComponentReview({
+    width:3,height:3,landMask:pixels,fourLabels:new Uint32Array(9),
+    footprints:[footprint],regions,selectedComponentIds:[1],
+  }),/missing four-neighbor/);
+});
+
+test('component close-up and exact ownership report are read-only tools',()=>{
+  const root=resolve(fileURLToPath(new URL('../..',import.meta.url)));
+  const cli=readFileSync(resolve(root,'scripts/first-world-raster-evidence.mjs'),'utf8');
+  assert.match(cli,/--svg-coast40/);
+  assert.match(cli,/componentOwnershipEvidence/);
+  assert.doesNotMatch(cli,/writeFileSync|createWriteStream/);
 });
