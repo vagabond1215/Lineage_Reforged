@@ -214,3 +214,107 @@ separate island jurisdiction case.
 
 No source rasters, polygons, generator, routes or game runtime were
 changed during this screenshot review.
+
+## Owner-reported local source ecology profiles (2026-11-12)
+
+The owner ran `--coast10-review` against the registered original maps.
+Windward Spine Part 1 remains **4,572 source-footprint pixels**:
+**3,673 divergent terrain**, **653 unresolved shared ink**,
+**246 shared-blue candidates**, zero other unresolved. Terrain-only
+component **30** has **3,661** pixels under this polygon and component
+**113** has **12**; shared-ink-inclusive component 25 contains
+**4,326** provisional land pixels. These belong to *different
+scenario namespaces*, not multiple political regions.
+
+The source histogram comparison within the **same Coast 10
+review crop** returned:
+
+| Existing footprint | Authored macro | Source terrain cells sampled in crop | Windward-relative 4-bit RGB histogram overlap | Uncalibrated elevation luma p10 / median / p90 |
+| --- | --- | ---: | ---: | --- |
+| Windward Spine Part 1 | Serathyl | 3,673 | 100% reference | 241 / **247** / 251 |
+| Shattercap Isles Part 15 | Kaelvar | 3,357 | **54.32%** | 230 / **242** / 250 |
+| Verdant Thalos Part 1 | Kaelvar | 2,611 | **41.95%** | 209 / **231** / 247 |
+| Windward Spine Part 4 | Serathyl | 230 | 33.95% | 125 / 243 / 250 |
+| Windward Spine Part 6 | Serathyl | 162 | 33.87% | 125 / 250 / 252 |
+| Shattercap Isles Part 16 | Kaelvar | 83 | 40.76% | 125 / 248 / 250 |
+| Windward Spine Part 2 | Serathyl | 74 | 33.87% | 250 / 252 / 252 |
+| Verdant Thalos Part 6 | Kaelvar | 56 | 33.87% | 125 / 250 / 252 |
+| Windward Spine Part 5 | Serathyl | 11 | 33.87% | 125 / 252 / 252 |
+
+**Do not rank recipient political regions by RGB match.** The
+overlap percentages compare coarse source image color histograms
+and not labeled forest, alpine meadow, scrub, farmland or
+ecological feasibility. The elevation values are RGB-derived
+luminance and are not calibrated altitude or slope.
+
+### Critical authored-geography cross-check
+
+Direct inspection of canonical `regions.json` shows:
+
+- **Shattercap Isles** has `positionLabel =
+  kaelvar_northern_coast` and is a *broken northern island
+  fringe*, with cold maritime, conifer-island and rugged-shoal
+  expectations. A 54.32% RGB similarity to the southeastern
+  Coast 10 peninsula is **not geographic support** for
+  transferring the peninsula to Shattercap.
+- **Verdant Thalos** has `positionLabel =
+  kaelvar_southern_peninsula` and is authored as a
+  fertile southern coastal peninsula with Mediterranean
+  woodland, mixed forest, coastal scrub and low hills.
+  Its 41.95% RGB overlap is not sufficient to exclude it
+  from a proposed southern coastal reassignment.
+- **Auric Marches** has `positionLabel =
+  kaelvar_western_interior`, expecting dry scrub, steppe
+  and broken uplands. It also cannot be assigned a coastal
+  peninsula solely by closeness.
+- **Windward Spine** has `positionLabel =
+  serathyl_northern_mountains`, a high mountain-chain
+  subregion. Its southeast Kaelvar footprint remains a
+  plausible foreign-continent intrusion, rather than a
+  confirmed author-intended southern maritime highland.
+
+**New intra-Kaelvar QA concern:** previous source-label sampling
+placed Shattercap Part 7 (**25,342** provisional land pixels)
+and Part 15 (**4,464** pixels) on ink-inclusive Kaelvar
+mainland component 25. Part 15 also intersects this exact
+southeastern Windward Coast 10 crop, contributing **3,357**
+source terrain candidates to the local table. This raises
+a separate possible **same-continent northern-island-region
+versus southern-mainland placement error**. The old component
+25 is ink-inclusive: first check whether Shattercap Parts
+7 and 15 share a terrain-only component with the inland
+mainland, or whether coastline ink artificially joins true
+islands. Do not declare those polygons wrong before the
+native terrain-only crosswalk is reviewed.
+
+The `--coast10-review` JSON now includes
+`neighboringSourceTopologies`, an explicitly
+`FULL_CANONICAL_FOOTPRINT_NOT_ONLY_REVIEW_CROP`
+4-neighbor crosswalk for Shattercap Parts 7 and 15,
+Verdant Part 1 and Auric Part 4. This deliberately
+separates the full polygon topology from the **review-crop**
+color/elevation histograms and carries each authored
+positionLabel/summary for audit.
+
+### Revised decision
+
+1. **Do not auto-reassign Windward to Shattercap**, despite
+   Shattercap's higher source-RGB histogram overlap.
+2. **Prioritize actual physical southern-peninsula borders**,
+   investigate Verdant/coastal-ecotone placement and any
+   other authored southern Kaelvar region, and independently
+   investigate whether Shattercap's current Coast 10
+   footprint is misplaced.
+3. **Defer any canonical child-region redraw** until
+   source biome and elevation legend calibration,
+   treatment of waterways and the 12-pixel fragment,
+   and an explicit political/macro decision.
+4. **Separate physical geography from land use:** farmland
+   and vineyards require climatic, settlement and
+   hydrological evidence, not merely green or yellow
+   source map pixels.
+
+**Gate status:** owner numeric source extraction VERIFIED,
+local Coast 10 spatial/semantic recipient choice HELD.
+No source geometry, PNG, route, settlement or runtime
+files were altered.
