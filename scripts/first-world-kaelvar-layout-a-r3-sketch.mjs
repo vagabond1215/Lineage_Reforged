@@ -51,7 +51,10 @@ if(source.referenceImageWidthPx!==2048||
   registered?.width!==3976||registered?.height!==2235||
   spec.sourceIdentity.grid.width!==2048||
   spec.sourceIdentity.grid.height!==1152||
-  JSON.stringify(registered)!==JSON.stringify(spec.sourceIdentity.crop)||
+  registered.x!==spec.sourceIdentity.crop.x||
+  registered.y!==spec.sourceIdentity.crop.y||
+  registered.width!==spec.sourceIdentity.crop.width||
+  registered.height!==spec.sourceIdentity.crop.height||
   spec.acceptedPlanningHead!=='8731864d809bb8a18d6d74f4003b9cc941eb0e00'||
   spec.sourceIdentity.geometryGitBlob!==base.immutableEvidence.sourceGeometryGitBlob||
   spec.terrainOnlyPhysicalComponent.componentId!==30)
