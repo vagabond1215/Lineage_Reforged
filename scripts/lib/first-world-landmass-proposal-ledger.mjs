@@ -90,8 +90,17 @@ export function validateLandmassProposalLedger({
   const all = requireArray(sourceFootprints,'source footprint');
   const sourceById = new Map(all.map(f => [f.id,f]));
   if (sourceById.size !== all.length) fail('duplicate source feature ids');
-  if (!excluded.every(id => sourceById.has(id))) fail('accepted exclusion missing in source');
-  if (all.filter(f => !excluded.includes(f.id)).length !== 159)
+  // Approved artifacts may already have been removed from the canonical source.
+  // The historical 201-part JSON retains all 42; the cleaned source has 159
+  // and retains none. A partially reintroduced set must fail closed.
+  const exclusionsStillPresent = excluded.filter(id => sourceById.has(id));
+  if (exclusionsStillPresent.length !== 0 && exclusionsStillPresent.length !== 42)
+    fail('partially applied accepted exclusion manifest');
+  const sourceExclusionState = exclusionsStillPresent.length === 0
+    ? 'SOURCE_ALREADY_CLEAN'
+    : 'LEGACY_201_SOURCE_FILTERED_IN_MEMORY';
+  if (all.length !== (exclusionsStillPresent.length === 0 ? 159 : 201) ||
+      all.filter(f => !excluded.includes(f.id)).length !== 159)
     fail('effective footprint count drift');
   const reviews = requireArray(ledger.sourceFootprintReviews,'source review');
   unique(reviews.map(r => r.sourceFeatureId),'source footprint review');
@@ -171,6 +180,10 @@ export function validateLandmassProposalLedger({
     disputedOriginalFootprintReviews:reviews.length,
     pendingDisplacedClaims:displaced.length,
     proposedMaskCount:0,
+    sourceExclusionState,
+    physicalSourceFootprints:all.length,
+    appliedExclusionCount:exclusionsStillPresent.length,
+    effectiveSourceFootprints:159,
     placementApproved:false,canonicalWritable:false,
   };
 }
