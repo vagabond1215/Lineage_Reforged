@@ -121,7 +121,7 @@ test('reviewed boundaries reject water, macro overlap, unreviewed approval and f
   assert.throws(()=>planReviewedMacroOwnership({
     width:3,height:3,landMask:pixels,componentByCell:comps.labels,
     regions,decisions:[{id:'unsigned',macroId:'region.kaelvar',status:'approved',mask:west}],
-  }),/approval/);
+  }),/requires explicit reviewer evidence/);
   assert.throws(()=>planReviewedMacroOwnership({
     width:3,height:3,landMask:pixels,componentByCell:comps.labels,
     regions,decisions:[approval('west','region.kaelvar',west)],
