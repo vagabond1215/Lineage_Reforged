@@ -7,6 +7,8 @@
  * node scripts/first-world-source-pair-qa.mjs --connectivity > source-pair-connectivity.json
  * node scripts/first-world-source-pair-qa.mjs --coast10-review > coast10-ecology.json
  * node scripts/first-world-source-pair-qa.mjs --svg-coast10 > coast10-source-ecology.svg
+ * node scripts/first-world-source-pair-qa.mjs --kaelvar-locality > kaelvar-locality.json
+ * node scripts/first-world-source-pair-qa.mjs --svg-kaelvar > kaelvar-locality.svg
  */
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
@@ -21,10 +23,12 @@ import {buildSourcePairTopologySensitivity,summarizeSourcePairPilotFootprints}
   from './lib/first-world-source-pair-topology.mjs';
 import {coast10ReviewBounds,buildCoast10EnvironmentReview,coast10ReviewSvg}
   from './lib/first-world-coast10-ecology-review.mjs';
+import {collectKaelvarLocality,kaelvarLocalitySvg,KAELVAR_LOCALITY_IDS}
+  from './lib/first-world-kaelvar-locality-review.mjs';
 
 const args=process.argv.slice(2);
-if(args.length!==1 || !['--check','--svg-qa','--connectivity','--coast10-review','--svg-coast10'].includes(args[0])){
-  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa|--connectivity|--coast10-review|--svg-coast10');
+if(args.length!==1 || !['--check','--svg-qa','--connectivity','--coast10-review','--svg-coast10','--kaelvar-locality','--svg-kaelvar'].includes(args[0])){
+  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa|--connectivity|--coast10-review|--svg-coast10|--kaelvar-locality|--svg-kaelvar');
   process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -82,6 +86,49 @@ const suspectKeys=[
 ];
 for(const id of suspectKeys)
   if(!rows.some(r=>r.id===id))throw Error('Missing Coast 10/40 candidate: '+id);
+if(args[0]==='--kaelvar-locality'||args[0]==='--svg-kaelvar'){
+  if(args[0]==='--svg-kaelvar'){
+    const preview=kaelvarLocalitySvg({
+      width,height,classification:pair.classification,
+      biomeRgba,footprints,regions,selectedIds:KAELVAR_LOCALITY_IDS,
+    });
+    process.stdout.write(preview.svg);
+  }else {
+    const topology=buildSourcePairTopologySensitivity({
+      width,height,classification:pair.classification,
+    });
+    // Audit all Shattercap fragments, not merely the two large suspect
+    // polygon IDs. Distinguish mainland terrain from legitimate islands.
+    const allShattercapIds=footprints
+      .filter(p=>p.regionIds?.[0]==='region.shattercap_isles')
+      .map(p=>p.id).sort();
+    const selectedIds=[...new Set([...KAELVAR_LOCALITY_IDS,...allShattercapIds])];
+    const placement=collectKaelvarLocality({
+      width,height,classification:pair.classification,
+      terrainLabels:topology.grids.terrainOnly.four.labels,
+      footprints,regions,selectedIds,
+    });
+    const mainId=placement.physicalReference.terrainOnlyMainlandComponentId;
+    if(mainId===null)throw Error('Missing Auric reference terrain-only mainland component');
+    const shattercap=placement.rows.filter(r=>r.regionId==='region.shattercap_isles');
+    const sumTerrain=shattercap.reduce((n,r)=>n+r.terrainCandidatePixels,0);
+    const sumMain=shattercap.reduce((n,r)=>n+r.terrainCandidatePixelsOnReferenceComponent,0);
+    process.stdout.write(JSON.stringify({
+      ...placement,sourceIdentity,sourceImages:metadata,
+      fullShattercapReview:{
+        footprintCount:shattercap.length,
+        sumPerFootprintTerrainCandidatePixels:sumTerrain,
+        sumPerFootprintPixelsOnAuricReferenceMainland:sumMain,
+        sharePercentOfSummedFootprintPixels:sumTerrain?
+          Number((sumMain/sumTerrain*100).toFixed(2)):null,
+        caution:'Per-footprint sums may double count source polygons; not a unique union, not approved reassignment.',
+      },
+      nextGate:'Review placement SVG and authored northern-island vs southern-peninsula geography, then calibrate biome/elevation before drafting new boundaries.',
+      sourceGeometryWritable:false,
+    },null,2)+'\n');
+  }
+  process.exit(0);
+}
 if(args[0]==='--coast10-review'||args[0]==='--svg-coast10'){
   const focusId='feature.region_windward_spine.part_1';
   const focus=footprints.find(p=>p.id===focusId);
