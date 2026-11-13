@@ -4,6 +4,7 @@
  *
  * node scripts/first-world-source-pair-qa.mjs --check > source-pair-qa.json
  * node scripts/first-world-source-pair-qa.mjs --svg-qa > source-pair-qa.svg
+ * node scripts/first-world-source-pair-qa.mjs --connectivity > source-pair-connectivity.json
  */
 import {readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
@@ -14,10 +15,12 @@ import {decodeSourcePng} from './lib/first-world-source-png.mjs';
 import {registeredRgba} from './lib/first-world-environment-profiles.mjs';
 import {classifySourcePair,sourcePairFootprintRows,sourcePairQaSvg}
   from './lib/first-world-source-pair-qa.mjs';
+import {buildSourcePairTopologySensitivity,summarizeSourcePairPilotFootprints}
+  from './lib/first-world-source-pair-topology.mjs';
 
 const args=process.argv.slice(2);
-if(args.length!==1 || !['--check','--svg-qa'].includes(args[0])){
-  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa');
+if(args.length!==1 || !['--check','--svg-qa','--connectivity'].includes(args[0])){
+  console.error('Usage: node scripts/first-world-source-pair-qa.mjs --check|--svg-qa|--connectivity');
   process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -75,6 +78,33 @@ const suspectKeys=[
 ];
 for(const id of suspectKeys)
   if(!rows.some(r=>r.id===id))throw Error('Missing Coast 10/40 candidate: '+id);
+if(args[0]==='--connectivity'){
+  const topology=buildSourcePairTopologySensitivity({
+    width,height,classification:pair.classification,
+  });
+  const legacyPixels=pair.report.legacyThresholdLandPixels;
+  const inkScenarioPixels=topology.summary.sharedInkIncluded.landCandidatePixels;
+  if(topology.summary.otherUnresolvedPixels===0 && inkScenarioPixels!==legacyPixels)
+    throw Error('Shared-ink sensitivity mask did not reproduce legacy threshold');
+  const pilots=summarizeSourcePairPilotFootprints({
+    width,height,classification:pair.classification,topology,footprints,
+    selectedIds:suspectKeys,
+  });
+  process.stdout.write(JSON.stringify({
+    ...topology.summary,sourceIdentity,sourceImages:metadata,
+    registration:{crop,width,height},
+    excludedArtifactCount:42,retainedFootprints:footprints.length,
+    coast10And40:pilots,
+    baselineLegacyReference:{landPixels:585834,fourNeighborComponents:167,
+      eightNeighborComponents:160},
+    baselineLegacyReproduced:inkScenarioPixels===585834 &&
+      topology.summary.sharedInkIncluded.fourNeighborComponents===167 &&
+      topology.summary.sharedInkIncluded.eightNeighborComponents===160,
+    reviewGate:'HOLD: component joins and ink-only artifacts are not political decisions or a certified physical shoreline.',
+    sourceGeometryWritable:false,
+  },null,2)+'\\n');
+  process.exit(0);
+}
 const uncertain=row=>row.candidateClasses.SHARED_NONBLUE_UNRESOLVED.pixels+
   row.candidateClasses.BLUE_DIVERGENCE_UNRESOLVED.pixels+
   row.candidateClasses.ALPHA_UNRESOLVED.pixels;
