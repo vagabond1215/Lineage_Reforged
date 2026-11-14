@@ -1,0 +1,337 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1o-source-grounded-mainland-candidate-polygons.v1",
+  "date": "2026-11-14",
+  "status": "REVERSIBLE_FOUR_MAINLAND_REGION_POLYGON_CANDIDATES_OWNER_REVIEW_HELD",
+  "baseCommit": "8c317d48ef405ca29830d4dc4959ce21f07693bb",
+  "sourcePaths": {
+    "c1n": "docs/design/kaelvar-c1n-indexed-north-coast-atlas-2026-11-14.json",
+    "c1f": "docs/design/kaelvar-c1f-owner-corrected-placement-guides-2026-11-13.json",
+    "c1j": "docs/design/kaelvar-c1j-coastline-sector-review-2026-11-13.json",
+    "c1m": "docs/design/kaelvar-c1m-owner-shore-correction-2026-11-14.json"
+  },
+  "source": {
+    "path": "packages/content/base/world/world_map_features.json",
+    "mainlandContourId": "feature.coastline.first_world.part_10",
+    "originalEdges": 599,
+    "observedParentBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "frame": "world_map.first_world.reference",
+    "sourceCoastlineCertified": false,
+    "politicalOwnershipApproved": false
+  },
+  "mainlandTerrainWitness": {
+    "componentId": 30,
+    "originalCandidateCells": 79419,
+    "priorUnassignedCandidateCells": 26795,
+    "detachedComponentsHeld": 18
+  },
+  "regions": [
+    {
+      "id": "region.auric_marches",
+      "label": "Auric Marches",
+      "color": "#F3BF69",
+      "confidence": "PROVISIONAL_MEDIUM",
+      "sourceArc": {
+        "startVertex": 420,
+        "endVertex": 455
+      },
+      "inlandWaypoints": [
+        [
+          121,
+          258
+        ],
+        [
+          167,
+          239
+        ],
+        [
+          200,
+          240
+        ],
+        [
+          216,
+          264
+        ],
+        [
+          216,
+          294
+        ],
+        [
+          201,
+          315
+        ],
+        [
+          155,
+          325
+        ]
+      ],
+      "reason": "Western source-trace perimeter and C1-F mineral-steppe core; the inland bends are interpretive, leave a northern transition gap.",
+      "uncertainties": [
+        "western capes not necessarily a calibrated sea edge",
+        "unverified steppe-to-dryland boundary"
+      ]
+    },
+    {
+      "id": "region.kharuun_drylands",
+      "label": "Kharuun Drylands",
+      "color": "#D89B61",
+      "confidence": "PROVISIONAL_LOW_SHORE_ENDPOINTS",
+      "sourceArc": {
+        "startVertex": 35,
+        "endVertex": 59
+      },
+      "inlandWaypoints": [
+        [
+          428,
+          251
+        ],
+        [
+          443,
+          280
+        ],
+        [
+          422,
+          302
+        ],
+        [
+          388,
+          305
+        ],
+        [
+          355,
+          311
+        ],
+        [
+          323,
+          322
+        ],
+        [
+          285,
+          311
+        ],
+        [
+          256,
+          307
+        ],
+        [
+          234,
+          280
+        ],
+        [
+          225,
+          245
+        ],
+        [
+          251,
+          217
+        ],
+        [
+          281,
+          200
+        ],
+        [
+          307,
+          190
+        ]
+      ],
+      "reason": "Inner northern bay turns south and east across exactly recorded vertices 35..59, adjacent to central tan/dryland placement intent. Only edges 35..58 are tentatively attributed; the two endpoints and bay hydrology remain unknown.",
+      "uncertainties": [
+        "start at vertex 35 could be shifted to 30 or 40",
+        "end at vertex 59 could shift to 55 or 65",
+        "original map colors do not certify aridity or salt water",
+        "all return waypoints require physical-boundary review"
+      ]
+    },
+    {
+      "id": "region.verdant_thalos",
+      "label": "Verdant Thalos",
+      "color": "#45D5A0",
+      "confidence": "PROVISIONAL_MEDIUM_ANCHORS",
+      "sourceArc": {
+        "startVertex": 195,
+        "endVertex": 349
+      },
+      "inlandWaypoints": [
+        [
+          261,
+          406
+        ],
+        [
+          271,
+          367
+        ],
+        [
+          289,
+          341
+        ],
+        [
+          324,
+          330
+        ],
+        [
+          356,
+          337
+        ],
+        [
+          382,
+          335
+        ]
+      ],
+      "reason": "Southeastern southern mainland, including the source-traced promontory and all three approved inclusion anchors; north seam held as a hypothesis, never a river placement.",
+      "uncertainties": [
+        "northwest transition to Auric unresolved",
+        "Kharuun/Verdant escarpment requires ecological and relief evidence"
+      ]
+    },
+    {
+      "id": "region.veyrholm_shore",
+      "label": "Veyrholm Shore",
+      "color": "#92B8F1",
+      "confidence": "PROVISIONAL_MEDIUM_COAST_LOW_INLAND",
+      "sourceArc": {
+        "startVertex": 475,
+        "endVertex": 24
+      },
+      "inlandWaypoints": [
+        [
+          335,
+          171
+        ],
+        [
+          321,
+          178
+        ],
+        [
+          291,
+          185
+        ],
+        [
+          270,
+          188
+        ],
+        [
+          246,
+          178
+        ],
+        [
+          224,
+          189
+        ],
+        [
+          201,
+          186
+        ],
+        [
+          181,
+          194
+        ],
+        [
+          157,
+          202
+        ],
+        [
+          144,
+          219
+        ],
+        [
+          117,
+          213
+        ],
+        [
+          98,
+          218
+        ],
+        [
+          83,
+          207
+        ]
+      ],
+      "reason": "Northwestern and north-central source trace wrapped through edge 598 to edge 0. Deliberately variable inland width with headlands and deeper benches, not the rejected fixed-width northern ribbon; all three dry interior exclusion anchors stay outside.",
+      "uncertainties": [
+        "northwestern transition to Auric held",
+        "eastern bay endpoint at vertex 24 not approved",
+        "eastern headland 75..115 deliberately not filled"
+      ]
+    }
+  ],
+  "investigativeArcs": [
+    {
+      "id": "kharuun_inner_bay_primary",
+      "candidateRegionId": "region.kharuun_drylands",
+      "sourceStartEdge": 35,
+      "sourceEndEdge": 58,
+      "confidence": "LOW",
+      "status": "PROPOSED_SOURCE_INDEXED_NOT_APPROVED",
+      "endpointOptions": [
+        {
+          "startVertex": 30,
+          "endVertex": 60,
+          "meaning": "wider original inner-bay review"
+        },
+        {
+          "startVertex": 40,
+          "endVertex": 55,
+          "meaning": "narrower fallback"
+        }
+      ]
+    },
+    {
+      "id": "veyrholm_northwestern_coast_primary",
+      "candidateRegionId": "region.veyrholm_shore",
+      "sourceStartEdge": 475,
+      "sourceEndEdge": 23,
+      "wrapsZero": true,
+      "confidence": "MEDIUM_SOURCE_LOW_OWNERSHIP",
+      "status": "PROPOSED_SOURCE_INDEXED_NOT_APPROVED"
+    },
+    {
+      "id": "northeast_headland",
+      "candidateRegionId": null,
+      "sourceStartEdge": 75,
+      "sourceEndEdge": 114,
+      "confidence": "UNRESOLVED",
+      "status": "OWNERSHIP_WITHHELD_NOT_IN_POLYGON",
+      "possibleRegions": [
+        "region.veyrholm_shore",
+        "region.kharuun_drylands"
+      ]
+    },
+    {
+      "id": "bay_to_headland_transition",
+      "candidateRegionId": null,
+      "sourceStartEdge": 59,
+      "sourceEndEdge": 74,
+      "confidence": "UNRESOLVED",
+      "status": "GAP_PRESERVED"
+    },
+    {
+      "id": "east_south_coastline",
+      "candidateRegionId": null,
+      "sourceStartEdge": 135,
+      "sourceEndEdge": 175,
+      "confidence": "UNRESOLVED",
+      "status": "NOT_EQUATED_WITH_KHARUUN_NORTH_SHORE"
+    }
+  ],
+  "ownerAnchors": {
+    "c1fMustBePreserved": true,
+    "veyrholmInlandExcludedCount": 3,
+    "verdantPeninsulaIncludedCount": 3
+  },
+  "politicalHolds": {
+    "canonicalWritable": false,
+    "newActiveRegionGeometryRefs": 0,
+    "politicalCoastOwnershipApproved": false,
+    "sourceContourCertified": false,
+    "largeNortheastIslandWholeUnclaimed": true,
+    "detachedClaims": [],
+    "shattercapRegionPolygon": null,
+    "coast40Claim": null,
+    "foreignWindwardParent": "region.serathyl",
+    "portsPlaced": 0,
+    "wellOrRiverPlacements": 0,
+    "waterRoutesPlaced": 0,
+    "saltBasinsPlaced": 0,
+    "noLegacyHexChanges": true
+  }
+}
