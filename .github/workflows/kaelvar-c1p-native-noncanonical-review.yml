@@ -587,6 +587,38 @@ jobs:
             'KHARUUN_VERDANT_SOUTHERN_TRANSITION',
             'AURIC_VERDANT_SOUTHWESTERN_TRANSITION']);
           assert.equal(r.reviewWindows.length,5);
+          assert.deepEqual(r.reviewWindows.map(x=>x.minimumUnassignedIntermediateCells),
+            [19,27,10,15,121]);
+          assert.deepEqual(r.reviewWindows.map(x=>x.shortestPixelSteps),
+            [20,28,11,16,122]);
+          assert.deepEqual(r.reviewWindows.map(x=>x.tentativeMidGapReviewPoint),[
+            {x:222,y:263},{x:107,y:235},{x:292,y:190},
+            {x:319,y:326},{x:269,y:307}]);
+          assert.deepEqual(r.reviewWindows.map(x=>x.pathSha256),[
+            '0c23e493ed4734a96409086a0930980501f79c2d8a4f84b7507dc60997b7d433',
+            '37c6948a3d5dc7e2e9e6dd7eaf1047f888ca196b68d0d194ad5372cf5b28480e',
+            'fe195e3afa7ed20105bea1b23d7f32134abaee9152f02cf6c5412bd445bb9860',
+            '5363789bd3854425a2e984ca736bf21518235d0ae91b57cbc209270c9015e577',
+            'c9d45bb5a7c55d06297cee57de7a8d7a95cbf33cff77cf4aa23889ea5511751b'
+          ]);
+          assert.deepEqual(r.reviewWindows.map(x=>x.endpointSamples),[
+            [{x:212,y:263},{x:232,y:263}],
+            [{x:102,y:244},{x:107,y:221}],
+            [{x:292,y:185},{x:292,y:196}],
+            [{x:319,y:318},{x:319,y:334}],
+            [{x:218,y:297},{x:290,y:347}]
+          ]);
+          assert.deepEqual(r.reviewWindows.map(x=>x.sourceGridInventory.otherPhysicalComponent),
+            [0,7,0,0,120]);
+          assert.deepEqual(r.reviewWindows.map(x=>x.sourceGridInventory.otherRegion),
+            [0,2358,75,0,857]);
+          assert.deepEqual(r.nextTechnicalInspectionPriority.map(x=>x.id),[
+            'VEYRHOLM_KHARUUN_NORTHERN_INLAND',
+            'KHARUUN_VERDANT_SOUTHERN_TRANSITION',
+            'AURIC_KHARUUN_WESTERN_STEPPE',
+            'AURIC_VEYRHOLM_NORTHWEST',
+            'AURIC_VERDANT_SOUTHWESTERN_TRANSITION'
+          ]);
           for(const x of r.reviewWindows){
             assert.equal(x.endpointsPresent,true);
             assert.equal(x.fourNeighborStrictMainlandOnly,true);
