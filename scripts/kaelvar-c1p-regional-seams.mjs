@@ -26,10 +26,12 @@ import {selectC1JOriginalVectorEdges}
  from './lib/kaelvar-c1j-vector-coastline-review.mjs';
 import {buildC1PRegionalReview}
  from './lib/kaelvar-c1p-regional-seam-review.mjs';
+import {buildC1QHeadlandReview}
+ from './lib/kaelvar-c1q-headland-continuity.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -91,6 +93,17 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
+let headland=null;
+if(mode==='--headland-check'||mode==='--headland-svg'){
+ const q=json('docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json');
+ headland=buildC1QHeadlandReview({
+  c:q,p,r:report,revised,selected,labels,ownership:imageMasks.refined
+ });
+ if(mode==='--headland-check'){
+  process.stdout.write(JSON.stringify(headland,null,2)+'\n');
+  process.exit(0);
+ }
+}
 if(mode==='--check'){
  process.stdout.write(JSON.stringify(report,null,2)+'\n');
  process.exit(0);
@@ -178,12 +191,12 @@ const kh='<path d="'+arc(35,59)+
  '" fill="none" stroke="#FFD344" stroke-width="3.3"/>';
 const ne='<path d="'+arc(75,116)+
  '" fill="none" stroke="#FFAC68" stroke-width="2.3" stroke-dasharray="3 3"/>';
-const panel=(x,y,w,h,view,mask,geom)=>'<svg x="'+x+'" y="'+y+
+const panel=(x,y,w,h,view,mask,geom,extra='')=>'<svg x="'+x+'" y="'+y+
  '" width="'+w+'" height="'+h+'" viewBox="'+view.join(' ')+
  '" preserveAspectRatio="xMidYMid meet">'+background+
  '<image x="0" y="0" width="'+width+'" height="'+height+
  '" preserveAspectRatio="none" href="data:image/png;base64,'+mask+'"/>'+
- sourceInk+held+outlines(geom)+kh+ne+endpoints+'</svg>'+
+ sourceInk+held+outlines(geom)+kh+ne+endpoints+extra+'</svg>'+
  '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+
  '" fill="none" stroke="#9DB1C7" stroke-width="2"/>';
 const title=(x,y,t,size=20,color='#F2F6FA')=>
@@ -216,6 +229,34 @@ if(mode==='--north-svg'){
  title(40,1034,'C1-O baseline northern inland edge',20)+
  title(1310,1034,'C1-P revised variable-depth northern inland edge',20)+
  '</svg>\n';
+ process.stdout.write(s);
+ process.exit(0);
+}
+
+if(mode==='--headland-svg'){
+ const path=headland.candidateCorridors[0];
+ const seed={x:390,y:336},target={x:492,y:215};
+ const pathStr=path.found?path.path.map((q,i)=>(i?'L':'M')+
+  (q.x+.5)+' '+(q.y+.5)).join(' '):'';
+ const draw='<path d="'+pathStr+
+  '" fill="none" stroke="#55F7F2" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="3.2 2.2"/>'+
+  [seed,target].map((q,i)=>'<circle cx="'+(q.x+.5)+'" cy="'+(q.y+.5)+
+   '" r="4.5" fill="'+(i?'#FFCF7A':'#58F7ED')+
+   '" stroke="#071828" stroke-width="1.5"/>').join('');
+ const view=[375,186,170,170];
+ const intro=path.found?'Source terrain-candidate corridor exists; not an approved political or travel route':
+  'No verified path in source-constrained search window: Verdant extension HELD';
+ const s='<svg xmlns="http://www.w3.org/2000/svg" width="2540" height="1130" viewBox="0 0 2540 1130">'+head+
+  title(35,44,'C1-Q / NORTHEAST HEADLAND - TWO OPTIONS, NO REGION ALLOCATION',28)+
+  title(35,77,'All 79,419 terrain candidates remain in C1-P accounting; islands, source coastline and canon untouched',18,'#FFCFA1')+
+  panel(35,115,1200,875,view,imgs[1],revised)+
+  panel(1305,115,1200,875,view,imgs[1],revised,draw)+
+  title(45,1030,'OPTION A - KEEP HEADLAND AND EASTERN FLANK UNASSIGNED',21)+
+  title(1312,1030,'OPTION B - VERDANT CONNECTION FEASIBILITY ONLY',21)+
+  title(45,1070,'Gold Kharuun 35-58 / Orange NE 75-115 unassigned / Pink detached coast contours',16,'#FFE0A6')+
+  title(1312,1070,intro,16,path.found?'#98FFEF':'#FBB9A4')+
+  title(45,1101,'A path through uncalibrated source terrain candidates does not certify mainland walkability, sea type, sovereignty or a valid new polygon.',16)+
+  '</svg>\n';
  process.stdout.write(s);
  process.exit(0);
 }
