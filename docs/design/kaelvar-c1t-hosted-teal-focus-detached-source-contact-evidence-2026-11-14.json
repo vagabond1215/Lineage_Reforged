@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1t-hosted-native-teal-focus-source-contact-witness.v1",
+  "date": "2026-11-14",
+  "status": "HOSTED_C1T_SOURCE_MORPHOLOGY_PASSED_HEADLAND_ISLAND_AND_CANONICAL_HELD",
+  "verifiedImplementationCommit": "a3ca77685e3c0a11a95a315c856e4663ccc0edb6",
+  "runUrl": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43642540816",
+  "artifactId": 14133080305,
+  "artifactName": "c1p-noncanonical-native-terrain-review",
+  "artifactRetentionDays": 7,
+  "executionEnvironment": "GitHub-hosted Ubuntu Node 22; owner Windows-native acceptance not claimed",
+  "tests": {
+    "passed": 41,
+    "failed": 0,
+    "scannedCodeFiles": 880,
+    "newLegacyHexDependencies": 0
+  },
+  "source": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceCoastEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "focus": {
+    "reference": [
+      400,
+      317
+    ],
+    "sourcePngPixel": [
+      837,
+      675
+    ],
+    "biomeRGB": [
+      4,
+      159,
+      169
+    ],
+    "elevationRGB": [
+      4,
+      159,
+      169
+    ],
+    "sourceLayerAlpha": [
+      255,
+      255
+    ],
+    "originalTerrainLabel": 0,
+    "originalOwner": 0,
+    "onSelectedC1STealOnly1pxPath": true,
+    "selectedC1SPathUnknownTealSamples": 1,
+    "tealOnlyFull1px": {
+      "connected": true,
+      "steps": 223,
+      "sha256": "0cfbc0fac95776681b79b48d9903b73ee4c588a09e9526f268e06b801249c16b"
+    },
+    "onlyThisSingleTealSample1px": {
+      "connected": false
+    },
+    "allTealExceptThisSample1px": {
+      "connected": true,
+      "steps": 223,
+      "sha256": "47090514e4a31be6d14d6c60762c31bc2219118736cf026511cb6cfef86c6cd4"
+    },
+    "interpretation": "The selected path crosses this exact teal pixel, but this pixel is not uniquely required for 1-pixel-clearance connectivity under speculative teal admissibility. Reclassifying it as land is not authorized."
+  },
+  "focus17by17Neighborhood": {
+    "strictOriginalCandidate": 205,
+    "sharedBlack": 24,
+    "sharedTeal": 12,
+    "sharedOther": 1,
+    "otherNotShared": 22,
+    "outsideOriginalContour": 25
+  },
+  "originalDetachedAdjacency": {
+    "uncertainPixelClasses": {
+      "black": 31,
+      "teal": 0,
+      "other": 0
+    },
+    "totalUncertainOriginalSourceReferenceSamples": 31,
+    "physicalComponents": {
+      "51": {
+        "adjacentBlackSamples": 8,
+        "points": [
+          [
+            466,
+            206
+          ],
+          [
+            467,
+            210
+          ],
+          [
+            471,
+            210
+          ],
+          [
+            468,
+            211
+          ],
+          [
+            470,
+            211
+          ],
+          [
+            468,
+            212
+          ],
+          [
+            470,
+            212
+          ],
+          [
+            469,
+            213
+          ]
+        ]
+      },
+      "78": {
+        "adjacentBlackSamples": 12,
+        "points": [
+          [
+            509,
+            309
+          ],
+          [
+            508,
+            310
+          ],
+          [
+            510,
+            310
+          ],
+          [
+            511,
+            310
+          ],
+          [
+            512,
+            311
+          ],
+          [
+            513,
+            311
+          ],
+          [
+            509,
+            312
+          ],
+          [
+            514,
+            312
+          ],
+          [
+            510,
+            313
+          ],
+          [
+            511,
+            313
+          ],
+          [
+            512,
+            313
+          ],
+          [
+            513,
+            313
+          ]
+        ]
+      },
+      "113": {
+        "adjacentBlackSamples": 11,
+        "points": [
+          [
+            498,
+            423
+          ],
+          [
+            499,
+            423
+          ],
+          [
+            497,
+            424
+          ],
+          [
+            500,
+            424
+          ],
+          [
+            498,
+            425
+          ],
+          [
+            499,
+            426
+          ],
+          [
+            503,
+            426
+          ],
+          [
+            499,
+            427
+          ],
+          [
+            503,
+            427
+          ],
+          [
+            501,
+            428
+          ],
+          [
+            502,
+            428
+          ]
+        ]
+      }
+    },
+    "strictOriginalSourcePair": {
+      "potentialReachableSourceContacts": 0,
+      "originalComponentLabelsPotentiallyTouched": []
+    },
+    "tealOnlyHypothesis": {
+      "potentialReachableSourceContacts": 0,
+      "originalComponentLabelsPotentiallyTouched": []
+    },
+    "blackAndTealHypothesis": {
+      "potentialReachableSourceContacts": 22,
+      "originalComponentLabelsPotentiallyTouched": [
+        51,
+        78,
+        113
+      ]
+    },
+    "allSharedNonblueHypothesis": {
+      "potentialReachableSourceContacts": 22,
+      "originalComponentLabelsPotentiallyTouched": [
+        51,
+        78,
+        113
+      ]
+    },
+    "actuallyAssignedOrMergedPhysicalComponents": 0,
+    "interpretation": "Adjacent unresolved black pixels may expose candidate connectivity to separate original components in a permissive hypothetical mask. The original physical component labels remain unchanged, and contact alone does not certify physical attachment."
+  },
+  "acceptedC1PUnchanged": {
+    "mainlandTerrainCandidateCells": 79419,
+    "regionalCells": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "assigned": 52449,
+    "unassigned": 26970,
+    "originalKharuunCoastEdges": [
+      35,
+      58
+    ],
+    "headlandOriginalEdges": [
+      75,
+      115
+    ],
+    "newTerritorialCells": 0,
+    "newDetachedClaims": 0,
+    "newSourceRasterOrVectorChanges": 0,
+    "canonicalWritable": false
+  },
+  "holds": {
+    "southeasternVerdantPeninsulaPreserved": true,
+    "northeastHeadlandUnassigned": true,
+    "shattercapIslesUnassigned": true,
+    "largeNortheasternIslandUnassigned": true,
+    "coast40Unclaimed": true,
+    "serathylWindwardUntransferred": true,
+    "newPortsWellsRoutesRiversSaltBasins": 0
+  },
+  "nextGate": "C1-U source coastline/river-ink semantics and possible strict source-safe polygon review. Do not use unresolved teal or shared black to justify annexation."
+}
