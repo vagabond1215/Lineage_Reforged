@@ -201,7 +201,7 @@ checkout accumulation without weakening unique-work preservation.
 
 ### Checkout budget
 
-- Keep one primary local checkout (`C:\\Codex\\EoL`).
+- Keep one primary local checkout (`C:\Codex\EoL`).
 - Use **at most two concurrent persistent task worktrees by default**, beyond
   the primary checkout. A third requires a documented active consumer,
   owner, reason and closeout trigger in the run handoff. The limit is a
@@ -261,7 +261,7 @@ locks, junctions, active processes and output consumers.
 ### Storage telemetry and responsibility
 
 Codex owns **local** inventory, cleanup and readback because the GitHub
-Connector cannot inspect `C:\\Codex` or certify Windows process, dependency,
+Connector cannot inspect `C:\Codex` or certify Windows process, dependency,
 junction and untracked-file state. Connector may inspect remote branches,
 PRs and design reviews, but must not claim a local worktree was cleaned.
 
