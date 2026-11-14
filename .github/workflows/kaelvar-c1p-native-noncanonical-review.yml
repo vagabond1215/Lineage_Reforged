@@ -12,6 +12,9 @@ on:
       - 'tests/unit/kaelvar-c1q-headland-continuity.test.mjs'
       - 'scripts/lib/kaelvar-c1r-headland-source-diagnostics.mjs'
       - 'tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs'
+      - 'scripts/lib/kaelvar-c1s-headland-ink-sensitivity.mjs'
+      - 'tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs'
+      - 'docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json'
       - 'docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json'
       - 'docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json'
       - 'docs/design/kaelvar-c1p-refined-mainland-seam-candidates-2026-11-14.json'
@@ -40,13 +43,15 @@ jobs:
           node --check scripts/lib/kaelvar-c1p-regional-seam-review.mjs
           node --check scripts/lib/kaelvar-c1q-headland-continuity.mjs
           node --check scripts/lib/kaelvar-c1r-headland-source-diagnostics.mjs
+          node --check scripts/lib/kaelvar-c1s-headland-ink-sensitivity.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
           node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
           node --check tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs
+          node --check tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -178,6 +183,53 @@ jobs:
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --bottleneck-svg > "$RUNNER_TEMP/c1r-bottleneck-comparison.svg"
           test -s "$RUNNER_TEMP/c1r-bottleneck-comparison.svg"
+      - name: C1-S source-pair shared-ink sensitivity without territorial allocation
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --ink-check > "$RUNNER_TEMP/c1s-ink-sensitivity.json"
+          node - "$RUNNER_TEMP/c1s-ink-sensitivity.json" <<'NODE'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1S_UNCERTAIN_SHARED_SOURCE_INK_SENSITIVITY_ONLY_CANONICAL_HELD');
+          assert.equal(r.inputWitness.sourceContourVertices,599);
+          assert.deepEqual(r.inputWitness.protectedHeadlandSourceEdges,[75,115]);
+          assert.equal(r.immutableC1P.mainlandTerrainCandidateCells,79419);
+          assert.equal(r.immutableC1P.assigned,52449);
+          assert.equal(r.immutableC1P.unassigned,26970);
+          assert.deepEqual(r.immutableC1P.perRegion,[5632,18624,19182,9011]);
+          assert.equal(r.immutableC1P.changedSourcePixels,0);
+          assert.equal(r.immutableC1P.changedOriginalTerrainLabels,0);
+          assert.equal(r.immutableC1P.newlyAssignedRegions,0);
+          assert.equal(r.immutableC1P.detachedComponentsClaimed,0);
+          assert.equal(r.immutableC1P.canonicalWritable,false);
+          assert.equal(r.classification.eligibleTotal,
+            Object.values(r.classification.eligibleUncertainReferenceSamples)
+              .reduce((a,b)=>a+b,0));
+          const ids=['ORIGINAL_SOURCE_PAIR_ONLY','HYPOTHETICAL_BLACK_ONLY',
+            'HYPOTHETICAL_TEAL_ONLY','HYPOTHETICAL_BLACK_AND_TEAL',
+            'HYPOTHETICAL_ALL_SHARED_NONBLUE'];
+          assert.deepEqual(r.scenarios.map(x=>x.id),ids);
+          assert.deepEqual(r.scenarios[0].clearance.map(x=>x.found),[true,false,false]);
+          assert.equal(r.scenarios[0].clearance[0].pixelSteps,223);
+          assert.equal(r.scenarios[0].clearance[0].pathSha256,
+            '0147077f649823002cb7ef7a0d40d6617c0fc699ee3b34337fcfb8ff82b1b01a');
+          assert.equal(r.scenarios[0].hypotheticalCandidateSamples,0);
+          assert.equal(r.scenarios[4].hypotheticalCandidateSamples,r.classification.eligibleTotal);
+          for(const row of r.scenarios){
+            assert.equal(row.originalMainlandLabelsChanged,0);
+            assert.equal(row.actualTerritorialPixelsAssigned,0);
+            assert.equal(row.noSourceOrPoliticalPublication,true);
+            assert.equal(row.clearance.length,3);
+            assert.equal(row.pathHypotheticalUnknownUsage.length,3);
+            assert.equal(Object.values(row.hypotheticalByClass)
+               .reduce((a,b)=>a+b,0),row.hypotheticalCandidateSamples);
+          }
+          assert.equal(r.limits.hypotheticalMasksAreNotCertifiedLandSea,true);
+          console.log('C1-S conditional source-ink connectivity: '+
+            r.scenarios.map(x=>x.id+' '+x.clearance.map(c=>c.found).join('/')).join('; '));
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --ink-svg > "$RUNNER_TEMP/c1s-ink-sensitivity-preview.svg"
+          test -s "$RUNNER_TEMP/c1s-ink-sensitivity-preview.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -191,5 +243,7 @@ jobs:
             ${{ runner.temp }}/c1q-headland-options.svg
             ${{ runner.temp }}/c1r-bottleneck-report.json
             ${{ runner.temp }}/c1r-bottleneck-comparison.svg
+            ${{ runner.temp }}/c1s-ink-sensitivity.json
+            ${{ runner.temp }}/c1s-ink-sensitivity-preview.svg
           if-no-files-found: warn
           retention-days: 7
