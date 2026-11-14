@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1r-source-candidate-headland-bottleneck-probe.v1",
+  "date": "2026-11-14",
+  "status": "REVIEW_ONLY_WIDER_CORRIDOR_AND_SOURCE_PIXEL_CLASSIFICATION_CANONICAL_HELD",
+  "pinnedParentHead": "cc1a206b148d3d10c783aa9917575031bc360906",
+  "c1qSourcePath": "docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json",
+  "sourceVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+  "originalBiomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+  "originalElevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+  "sampleDimensions": {
+    "width": 2048,
+    "height": 1152
+  },
+  "sourceCrop": {
+    "x": 60,
+    "y": 60,
+    "width": 3976,
+    "height": 2235
+  },
+  "baselineWindowInclusive": {
+    "minX": 375,
+    "maxX": 540,
+    "minY": 190,
+    "maxY": 350
+  },
+  "widenedWindowInclusive": {
+    "minX": 300,
+    "maxX": 590,
+    "minY": 155,
+    "maxY": 465
+  },
+  "sourceStart": {
+    "x": 390,
+    "y": 336
+  },
+  "sourceTarget": {
+    "x": 492,
+    "y": 215
+  },
+  "sourceComponentId": 30,
+  "permittedOwners": [
+    0,
+    3
+  ],
+  "disallowedOwners": [
+    1,
+    2,
+    4
+  ],
+  "clearances": [
+    0,
+    1,
+    2
+  ],
+  "connectivity": 4,
+  "outputs": {
+    "compareWindowConnectivity": true,
+    "sourceAdjacentBlockerReasons": true,
+    "reportNarrowPathRuns": true,
+    "alternatePathDisjointFromBaselineInterior": true,
+    "originalImageSamplesOnly": true,
+    "drawReviewOnlySourceUnderlay": true
+  },
+  "immutableHolds": {
+    "previousC1PAssigned": 52449,
+    "previousC1PUnassigned": 26970,
+    "sourceMainlandTerrainCandidates": 79419,
+    "kharuunOriginalSourceEdgesInclusive": [
+      35,
+      58
+    ],
+    "northeastHeadlandOriginalSourceEdgesInclusive": [
+      75,
+      115
+    ],
+    "verdantSoutheasternPeninsulaIncluded": true,
+    "originalCoastlineUnmodified": true,
+    "northeastHeadlandSovereigntyApproved": false,
+    "shattercapIslandClaims": 0,
+    "largeNortheasternIslandClaims": 0,
+    "detachedComponentClaims": 0,
+    "coast40Claim": null,
+    "foreignWindwardParent": "region.serathyl",
+    "newPortsWellsRiversRoutesSaltBasins": 0,
+    "newLegacyHexDependencies": 0,
+    "canonicalWritable": false
+  },
+  "warnings": [
+    "Source-pair blue/shared RGB labels are diagnostics, not certified land/sea or ecology.",
+    "A candidate mask can contain a single-sample connection that does not establish physical width.",
+    "Widening an uncalibrated pixel-search window cannot itself authorize a sovereign border or travel route."
+  ]
+}
