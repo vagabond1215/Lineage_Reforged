@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1v-pinned-native-original-component51-morphology-evidence.v1",
+  "date": "2026-11-14",
+  "status": "C1V_HOSTED_NATIVE_ACCEPTED_SEPARATE_COMPONENT_HELD_SOURCE_INK_UNCALIBRATED_POLITICAL_UNASSIGNED",
+  "testedImplementationCommit": "2392501df295967897ef540040f94f6d3e5e775f",
+  "run": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43648675004",
+  "artifactId": 14135321430,
+  "artifactName": "c1p-noncanonical-native-terrain-review",
+  "artifactRetentionDays": 7,
+  "executionEnvironment": "GitHub-hosted Ubuntu Node 22; Windows owner-local execution not claimed",
+  "tests": {
+    "passed": 51,
+    "failed": 0,
+    "codeFilesScanned": 884,
+    "newLegacyHexDependencies": 0
+  },
+  "exactNativeReportSha256": "b9ce8c4b7b4c6a0d7349ac1c003544bf6a4ca46d4dca4e1a2d98a6bd1c539e95",
+  "originalSource": {
+    "vectorGitBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceMainlandContourEdges": 599,
+    "headlandReviewEdgesInclusive": [
+      75,
+      115
+    ],
+    "originalBiomePngSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "originalElevationPngSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "physicalComponent51": {
+    "originalTerrainLabel": 51,
+    "sourceCandidatePixelCount": 21,
+    "boundingBoxReferencePixels": {
+      "minX": 466,
+      "minY": 206,
+      "maxX": 470,
+      "maxY": 212
+    },
+    "sourceFourConnected": true,
+    "componentPixelsInsideSourceMainlandVectorContour": 13,
+    "componentPixelsOutsideSourceMainlandVectorContour": 8,
+    "enclosedInsideBothC1UReviewCaps": 13,
+    "closestOriginalHeadlandCoastEdge": 81,
+    "minimumPointToSourceEdgeDistanceReferencePixels": 0,
+    "maximumPointToSourceHeadlandDistanceReferencePixels": 1.7000000000000002,
+    "nearestComponentPixel": {
+      "x": 466,
+      "y": 207
+    },
+    "politicalOwner": null,
+    "interpretationsNotApproved": [
+      "island",
+      "connected_mainland_promontory",
+      "waterbody",
+      "canonical_terrain_feature"
+    ]
+  },
+  "immediatePerimeter": {
+    "component51InternalCardinalSides": 60,
+    "excludedZeroLabelCardinalSides": 24,
+    "directMainland30CardinalSides": 0,
+    "uniqueAdjacentExcludedReferencePixels": 18,
+    "adjacentSourcePairRgbClassification": {
+      "black": 18,
+      "teal": 0,
+      "otherSharedNonblue": 0,
+      "sourceBlue": 0,
+      "otherExcluded": 0,
+      "invalidAlpha": 0
+    },
+    "implication": "The component is isolated by original shared-black source ink, not an independently certified water gap."
+  },
+  "boundedHypotheticalConnection": {
+    "originalStrictSourcePair": {
+      "found": false
+    },
+    "sharedBlackOnly": {
+      "found": true,
+      "shortestReferencePixelSteps": 2,
+      "newlyPermittedBlackPixels": 1
+    },
+    "sharedTealOnly": {
+      "found": false
+    },
+    "sharedBlackAndTeal": {
+      "found": true,
+      "shortestReferencePixelSteps": 2,
+      "newlyPermittedBlackPixels": 1
+    },
+    "allSharedNonblue": {
+      "found": true,
+      "shortestReferencePixelSteps": 2,
+      "newlyPermittedBlackPixels": 1
+    },
+    "commonHypotheticalPathReferencePixels": [
+      [
+        469,
+        212
+      ],
+      [
+        469,
+        213
+      ],
+      [
+        469,
+        214
+      ]
+    ],
+    "sharedBlackGapSample": [
+      469,
+      213
+    ],
+    "originalComponent51LastSample": [
+      469,
+      212
+    ],
+    "originalMainland30FirstSample": [
+      469,
+      214
+    ],
+    "sourceCoastProperCrossingsAlongHypotheticalPath": 0,
+    "commonSourcePathSha256": "81534e9799d4f6b83c9c0ba106c25de2143de2b53636ecd362b0239867c7d1b8",
+    "interpretation": "One hypothetical original shared-black pixel joins strictly separate candidate labels in the local search; this is never a validated physical land bridge or political permission."
+  },
+  "boundedSourceWindow": {
+    "referenceInclusive": [
+      440,
+      185,
+      515,
+      255
+    ],
+    "originalExcludedUnassignedSourceClassesInsideVector": {
+      "sharedBlack": 497,
+      "sharedTeal": 0,
+      "otherSharedNonblue": 79,
+      "sourceBlue": 352
+    },
+    "sampleDistancesNotKilometers": true,
+    "originalSourcePixelsMutated": 0,
+    "originalComponentLabelsMutated": 0
+  },
+  "acceptedC1PHolds": {
+    "registeredMainlandComponent30Cells": 79419,
+    "regionCells": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "provisionalAssigned": 52449,
+    "deliberatelyUnassigned": 26970,
+    "originalKharuunOptionBSourceEdges": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaProtected": true,
+    "northeasternHeadlandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "largeNortheastDetachedIslandUnassigned": true,
+    "component51StillSeparateAndUnassigned": true,
+    "allOtherDetachedComponentsHeld": true,
+    "coast40Unclaimed": true,
+    "serathylWindwardParent": "region.serathyl",
+    "portsWellsRiversWaterRoutesSaltBasinsUnchanged": true,
+    "sourceVectorMutations": 0,
+    "canonicalRegionPublicationAllowed": false
+  },
+  "nextGate": "C1-W owner-facing physical interpretation: compare a coastline linework seam versus a genuine physical islet under original vector/raster witnesses; resolve source conventions explicitly before any revised political polygon or component relabeling."
+}
