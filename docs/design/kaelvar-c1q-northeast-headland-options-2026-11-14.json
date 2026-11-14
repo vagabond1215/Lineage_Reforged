@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1q-ne-mainland-headland-source-corridor-options.v1",
+  "date": "2026-11-14",
+  "status": "OWNER_COMPARE_SOURCE_CONNECTED_VS_UNASSIGNED_CANONICAL_HELD",
+  "sourceC1PHead": "a19fb209624b99a4803ccb8d4c6015f484b83340",
+  "c1pCandidatePath": "docs/design/kaelvar-c1p-refined-mainland-seam-candidates-2026-11-14.json",
+  "c1oSourceVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+  "c1pBaselineTerrain": {
+    "mainlandCandidateCells": 79419,
+    "assigned": 52449,
+    "unassigned": 26970
+  },
+  "headlandSource": {
+    "contourId": "feature.coastline.first_world.part_10",
+    "startEdge": 75,
+    "endEdgeInclusive": 115,
+    "startVertex": 75,
+    "endVertex": 116,
+    "edgeCount": 41,
+    "detached": false
+  },
+  "comparisonOptions": [
+    {
+      "id": "HOLD_UNASSIGNED",
+      "description": "Keep northeastern original-mainland headland and eastern connecting terrain unassigned, preserving native C1-P totals.",
+      "politicalOwnershipApproved": false,
+      "canonicalWritable": false
+    },
+    {
+      "id": "VERDANT_CORRIDOR_EVIDENCE_ONLY",
+      "description": "Test uninterrupted original source terrain-candidate pixels from the currently proposed Verdant interior to the NE headland without assigning coast edges or opening a new canonical polygon.",
+      "politicalOwnershipApproved": false,
+      "canonicalWritable": false
+    }
+  ],
+  "corridorTest": {
+    "width": 2048,
+    "height": 1152,
+    "fromVerdant": {
+      "x": 390,
+      "y": 336
+    },
+    "toHeadland": {
+      "x": 492,
+      "y": 215
+    },
+    "allowedWindowInclusive": {
+      "minX": 375,
+      "maxX": 540,
+      "minY": 190,
+      "maxY": 350
+    },
+    "forbiddenCurrentOwners": [
+      "region.auric_marches",
+      "region.kharuun_drylands",
+      "region.veyrholm_shore"
+    ],
+    "permittedCurrentOwner": "region.verdant_thalos",
+    "terrainComponentId": 30,
+    "sampleConnectivity": 4,
+    "clearanceChecksPx": [
+      0,
+      1,
+      2
+    ],
+    "requireOriginalSourceContour": true,
+    "interpretation": "SOURCE_TERRAIN_CANDIDATE_CONNECTIVITY_NOT_A_WALKABLE_ROUTE_OR_POLITICAL_BOUNDARY"
+  },
+  "immutableHolds": {
+    "original599EdgeContourUntouched": true,
+    "kharuunOptionBEdges": [
+      35,
+      58
+    ],
+    "revisedFourC1PRingsUnchanged": true,
+    "noRegionOwnershipChanges": true,
+    "northeastHeadlandOwnershipApproved": false,
+    "shattercapDetachedIslandsUnclaimed": true,
+    "largeNortheastIslandUnclaimed": true,
+    "detachedPhysicalComponentsClaimed": 0,
+    "coast40Claim": null,
+    "foreignWindwardParent": "region.serathyl",
+    "portsPlaced": 0,
+    "wellsOrRiversPlaced": 0,
+    "waterRoutesPlaced": 0,
+    "saltBasinsPlaced": 0,
+    "newLegacyHexDependencies": 0,
+    "canonicalWritable": false
+  }
+}
