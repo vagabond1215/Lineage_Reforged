@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1k-coast-informed-inland-boundary-review.v1",
+  "date": "2026-11-14",
+  "status": "SOURCE_COAST_OUTER_REFERENCE_INLAND_DIVISIONS_UNAPPROVED",
+  "sourcePaths": {
+    "c1j": "docs/design/kaelvar-c1j-coastline-sector-review-2026-11-13.json",
+    "c1f": "docs/design/kaelvar-c1f-owner-corrected-placement-guides-2026-11-13.json"
+  },
+  "mapId": "world_map.first_world",
+  "coordinateSpaceId": "world_map.first_world.reference",
+  "parentRegionId": "region.kaelvar",
+  "originalMainlandSourceId": "feature.coastline.first_world.part_10",
+  "originalSourceEdgeCount": 599,
+  "northernSectorEdgeCounts": [
+    90,
+    106,
+    114
+  ],
+  "otherSourceEdgeCount": 289,
+  "outerReferencePolicy": "UNCHANGED_SOURCE_VECTOR_REVIEW_ONLY_NOT_CERTIFIED_COAST_OR_SOVEREIGNTY",
+  "inlandDivisionPolicy": "MEASURE_DISJOINT_GUIDE_GAPS_NO_AUTOMATIC_CONNECT_OR_GAP_FILL",
+  "reviewInterfaces": [
+    {
+      "id": "auric_veyrholm",
+      "regionA": "region.auric_marches",
+      "regionB": "region.veyrholm_shore",
+      "approvedBorderGeometryRef": null
+    },
+    {
+      "id": "kharuun_veyrholm",
+      "regionA": "region.kharuun_drylands",
+      "regionB": "region.veyrholm_shore",
+      "approvedBorderGeometryRef": null
+    },
+    {
+      "id": "auric_kharuun",
+      "regionA": "region.auric_marches",
+      "regionB": "region.kharuun_drylands",
+      "approvedBorderGeometryRef": null
+    },
+    {
+      "id": "kharuun_verdant",
+      "regionA": "region.kharuun_drylands",
+      "regionB": "region.verdant_thalos",
+      "approvedBorderGeometryRef": null
+    }
+  ],
+  "northeastSourceSectorStatus": "VEYRHOLM_VERSUS_KHARUUN_FRONTAGE_UNRESOLVED",
+  "protectedOffshoreSourceIds": [
+    "feature.coastline.first_world.part_7",
+    "feature.coastline.first_world.part_8",
+    "feature.coastline.first_world.part_31"
+  ],
+  "largeNortheastIslandOwnership": "UNRESOLVED_WHOLE_UNIT",
+  "shattercapOwnership": "UNRESOLVED_WHOLE_COMPONENTS",
+  "coast40OwnerRegionId": null,
+  "foreignWindwardParent": "region.serathyl",
+  "kharuunSeaAccessApproved": false,
+  "saltBasinsGeometryRef": null,
+  "riversAndOceanCalibrated": false,
+  "approval": {
+    "canonicalWritable": false,
+    "sourceTraceIsApprovedRegionBorder": false,
+    "newInlandBorderGeometryApproved": false,
+    "shorelineFrontageCertified": false,
+    "islandClaims": [],
+    "publishedGeometryRefs": [],
+    "ownerApprovalRef": null
+  }
+}
