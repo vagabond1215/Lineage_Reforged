@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1w-hosted-original-paired-source-physical-interpretation-witness.v1",
+  "date": "2026-11-14",
+  "status": "HOSTED_C1W_PASSED_OWNER_PHYSICAL_INTERPRETATION_OPEN_CANONICAL_AND_ISLAND_HOLDS_UNCHANGED",
+  "testedImplementationCommit": "021e6af4369e5f195a122888faa7637d032fec8f",
+  "githubActionsRun": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43651599921",
+  "artifactId": 14135449545,
+  "artifactName": "c1p-noncanonical-native-terrain-review",
+  "artifactRetentionDays": 7,
+  "nativeReportSha256": "8d212111087fc25acc0d7ecd73868dbd2879bea4c28c6f893ac582fc1667e040",
+  "environment": "GitHub-hosted Ubuntu Node 22; owner-local Windows native gate not run",
+  "checks": {
+    "passed": 55,
+    "failed": 0,
+    "scannedCodeFiles": 886,
+    "newLegacyHexDependencies": 0,
+    "pairedOriginalSvgGenerated": true
+  },
+  "originalSource": {
+    "gitVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceCoastlineEdges": 599,
+    "headlandOriginalEdgesInclusive": [
+      75,
+      115
+    ],
+    "component51SourceCoastNearestEdge": 81,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "component51": {
+    "originalStrictCandidateCells": 21,
+    "insideOriginalMainlandVector": 13,
+    "outsideOriginalMainlandVector": 8,
+    "originalPhysicalTerrainLabel": 51,
+    "strictMainlandLabel": 30,
+    "originalSharedBlackExcludedNeighborSamples": 18,
+    "blackNeighborSamplesInsideOriginalMainlandVector": 8,
+    "blackNeighborSamplesOutsideOriginalMainlandVector": 10,
+    "originalPhysicalComponentRemainsSeparate": true
+  },
+  "pairedOriginalSourceGap": [
+    {
+      "role": "COMPONENT51",
+      "reference": [
+        469,
+        212
+      ],
+      "originalPngSample": [
+        971,
+        472
+      ],
+      "biomeRGB": [
+        15,
+        100,
+        40
+      ],
+      "elevationRGB": [
+        123,
+        126,
+        115
+      ],
+      "originalTerrainComponent": 51,
+      "originalVectorInside": true
+    },
+    {
+      "role": "UNRESOLVED_SHARED_BLACK",
+      "reference": [
+        469,
+        213
+      ],
+      "originalPngSample": [
+        971,
+        474
+      ],
+      "biomeRGB": [
+        0,
+        0,
+        0
+      ],
+      "elevationRGB": [
+        0,
+        0,
+        0
+      ],
+      "originalTerrainComponent": 0,
+      "originalVectorInside": true
+    },
+    {
+      "role": "MAINLAND30",
+      "reference": [
+        469,
+        214
+      ],
+      "originalPngSample": [
+        971,
+        476
+      ],
+      "biomeRGB": [
+        15,
+        100,
+        40
+      ],
+      "elevationRGB": [
+        123,
+        127,
+        116
+      ],
+      "originalTerrainComponent": 30,
+      "originalVectorInside": true
+    }
+  ],
+  "unselectedInterpretations": [
+    "COAST_ATTACHED_PROMONTORY",
+    "PHYSICALLY_SEPARATE_ISLET",
+    "UNRESOLVED_CARTOGRAPHIC_LINEWORK"
+  ],
+  "ownerDecision": null,
+  "visualReviewObservation": "The paired original images show a narrow, ink-outlined projection with a green-colored neck. This visually favors a mainland-attached tip but does not certify dry-land continuity or justify component relabeling.",
+  "physicalSourceInterpretationCertified": false,
+  "attachmentOrIslandApproval": false,
+  "immutableC1P": {
+    "sourceMainlandTerrainCandidateCells": 79419,
+    "originalCandidateRegionCells": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "assigned": 52449,
+    "unassigned": 26970,
+    "kharuunOptionBOriginalCoastEdges": [
+      35,
+      58
+    ],
+    "southeasternVerdantPeninsulaPreserved": true,
+    "northeasternHeadlandStillUnassigned": true,
+    "component51StillSeparatelyLabeled": true,
+    "shattercapDetachedIslesUnassigned": true,
+    "largeNortheasternIslandUnassigned": true,
+    "allOriginalDetachedPhysicalComponentsHeld": true,
+    "foreignSerathylWindwardUnchanged": true,
+    "originalTerrainLabelEdits": 0,
+    "originalVectorEdits": 0,
+    "originalPngEdits": 0,
+    "newTerritorialCells": 0,
+    "canonicalWritable": false
+  },
+  "nextGate": "Owner review of the native paired images and the three physical hypotheses. An explicit choice can authorize a separate reversible future interpretation study but must not automatically change terrain labels, source coastlines, political regions, or islands."
+}
