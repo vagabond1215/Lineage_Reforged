@@ -88,6 +88,9 @@ function outlineProximity(pts,contour){
   distancesAreUncalibrated:true};
 }
 function reviewPath(labels,owner,contour,classes,componentCells,allowed){
+ if(!eq(neighborTypes,{black:18,teal:0,other:0,sourceBlue:0,
+  otherExcluded:0,invalidAlpha:0}))
+  hold('component 51 immediate boundary shared-black source status changed');
  const localW=win.maxX-win.minX+1,localH=win.maxY-win.minY+1;
  const lid=(x,y)=>(y-win.minY)*localW+x-win.minX;
  const xof=i=>win.minX+i%localW;
@@ -235,7 +238,8 @@ export function buildC1VComponent51Review({spec,c1uSpec,p,c1uReport,
  const contour=revised.originalContour,component=[];
  for(let i=0;i<labels.length;i++)
   if(labels[i]===51)component.push({x:i%width,y:Math.floor(i/width)});
- if(!component.length||component.length>10000||
+ if(component.length!==21||
+  !eq(bbox(component),{minX:466,minY:206,maxX:470,maxY:212})||
   labels[seed.y*width+seed.x]!==51)
   hold('original separate component 51 has vanished or expanded unexpectedly');
  const pixelsSet=new Set(component.map(key));
@@ -260,6 +264,8 @@ export function buildC1VComponent51Review({spec,c1uSpec,p,c1uReport,
  });
  const insideCount=component.filter(p=>
   c1oPointInRing({x:p.x+.5,y:p.y+.5},contour)).length;
+ if(insideCount!==13||component.length-insideCount!==8)
+  hold('component 51 crosses original source contour differently');
  const neighbors=new Map(),edges={strictMainland30:0,component51:0,
   unresolvedZero:0,outsideFrame:0,otherPhysicalComponent:0};
  for(const pt of component)for(const [dx,dy] of cardinal){
@@ -273,6 +279,9 @@ export function buildC1VComponent51Review({spec,c1uSpec,p,c1uReport,
   if(!neighbors.has(x+','+y))neighbors.set(x+','+y,{x,y,label:id});
  }
  const neighborTypes=emptyClasses(),nonMainlandNeighborPixels=[];
+ if(!eq(edges,{strictMainland30:0,component51:60,unresolvedZero:24,
+  outsideFrame:0,otherPhysicalComponent:0})||neighbors.size!==18)
+  hold('component 51 strict physical detachment morphology changed');
  for(const nb of neighbors.values()){
   if(nb.label!==0)continue;
   const ink=colorSample(biome,elevation,nb.x,nb.y);
@@ -304,6 +313,21 @@ export function buildC1VComponent51Review({spec,c1uSpec,p,c1uReport,
   return {scenario:s.id,admittedUnresolvedClasses:s.allow,
    ...a,notLandSeaOrSovereigntyCertification:true};
  });
+ const exactPath=[
+  {x:469,y:212},{x:469,y:213},{x:469,y:214}
+ ];
+ if(!eq(routes.map(x=>x.found),[false,true,false,true,true])||
+  !eq(routes[1].path,exactPath)||
+  routes[1].hypotheticalPixelsOnPath!==1||
+  routes[1].sourceVectorProperCrossingsOnPath!==0||
+  routes[1].pathSha256!==
+   '81534e9799d4f6b83c9c0ba106c25de2143de2b53636ecd362b0239867c7d1b8')
+  hold('source-shared-black sensitivity bridge changed or became uncalibrated');
+ const proximity=outlineProximity(component,contour);
+ if(proximity.sourceEdgeIndex!==81||
+  proximity.distanceReferencePixels!==0||
+  Math.abs(proximity.maxDistanceReferencePixels-1.7)>1e-9)
+  hold('component 51 original headland source-edge proximity changed');
  const pairSamples=component.slice(0,40).map(p=>({
   ...colorSample(biome,elevation,p.x,p.y),
   strictComponentId:51,politicalOwner:ownership[p.y*width+p.x]
@@ -321,7 +345,7 @@ export function buildC1VComponent51Review({spec,c1uSpec,p,c1uReport,
    fourConnected:true,originalSourceContourContainedCells:insideCount,
    originalSourceContourOutsideCells:component.length-insideCount,
    extentInsideReviewEnclosures:capMetrics,
-   sourceCoastProximity:outlineProximity(component,contour),
+   sourceCoastProximity:proximity,
    originalComponent51Pixels:component,
    originalPairSamples:pairSamples
   },
