@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13, connector/c1g-kaelvar-coastal-salt-basin-evidence-2026-11-13]
+    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13, connector/c1g-kaelvar-coastal-salt-basin-evidence-2026-11-13, connector/c1h-kaelvar-source-landform-diagnostics-2026-11-13]
 
 permissions:
   contents: read
@@ -81,4 +81,22 @@ jobs:
           path: |
             ${{ runner.temp }}/kaelvar-c1h-diagnostic.json
             ${{ runner.temp }}/kaelvar-c1h-source-review.svg
+          retention-days: 7
+
+      - name: C1-I original-source blue connectivity and unresolved-ink horizon
+        run: |
+          node --check scripts/lib/kaelvar-c1i-source-ink-separation.mjs
+          node --check scripts/kaelvar-c1i-source-ink-review.mjs
+          node --check tests/unit/kaelvar-c1i-source-ink-separation.test.mjs
+          node --test tests/unit/kaelvar-c1i-source-ink-separation.test.mjs
+          node scripts/kaelvar-c1i-source-ink-review.mjs --check | tee "$RUNNER_TEMP/kaelvar-c1i-source-classification.json"
+          node scripts/kaelvar-c1i-source-ink-review.mjs --svg > "$RUNNER_TEMP/kaelvar-c1i-source-comparison.svg"
+          test -s "$RUNNER_TEMP/kaelvar-c1i-source-comparison.svg"
+      - name: Publish C1-I evidence but never political or water authority
+        uses: actions/upload-artifact@v4
+        with:
+          name: kaelvar-c1i-blue-ink-sensitivity-no-hydrology
+          path: |
+            ${{ runner.temp }}/kaelvar-c1i-source-classification.json
+            ${{ runner.temp }}/kaelvar-c1i-source-comparison.svg
           retention-days: 7
