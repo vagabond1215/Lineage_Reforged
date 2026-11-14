@@ -2,16 +2,16 @@
 
 Date: 2026-11-14
 Status: **FOUR ACTUAL SOURCE-INDEXED POLYGON CANDIDATES AUTHORED; NATIVE RASTER ACCEPTANCE NOT YET REPORTED; CANONICAL PUBLICATION HELD**
-Parent: \`8c317d48ef405ca29830d4dc4959ce21f07693bb\`
-Branch: \`connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14\`
+Parent: `8c317d48ef405ca29830d4dc4959ce21f07693bb`
+Branch: `connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14`
 
 ## Corrected C1-N entry gate
 
 The exact C1-N branch has been compared to commit
-\`8c317d48ef405ca29830d4dc4959ce21f07693bb\` and returned
+`8c317d48ef405ca29830d4dc4959ce21f07693bb` and returned
 **identical**. That commit changes one test assertion from
-\`/index specification drift/\` to the actual validator wording
-\`/indexed source-contour segment specification drift/\`.
+`/index specification drift/` to the actual validator wording
+`/indexed source-contour segment specification drift/`.
 The repository API exposed **no CI statuses and no workflow runs**
 for that SHA. Therefore the source/test-text correction is confirmed,
 but the corrected **C1-N native Node pass is not independently attested**.
@@ -71,7 +71,7 @@ northern margin and central inland transitions are still partly
 unassigned, not force-filled.
 
 The vector geometry was read independently from immutable source Git
-blob \`9cd6752e9dbca00796e5f7c013066bb0e5a96175\`, and all four
+blob `9cd6752e9dbca00796e5f7c013066bb0e5a96175`, and all four
 rings were evaluated against the same 599 vertices. A strict
 source-vector geometry dry run reported **zero self-intersections,
 zero pairwise crossing/ownership overlaps, zero interior return-edge
@@ -80,7 +80,7 @@ preserved. That does not constitute a native acceptance run.
 
 ## Evidence and open uncertainties
 
-- The original \`feature.coastline.first_world.part_10\` is 599 edges
+- The original `feature.coastline.first_world.part_10` is 599 edges
   exactly, with north-sector counts 90 / 106 / 114, and 289 other edges.
   The sector bins are descriptive source search windows only.
 - The source-origin NE headland edges 75–114, bay transition 59–74
@@ -110,29 +110,29 @@ preserved. That does not constitute a native acceptance run.
 Committed source-vector review outputs (available even before native
 rendering):
 
-- \`docs/design/kaelvar-c1o-regional-boundary-candidates-2026-11-14.json\`
+- `docs/design/kaelvar-c1o-regional-boundary-candidates-2026-11-14.json`
   contains original edge ranges, each inland waypoint, geographic
   justification, uncertainty and all holds.
-- \`docs/design/kaelvar-c1o-expanded-vector-review-2026-11-14.json\`
+- `docs/design/kaelvar-c1o-expanded-vector-review-2026-11-14.json`
   expands the original source-coordinate vertices for all four
   polygon rings and all investigative arcs. The new raster terrain
   totals are explicitly **null**, not invented.
-- \`docs/design/kaelvar-c1o-source-vector-review.svg\`: vector-only
+- `docs/design/kaelvar-c1o-source-vector-review.svg`: vector-only
   overall candidate overview, original source mainland and held islands,
   anchor-guided region labels and north bay zoom.
-- \`docs/design/kaelvar-c1o-northern-source-index-review.svg\`:
+- `docs/design/kaelvar-c1o-northern-source-index-review.svg`:
   separate enlarged exact-index view; candidate endpoints highlighted.
 
 Native outputs from
-\`scripts/kaelvar-c1o-regional-boundaries.mjs\`:
+`scripts/kaelvar-c1o-regional-boundaries.mjs`:
 
-1. \`kaelvar-c1o-regional-review.json\` (**source raster candidate counts
+1. `kaelvar-c1o-regional-review.json` (**source raster candidate counts
    and expanded original edges**, requires native source PNG checks).
-2. \`kaelvar-c1o-regional-preview.svg\` (large, source biome PNG embedded
+2. `kaelvar-c1o-regional-preview.svg` (large, source biome PNG embedded
    underneath transparent region polygons and vector coast).
-3. \`kaelvar-c1o-north-coast.svg\` (separate enlarged, numbered original
+3. `kaelvar-c1o-north-coast.svg` (separate enlarged, numbered original
    northern coast with source PNG and disputed boundaries).
-4. \`kaelvar-c1o-regional-preview.png\` (2400 × 1858 source-biome-underlaid
+4. `kaelvar-c1o-regional-preview.png` (2400 × 1858 source-biome-underlaid
    terrain-component preview, created with Node standard library PNG
    encoder without a third-party renderer).
 
@@ -143,8 +143,8 @@ to judge ecology, relief, region placement or the disputed headland.
 ## Exact PowerShell 7 detached-worktree acceptance
 
 Substitute the final reported C1-O SHA for
-\`<PIN_FINAL_C1O_SHA>\`. Execute in PowerShell 7 on the Windows machine.
-It neither switches nor cleans \`C:\Codex\EoL\`.
+`<PIN_FINAL_C1O_SHA>`. Execute in PowerShell 7 on the Windows machine.
+It neither switches nor cleans `C:\Codex\EoL`.
 
 ~~~powershell
 $ErrorActionPreference = 'Stop'
