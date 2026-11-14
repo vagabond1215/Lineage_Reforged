@@ -40,10 +40,12 @@ import {buildC1VComponent51Review}
  from './lib/kaelvar-c1v-component51-source-separation.mjs';
 import {buildC1WPhysicalInterpretation}
  from './lib/kaelvar-c1w-component51-physical-adjudication.mjs';
+import {buildC1XPairedGates}
+ from './lib/kaelvar-c1x-targeted-attached-tip-feasibility.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg|--paired-gates-check|--paired-gates-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -105,8 +107,8 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let enclosure=null,component51=null,physicalReview=null;
-if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg'].includes(mode)){
+let enclosure=null,component51=null,physicalReview=null,pairedGates=null;
+if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
  const c1u=json('docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json');
  enclosure=buildC1UFeasibility({spec:c1u,p,report,revised,labels,
   ownership:imageMasks.refined,selected});
@@ -114,7 +116,7 @@ if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-s
   process.stdout.write(JSON.stringify(enclosure,null,2)+'\n');
   process.exit(0);
  }
- if(['--component51-check','--component51-svg','--physical-review-check','--physical-review-svg'].includes(mode)){
+ if(['--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
   const c1v=json('docs/design/kaelvar-c1v-component51-source-physical-separation-review-2026-11-14.json');
   component51=buildC1VComponent51Review({
    spec:c1v,c1uSpec:c1u,p,c1uReport:enclosure,c1pReport:report,
@@ -125,7 +127,7 @@ if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-s
    process.stdout.write(JSON.stringify(component51,null,2)+'\n');
    process.exit(0);
   }
-  if(mode==='--physical-review-check'||mode==='--physical-review-svg'){
+  if(['--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
    const c1w=json('docs/design/kaelvar-c1w-component51-physical-interpretation-owner-review-2026-11-14.json');
    physicalReview=buildC1WPhysicalInterpretation({
     spec:c1w,c1vSpec:c1v,c1vReport:component51,c1pReport:report,
@@ -140,7 +142,7 @@ if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-s
  }
 }
 let headland=null,bottleneck=null,ink=null,pinch=null;
-if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)){
+if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
  const q=json('docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json');
  headland=buildC1QHeadlandReview({
   c:q,p,r:report,revised,selected,labels,ownership:imageMasks.refined
@@ -149,7 +151,7 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg',
   process.stdout.write(JSON.stringify(headland,null,2)+'\n');
   process.exit(0);
  }
- if(['--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)){
+ if(['--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
   const c1r=json('docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json');
   bottleneck=buildC1RHeadlandDiagnostic({
    spec:c1r,q,p,baseline:headland,revised,labels,ownership:imageMasks.refined,
@@ -159,7 +161,7 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg',
    process.stdout.write(JSON.stringify(bottleneck,null,2)+'\n');
    process.exit(0);
   }
-  if(['--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)){
+  if(['--ink-check','--ink-svg','--pinch-check','--pinch-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
    const c1s=json('docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json');
    ink=buildC1SSensitivity({
     spec:c1s,c1rSpec:c1r,p,q,c1pReport:report,c1rReport:bottleneck,
@@ -170,7 +172,7 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg',
     process.stdout.write(JSON.stringify(ink,null,2)+'\n');
     process.exit(0);
    }
-   if(mode==='--pinch-check'||mode==='--pinch-svg'){
+   if(['--pinch-check','--pinch-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
     const c1t=json('docs/design/kaelvar-c1t-teal-pinch-and-detached-component-contact-review-2026-11-14.json');
     pinch=buildC1TReview({spec:c1t,c1sSpec:c1s,c1s:ink,c1p:report,
      labels,ownership:imageMasks.refined,revised,
@@ -181,6 +183,18 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg',
     }
    }
   }
+ }
+}
+if(mode==='--paired-gates-check'||mode==='--paired-gates-svg'){
+ const c1x=json('docs/design/kaelvar-c1x-targeted-promontory-vs-broad-ink-feasibility-2026-11-14.json');
+ pairedGates=buildC1XPairedGates({
+  spec:c1x,w:physicalReview,ink,pinch,u:enclosure,p:report,
+  labels,ownership:imageMasks.refined,revised,
+  biome:images.biome.img,elevation:images.elevation.img
+ });
+ if(mode==='--paired-gates-check'){
+  process.stdout.write(JSON.stringify(pairedGates,null,2)+'\n');
+  process.exit(0);
  }
 }
 if(mode==='--check'){
@@ -563,5 +577,38 @@ if(mode==='--physical-review-svg'){
   title(24,1160,'Original component 51: 21 candidate pixels (13 vector-inside, 8 vector-outside); 18 immediately adjacent excluded shared-black pixels.',18,'#FBD6AB')+
   title(24,1206,'All three interpretations remain UNDECIDED. The black gap (469,213) is not certified land or sea. C1-P, Kharuun B, islands, and canon remain HELD.',17,'#FFCCAA');
  process.stdout.write(heading+left+mid+right+captions+'</svg>\n');
+ process.exit(0);
+}
+
+if(mode==='--paired-gates-svg'){
+ const W=2540,H=1115,g=pairedGates;
+ const highlightBlack='<rect x="469" y="213" width="1" height="1" fill="#F866D8" stroke="#FFFFFF" stroke-width=".25"/>';
+ const component51=physicalReview.component51OriginalCellInventory.originalCells.map(p=>
+  '<rect x="'+p.reference.x+'" y="'+p.reference.y+'" width="1" height="1" fill="#FAEC67" fill-opacity=".86"/>').join('');
+ const openHeadland='<path d="'+revised.originalContour.slice(75,117)
+  .map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ')+
+  '" fill="none" stroke="#FFF2D3" stroke-width=".65"/>';
+ const onePath=g.selectedVisualizationPaths.targetedTealOneClearance;
+ const corridor=onePath.length?
+  '<path d="'+onePath.map((p,i)=>(i?'L':'M')+(p.x+.5)+' '+(p.y+.5)).join(' ')+
+  '" fill="none" stroke="#62F2E8" stroke-width="2" stroke-dasharray="3 1.5"/>':'';
+ const left=panel(32,130,1195,775,[455,194,62,60],imgs[1],revised,
+  openHeadland+component51+highlightBlack);
+ const right=panel(1293,130,1215,775,[295,150,300,325],imgs[1],revised,
+  corridor+highlightBlack);
+ const status=g.scenarios.map(x=>x.id+': '+x.headland.map(c=>c.found?'Y':'N').join('/')+
+  '; tip bridge '+(x.blackComponent51MayReachMainland?'hypothetical':'NO')).join(' | ');
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+
+  '" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'+head+
+  title(33,46,'C1-X / TARGETED ATTACHED-TIP HYPOTHESIS - TWO INDEPENDENT SOURCE GATES',28)+
+  title(33,83,'YELLOW: original component 51  |  MAGENTA: one excluded black seam pixel  |  CYAN: hypothetical teal-class mainland route',17,'#FFD0A3')+
+  left+right+
+  title(37,944,'A / ONE PIXEL AT (469,213) CANNOT CERTIFY ATTACHED LAND',19)+
+  title(1298,944,'B / TEAL CORRIDOR DOES NOT CERTIFY VERDANT SOVEREIGNTY',19)+
+  title(37,1004,'C1-P 52,449 assigned + 26,970 unassigned = 79,419 candidate mainland cells',18,'#FDE1AC')+
+  title(37,1046,'Broad black+teal masks expose 22 possible contact samples to components 51, 78, 113. Micro-exception is NOT a real-world land claim.',17,'#FBD0B1')+
+  title(37,1083,'No terrain pixels, island components, original coastline, headland owner, or canonical regions were changed.',18)+
+  '</svg>\n';
+ process.stdout.write(svg);
  process.exit(0);
 }
