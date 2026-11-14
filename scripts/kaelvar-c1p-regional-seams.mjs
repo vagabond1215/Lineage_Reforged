@@ -36,10 +36,12 @@ import {buildC1TReview}
  from './lib/kaelvar-c1t-source-pinch-and-island-contact.mjs';
 import {buildC1UFeasibility}
  from './lib/kaelvar-c1u-headland-review-enclosures.mjs';
+import {buildC1VComponent51Review}
+ from './lib/kaelvar-c1v-component51-source-separation.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -101,14 +103,26 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let enclosure=null;
-if(mode==='--enclosure-check'||mode==='--enclosure-svg'){
+let enclosure=null,component51=null;
+if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-svg'].includes(mode)){
  const c1u=json('docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json');
  enclosure=buildC1UFeasibility({spec:c1u,p,report,revised,labels,
   ownership:imageMasks.refined,selected});
  if(mode==='--enclosure-check'){
   process.stdout.write(JSON.stringify(enclosure,null,2)+'\n');
   process.exit(0);
+ }
+ if(mode==='--component51-check'||mode==='--component51-svg'){
+  const c1v=json('docs/design/kaelvar-c1v-component51-source-physical-separation-review-2026-11-14.json');
+  component51=buildC1VComponent51Review({
+   spec:c1v,c1uSpec:c1u,p,c1uReport:enclosure,c1pReport:report,
+   labels,ownership:imageMasks.refined,revised,
+   biome:images.biome.img,elevation:images.elevation.img
+  });
+  if(mode==='--component51-check'){
+   process.stdout.write(JSON.stringify(component51,null,2)+'\n');
+   process.exit(0);
+  }
  }
 }
 let headland=null,bottleneck=null,ink=null,pinch=null;
@@ -437,6 +451,57 @@ if(mode==='--enclosure-svg'){
   cell(40,140,safe[0])+cell(1300,140,safe[1])+
   mark('INSET-RETURN · REVIEW ONLY',40)+mark('COMPACT-RETURN · REVIEW ONLY',1300)+
   title(45,1074,'Neither is a sovereign boundary. Direct Verdant expansion crosses source coast and conflicts with Kharuun.',16,'#FFD19C')+
+  '</svg>\n';
+ process.stdout.write(svg);
+ process.exit(0);
+}
+
+if(mode==='--component51-svg'){
+ const W=2540,H=1220,c=component51;
+ const pix=(p,color,size=1,opacity=1)=>'<rect x="'+p.x+'" y="'+p.y+
+  '" width="'+size+'" height="'+size+'" fill="'+color+
+  '" fill-opacity="'+opacity+'"/>';
+ const pairColors={black:'#FFB15C',teal:'#67F0E5',other:'#E894FC',
+  sourceBlue:'#83BFFF',otherExcluded:'#F5E3B6',invalidAlpha:'#EC718C'};
+ const isolate=c.component.originalComponent51Pixels
+  .map(p=>pix(p,'#FFF05A',1,.96)).join('');
+ const adjacent=c.componentBoundary.originalSourceZeroNeighborSamples
+  .map(p=>pix(p,pairColors[p.category]??'#E8E8E8',1,.95)).join('');
+ let terrain='';
+ for(let y=198;y<=235;y++)for(let x=448;x<=502;x++){
+  if(labels[y*width+x]===30)terrain+=pix({x,y},'#50EEA4',1,.44);
+ }
+ const rings=enclosure.reviewEnclosures.filter(r=>r.status==='GEOMETRIC_REVIEW_ONLY');
+ const poly=(points,color,dash=false,w=1)=>'<path d="'+
+  points.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ')+' Z'+
+  '" fill="none" stroke="'+color+'" stroke-width="'+w+'"'+
+  (dash?' stroke-dasharray="2 1"':'')+'/>';
+ const coast=poly(revised.originalContour.slice(75,117),'#E8FCFF',false,1.4);
+ const arrowRoute=c.localHypotheticalConnectivity.routeScenarios
+  .find(x=>x.scenario==='SHARED_BLACK_AND_TEAL');
+ const path=arrowRoute?.path??[];
+ const route=path.length?'<path d="'+path.map((p,i)=>
+  (i?'L':'M')+(p.x+.5)+' '+(p.y+.5)).join(' ')+
+  '" fill="none" stroke="#FF83E6" stroke-width="1.6" stroke-dasharray="2 1"/>':'';
+ const context=coast+
+  rings.map((r,i)=>poly(r.ringOriginalSourceFrame,
+   i?'#A5FBED':'#F5C179',true,1.2)).join('')+isolate;
+ const detail=terrain+adjacent+isolate+route;
+ const local=c.component.boundingReferencePixels;
+ const link=c.localHypotheticalConnectivity.routeScenarios
+  .map(x=>x.scenario+':'+(x.found?'possible':'no link')).join(' | ');
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+
+  '" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'+head+
+  title(32,46,'KAELVAR C1-V / ORIGINAL PHYSICAL COMPONENT 51',30)+
+  title(32,81,'Yellow = separately labeled strict component; teal-green = mainland-30; orange = unresolved black source ink',18,'#F8CDA1')+
+  panel(30,120,1210,890,[440,182,89,80],imgs[1],revised,context)+
+  panel(1295,120,1210,890,[449,196,61,54],imgs[1],revised,detail)+
+  title(38,1055,'EXACT HEADLAND SOURCE OUTLINE + BOTH NONPOLITICAL C1-U CAP RETURNS',19)+
+  title(1301,1055,'MAGNIFIED ORIGINAL RASTER CELL LABELS AND SOURCE-INK NEIGHBORS',19)+
+  title(40,1097,'Original component 51: '+c.component.actualSourceCandidatePixelCount+
+   ' candidate pixels, bounding box '+JSON.stringify(local),16,'#FFE8B8')+
+  title(40,1142,link,15,'#CDDCEC')+
+  title(40,1190,'Any dashed magenta connection is a hypothetical source-ink sensitivity only, not land, sea, a road or a sovereign boundary.',16,'#FFD9AF')+
   '</svg>\n';
  process.stdout.write(svg);
  process.exit(0);
