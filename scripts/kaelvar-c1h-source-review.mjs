@@ -73,7 +73,8 @@ for(const [layer,sha] of [['biome',c1.sourceWitness.biomeSha256],
     fail('source image dimensions drift');
   images[layer]={data,decoded};
 }
-const {width,height}=c1.coordinateSpace;
+const {widthPixels:width,heightPixels:height}=c1.coordinateSpace;
+if(width!==2048||height!==1152)fail('registered reference dimensions changed');
 const terrain=registeredTerrainCandidates({
   biome:images.biome.decoded,elevation:images.elevation.decoded,
   crop,width,height,
