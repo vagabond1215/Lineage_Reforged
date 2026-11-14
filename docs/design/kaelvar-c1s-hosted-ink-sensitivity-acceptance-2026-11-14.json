@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1s-shared-ink-hosted-native-witness.v1",
+  "date": "2026-11-14",
+  "status": "HOSTED_C1S_SOURCE_SENSITIVITY_PASSED_PHYSICAL_AND_POLITICAL_APPROVAL_HELD",
+  "testBearingCommit": "283e7e52a5f95409fb7e9574b53d8b20bcaced99",
+  "runUrl": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43641073027",
+  "artifactId": 14131733341,
+  "artifactRetentionDays": 7,
+  "nativeReportSha256": "924d7ddbcf31f614bfe510412e7456c48ba652ec462833b7d2930befb7b638f5",
+  "environment": "GitHub-hosted Ubuntu Node 22 (not owner Windows PowerShell)",
+  "tests": {
+    "passed": 36,
+    "failed": 0,
+    "filesScanned": 878,
+    "newLegacyHexDependencies": 0
+  },
+  "originalSources": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "coastEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "reviewedHeadlandOriginalEdgesInclusive": [
+      75,
+      115
+    ],
+    "sourceReferenceGrid": [
+      2048,
+      1152
+    ],
+    "sourceSearchWindow": [
+      300,
+      155,
+      590,
+      465
+    ],
+    "startVerdant": [
+      390,
+      336
+    ],
+    "endHeadland": [
+      492,
+      215
+    ]
+  },
+  "unresolvedSharedRgbEligible": {
+    "blackExactRGB_0_0_0": 2289,
+    "tealExactRGB_4_159_169": 173,
+    "otherSharedNonblue": 351,
+    "total": 2813,
+    "adjacentToOtherOriginalPhysicalComponents": 31,
+    "otherOriginalPhysicalComponentLabels": [
+      51,
+      78,
+      113
+    ]
+  },
+  "sensitivity": [
+    {
+      "id": "ORIGINAL_SOURCE_PAIR_ONLY",
+      "hypotheticalSamples": 0,
+      "clearancePx0_1_2": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "HYPOTHETICAL_BLACK_ONLY",
+      "hypotheticalSamples": 2289,
+      "clearancePx0_1_2": [
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "id": "HYPOTHETICAL_TEAL_ONLY",
+      "hypotheticalSamples": 173,
+      "clearancePx0_1_2": [
+        true,
+        true,
+        false
+      ],
+      "clearance1Sha256": "0cfbc0fac95776681b79b48d9903b73ee4c588a09e9526f268e06b801249c16b"
+    },
+    {
+      "id": "HYPOTHETICAL_BLACK_AND_TEAL",
+      "hypotheticalSamples": 2462,
+      "clearancePx0_1_2": [
+        true,
+        true,
+        true
+      ],
+      "clearance2Sha256": "3b8a527dbb6cbf835b4b123923b2f8e6fde72f509afba3783f498a9a12d20d25"
+    },
+    {
+      "id": "HYPOTHETICAL_ALL_SHARED_NONBLUE",
+      "hypotheticalSamples": 2813,
+      "clearancePx0_1_2": [
+        true,
+        true,
+        true
+      ]
+    }
+  ],
+  "unchangedC1P": {
+    "mainlandCandidateCells": 79419,
+    "regions": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "assigned": 52449,
+    "unassigned": 26970,
+    "newPoliticalTerritory": 0,
+    "originalTerrainLabelsModified": 0,
+    "originalSourcePixelsModified": 0,
+    "detachedComponentsClaimed": 0
+  },
+  "holds": {
+    "kharuunOriginalCoastEdges": [
+      35,
+      58
+    ],
+    "southeasternVerdantPeninsulaPreserved": true,
+    "northeastHeadlandUnassigned": true,
+    "largeNortheastIslandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "allPortsWellsRiversRoutesSaltBasinsUnchanged": true,
+    "canonicalWritable": false
+  },
+  "interpretation": "Hypothetically permitting unresolved source-pair shared nonblue pixels changes corridor clearance, but no black or teal samples are certified land, water, route or political boundary. Original source masks, political geometry and islands remain unchanged.",
+  "next": "C1-T: inspect actual original ink morphology, teal bottleneck and detached-component adjacency before any new noncanonical headland polygon."
+}
