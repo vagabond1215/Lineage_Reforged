@@ -57,13 +57,14 @@
       214
     ],
     "originalStrictPhysicalConnection": false,
-    "hypotheticalBlackConnection": false,
     "sourceReferenceReviewWindow": {
       "minX": 454,
       "minY": 196,
       "maxX": 516,
       "maxY": 252
-    }
+    },
+    "hypotheticalBlackConnectionExists": true,
+    "hypotheticalBlackConnectionCertifiesLand": false
   },
   "interpretations": [
     {
