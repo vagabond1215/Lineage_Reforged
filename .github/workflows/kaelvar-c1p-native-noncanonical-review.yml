@@ -8,6 +8,9 @@ on:
       - 'scripts/kaelvar-c1p-regional-seams.mjs'
       - 'scripts/lib/kaelvar-c1p-regional-seam-review.mjs'
       - 'tests/unit/kaelvar-c1p-regional-seam-review.test.mjs'
+      - 'scripts/lib/kaelvar-c1q-headland-continuity.mjs'
+      - 'tests/unit/kaelvar-c1q-headland-continuity.test.mjs'
+      - 'docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json'
       - 'docs/design/kaelvar-c1p-refined-mainland-seam-candidates-2026-11-14.json'
       - '.github/workflows/kaelvar-c1p-native-noncanonical-review.yml'
   pull_request:
@@ -32,11 +35,13 @@ jobs:
       - name: Check native code syntax
         run: |
           node --check scripts/lib/kaelvar-c1p-regional-seam-review.mjs
+          node --check scripts/lib/kaelvar-c1q-headland-continuity.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
+          node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -73,6 +78,38 @@ jobs:
           node scripts/kaelvar-c1p-regional-seams.mjs --north-svg > "$RUNNER_TEMP/c1p-refined-north-coast.svg"
           test -s "$RUNNER_TEMP/c1p-original-versus-refined.svg"
           test -s "$RUNNER_TEMP/c1p-refined-north-coast.svg"
+      - name: C1-Q source-indexed NE headland continuity and no-allocation options
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --headland-check > "$RUNNER_TEMP/c1q-headland-review.json"
+          node - "$RUNNER_TEMP/c1q-headland-review.json" <<'NODE'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1Q_NORTHEAST_HEADLAND_OPTIONS_REVIEW_ONLY_NO_POLITICAL_ALLOCATION');
+          assert.deepEqual([r.headland.originalSourceEdgeIndices[0],
+            r.headland.originalSourceEdgeIndices.at(-1)],[75,115]);
+          assert.equal(r.headland.originalSourceEdgeIndices.length,41);
+          assert.equal(r.headland.politicalOwner,null);
+          assert.deepEqual(r.options.map(x=>x.id),
+            ['HOLD_UNASSIGNED','VERDANT_CORRIDOR_EVIDENCE_ONLY']);
+          assert.equal(r.c1pTerrainConservation.mainlandCandidateCells,79419);
+          assert.equal(r.c1pTerrainConservation.assigned,52449);
+          assert.equal(r.c1pTerrainConservation.unassigned,26970);
+          assert.equal(r.c1pTerrainConservation.additionalTerritorialCellsAssigned,0);
+          assert.equal(r.c1pTerrainConservation.detachedComponentsClaimed,0);
+          assert.equal(r.limits.noNewPolygonOrCanonicalPublication,true);
+          assert.equal(r.candidateCorridors.length,3);
+          for(const x of r.candidateCorridors){
+            if(x.found){
+              assert.ok(x.pixelSteps>0);
+              assert.equal(x.path.length,x.pixelSteps+1);
+            }else assert.deepEqual(x.path,[]);
+          }
+          console.log('C1-Q held corridor evidence: '+
+            r.candidateCorridors.map(x=>x.clearancePx+':'+x.found).join(', '));
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --headland-svg > "$RUNNER_TEMP/c1q-headland-options.svg"
+          test -s "$RUNNER_TEMP/c1q-headland-options.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -82,5 +119,7 @@ jobs:
             ${{ runner.temp }}/c1p-native-review.json
             ${{ runner.temp }}/c1p-original-versus-refined.svg
             ${{ runner.temp }}/c1p-refined-north-coast.svg
+            ${{ runner.temp }}/c1q-headland-review.json
+            ${{ runner.temp }}/c1q-headland-options.svg
           if-no-files-found: warn
           retention-days: 7
