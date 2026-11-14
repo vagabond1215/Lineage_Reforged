@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13]
+    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13]
 
 permissions:
   contents: read
@@ -56,3 +56,11 @@ jobs:
             ${{ runner.temp }}/kaelvar-c1f-review.svg
             ${{ runner.temp }}/kaelvar-c1f-report.json
           retention-days: 7
+
+      - name: C1-G coast and inland salt basin narrative gates
+        run: |
+          node --check scripts/lib/kaelvar-c1g-ecology-evidence.mjs
+          node --check scripts/kaelvar-c1g-ecology-review.mjs
+          node --check tests/unit/kaelvar-c1g-ecology-evidence.test.mjs
+          node --test tests/unit/kaelvar-c1g-ecology-evidence.test.mjs
+          node scripts/kaelvar-c1g-ecology-review.mjs --check
