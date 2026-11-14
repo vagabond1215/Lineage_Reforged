@@ -332,6 +332,9 @@ jobs:
             ['REJECT_SOURCE_COAST_CROSSING','GEOMETRIC_REVIEW_ONLY','GEOMETRIC_REVIEW_ONLY']);
           assert.deepEqual(r.reviewEnclosures.map(x=>x.sourceCoastReturnCrossings.properCrossings),
             [1,0,0]);
+          assert.equal(r.reviewEnclosures[0].sample.outsideOriginalContourPixels,2);
+          assert.deepEqual(r.reviewEnclosures[0].sourceCoastReturnCrossings.examples,
+            [{returnSegmentIndex:41,sourceEdgeIndex:117}]);
           assert.deepEqual(r.reviewEnclosures.slice(1)
             .map(x=>x.sample.rawSourceReferencePixels),[1709,1482]);
           for(const row of r.reviewEnclosures.slice(1)){
@@ -340,6 +343,12 @@ jobs:
             assert.equal(row.sample.originalProvisionalRegionPixelCount,0);
             assert.equal(row.protectedOffshore.properIntersections,0);
             assert.equal(row.protectedOffshore.sourceContourVerticesEnclosed,0);
+            assert.equal(row.sample.otherOriginalPhysicalComponentPixels,13);
+            assert.equal(row.sample.otherOriginalPhysicalComponentExamples.length,13);
+            assert.equal(Object.values(row.sample.otherOriginalPhysicalComponentsById)
+              .reduce((a,b)=>a+b,0),13);
+            assert.equal(row.physicalComponentHold,true);
+            assert.equal(row.originalOtherComponentCellsNotClaimed,true);
             assert.equal(row.acceptedAsActiveRegion,false);
             assert.equal(row.canonicalWritable,false);
             assert.equal(row.sourceArcOriginalEdges.length,41);
