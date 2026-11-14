@@ -34,10 +34,12 @@ import {buildC1SSensitivity}
  from './lib/kaelvar-c1s-headland-ink-sensitivity.mjs';
 import {buildC1TReview}
  from './lib/kaelvar-c1t-source-pinch-and-island-contact.mjs';
+import {buildC1UFeasibility}
+ from './lib/kaelvar-c1u-headland-review-enclosures.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -99,6 +101,16 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
+let enclosure=null;
+if(mode==='--enclosure-check'||mode==='--enclosure-svg'){
+ const c1u=json('docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json');
+ enclosure=buildC1UFeasibility({spec:c1u,p,report,revised,labels,
+  ownership:imageMasks.refined,selected});
+ if(mode==='--enclosure-check'){
+  process.stdout.write(JSON.stringify(enclosure,null,2)+'\n');
+  process.exit(0);
+ }
+}
 let headland=null,bottleneck=null,ink=null,pinch=null;
 if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)){
  const q=json('docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json');
@@ -397,6 +409,31 @@ if(mode==='--pinch-svg'){
   title(35,1074,'Original shared source RGB: (4,159,169); original pixel (837,675)',17,'#FFDFB8')+
   title(35,1118,'C1-P: 52,449 assigned, 26,970 unassigned, 79,419 source mainland candidates. NO CANONICAL CHANGES.',17)+
   title(1300,1074,'Orange = shared black, cyan = shared teal, violet = other unresolved ink.',16,'#FFDFB8')+
+  '</svg>\n';
+ process.stdout.write(svg);
+ process.exit(0);
+}
+
+if(mode==='--enclosure-svg'){
+ const W=2540,H=1100;
+ const safe=enclosure.reviewEnclosures.filter(x=>x.status==='GEOMETRIC_REVIEW_ONLY');
+ if(safe.length!==2)hold('source-safe headland alternatives unavailable');
+ const direct=enclosure.reviewEnclosures[0];
+ const draw=(ring,stroke,dashed=false,width=2.2)=>
+  '<path d="'+ring.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ')+' Z'+
+  '" fill="none" stroke="'+stroke+'" stroke-width="'+width+'"'+
+  (dashed?' stroke-dasharray="3 3"':'')+'/>';
+ const mark=(id,side)=>'<text x="'+(side+18)+'" y="1042" font-size="20" fill="#F3F6F9">'+esc(id)+'</text>';
+ const cell=(x,y,rec)=>panel(x,y,1200,790,[430,180,138,102],imgs[1],revised,
+  draw(rec.ringOriginalSourceFrame,'#46EED3',false,2.6)+
+  draw(direct.ringOriginalSourceFrame,'#FF686C',true,1.5));
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+
+  '" viewBox="0 0 '+W+' '+H+'">'+head+
+  title(30,45,'C1-U / EXACT-SOURCE NORTHEASTERN HEADLAND ENCLOSURES',28)+
+  title(30,84,'Green = valid source-safe local review envelope; red dash = rejected shoreline-crossing chord',18,'#FFD1A1')+
+  cell(40,140,safe[0])+cell(1300,140,safe[1])+
+  mark('INSET-RETURN · REVIEW ONLY',40)+mark('COMPACT-RETURN · REVIEW ONLY',1300)+
+  title(45,1074,'Neither is a sovereign boundary. Direct Verdant expansion crosses source coast and conflicts with Kharuun.',16,'#FFD19C')+
   '</svg>\n';
  process.stdout.write(svg);
  process.exit(0);
