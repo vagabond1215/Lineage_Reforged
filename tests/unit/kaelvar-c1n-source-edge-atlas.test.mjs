@@ -112,7 +112,7 @@ test('False Veyrholm corridor and changed source count are rejected',()=>{
    /prematurely changed/);
  const b=inputs();b.n.northeasternSourceRuns[0].count=91;
  assert.throws(()=>validateC1NAtlasContract(b.n,b.j,b.l,b.m),
-   /index specification drift/);
+   /indexed source-contour segment specification drift/);
  const c=inputs();c.n.sourceCoastEdgeCount=598;
  assert.throws(()=>validateC1NAtlasContract(c.n,c.j,c.l,c.m),
    /atlas format/);
