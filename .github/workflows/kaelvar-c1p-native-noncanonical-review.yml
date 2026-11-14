@@ -387,19 +387,41 @@ jobs:
           assert.equal(r.sourceWitness.mainlandId,30);
           assert.equal(r.component.originalTerrainComponentId,51);
           assert.equal(r.component.fourConnected,true);
-          assert.ok(r.component.actualSourceCandidatePixelCount>=13);
-          assert.ok(r.component.originalSourceContourContainedCells>=13);
+          assert.equal(r.component.actualSourceCandidatePixelCount,21);
+          assert.deepEqual(r.component.boundingReferencePixels,
+            {minX:466,minY:206,maxX:470,maxY:212});
+          assert.equal(r.component.originalSourceContourContainedCells,13);
+          assert.equal(r.component.originalSourceContourOutsideCells,8);
+          assert.equal(r.component.sourceCoastProximity.sourceEdgeIndex,81);
+          assert.equal(r.component.sourceCoastProximity.distanceReferencePixels,0);
           assert.equal(r.component.extentInsideReviewEnclosures.length,2);
           assert.deepEqual(r.component.extentInsideReviewEnclosures
             .map(x=>x.containedOriginalComponent51Cells),[13,13]);
-          assert.equal(r.componentBoundary.cardinalEdgeCounts.strictMainland30,0);
+          assert.deepEqual(r.componentBoundary.cardinalEdgeCounts,{
+            strictMainland30:0,component51:60,unresolvedZero:24,
+            outsideFrame:0,otherPhysicalComponent:0});
+          assert.equal(r.componentBoundary.uniqueAdjacentReferencePixels,18);
+          assert.deepEqual(r.componentBoundary.uniqueAdjacentExcludedPixelColorCategories,
+            {black:18,teal:0,other:0,sourceBlue:0,otherExcluded:0,invalidAlpha:0});
           assert.equal(r.componentBoundary.originalSourceBoundaryUnchanged,true);
           assert.equal(r.localHypotheticalConnectivity.routeScenarios.length,5);
           assert.deepEqual(r.localHypotheticalConnectivity.routeScenarios
             .map(x=>x.scenario),
             ['STRICT_ORIGINAL','SHARED_BLACK_ONLY','SHARED_TEAL_ONLY',
              'SHARED_BLACK_AND_TEAL','ALL_SHARED_NONBLUE']);
-          assert.equal(r.localHypotheticalConnectivity.routeScenarios[0].found,false);
+          assert.deepEqual(r.localHypotheticalConnectivity.routeScenarios
+            .map(x=>x.found),[false,true,false,true,true]);
+          for(const i of [1,3,4]){
+            const route=r.localHypotheticalConnectivity.routeScenarios[i];
+            assert.equal(route.shortestPixelSteps,2);
+            assert.equal(route.hypotheticalPixelsOnPath,1);
+            assert.deepEqual(route.classesOnPath,{black:1,teal:0,other:0});
+            assert.deepEqual(route.path,
+              [{x:469,y:212},{x:469,y:213},{x:469,y:214}]);
+            assert.equal(route.sourceVectorProperCrossingsOnPath,0);
+            assert.equal(route.pathSha256,
+              '81534e9799d4f6b83c9c0ba106c25de2143de2b53636ecd362b0239867c7d1b8');
+          }
           for(const row of r.localHypotheticalConnectivity.routeScenarios){
             if(row.found){
               assert.ok(row.hypotheticalPixelsOnPath>0);
