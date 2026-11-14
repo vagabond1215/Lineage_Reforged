@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1t-teal-pinch-detached-component-ink-contact-review.v1",
+  "date": "2026-11-14",
+  "status": "SOURCE_PAIR_MORPHOLOGY_ONLY_NO_RECLASSIFICATION_NO_REGION_PUBLICATION",
+  "pinnedC1SHead": "ef615ed831f700b681837aae9a9414a1ca3d37e8",
+  "c1sSourceSpec": "docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json",
+  "source": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "contourVertices": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "registeredCrop": {
+      "x": 60,
+      "y": 60,
+      "width": 3976,
+      "height": 2235
+    },
+    "referenceWidth": 2048,
+    "referenceHeight": 1152
+  },
+  "focus": {
+    "referencePixel": {
+      "x": 400,
+      "y": 317
+    },
+    "registeredOriginalSourcePixel": {
+      "x": 837,
+      "y": 675
+    },
+    "expectedExactSharedRgb": [
+      4,
+      159,
+      169
+    ],
+    "localRadiusReferenceSamples": 8,
+    "expectedC1STealOnePixelClearancePathSha256": "0cfbc0fac95776681b79b48d9903b73ee4c588a09e9526f268e06b801249c16b"
+  },
+  "window": {
+    "minX": 300,
+    "minY": 155,
+    "maxX": 590,
+    "maxY": 465
+  },
+  "start": {
+    "x": 390,
+    "y": 336
+  },
+  "target": {
+    "x": 492,
+    "y": 215
+  },
+  "sensitivityScenarioIds": [
+    "ORIGINAL_SOURCE_PAIR_ONLY",
+    "HYPOTHETICAL_TEAL_ONLY",
+    "HYPOTHETICAL_BLACK_AND_TEAL",
+    "HYPOTHETICAL_ALL_SHARED_NONBLUE"
+  ],
+  "hypotheticalOnly": true,
+  "strictAllowedOwners": [
+    0,
+    3
+  ],
+  "strictForbiddenOwners": [
+    1,
+    2,
+    4
+  ],
+  "originalTerrainLabelMainland": 30,
+  "sourceAdjacentOtherComponentLabels": [
+    51,
+    78,
+    113
+  ],
+  "requiredOriginalC1P": {
+    "mainlandTerrainCandidates": 79419,
+    "assigned": 52449,
+    "unassigned": 26970,
+    "regions": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "KharuunOriginalEdgesInclusive": [
+      35,
+      58
+    ],
+    "reviewHeadlandEdgesInclusive": [
+      75,
+      115
+    ]
+  },
+  "holds": {
+    "sourceImagesUnchanged": true,
+    "originalTerrainLabelsUnchanged": true,
+    "originalSourceCoastUnchanged": true,
+    "regionPolygonsUnchanged": true,
+    "headlandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "largeNortheasternIslandUnassigned": true,
+    "detachedComponentClaims": 0,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "newPortsWellsRiversRoutesSaltBasins": 0,
+    "newLegacyHexDependencies": 0,
+    "canonicalWritable": false
+  },
+  "interpretation": "A one-pixel teal ablation or a hypothetical ink-contact path is a source-sensitivity diagnostic, not proof of water, dry land, safe passage, island annexation or political geometry."
+}
