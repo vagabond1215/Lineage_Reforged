@@ -273,9 +273,25 @@ jobs:
           assert.deepEqual(r.detachedContactAudit.eligibleUnresolvedSamples,{black:2289,teal:173,other:351});
           assert.deepEqual(Object.keys(r.detachedContactAudit.byOriginalPhysicalComponent),['51','78','113']);
           assert.equal(r.detachedContactAudit.sourceContactSamples.length,31);
+          assert.deepEqual(r.detachedContactAudit.byClass,{black:31,teal:0,other:0});
+          assert.deepEqual(Object.fromEntries(Object.entries(
+             r.detachedContactAudit.byOriginalPhysicalComponent)
+              .map(([key,x])=>[key,x.candidateSamples])),{'51':8,'78':12,'113':11});
+          assert.equal(r.focusPixelOneAtATime.focusOnlyHypotheticalTeal1px.found,false);
+          assert.equal(r.focusPixelOneAtATime.allTealExceptFocus1px.found,true);
+          assert.equal(r.focusPixelOneAtATime.allTealExceptFocus1px.steps,223);
+          assert.equal(r.focusPixelOneAtATime.allTealExceptFocus1px.hash,
+            '47090514e4a31be6d14d6c60762c31bc2219118736cf026511cb6cfef86c6cd4');
+          assert.deepEqual(r.localSourceNeighborhood.counts,
+            {black:24,teal:12,other:1,strictCandidate:205,
+             notShared:22,outsideContour:25});
           assert.deepEqual(r.detachedContactAudit.scenarios.map(x=>x.id),
             ['ORIGINAL_SOURCE_PAIR_ONLY','HYPOTHETICAL_TEAL_ONLY',
              'HYPOTHETICAL_BLACK_AND_TEAL','HYPOTHETICAL_ALL_SHARED_NONBLUE']);
+          assert.deepEqual(r.detachedContactAudit.scenarios.map(x=>x.potentialPhysicalContactSamples),
+            [0,0,22,22]);
+          assert.deepEqual(r.detachedContactAudit.scenarios.map(x=>x.potentialPhysicalComponentLabels),
+            [[],[],[51,78,113],[51,78,113]]);
           for(const c of r.detachedContactAudit.scenarios)
             assert.equal(c.actuallyMergedOrClaimedPhysicalComponents,0);
           assert.equal(r.noChanges.originalVectorEdges,599);
