@@ -192,3 +192,86 @@ When integration is useful but not safe inside the active run:
 - continue the active route without merging unrelated work.
 
 Conversely, do not defer a clean, dependency-relevant branch indefinitely when its review trigger has arrived and integration can be validated within the current package.
+
+## 11. Worktree and branch-count control (owner direction, 2026-11-14)
+
+This section supplements, not weakens, sections 2–10. It applies to Codex,
+Connector, human operators and agents. The objective is to stop permanent
+checkout accumulation without weakening unique-work preservation.
+
+### Checkout budget
+
+- Keep one primary local checkout (`C:\\Codex\\EoL`).
+- Use **at most two concurrent persistent task worktrees by default**, beyond
+  the primary checkout. A third requires a documented active consumer,
+  owner, reason and closeout trigger in the run handoff. The limit is a
+  default planning budget, **never an instruction to delete existing work
+  before it is verified safe**.
+- For read-only audits, single-SHA CI reproduction, geometry previews and
+  acceptance checks, prefer an already clean checkout or a **temporary
+  detached worktree** outside the primary tree. Record its path and SHA,
+  protect outputs externally, then remove it after the last dependent test.
+- Do not open a new worktree automatically for every prompt, stage letter,
+  revision, test rerun or connector checkpoint. Prefer continuing an
+  existing purpose-matched clean checkout and reusing the same topic branch
+  for an ongoing coherent integration series.
+- Each new worktree/branch must have a **named consumer, base SHA, target
+  output, lifetime/closeout event, and disposition**. If that information is
+  unavailable, do not create it by default.
+
+### Exit is part of completion
+
+Every run that creates or uses a nonprimary checkout must finish with a
+worktree closeout receipt: exact path, branch/HEAD, dirty/untracked/ignored
+inspection, output-retention location, action (removed or retained), reason
+for retention and next review trigger.
+
+When safe, remove completed disposable worktrees via `git worktree remove`
+**without `--force`**, then run `git worktree list --porcelain` to verify.
+Generated `dist` directories can be reclaimed only after proving they are
+ignored, reproducible, within an intended checkout, and not needed by a
+running preview. Never equate worktree removal with branch deletion.
+
+No generic `git clean -fdx`, `git reset --hard`, forced worktree removal,
+mass branch deletion or immediate object pruning is allowed as a cleanup
+shortcut. Inspect ignored and untracked content separately, along with
+locks, junctions, active processes and output consumers.
+
+### Prevent branch/PR snowballing
+
+- Prefer **one maintained topic branch and one active review PR per coherent
+  integration lane**, rather than a new branch and draft PR for every small
+  proof stage. Reviewed milestone SHAs remain immutable witnesses without
+  requiring a permanent checkout.
+- Existing stacked drafts (including C1 geography) remain protected under
+  their existing holds until their own accepted integration review. This
+  rule is prospective; do not collapse historical stacks blindly.
+- Do not create a branch merely to prepare a chat prompt, inspect an audit
+  or render a disposable preview. Record the source SHA and report instead.
+- Reinspect active topic branches and draft PRs on every major handoff and
+  at least once per 14 calendar days while work continues. Record their
+  named consumers and retire conditions; elapsed time alone never
+  authorizes deletion.
+- When a reviewed integration is accepted, close/retire its branch promptly
+  after proving the accepted result on `master`, preserving the evidence,
+  resolving linked PRs and verifying exact ref identity (sections 5–8).
+- Do not treat a newer branch as an automatic supersession of older
+  protected branches; compare ancestry and unique diffs first.
+
+### Storage telemetry and responsibility
+
+Codex owns **local** inventory, cleanup and readback because the GitHub
+Connector cannot inspect `C:\\Codex` or certify Windows process, dependency,
+junction and untracked-file state. Connector may inspect remote branches,
+PRs and design reviews, but must not claim a local worktree was cleaned.
+
+At every substantial cleanup and at the next planned maintenance review,
+report physical checkout count, bytes in primary checkout, bytes in sibling
+worktrees, largest ignored build/dependency outputs, Git-object usage and
+disk space actually recovered. Use the procedures in
+[Worktree closeout runbook](worktree-lifecycle-closeout-runbook-2026-11-14.md).
+
+**Acceptance:** A worktree policy is operationally effective only when
+subsequent local runs show closeout receipts and declining redundant
+checkout/build-output counts. Documentation and remote acceptance alone
+do not prove local disk recovery.
