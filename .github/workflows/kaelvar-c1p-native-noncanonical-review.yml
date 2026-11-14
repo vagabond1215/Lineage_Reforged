@@ -18,6 +18,9 @@ on:
       - 'tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs'
       - 'scripts/lib/kaelvar-c1u-headland-review-enclosures.mjs'
       - 'tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs'
+      - 'scripts/lib/kaelvar-c1v-component51-source-separation.mjs'
+      - 'tests/unit/kaelvar-c1v-component51-source-separation.test.mjs'
+      - 'docs/design/kaelvar-c1v-component51-source-physical-separation-review-2026-11-14.json'
       - 'docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json'
       - 'docs/design/kaelvar-c1t-teal-pinch-and-detached-component-contact-review-2026-11-14.json'
       - 'docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json'
@@ -52,6 +55,7 @@ jobs:
           node --check scripts/lib/kaelvar-c1s-headland-ink-sensitivity.mjs
           node --check scripts/lib/kaelvar-c1t-source-pinch-and-island-contact.mjs
           node --check scripts/lib/kaelvar-c1u-headland-review-enclosures.mjs
+          node --check scripts/lib/kaelvar-c1v-component51-source-separation.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
           node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
@@ -59,9 +63,10 @@ jobs:
           node --check tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs
           node --check tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs
           node --check tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs
+          node --check tests/unit/kaelvar-c1v-component51-source-separation.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs tests/unit/kaelvar-c1v-component51-source-separation.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -369,6 +374,62 @@ jobs:
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --enclosure-svg > "$RUNNER_TEMP/c1u-headland-enclosure-options.svg"
           test -s "$RUNNER_TEMP/c1u-headland-enclosure-options.svg"
+      - name: C1-V original physical component 51, ink barrier and native isolation
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --component51-check > "$RUNNER_TEMP/c1v-component51-source-separation.json"
+          node - "$RUNNER_TEMP/c1v-component51-source-separation.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1V_COMPONENT51_INLET_IDENTITY_NATIVE_SOURCE_AUDIT_CANONICAL_HELD');
+          assert.equal(r.sourceWitness.originalContourEdges,599);
+          assert.deepEqual(r.sourceWitness.headlandEdges,[75,115]);
+          assert.equal(r.sourceWitness.componentId,51);
+          assert.equal(r.sourceWitness.mainlandId,30);
+          assert.equal(r.component.originalTerrainComponentId,51);
+          assert.equal(r.component.fourConnected,true);
+          assert.ok(r.component.actualSourceCandidatePixelCount>=13);
+          assert.ok(r.component.originalSourceContourContainedCells>=13);
+          assert.equal(r.component.extentInsideReviewEnclosures.length,2);
+          assert.deepEqual(r.component.extentInsideReviewEnclosures
+            .map(x=>x.containedOriginalComponent51Cells),[13,13]);
+          assert.equal(r.componentBoundary.cardinalEdgeCounts.strictMainland30,0);
+          assert.equal(r.componentBoundary.originalSourceBoundaryUnchanged,true);
+          assert.equal(r.localHypotheticalConnectivity.routeScenarios.length,5);
+          assert.deepEqual(r.localHypotheticalConnectivity.routeScenarios
+            .map(x=>x.scenario),
+            ['STRICT_ORIGINAL','SHARED_BLACK_ONLY','SHARED_TEAL_ONLY',
+             'SHARED_BLACK_AND_TEAL','ALL_SHARED_NONBLUE']);
+          assert.equal(r.localHypotheticalConnectivity.routeScenarios[0].found,false);
+          for(const row of r.localHypotheticalConnectivity.routeScenarios){
+            if(row.found){
+              assert.ok(row.hypotheticalPixelsOnPath>0);
+              assert.ok(row.shortestPixelSteps>0);
+              assert.ok(row.path.length===row.shortestPixelSteps+1);
+              assert.equal(row.strictlyOriginalPhysicalConnectivity,false);
+            }else assert.deepEqual(row.path,[]);
+            assert.equal(row.notLandSeaOrSovereigntyCertification,true);
+          }
+          assert.equal(r.localHypotheticalConnectivity.physicalComponent51NeverRelabeled,true);
+          assert.equal(r.localHypotheticalConnectivity.originalMainlandComponent30NeverRelabeled,true);
+          assert.equal(r.localHypotheticalConnectivity.noOtherPhysicalComponentTraversed,true);
+          assert.equal(r.fixedC1P.mainlandOriginalCandidateCells,79419);
+          assert.equal(r.fixedC1P.originalRegionAssignedCells,52449);
+          assert.equal(r.fixedC1P.originalRegionUnassignedCells,26970);
+          assert.equal(r.fixedC1P.sourcePixelsChanged,0);
+          assert.equal(r.fixedC1P.terrainComponentLabelsChanged,0);
+          assert.equal(r.fixedC1P.newPoliticalTerritoryCells,0);
+          assert.equal(r.fixedC1P.detachedComponentsGranted,0);
+          assert.equal(r.fixedC1P.canonicalWritable,false);
+          assert.equal(r.holds.headlandPoliticalOwner,null);
+          assert.equal(r.holds.shattercapUnassigned,true);
+          console.log('C1-V exact component 51 cells '+r.component.actualSourceCandidatePixelCount+
+           ', original coast proximity '+r.component.sourceCoastProximity.distanceReferencePixels);
+          console.log('C1-V conditional source-ink connections: '+
+           r.localHypotheticalConnectivity.routeScenarios.map(x=>
+            x.scenario+':'+x.found+'('+x.hypotheticalPixelsOnPath+')').join('; '));
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --component51-svg > "$RUNNER_TEMP/c1v-component51-morphology-preview.svg"
+          test -s "$RUNNER_TEMP/c1v-component51-morphology-preview.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -388,5 +449,7 @@ jobs:
             ${{ runner.temp }}/c1t-teal-detached-contact-preview.svg
             ${{ runner.temp }}/c1u-headland-enclosure-review.json
             ${{ runner.temp }}/c1u-headland-enclosure-options.svg
+            ${{ runner.temp }}/c1v-component51-source-separation.json
+            ${{ runner.temp }}/c1v-component51-morphology-preview.svg
           if-no-files-found: warn
           retention-days: 7
