@@ -22,6 +22,9 @@ on:
       - 'tests/unit/kaelvar-c1v-component51-source-separation.test.mjs'
       - 'scripts/lib/kaelvar-c1w-component51-physical-adjudication.mjs'
       - 'tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs'
+      - 'scripts/lib/kaelvar-c1x-targeted-attached-tip-feasibility.mjs'
+      - 'tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs'
+      - 'docs/design/kaelvar-c1x-targeted-promontory-vs-broad-ink-feasibility-2026-11-14.json'
       - 'docs/design/kaelvar-c1w-component51-physical-interpretation-owner-review-2026-11-14.json'
       - 'docs/design/kaelvar-c1v-component51-source-physical-separation-review-2026-11-14.json'
       - 'docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json'
@@ -60,6 +63,7 @@ jobs:
           node --check scripts/lib/kaelvar-c1u-headland-review-enclosures.mjs
           node --check scripts/lib/kaelvar-c1v-component51-source-separation.mjs
           node --check scripts/lib/kaelvar-c1w-component51-physical-adjudication.mjs
+          node --check scripts/lib/kaelvar-c1x-targeted-attached-tip-feasibility.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
           node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
@@ -69,9 +73,10 @@ jobs:
           node --check tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs
           node --check tests/unit/kaelvar-c1v-component51-source-separation.test.mjs
           node --check tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs
+          node --check tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs tests/unit/kaelvar-c1v-component51-source-separation.test.mjs tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs tests/unit/kaelvar-c1v-component51-source-separation.test.mjs tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -505,6 +510,61 @@ jobs:
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --physical-review-svg > "$RUNNER_TEMP/c1w-original-paired-physical-review.svg"
           test -s "$RUNNER_TEMP/c1w-original-paired-physical-review.svg"
+      - name: C1-X selective black gap versus teal and broad black native source gate
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --paired-gates-check > "$RUNNER_TEMP/c1x-paired-ink-gates.json"
+          node - "$RUNNER_TEMP/c1x-paired-ink-gates.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1X_PAIRED_INK_GATES_DIAGNOSTIC_PASSED_NO_PHYSICAL_OR_POLITICAL_APPROVAL');
+          assert.equal(r.sourceWitness.coastlineEdges,599);
+          assert.deepEqual(r.sourceWitness.headlandOriginalCoastEdges,[75,115]);
+          assert.deepEqual(r.blackPixel.reference,{x:469,y:213});
+          assert.deepEqual(r.blackPixel.originalPngPixel,{x:971,y:474});
+          assert.deepEqual(r.blackPixel.identicalRgb,[0,0,0]);
+          assert.equal(r.blackPixel.cardinalNorthPhysicalLabel,51);
+          assert.equal(r.blackPixel.cardinalSouthPhysicalLabel,30);
+          assert.equal(r.blackPixel.uniqueHypotheticalGapSamples,1);
+          assert.equal(r.blackPixel.component51StillLabeledAsSeparate,true);
+          assert.equal(r.blackPixel.physicalAttachmentCertified,false);
+          assert.equal(r.tealClass.eligibleBoundedReferencePixels,173);
+          assert.deepEqual(r.scenarios.map(x=>x.id),[
+            'STRICT_ORIGINAL','TARGETED_BLACK_GAP_ONLY','TEAL_ONLY',
+            'TEAL_PLUS_TARGETED_BLACK_GAP','BROAD_BLACK_AND_TEAL_WARNING']);
+          assert.deepEqual(r.scenarios.map(x=>x.hypotheticalZeroLabelSamples),
+            [0,1,173,174,2462]);
+          assert.deepEqual(r.scenarios.map(x=>x.headland.map(c=>c.found)),[
+            [false,false],[false,false],[true,false],[true,false],[true,true]]);
+          assert.deepEqual(r.scenarios.map(x=>x.blackComponent51MayReachMainland),
+            [false,true,false,true,true]);
+          assert.deepEqual(r.scenarios.map(x=>x.otherOriginalComponentContactRisk),
+            [0,0,0,0,22]);
+          assert.equal(r.scenarios[3].headland[0].pixelSteps,223);
+          assert.deepEqual(r.previousUncalibratedGeometry.caps
+            .map(x=>x.originalComponent51CellsInside),[13,13]);
+          assert.equal(r.previousUncalibratedGeometry.broadBlackRiskReachableContactSamples,22);
+          assert.deepEqual(r.previousUncalibratedGeometry.broadBlackRiskOriginalComponents,[51,78,113]);
+          assert.equal(r.fixedC1P.mainlandOriginalCandidateCells,79419);
+          assert.equal(r.fixedC1P.politicallyAssigned,52449);
+          assert.equal(r.fixedC1P.politicallyUnassigned,26970);
+          assert.deepEqual(r.fixedC1P.originalRegionCells,[5632,18624,19182,9011]);
+          assert.equal(r.fixedC1P.promotedOriginalPhysicalComponentCells,0);
+          assert.equal(r.fixedC1P.originalPixelOrVectorEdits,0);
+          assert.equal(r.fixedC1P.existingRingEdits,0);
+          assert.equal(r.fixedC1P.newTerritorialCells,0);
+          assert.equal(r.fixedC1P.detachedPhysicalComponentClaims,0);
+          assert.equal(r.fixedC1P.canonicalWritable,false);
+          assert.equal(r.decision.ownerSelection,null);
+          assert.equal(r.decision.physicalContinuityCertified,false);
+          assert.equal(r.decision.VerdantPoliticalConnectionCertified,false);
+          assert.equal(r.decision.headlandPoliticalOwner,null);
+          assert.equal(r.decision.allIslandsHeld,true);
+          console.log('C1-X paired gates: '+
+            r.scenarios.map(x=>x.id+' -> 1/2px '+x.headland.map(c=>c.found).join('/')+
+              ', proposed tip attachment '+x.blackComponent51MayReachMainland).join('; '));
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --paired-gates-svg > "$RUNNER_TEMP/c1x-targeted-ink-vs-teal-source-review.svg"
+          test -s "$RUNNER_TEMP/c1x-targeted-ink-vs-teal-source-review.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -528,5 +588,7 @@ jobs:
             ${{ runner.temp }}/c1v-component51-morphology-preview.svg
             ${{ runner.temp }}/c1w-original-paired-physical-review.json
             ${{ runner.temp }}/c1w-original-paired-physical-review.svg
+            ${{ runner.temp }}/c1x-paired-ink-gates.json
+            ${{ runner.temp }}/c1x-targeted-ink-vs-teal-source-review.svg
           if-no-files-found: warn
           retention-days: 7
