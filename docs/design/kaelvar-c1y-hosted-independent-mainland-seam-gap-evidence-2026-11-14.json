@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1y-pinned-native-original-mainland-seam-gap-witness.v1",
+  "date": "2026-11-14",
+  "status": "C1Y_HOSTED_SOURCE_GAP_MEASUREMENTS_ACCEPTED_INDEPENDENT_POLITICAL_SEAMS_UNAPPROVED",
+  "testedImplementationCommit": "a7ed6dff8e1f440ae2083681a25a6ff30a426053",
+  "workflowRunUrl": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43653904057",
+  "artifact": {
+    "id": 14137267264,
+    "name": "c1p-noncanonical-native-terrain-review",
+    "retentionDays": 7,
+    "originalSourceReviewJsonSha256": "70c86a2a4c1fb82382d2dfaaf1e17c6ad38040cd4be64989de0d3f567ec87b93",
+    "originalSourceReviewSvgSha256": "a224476033e8e7e9b7eb608d4aaaf91283b989e86b93c4fd323539e7bc2e70a9"
+  },
+  "environment": "GitHub-hosted Ubuntu Node 22; owner-local Windows native acceptance not run",
+  "tests": {
+    "passed": 63,
+    "failed": 0,
+    "codeFilesScanned": 890,
+    "newLegacyHexDependencies": 0
+  },
+  "source": {
+    "originalVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalCoastlineEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "referenceGrid": {
+      "width": 2048,
+      "height": 1152
+    },
+    "physicalMainlandComponent": 30
+  },
+  "measurements": [
+    {
+      "id": "AURIC_KHARUUN_WESTERN_STEPPE",
+      "regionA": "region.auric_marches",
+      "regionB": "region.kharuun_drylands",
+      "minUnassignedMainlandSamples": 19,
+      "shortestPixelSteps": 20,
+      "endpoints": [
+        [
+          212,
+          263
+        ],
+        [
+          232,
+          263
+        ]
+      ],
+      "middleReviewSample": [
+        222,
+        263
+      ],
+      "pathSha256": "0c23e493ed4734a96409086a0930980501f79c2d8a4f84b7507dc60997b7d433",
+      "windowOtherAssignedRegionSamples": 0,
+      "windowOtherPhysicalComponentSamples": 0,
+      "windowUnassignedMainlandSamples": 5976
+    },
+    {
+      "id": "AURIC_VEYRHOLM_NORTHWEST",
+      "regionA": "region.auric_marches",
+      "regionB": "region.veyrholm_shore",
+      "minUnassignedMainlandSamples": 27,
+      "shortestPixelSteps": 28,
+      "endpoints": [
+        [
+          102,
+          244
+        ],
+        [
+          107,
+          221
+        ]
+      ],
+      "middleReviewSample": [
+        107,
+        235
+      ],
+      "pathSha256": "37c6948a3d5dc7e2e9e6dd7eaf1047f888ca196b68d0d194ad5372cf5b28480e",
+      "windowOtherAssignedRegionSamples": 2358,
+      "windowOtherPhysicalComponentSamples": 7,
+      "windowUnassignedMainlandSamples": 7434
+    },
+    {
+      "id": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "regionA": "region.veyrholm_shore",
+      "regionB": "region.kharuun_drylands",
+      "minUnassignedMainlandSamples": 10,
+      "shortestPixelSteps": 11,
+      "endpoints": [
+        [
+          292,
+          185
+        ],
+        [
+          292,
+          196
+        ]
+      ],
+      "middleReviewSample": [
+        292,
+        190
+      ],
+      "pathSha256": "fe195e3afa7ed20105bea1b23d7f32134abaee9152f02cf6c5412bd445bb9860",
+      "windowOtherAssignedRegionSamples": 75,
+      "windowOtherPhysicalComponentSamples": 0,
+      "windowUnassignedMainlandSamples": 3826
+    },
+    {
+      "id": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "regionA": "region.kharuun_drylands",
+      "regionB": "region.verdant_thalos",
+      "minUnassignedMainlandSamples": 15,
+      "shortestPixelSteps": 16,
+      "endpoints": [
+        [
+          319,
+          318
+        ],
+        [
+          319,
+          334
+        ]
+      ],
+      "middleReviewSample": [
+        319,
+        326
+      ],
+      "pathSha256": "5363789bd3854425a2e984ca736bf21518235d0ae91b57cbc209270c9015e577",
+      "windowOtherAssignedRegionSamples": 0,
+      "windowOtherPhysicalComponentSamples": 0,
+      "windowUnassignedMainlandSamples": 6456
+    },
+    {
+      "id": "AURIC_VERDANT_SOUTHWESTERN_TRANSITION",
+      "regionA": "region.auric_marches",
+      "regionB": "region.verdant_thalos",
+      "minUnassignedMainlandSamples": 121,
+      "shortestPixelSteps": 122,
+      "endpoints": [
+        [
+          218,
+          297
+        ],
+        [
+          290,
+          347
+        ]
+      ],
+      "middleReviewSample": [
+        269,
+        307
+      ],
+      "pathSha256": "c9d45bb5a7c55d06297cee57de7a8d7a95cbf33cff77cf4aa23889ea5511751b",
+      "windowOtherAssignedRegionSamples": 857,
+      "windowOtherPhysicalComponentSamples": 120,
+      "windowUnassignedMainlandSamples": 8725
+    }
+  ],
+  "interpretation": {
+    "technicalShortestGap": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+    "candidateWithVisibleDifferentTerrainColors": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+    "geographicCharacterStillRequiresIndependentReview": true,
+    "pathNeverTraversesOtherRegionOrDetachedPhysicalComponent": true,
+    "windowOtherRegionCountsAreNotPathCrossings": true,
+    "shortestGapRankingIsNotAnInstructionToConsumeReserve": true,
+    "noNewWaypointsAcceptedAsRegionBorders": true,
+    "manualOwnerJudgmentStillRequired": true
+  },
+  "frozenC1P": {
+    "totalMainlandComponent30": 79419,
+    "perRegion": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "provisionalAssigned": 52449,
+    "deliberatelyUnassigned": 26970,
+    "kharuunOptionBOriginalCoastEdges": [
+      35,
+      58
+    ],
+    "northeastHeadlandOriginalEdges": [
+      75,
+      115
+    ],
+    "sourceRasterEdits": 0,
+    "sourceVectorEdits": 0,
+    "terrainLabelEdits": 0,
+    "regionRingEdits": 0,
+    "newTerritorialCells": 0,
+    "detachedComponentClaims": 0,
+    "component51StillSeparate": true,
+    "northeastHeadlandUnassigned": true,
+    "largeNEIslandUnassigned": true,
+    "shattercapUnassigned": true,
+    "southeasternVerdantPeninsulaPreserved": true,
+    "veyrholmDryInlandExclusionsPreserved": true,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "portsWellsRiversRoutesSaltBasinsUnchanged": true,
+    "canonicalWritable": false
+  },
+  "nextGate": "C1-Z: compare Veyrholm–Kharuun 10-sample northern gap with Kharuun–Verdant 15-sample southern transition using exact source underlay, protected anchors and reversible inland waypoint options. Do not assume short equals right; do not assign the entire reserve or touch the NE headland."
+}
