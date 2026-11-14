@@ -216,3 +216,39 @@ After owner visual adjudication, either freeze these provisional rings or
 make a bounded revision and rerun the same native test/raster/preview
 gate on that exact SHA. No detached island, Shattercap, NE headland or
 canonical boundary may be filled to reduce unassigned pixels.
+
+
+## Clarification: northeastern 75–115 offshoot is not the southeastern Verdant peninsula
+
+The owner-provided zoom with index dots `75` and `116` depicts the
+**northeastern mainland headland**, an original source coast run of edges
+`75..115`. It is *not* the southeastern Verdant mainland peninsula
+whose three C1-F inclusion anchors are `(345,388)`, `(430,423)`,
+and `(488,448)`. Previous conversation language conflated these two
+distinct attached mainland projections; the original geography masks,
+indices, and noncanonical C1-P native measurements must not be
+silently reinterpreted because of that wording.
+
+For the **75–115 northeastern headland**, the working design
+recommendation is to investigate **Verdant Thalos as a prospective
+mainland parent before Shattercap Isles**. Its contiguous mainland
+connection is a better political-geographic starting hypothesis than
+automatically calling any green offshore-facing territory an island
+region. However, no source-indexed **landward connection from the
+current Verdant polygon to this headland** has been authored or accepted.
+The headland remains geographically **unassigned** in the C1-P
+candidate rings and native terrain counts.
+
+The alternative Shattercap maritime cultural influence can be explored
+without creating a Shattercap mainland sovereign polygon. Do not use
+color, a narrow neck, proximity to detached islets, or this
+recommendation as evidence of actual physical sea type, political
+ownership, ecological continuity, settlement, port or route.
+
+**Future review task:** construct at least two separately labeled
+reversible options for headland edges `75..115`: (1) Verdant-connected
+coastal expansion after showing an uninterrupted source-safe eastern
+mainland seam, and (2) remain unassigned pending owner review.
+Do not replace the current accepted C1-P terrain accounting with
+either unmeasured option. Shattercap's separate detached island work
+and canonical publication continue to be held.
