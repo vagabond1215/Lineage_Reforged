@@ -37,3 +37,14 @@ jobs:
           node --check tests/unit/world-geographic-authority.test.mjs
           node --test tests/unit/world-geographic-authority.test.mjs
           node scripts/kaelvar-c1-geography-review.mjs --check
+
+      - name: C1-F source-pair clipped placement preview and island holds
+        run: |
+          node --check scripts/lib/kaelvar-c1f-source-png.mjs
+          node --check scripts/lib/kaelvar-c1f-source-raster.mjs
+          node --check scripts/lib/kaelvar-c1f-placement-intent.mjs
+          node --check scripts/kaelvar-c1f-placement-preview.mjs
+          node --test tests/unit/kaelvar-c1f-placement-intent.test.mjs
+          node scripts/kaelvar-c1f-placement-preview.mjs --report
+          node scripts/kaelvar-c1f-placement-preview.mjs --svg > "$RUNNER_TEMP/kaelvar-c1f-review.svg"
+          test -s "$RUNNER_TEMP/kaelvar-c1f-review.svg"

@@ -1,0 +1,521 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1f-owner-corrected-placement-guides.v1",
+  "date": "2026-11-13",
+  "status": "SOURCE_ALIGNED_CANDIDATE_ONLY_NO_APPROVED_BORDERS",
+  "sourceC1LedgerPath": "docs/design/kaelvar-c1-coordinate-geography-review-2026-11-13.json",
+  "coordinateSpaceId": "world_map.first_world.reference",
+  "mapId": "world_map.first_world",
+  "parentRegionId": "region.kaelvar",
+  "sourcePairClassification": "DIVERGENT_RGB_OFF_BLUE_NOT_CERTIFIED_LAND",
+  "terrainOnlyComponent": {
+    "namespace": "SOURCE_PAIR_TERRAIN_ONLY_4_NEIGHBOR_K1",
+    "componentId": 30,
+    "expectedTerrainCandidateCells": 79419
+  },
+  "ownerFeedback": "Northern coastal Veyrholm must stay out of deeper-yellow interior; Verdant centered on whole southern green peninsula; foreign Windward magenta outline is prior Serathyl source, not Kaelvar proposal.",
+  "regionGuides": [
+    {
+      "regionId": "region.auric_marches",
+      "label": "Auric Marches",
+      "color": "#F3BF69",
+      "guidePolygon": [
+        {
+          "x": 77,
+          "y": 224
+        },
+        {
+          "x": 105,
+          "y": 209
+        },
+        {
+          "x": 135,
+          "y": 209
+        },
+        {
+          "x": 160,
+          "y": 198
+        },
+        {
+          "x": 185,
+          "y": 209
+        },
+        {
+          "x": 209,
+          "y": 226
+        },
+        {
+          "x": 212,
+          "y": 255
+        },
+        {
+          "x": 226,
+          "y": 282
+        },
+        {
+          "x": 219,
+          "y": 305
+        },
+        {
+          "x": 199,
+          "y": 332
+        },
+        {
+          "x": 175,
+          "y": 350
+        },
+        {
+          "x": 146,
+          "y": 330
+        },
+        {
+          "x": 120,
+          "y": 312
+        },
+        {
+          "x": 91,
+          "y": 286
+        },
+        {
+          "x": 80,
+          "y": 257
+        }
+      ],
+      "labelAnchor": {
+        "x": 149,
+        "y": 270
+      },
+      "authoredPlacementRule": "WESTERN_STEPPE_MINERAL_UPLANDS_CORE_ONLY",
+      "sourceFeatureIds": [],
+      "geometryRef": null,
+      "physicalComponentClaims": [],
+      "status": "PREVIEW_GUIDE_NOT_CANONICAL"
+    },
+    {
+      "regionId": "region.kharuun_drylands",
+      "label": "Kharuun Drylands",
+      "color": "#D89B61",
+      "guidePolygon": [
+        {
+          "x": 236,
+          "y": 208
+        },
+        {
+          "x": 253,
+          "y": 188
+        },
+        {
+          "x": 280,
+          "y": 179
+        },
+        {
+          "x": 318,
+          "y": 184
+        },
+        {
+          "x": 349,
+          "y": 195
+        },
+        {
+          "x": 377,
+          "y": 216
+        },
+        {
+          "x": 407,
+          "y": 238
+        },
+        {
+          "x": 440,
+          "y": 260
+        },
+        {
+          "x": 450,
+          "y": 286
+        },
+        {
+          "x": 426,
+          "y": 309
+        },
+        {
+          "x": 393,
+          "y": 310
+        },
+        {
+          "x": 353,
+          "y": 302
+        },
+        {
+          "x": 322,
+          "y": 318
+        },
+        {
+          "x": 290,
+          "y": 307
+        },
+        {
+          "x": 255,
+          "y": 301
+        },
+        {
+          "x": 238,
+          "y": 278
+        },
+        {
+          "x": 225,
+          "y": 252
+        }
+      ],
+      "labelAnchor": {
+        "x": 336,
+        "y": 261
+      },
+      "authoredPlacementRule": "CENTRAL_DRYLANDS_ECOLOGY_UNCALIBRATED_NO_AUTOFILL",
+      "sourceFeatureIds": [],
+      "geometryRef": null,
+      "physicalComponentClaims": [],
+      "status": "PREVIEW_GUIDE_NOT_CANONICAL"
+    },
+    {
+      "regionId": "region.verdant_thalos",
+      "label": "Verdant Thalos",
+      "color": "#45D5A0",
+      "guidePolygon": [
+        {
+          "x": 277,
+          "y": 347
+        },
+        {
+          "x": 301,
+          "y": 340
+        },
+        {
+          "x": 326,
+          "y": 328
+        },
+        {
+          "x": 350,
+          "y": 331
+        },
+        {
+          "x": 368,
+          "y": 343
+        },
+        {
+          "x": 389,
+          "y": 330
+        },
+        {
+          "x": 410,
+          "y": 350
+        },
+        {
+          "x": 430,
+          "y": 359
+        },
+        {
+          "x": 449,
+          "y": 369
+        },
+        {
+          "x": 469,
+          "y": 394
+        },
+        {
+          "x": 493,
+          "y": 415
+        },
+        {
+          "x": 507,
+          "y": 440
+        },
+        {
+          "x": 516,
+          "y": 462
+        },
+        {
+          "x": 500,
+          "y": 477
+        },
+        {
+          "x": 463,
+          "y": 477
+        },
+        {
+          "x": 438,
+          "y": 468
+        },
+        {
+          "x": 415,
+          "y": 471
+        },
+        {
+          "x": 392,
+          "y": 453
+        },
+        {
+          "x": 365,
+          "y": 461
+        },
+        {
+          "x": 334,
+          "y": 458
+        },
+        {
+          "x": 298,
+          "y": 461
+        },
+        {
+          "x": 282,
+          "y": 431
+        },
+        {
+          "x": 268,
+          "y": 403
+        },
+        {
+          "x": 270,
+          "y": 372
+        }
+      ],
+      "labelAnchor": {
+        "x": 387,
+        "y": 403
+      },
+      "authoredPlacementRule": "SOUTHERN_GREEN_RIVERED_PENINSULA_INCLUDES_SE_PROMONTORY",
+      "sourceFeatureIds": [],
+      "geometryRef": null,
+      "physicalComponentClaims": [],
+      "status": "PREVIEW_GUIDE_NOT_CANONICAL"
+    },
+    {
+      "regionId": "region.veyrholm_shore",
+      "label": "Veyrholm Shore",
+      "color": "#92B8F1",
+      "guidePolygon": [
+        {
+          "x": 72,
+          "y": 190
+        },
+        {
+          "x": 84,
+          "y": 166
+        },
+        {
+          "x": 109,
+          "y": 163
+        },
+        {
+          "x": 135,
+          "y": 150
+        },
+        {
+          "x": 173,
+          "y": 142
+        },
+        {
+          "x": 196,
+          "y": 148
+        },
+        {
+          "x": 219,
+          "y": 136
+        },
+        {
+          "x": 251,
+          "y": 137
+        },
+        {
+          "x": 278,
+          "y": 121
+        },
+        {
+          "x": 308,
+          "y": 130
+        },
+        {
+          "x": 339,
+          "y": 125
+        },
+        {
+          "x": 367,
+          "y": 150
+        },
+        {
+          "x": 387,
+          "y": 171
+        },
+        {
+          "x": 410,
+          "y": 192
+        },
+        {
+          "x": 443,
+          "y": 205
+        },
+        {
+          "x": 468,
+          "y": 215
+        },
+        {
+          "x": 503,
+          "y": 223
+        },
+        {
+          "x": 528,
+          "y": 233
+        },
+        {
+          "x": 529,
+          "y": 254
+        },
+        {
+          "x": 499,
+          "y": 247
+        },
+        {
+          "x": 466,
+          "y": 235
+        },
+        {
+          "x": 438,
+          "y": 225
+        },
+        {
+          "x": 414,
+          "y": 219
+        },
+        {
+          "x": 389,
+          "y": 202
+        },
+        {
+          "x": 366,
+          "y": 185
+        },
+        {
+          "x": 338,
+          "y": 170
+        },
+        {
+          "x": 311,
+          "y": 160
+        },
+        {
+          "x": 279,
+          "y": 156
+        },
+        {
+          "x": 249,
+          "y": 161
+        },
+        {
+          "x": 220,
+          "y": 159
+        },
+        {
+          "x": 192,
+          "y": 170
+        },
+        {
+          "x": 174,
+          "y": 164
+        },
+        {
+          "x": 146,
+          "y": 177
+        },
+        {
+          "x": 117,
+          "y": 185
+        },
+        {
+          "x": 91,
+          "y": 198
+        },
+        {
+          "x": 72,
+          "y": 208
+        }
+      ],
+      "labelAnchor": {
+        "x": 273,
+        "y": 148
+      },
+      "authoredPlacementRule": "NARROW_NORTHERN_MAINLAND_LITTORAL_EXCLUDES_DEEP_INTERIOR",
+      "sourceFeatureIds": [],
+      "geometryRef": null,
+      "physicalComponentClaims": [],
+      "status": "PREVIEW_GUIDE_NOT_CANONICAL"
+    },
+    {
+      "regionId": "region.shattercap_isles",
+      "label": "Shattercap Isles",
+      "color": "#4DCBDE",
+      "guidePolygon": null,
+      "labelAnchor": null,
+      "authoredPlacementRule": "DETACHED_NORTHERN_ISLANDS_HELD_WHOLE_OWNERSHIP",
+      "sourceFeatureIds": [],
+      "geometryRef": null,
+      "physicalComponentClaims": [],
+      "status": "PREVIEW_GUIDE_NOT_CANONICAL"
+    }
+  ],
+  "reviewAnchors": {
+    "veyrholmMustExcludeInland": [
+      {
+        "x": 190,
+        "y": 260
+      },
+      {
+        "x": 260,
+        "y": 228
+      },
+      {
+        "x": 350,
+        "y": 250
+      }
+    ],
+    "verdantMustIncludePeninsula": [
+      {
+        "x": 345,
+        "y": 388
+      },
+      {
+        "x": 430,
+        "y": 423
+      },
+      {
+        "x": 488,
+        "y": 448
+      }
+    ],
+    "unownedNortheasternIslandSample": {
+      "x": 567,
+      "y": 142
+    }
+  },
+  "sourceHolds": {
+    "foreignWindwardSourceFeatureIds": [
+      "feature.region_windward_spine.part_1",
+      "feature.region_windward_spine.part_2"
+    ],
+    "coast40DisputedFeatureId": "feature.region_verdant_thalos.part_6",
+    "shattercapSourceFeatureIds": [
+      "feature.region_shattercap_isles.part_1",
+      "feature.region_shattercap_isles.part_7",
+      "feature.region_shattercap_isles.part_15"
+    ],
+    "historicalMagentaSourceOutlineShownInProposal": false,
+    "foreignSourceTransferredToKaelvar": false,
+    "islandClaims": [],
+    "unassignedTerrainAllowed": true,
+    "waterOrSharedInkAllocated": false
+  },
+  "approval": {
+    "canonicalWritable": false,
+    "parentConfirmed": false,
+    "regionBordersApproved": false,
+    "ecologicalCalibrationApproved": false,
+    "ownerApprovalRef": null
+  }
+}
