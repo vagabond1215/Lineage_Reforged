@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1l-landmass-first-coast-arc-adjudication.v1",
+  "date": "2026-11-14",
+  "status": "SOURCE_ARC_AND_REGION_DESCRIPTOR_REVIEW_ONLY_NO_BORDER_AUTHORING",
+  "sourcePaths": {
+    "c1": "docs/design/kaelvar-c1-coordinate-geography-review-2026-11-13.json",
+    "c1f": "docs/design/kaelvar-c1f-owner-corrected-placement-guides-2026-11-13.json",
+    "c1j": "docs/design/kaelvar-c1j-coastline-sector-review-2026-11-13.json",
+    "c1k": "docs/design/kaelvar-c1k-coast-informed-boundary-review-2026-11-14.json"
+  },
+  "mapId": "world_map.first_world",
+  "coordinateSpaceId": "world_map.first_world.reference",
+  "parentLandmass": "kaelvar_mainland_source_candidate_component_30",
+  "parentRegionId": "region.kaelvar",
+  "mainlandSourceContourId": "feature.coastline.first_world.part_10",
+  "originalSourceEdges": 599,
+  "northernSourceEdgeCounts": [
+    90,
+    106,
+    114
+  ],
+  "otherOriginalSourceEdges": 289,
+  "mainlandTerrainCandidateCells": 79419,
+  "unassignedMainlandTerrainCandidateCells": 26795,
+  "sourceArcClasses": [
+    "NW_NC_VEYRHOLM_GUIDE_MIDPOINT_ONLY",
+    "NW_NC_OTHER_GUIDE_MIDPOINT_HELD",
+    "NW_NC_NO_GUIDE_MIDPOINT_HELD",
+    "NE_VEYRHOLM_KHARUUN_COMPETITION_HELD",
+    "OTHER_SOURCE_ARC_UNREVIEWED_HELD"
+  ],
+  "regionDescriptions": [
+    {
+      "regionId": "region.auric_marches",
+      "role": "WESTERN_STEPPE_MINERAL_FRONTIER",
+      "location": "west and west-interior mainland",
+      "northwestSourceStatus": "NOT_ASSIGNED_BY_ARC_MATCH",
+      "proposedGeometryRef": null
+    },
+    {
+      "regionId": "region.kharuun_drylands",
+      "role": "CENTRAL_ARID_BASINS_ESCARPMENTS_OASIS_DEPENDENT",
+      "location": "central inland mainland, northern extent contested",
+      "northwestSourceStatus": "NO_SEA_FRONTAGE_APPROVED",
+      "proposedGeometryRef": null
+    },
+    {
+      "regionId": "region.verdant_thalos",
+      "role": "FERTILE_SOUTHERN_PENINSULA_INCLUDING_SE_PROMONTORY",
+      "location": "southern green wooded mainland and southeastern peninsula anchors",
+      "northwestSourceStatus": "NOT_ASSIGNED_BY_ARC_MATCH",
+      "proposedGeometryRef": null
+    },
+    {
+      "regionId": "region.veyrholm_shore",
+      "role": "NORTHERN_MAINLAND_VARIABLE_DEPTH_LITTORAL",
+      "location": "north mainland, excluding three interior dryland anchors",
+      "northwestSourceStatus": "GUIDE_COINCIDENCE_NOT_APPROVED_FRONTAGE",
+      "proposedGeometryRef": null
+    },
+    {
+      "regionId": "region.shattercap_isles",
+      "role": "DETACHED_NORTHERN_ISLAND_COMMUNITIES",
+      "location": "whole detached islands only, pending separate identity and owner review",
+      "northwestSourceStatus": "NO_MAINLAND_OR_ISLAND_CLAIMS",
+      "proposedGeometryRef": null
+    }
+  ],
+  "heldDetachedComponentCount": 18,
+  "heldDetachedCandidateCells": 3693,
+  "northeasternLargeIslandPolicy": "WHOLE_COMPONENT_UNCLAIMED",
+  "originalOffshoreContourIds": [
+    "feature.coastline.first_world.part_7",
+    "feature.coastline.first_world.part_8",
+    "feature.coastline.first_world.part_31"
+  ],
+  "coast40Policy": "HISTORIC_REGION_CONFLICT_NOT_VECTOR_PART_40",
+  "foreignWindwardParent": "region.serathyl",
+  "kharuunSeaAccessApproved": false,
+  "sourceOceanOrRiverCalibrated": false,
+  "saltBasinsPlaced": 0,
+  "approval": {
+    "ownerVisualReviewRef": null,
+    "sourceCoastlineCertified": false,
+    "regionBorderGeometryApproved": false,
+    "inlandSeamGeometryApproved": false,
+    "sourceArcRegionOwnershipAssigned": 0,
+    "detachedComponentClaims": [],
+    "canonicalWritable": false
+  }
+}
