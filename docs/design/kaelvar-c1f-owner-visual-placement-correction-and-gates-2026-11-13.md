@@ -147,3 +147,13 @@ western and eastern peninsular edges, Kharuun's central reach, and which
 northern detached islands belong to Shattercap as whole physical
 units. Until those are independently source-certified and approved,
 do not publish any regional polygons or old-source transfers.
+
+## CI visual handoff
+
+The stacked draft PR's C1-F GitHub Actions run now uploads the
+`kaelvar-c1f-noncanonical-source-review` artifact containing the
+three-panel source-aligned SVG and machine-readable report. This is
+review convenience only: owner-native PowerShell verification and
+independent visual geography review are still required before any
+boundary or island approval. The diagnostic magenta historical source
+view remains in the older, separate C1 SVG command.
