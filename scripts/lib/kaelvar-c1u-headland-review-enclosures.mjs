@@ -120,6 +120,8 @@ function sampleRing(ring,source,labels,ownership){
   originalUnassignedMainlandCandidatePixels:0,
   originalProvisionalRegionPixelCount:0,
   otherOriginalPhysicalComponentPixels:0,
+  otherOriginalPhysicalComponentsById:{},
+  otherOriginalPhysicalComponentExamples:[],
   excludedOrUnregisteredSourcePixelCount:0,
   provisionalRegionContactCounts:{auric:0,kharuun:0,verdant:0,veyrholm:0}
  };
@@ -134,8 +136,13 @@ function sampleRing(ring,source,labels,ownership){
    if(cls===30){
     out.originalMainlandCandidatePixels++;
     if(owner===0)out.originalUnassignedMainlandCandidatePixels++;
-   }else if(cls>0)out.otherOriginalPhysicalComponentPixels++;
-   else out.excludedOrUnregisteredSourcePixelCount++;
+   }else if(cls>0){
+    out.otherOriginalPhysicalComponentPixels++;
+    out.otherOriginalPhysicalComponentsById[cls]=
+     (out.otherOriginalPhysicalComponentsById[cls]||0)+1;
+    if(out.otherOriginalPhysicalComponentExamples.length<24)
+     out.otherOriginalPhysicalComponentExamples.push({x,y,component:cls});
+   }else out.excludedOrUnregisteredSourcePixelCount++;
    if(owner){
     out.originalProvisionalRegionPixelCount++;
     if(owner<1||owner>4)hold('unexpected candidate owner code');
@@ -184,6 +191,9 @@ export function buildC1UFeasibility({spec,p,report,revised,labels,ownership,sele
   if(c.expectedOriginalContourEscapeSamples!==undefined&&
    spatial.outsideOriginalContourPixels!==c.expectedOriginalContourEscapeSamples)
    hold(c.id+' outside source contour drift');
+  if(c.id!=='DIRECT_CHORD_DIAGNOSTIC'&&
+   spatial.otherOriginalPhysicalComponentPixels!==13)
+   hold(c.id+' physical-component contamination witness changed');
   if(c.id!=='DIRECT_CHORD_DIAGNOSTIC'&&(
    !validity.valid||sourceCheck.properCrossings!==0||
    protectedReview.properIntersections!==0||
@@ -199,6 +209,8 @@ export function buildC1UFeasibility({spec,p,report,revised,labels,ownership,sele
    ringOriginalSourceFrame:ring,ringValidity:validity,
    sourceCoastReturnCrossings:sourceCheck,
    sample:spatial,protectedOffshore:protectedReview,
+   physicalComponentHold:spatial.otherOriginalPhysicalComponentPixels>0,
+   originalOtherComponentCellsNotClaimed:true,
    acceptedAsActiveRegion:false,canonicalWritable:false};
  });
  const verdant=revised.regions[2];
