@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13, connector/c1g-kaelvar-coastal-salt-basin-evidence-2026-11-13, connector/c1h-kaelvar-source-landform-diagnostics-2026-11-13]
+    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13, connector/c1g-kaelvar-coastal-salt-basin-evidence-2026-11-13, connector/c1h-kaelvar-source-landform-diagnostics-2026-11-13, connector/c1i-kaelvar-ink-water-separation-2026-11-13]
 
 permissions:
   contents: read
@@ -99,4 +99,22 @@ jobs:
           path: |
             ${{ runner.temp }}/kaelvar-c1i-source-classification.json
             ${{ runner.temp }}/kaelvar-c1i-source-comparison.svg
+          retention-days: 7
+
+      - name: C1-J original coastline source sector and river separation
+        run: |
+          node --check scripts/lib/kaelvar-c1j-vector-coastline-review.mjs
+          node --check scripts/kaelvar-c1j-coastline-review.mjs
+          node --check tests/unit/kaelvar-c1j-vector-coastline-review.test.mjs
+          node --test tests/unit/kaelvar-c1j-vector-coastline-review.test.mjs
+          node scripts/kaelvar-c1j-coastline-review.mjs --check | tee "$RUNNER_TEMP/kaelvar-c1j-vector-report.json"
+          node scripts/kaelvar-c1j-coastline-review.mjs --svg > "$RUNNER_TEMP/kaelvar-c1j-vector-review.svg"
+          test -s "$RUNNER_TEMP/kaelvar-c1j-vector-review.svg"
+      - name: Attach original-source vector coastline evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: kaelvar-c1j-original-vector-contour-review-only
+          path: |
+            ${{ runner.temp }}/kaelvar-c1j-vector-report.json
+            ${{ runner.temp }}/kaelvar-c1j-vector-review.svg
           retention-days: 7
