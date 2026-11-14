@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1n-original-northern-source-edge-atlas.v1",
+  "date": "2026-11-14",
+  "status": "OWNER_READY_INDEXED_SOURCE_COAST_ATLAS_NO_FRONTAGE_PUBLISHED",
+  "sourcePaths": {
+    "c1j": "docs/design/kaelvar-c1j-coastline-sector-review-2026-11-13.json",
+    "c1l": "docs/design/kaelvar-c1l-landmass-coast-arc-adjudication-2026-11-14.json",
+    "c1m": "docs/design/kaelvar-c1m-owner-shore-correction-2026-11-14.json"
+  },
+  "mapId": "world_map.first_world",
+  "coordinateSpaceId": "world_map.first_world.reference",
+  "sourceMainlandContourId": "feature.coastline.first_world.part_10",
+  "sourceCoastEdgeCount": 599,
+  "sectorEdgeCounts": [
+    90,
+    106,
+    114,
+    289
+  ],
+  "sectorNames": [
+    "NW_ORIGINAL_SOURCE_REVIEW",
+    "NORTHCENTRAL_ORIGINAL_SOURCE_REVIEW",
+    "NORTHEAST_ORIGINAL_SOURCE_REVIEW",
+    "OTHER_SOURCE_EDGES_HELD"
+  ],
+  "northCentralCyclicRun": {
+    "sourceIndexStart": 553,
+    "sourceIndexEnd": 59,
+    "wrapsZero": true,
+    "count": 106
+  },
+  "northeasternSourceRuns": [
+    {
+      "startEdgeIndex": 60,
+      "endEdgeIndex": 149,
+      "count": 90
+    },
+    {
+      "startEdgeIndex": 154,
+      "endEdgeIndex": 177,
+      "count": 24
+    }
+  ],
+  "sourceDrawingOnly": true,
+  "previewPanels": [
+    {
+      "id": "entire_mainland",
+      "label": "1. Entire source mainland and held islands",
+      "viewBox": [
+        40,
+        90,
+        620,
+        480
+      ],
+      "everyNthVertex": 40
+    },
+    {
+      "id": "north_coast",
+      "label": "2. Northern source coast: indexed",
+      "viewBox": [
+        60,
+        105,
+        495,
+        230
+      ],
+      "everyNthVertex": 10
+    },
+    {
+      "id": "northeast_zoom",
+      "label": "3. Northeastern frontage: index detail",
+      "viewBox": [
+        310,
+        150,
+        245,
+        205
+      ],
+      "everyNthVertex": 5
+    }
+  ],
+  "ownerDesign": {
+    "kharuunHasShortNorthernCoast": true,
+    "falseVeyrholmCorridorRejected": true,
+    "coastKharuunSourceEdgeIndices": null,
+    "coastVeyrholmSourceEdgeIndices": null,
+    "kharuunVeyrholmInlandBoundaryGeometryRef": null,
+    "kharuunCoastPortLocation": null,
+    "supportedWholeIslandClaims": [],
+    "oldSourceContoursRemainUnmodified": true
+  },
+  "protected": {
+    "mainlandTerrainCandidates": 79419,
+    "unassignedMainlandTerrainCandidates": 26795,
+    "detachedPhysicalCandidates": 18,
+    "northeastLargeIslandWholeAndUnclaimed": true,
+    "coast40DisputeHeld": true,
+    "foreignWindwardParent": "region.serathyl",
+    "saltBasinsPlaced": 0
+  },
+  "approval": {
+    "ownerIndexSelectionRef": null,
+    "sourceCoastCertified": false,
+    "sourceCoastPoliticalOwnershipApproved": false,
+    "regionPolygonsApproved": false,
+    "maritimeRouteApproved": false,
+    "portApproved": false,
+    "canonicalWritable": false
+  }
+}
