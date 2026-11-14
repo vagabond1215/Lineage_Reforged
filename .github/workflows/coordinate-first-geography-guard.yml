@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13]
+    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13]
 
 permissions:
   contents: read
