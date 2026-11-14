@@ -157,3 +157,7 @@ review convenience only: owner-native PowerShell verification and
 independent visual geography review are still required before any
 boundary or island approval. The diagnostic magenta historical source
 view remains in the older, separate C1 SVG command.
+
+## Owner-preview visual clarity refinement
+
+The exported review SVG draws **only source-clipped candidate-terrain pixels** as colored region cores. Raw guide envelope polygon borders are no longer drawn across water or unresolved ink, avoiding false shoreline/sovereignty cues. Region labels use neutral readable background plates and Shattercap's northeastern island remains explicitly held. The guide envelope coordinates remain machine-readable in the separate review JSON but cannot be published or interpreted as approved land boundaries.

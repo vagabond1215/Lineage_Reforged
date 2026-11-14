@@ -114,17 +114,20 @@ if(mode==='--report'){
     }
   }
   const colored=[...fills].map(([fill,paths])=>
-    '<path fill="'+fill+'" fill-opacity=".42" d="'+paths.join('')+'"/>').join('');
-  const guideOutlines=spec.regionGuides.filter(g=>g.guidePolygon).map(g=>
-    '<polygon points="'+g.guidePolygon.map(p=>p.x+','+p.y).join(' ')+
-    '" fill="none" stroke="'+g.color+'" stroke-width="2.5" stroke-dasharray="6 4"/>').join('');
-  const labels=spec.regionGuides.filter(g=>g.labelAnchor).map(g=>
-    '<text x="'+g.labelAnchor.x+'" y="'+g.labelAnchor.y+
-    '" font-size="13" text-anchor="middle" stroke="#172435" stroke-width="3.5"'+
-    ' paint-order="stroke fill" fill="#FFFFFF">'+esc(g.label)+'</text>').join('');
-  const unresolved='<text x="548" y="120" fill="#FFFFFF" font-size="11"'+
-    ' text-anchor="middle" stroke="#172435" stroke-width="3"'+
-    ' paint-order="stroke fill">NE island HELD</text>';
+    '<path fill="'+fill+'" fill-opacity=".46" d="'+paths.join('')+'"/>').join('');
+  // IMPORTANT: Never draw raw guide polygons over sea as apparent political
+  // borders. Only the source-clipped candidate cells receive any color.
+  const labelPlate=(x,y,value,fontSize=12)=>{
+    const width=Math.max(80,Math.ceil(value.length*7+16));
+    return '<g transform="translate('+x+','+y+')">'+
+      '<rect x="'+(-width/2)+'" y="-16" rx="4" width="'+width+
+      '" height="22" fill="#172435" fill-opacity=".82"/>'+
+      '<text x="0" y="0" font-family="Arial,sans-serif" font-size="'+fontSize+
+      '" text-anchor="middle" fill="#FFFFFF">'+esc(value)+'</text></g>';
+  };
+  const labels=spec.regionGuides.filter(g=>g.labelAnchor)
+    .map(g=>labelPlate(g.labelAnchor.x,g.labelAnchor.y,g.label)).join('');
+  const unresolved=labelPlate(548,120,'NE island HELD',11);
   const render=(which,index,layer,overlay)=>'<text x="'+left[index]+
     '" y="43" font-size="16" fill="#EAF2FC">'+esc(which)+'</text>'+
     '<svg x="'+left[index]+'" y="'+panelY+'" width="'+panelW+
@@ -134,9 +137,9 @@ if(mode==='--report'){
   const body=[
     render('1. Registered original biome | NOT calibrated',0,'biome',''),
     render('2. FOUR noncanonical source-clipped draft cores',1,'biome',
-      colored+guideOutlines+labels+unresolved),
+      colored+labels+unresolved),
     render('3. Original elevation + candidate cores',2,'elevation',
-      colored+guideOutlines),
+      colored),
   ].join('');
   process.stdout.write('<svg xmlns="http://www.w3.org/2000/svg"'+
     ' width="1900" height="660" viewBox="0 0 1900 660">'+
