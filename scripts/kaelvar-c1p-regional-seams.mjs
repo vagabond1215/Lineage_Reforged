@@ -28,10 +28,12 @@ import {buildC1PRegionalReview}
  from './lib/kaelvar-c1p-regional-seam-review.mjs';
 import {buildC1QHeadlandReview}
  from './lib/kaelvar-c1q-headland-continuity.mjs';
+import {buildC1RHeadlandDiagnostic}
+ from './lib/kaelvar-c1r-headland-source-diagnostics.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -93,8 +95,8 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let headland=null;
-if(mode==='--headland-check'||mode==='--headland-svg'){
+let headland=null,bottleneck=null;
+if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg'].includes(mode)){
  const q=json('docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json');
  headland=buildC1QHeadlandReview({
   c:q,p,r:report,revised,selected,labels,ownership:imageMasks.refined
@@ -102,6 +104,17 @@ if(mode==='--headland-check'||mode==='--headland-svg'){
  if(mode==='--headland-check'){
   process.stdout.write(JSON.stringify(headland,null,2)+'\n');
   process.exit(0);
+ }
+ if(mode==='--bottleneck-check'||mode==='--bottleneck-svg'){
+  const c1r=json('docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json');
+  bottleneck=buildC1RHeadlandDiagnostic({
+   spec:c1r,q,p,baseline:headland,revised,labels,ownership:imageMasks.refined,
+   biome:images.biome.img,elevation:images.elevation.img
+  });
+  if(mode==='--bottleneck-check'){
+   process.stdout.write(JSON.stringify(bottleneck,null,2)+'\n');
+   process.exit(0);
+  }
  }
 }
 if(mode==='--check'){
@@ -257,6 +270,42 @@ if(mode==='--headland-svg'){
   title(1312,1070,intro,16,path.found?'#98FFEF':'#FBB9A4')+
   title(45,1101,'A path through uncalibrated source terrain candidates does not certify mainland walkability, sea type, sovereignty or a valid new polygon.',16)+
   '</svg>\n';
+ process.stdout.write(s);
+ process.exit(0);
+}
+
+if(mode==='--bottleneck-svg'){
+ const pathD=pts=>pts.length?pts.map((q,i)=>
+  (i?'L':'M')+(q.x+.5)+' '+(q.y+.5)).join(' '):'';
+ const draw=(pts,color,thick=2.2,dashed=false)=>pts.length?
+  '<path d="'+pathD(pts)+'" fill="none" stroke="'+color+
+  '" stroke-width="'+thick+'" stroke-linecap="round"'+
+  (dashed?' stroke-dasharray="3 2"':'')+'/>':'';
+ const r=bottleneck;
+ const under=r.paths.c1q;
+ const widened=r.widenedConnectivity;
+ const enlarged=r.paths.expandedOne.length?
+  r.paths.expandedOne:r.paths.expandedZero;
+ const diagnostic=r.narrowRouteDiagnostics;
+ const suspect=diagnostic.longestSuspectRuns.slice(0,8).map(x=>
+  '<circle cx="'+(x.midpoint.x+.5)+'" cy="'+(x.midpoint.y+.5)+
+  '" r="4.6" fill="#FF635C" stroke="#FFFFFF" stroke-width="1"/>').join('');
+ const labelL='Baseline: 223-step C1-Q trace, red = low-clearance loci';
+ const labelR='Wider window, 1px clearance: '+(widened[1].found?'connected':'NOT connected')+
+  '; 2px: '+(widened[2].found?'connected':'NOT connected');
+ const extraL=draw(under,'#57F5F2',2.2,true)+suspect;
+ const extraR=draw(enlarged,'#57F5F2',2.3,true)+
+  draw(r.paths.alternativeDisjoint,'#FFC845',1.9);
+ const s='<svg xmlns="http://www.w3.org/2000/svg" width="2540" height="1150" viewBox="0 0 2540 1150">'+head+
+ title(32,46,'C1-R / NORTHEAST HEADLAND ORIGINAL-PAIR BOTTLENECK DIAGNOSTIC',27)+
+ title(32,78,'Diagnostic masks only; no sovereign border, navigable route or calibrated sea type',18,'#FFCE9B')+
+ panel(28,122,1230,880,[370,185,178,176],imgs[1],revised,extraL)+
+ panel(1280,122,1230,880,[295,148,300,324],imgs[1],revised,extraR)+
+ title(38,1043,labelL,19)+title(1290,1043,labelR,19)+
+ title(38,1081,'Rejected source-pair adjacent pixels: '+
+  JSON.stringify(diagnostic.adjacentRejectedPixelReasons).slice(0,160),15,'#FFCDA1')+
+ title(38,1118,'C1-P: 52,449 assigned + 26,970 held = 79,419 terrain candidate samples; no allocation changed',17)+
+ '</svg>\n';
  process.stdout.write(s);
  process.exit(0);
 }
