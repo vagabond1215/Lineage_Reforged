@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1p-hosted-native-raster-review-evidence.v1",
+  "date": "2026-11-14",
+  "status": "HOSTED_NATIVE_NODE_REVIEW_PASSED_OWNER_VISUAL_AND_CANONICAL_HELD",
+  "sourceCommit": "4065dc6d5d00d2662a356d857082de1bd2f9d72f",
+  "sourceBranch": "connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14",
+  "hostedRunUrl": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43627816681",
+  "hostedRunId": 43627816681,
+  "hostedArtifactId": 14127067241,
+  "artifactName": "c1p-noncanonical-native-terrain-review",
+  "artifactRetentionDays": 7,
+  "originalSourceVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+  "originalBiomePngSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+  "sourceMainlandContour": "feature.coastline.first_world.part_10",
+  "validation": {
+    "host": "GitHub Actions ubuntu-latest Node 22",
+    "nativeWindowsOwnerAcceptanceClaimed": false,
+    "c1oAndC1pUnitTests": {
+      "passed": 18,
+      "failed": 0
+    },
+    "newLegacyHexDependencies": 0,
+    "scannedCodeFiles": 872,
+    "originalSourceEdgesConserved": 599,
+    "originalSourcePngFingerprintsVerified": true,
+    "originalSourceContourUnmodified": true,
+    "polygonOwnershipCollisions": 0,
+    "sourceContourCrossings": 0,
+    "protectedOffshoreSourceClaims": 0,
+    "detachedPhysicalComponentsClaimed": 0
+  },
+  "terrain": {
+    "componentId": 30,
+    "mainlandCandidateCells": 79419,
+    "baseline": {
+      "auric": 6050,
+      "kharuun": 19265,
+      "verdant": 19783,
+      "veyrholm": 8060,
+      "assigned": 53158,
+      "unassigned": 26261
+    },
+    "revised": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011,
+      "assigned": 52449,
+      "unassigned": 26970
+    },
+    "sumConserved": true
+  },
+  "ownerDirection": {
+    "kharuunCoastOriginalEdgeRange": [
+      35,
+      58
+    ],
+    "verdantAttachedPeninsulaCandidate": true,
+    "shattercapDetachedIslandsClaimed": false,
+    "northeasternHeadlandUnassigned": true
+  },
+  "holds": {
+    "canonicalWritable": false,
+    "sovereignCoastlinesCertified": false,
+    "waterAndEcologyCertified": false,
+    "largeNortheastIslandUnclaimed": true,
+    "shattercapPolygon": null,
+    "coast40Claim": null,
+    "foreignWindwardParent": "region.serathyl",
+    "portsApproved": 0,
+    "routesApproved": 0,
+    "wellsApproved": 0,
+    "saltDepositsPlaced": 0,
+    "finalOwnerVisualAdjudication": "PENDING"
+  }
+}
