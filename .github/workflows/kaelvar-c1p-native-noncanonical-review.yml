@@ -345,8 +345,7 @@ jobs:
             assert.equal(row.protectedOffshore.sourceContourVerticesEnclosed,0);
             assert.equal(row.sample.otherOriginalPhysicalComponentPixels,13);
             assert.equal(row.sample.otherOriginalPhysicalComponentExamples.length,13);
-            assert.equal(Object.values(row.sample.otherOriginalPhysicalComponentsById)
-              .reduce((a,b)=>a+b,0),13);
+            assert.deepEqual(row.sample.otherOriginalPhysicalComponentsById,{'51':13});
             assert.equal(row.physicalComponentHold,true);
             assert.equal(row.originalOtherComponentCellsNotClaimed,true);
             assert.equal(row.acceptedAsActiveRegion,false);
