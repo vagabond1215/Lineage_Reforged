@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1u-original-coastline-headland-review-enclosures.v1",
+  "date": "2026-11-14",
+  "status": "GEOMETRY_FEASIBILITY_ONLY_NO_POLITICAL_REGION_PUBLICATION",
+  "parentC1THead": "eee96eeef6554eee148b6a7b6fb1bdf153d52f8e",
+  "source": {
+    "blob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalMainlandContourId": "feature.coastline.first_world.part_10",
+    "vertices": 599,
+    "headlandSourceVerticesInclusive": [
+      75,
+      116
+    ],
+    "headlandSourceEdgesInclusive": [
+      75,
+      115
+    ],
+    "originalBiomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "originalElevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "reviewOnlyEnclosures": [
+    {
+      "id": "DIRECT_CHORD_DIAGNOSTIC",
+      "sourceArc": [
+        75,
+        116
+      ],
+      "returnWaypoints": [],
+      "expectedSourceCrossings": 1,
+      "expectedVerdict": "REJECT_SOURCE_COAST_CROSSING"
+    },
+    {
+      "id": "INSET_RETURN_CANDIDATE",
+      "sourceArc": [
+        75,
+        116
+      ],
+      "returnWaypoints": [
+        [
+          500,
+          226
+        ],
+        [
+          477,
+          225
+        ]
+      ],
+      "expectedSourceCrossings": 0,
+      "expectedRawSampledRingPixels": 1709,
+      "expectedOriginalContourEscapeSamples": 0,
+      "expectedVerdict": "GEOMETRIC_REVIEW_ONLY"
+    },
+    {
+      "id": "COMPACT_RETURN_CANDIDATE",
+      "sourceArc": [
+        75,
+        116
+      ],
+      "returnWaypoints": [
+        [
+          503,
+          220
+        ],
+        [
+          479,
+          220
+        ]
+      ],
+      "expectedSourceCrossings": 0,
+      "expectedRawSampledRingPixels": 1482,
+      "expectedOriginalContourEscapeSamples": 0,
+      "expectedVerdict": "GEOMETRIC_REVIEW_ONLY"
+    }
+  ],
+  "fullVerdantShortcut": {
+    "id": "NAIVE_COAST_ARC_75_TO_349_WITH_C1P_VERDANT_RETURN",
+    "sourceArc": [
+      75,
+      349
+    ],
+    "useUnchangedC1PVerdantInlandWaypoints": true,
+    "expectedOriginalCoastProperCrossings": 1,
+    "mustBeRejectedForRegionalOverlapWith": "region.kharuun_drylands",
+    "status": "DIAGNOSTIC_ONLY_REJECT_NOT_A_PUBLISHED_POLYGON"
+  },
+  "baseline": {
+    "candidateMainlandTerrainCells": 79419,
+    "assignedByFourC1PRegions": 52449,
+    "deliberatelyUnassigned": 26970,
+    "originalRegionCells": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "kharuunOriginalCoastEdges": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaProtectedAnchors": 3,
+    "headlandSourceArcPoliticalOwner": null,
+    "detachedOriginalTerrainComponentClaims": 0
+  },
+  "holds": {
+    "canonicalWritable": false,
+    "noRegionGeometryChange": true,
+    "noExistingC1PRingsChange": true,
+    "noOriginalVectorChange": true,
+    "noOriginalSourcePngChanges": true,
+    "noOriginalTerrainCandidateReclassification": true,
+    "noHeadlandPoliticalOwnership": true,
+    "noShattercapRegionPolygon": true,
+    "noDetachedIslandClaims": true,
+    "noLargeNortheastIslandClaim": true,
+    "noCoast40Claim": true,
+    "serathylWindwardParent": "region.serathyl",
+    "noPortsWellsRiversRoutesSaltBasins": true,
+    "newLegacyHexDependencies": 0
+  },
+  "interpretation": "Small self-consistent original-coast enclosures may be feasible as reversible geometric research, but do not prove political annexation, dry-land passage, source shoreline semantics, navigability or island attachment."
+}
