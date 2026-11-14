@@ -38,10 +38,12 @@ import {buildC1UFeasibility}
  from './lib/kaelvar-c1u-headland-review-enclosures.mjs';
 import {buildC1VComponent51Review}
  from './lib/kaelvar-c1v-component51-source-separation.mjs';
+import {buildC1WPhysicalInterpretation}
+ from './lib/kaelvar-c1w-component51-physical-adjudication.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -103,8 +105,8 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let enclosure=null,component51=null;
-if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-svg'].includes(mode)){
+let enclosure=null,component51=null,physicalReview=null;
+if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg'].includes(mode)){
  const c1u=json('docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json');
  enclosure=buildC1UFeasibility({spec:c1u,p,report,revised,labels,
   ownership:imageMasks.refined,selected});
@@ -112,7 +114,7 @@ if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-s
   process.stdout.write(JSON.stringify(enclosure,null,2)+'\n');
   process.exit(0);
  }
- if(mode==='--component51-check'||mode==='--component51-svg'){
+ if(['--component51-check','--component51-svg','--physical-review-check','--physical-review-svg'].includes(mode)){
   const c1v=json('docs/design/kaelvar-c1v-component51-source-physical-separation-review-2026-11-14.json');
   component51=buildC1VComponent51Review({
    spec:c1v,c1uSpec:c1u,p,c1uReport:enclosure,c1pReport:report,
@@ -122,6 +124,18 @@ if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-s
   if(mode==='--component51-check'){
    process.stdout.write(JSON.stringify(component51,null,2)+'\n');
    process.exit(0);
+  }
+  if(mode==='--physical-review-check'||mode==='--physical-review-svg'){
+   const c1w=json('docs/design/kaelvar-c1w-component51-physical-interpretation-owner-review-2026-11-14.json');
+   physicalReview=buildC1WPhysicalInterpretation({
+    spec:c1w,c1vSpec:c1v,c1vReport:component51,c1pReport:report,
+    revised,labels,ownership:imageMasks.refined,
+    biome:images.biome.img,elevation:images.elevation.img
+   });
+   if(mode==='--physical-review-check'){
+    process.stdout.write(JSON.stringify(physicalReview,null,2)+'\n');
+    process.exit(0);
+   }
   }
  }
 }
@@ -506,5 +520,48 @@ if(mode==='--component51-svg'){
   title(40,1190,'Any dashed magenta connection is a hypothetical source-ink sensitivity only, not land, sea, a road or a sovereign boundary.',16,'#FFD9AF')+
   '</svg>\n';
  process.stdout.write(svg);
+ process.exit(0);
+}
+
+if(mode==='--physical-review-svg'){
+ const W=2540,H=1260,rv=physicalReview;
+ const refView=[454,195,62,58];
+ const coastPath='<path d="'+revised.originalContour.slice(75,117)
+  .map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ')+
+  '" fill="none" stroke="#FFFFFF" stroke-width=".43" stroke-opacity=".85"/>';
+ const mapImage=layer=>'<image x="'+(-crop.x*width/crop.width)+
+  '" y="'+(-crop.y*height/crop.height)+
+  '" width="'+(images[layer].img.width*width/crop.width)+
+  '" height="'+(images[layer].img.height*height/crop.height)+
+  '" preserveAspectRatio="none" href="data:image/png;base64,'+
+  images[layer].bytes.toString('base64')+'"/>';
+ const rect=(p,col,opacity=.85)=>'<rect x="'+p.x+'" y="'+p.y+
+  '" width="1" height="1" fill="'+col+'" fill-opacity="'+opacity+'"/>';
+ const componentMarks=rv.component51OriginalCellInventory.originalCells
+  .map(p=>rect(p.reference,'#FFE95B')).join('');
+ const gapMarks=rv.blackInkOriginalNeighborInventory.originalNeighborCells
+  .map(p=>rect(p.reference,'#FB864C',.72)).join('');
+ const blackFocus='<rect x="469" y="213" width="1" height="1" fill="#FD54DE" stroke="#FFFFFF" stroke-width=".15"/>';
+ const originalColorBase=mapImage('biome');
+ const pane=(x,layer,overlay)=>'<svg x="'+x+'" y="134" width="800" height="855" viewBox="'+
+  refView.join(' ')+'" preserveAspectRatio="xMidYMid meet">'+
+  mapImage(layer)+coastPath+overlay+'</svg>'+
+  '<rect x="'+x+'" y="134" width="800" height="855" fill="none" stroke="#91AEC7" stroke-width="1.5"/>';
+ const left=pane(20,'biome','');
+ const mid=pane(870,'elevation','');
+ const right=pane(1720,'biome',componentMarks+gapMarks+blackFocus);
+ const heading='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+
+  '" viewBox="0 0 '+W+' '+H+'">'+head+
+  title(24,47,'C1-W / COMPONENT 51 ORIGINAL SOURCE PAIR · OWNER REVIEW',31)+
+  title(24,91,'Source images unmodified; thin white contour = original edges 75–115; NO LAND/WATER OR POLITICAL INTERPRETATION SELECTED',17,'#FFD5A3');
+ const captions=
+  title(24,1032,'1 / ORIGINAL BIOME PNG',22)+
+  title(875,1032,'2 / ORIGINAL ELEVATION PNG',22)+
+  title(1725,1032,'3 / SOURCE-INDEXED DIAGNOSTIC ONLY',21)+
+  title(1725,1069,'Yellow: component 51 / orange: original shared black / magenta: one-pixel gap',14,'#FFE5AE')+
+  title(24,1114,'ATTACHED COASTAL TIP?       SEPARATE ISLET?       UNRESOLVED SOURCE LINEWORK?',22)+
+  title(24,1160,'Original component 51: 21 candidate pixels (13 vector-inside, 8 vector-outside); 18 immediately adjacent excluded shared-black pixels.',18,'#FBD6AB')+
+  title(24,1206,'All three interpretations remain UNDECIDED. The black gap (469,213) is not certified land or sea. C1-P, Kharuun B, islands, and canon remain HELD.',17,'#FFCCAA');
+ process.stdout.write(heading+left+mid+right+captions+'</svg>\n');
  process.exit(0);
 }
