@@ -35,7 +35,7 @@ export function validateC1RReviewSpec(s,q,p,baseline){
   !same(s.clearances,[0,1,2])||s.connectivity!==4)
   fail('source, exact probe windows or 4-neighbor corridor contract changed');
  const o=s.outputs,h=s.immutableHolds;
- if(Object.keys(o||{}).length!==5 ||
+ if(Object.keys(o||{}).length!==6 ||
   Object.values(o).some(x=>x!==true)||
   h?.previousC1PAssigned!==52449||h.previousC1PUnassigned!==26970||
   h.sourceMainlandTerrainCandidates!==79419||
