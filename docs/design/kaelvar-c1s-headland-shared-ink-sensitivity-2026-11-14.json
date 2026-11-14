@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1s-original-source-shared-ink-sensitivity.v1",
+  "date": "2026-11-14",
+  "status": "REVIEW_ONLY_HYPOTHETICAL_SHARED_NONBLUE_PIXEL_SENSITIVITY_OWNERSHIP_HELD",
+  "pinnedC1RHead": "6a11498fd0b6cbc662fc364e3e6ee99788f77747",
+  "c1rSpecPath": "docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json",
+  "source": {
+    "originalCoastlineBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceEdgeCount": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "crop": {
+      "x": 60,
+      "y": 60,
+      "width": 3976,
+      "height": 2235
+    },
+    "reference": {
+      "width": 2048,
+      "height": 1152
+    }
+  },
+  "originalC1P": {
+    "componentId": 30,
+    "mainlandCandidateCells": 79419,
+    "assigned": 52449,
+    "unassigned": 26970,
+    "perRegion": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "originalKharuunEdgesInclusive": [
+      35,
+      58
+    ],
+    "headlandEdgesInclusive": [
+      75,
+      115
+    ]
+  },
+  "sampling": {
+    "windowInclusive": {
+      "minX": 300,
+      "minY": 155,
+      "maxX": 590,
+      "maxY": 465
+    },
+    "fromVerdant": {
+      "x": 390,
+      "y": 336
+    },
+    "toHeadland": {
+      "x": 492,
+      "y": 215
+    },
+    "connectivity": 4,
+    "clearancePx": [
+      0,
+      1,
+      2
+    ],
+    "allowedExistingOwnerCodes": [
+      0,
+      3
+    ],
+    "forbiddenExistingOwnerCodes": [
+      1,
+      2,
+      4
+    ],
+    "uncertainEligibleConditions": [
+      "ORIGINAL_SOURCE_VECTOR_CONTAINS_SAMPLE",
+      "IDENTICAL_BIOME_ELEVATION_RGB",
+      "NOT_SOURCE_BLUE_THRESHOLD",
+      "VALID_MATCHED_ALPHA",
+      "ORIGINAL_TERRAIN_LABEL_ZERO",
+      "NOT_AN_ASSIGNED_REGION"
+    ],
+    "colorClassifiers": {
+      "black": "RGB_EXACT_0_0_0",
+      "teal": "RGB_EXACT_4_159_169",
+      "other": "OTHER_IDENTICAL_NONBLUE_RGB"
+    }
+  },
+  "scenarios": [
+    {
+      "id": "ORIGINAL_SOURCE_PAIR_ONLY",
+      "allow": []
+    },
+    {
+      "id": "HYPOTHETICAL_BLACK_ONLY",
+      "allow": [
+        "black"
+      ]
+    },
+    {
+      "id": "HYPOTHETICAL_TEAL_ONLY",
+      "allow": [
+        "teal"
+      ]
+    },
+    {
+      "id": "HYPOTHETICAL_BLACK_AND_TEAL",
+      "allow": [
+        "black",
+        "teal"
+      ]
+    },
+    {
+      "id": "HYPOTHETICAL_ALL_SHARED_NONBLUE",
+      "allow": [
+        "black",
+        "teal",
+        "other"
+      ]
+    }
+  ],
+  "immutableHolds": {
+    "canonicalWritable": false,
+    "noOriginalSourcePixelReclassification": true,
+    "noOriginalTerrainLabelChanges": true,
+    "noOriginalCoastlineEdits": true,
+    "noRegionPolygonChanges": true,
+    "noNewPoliticalTerritory": true,
+    "northeastHeadlandUnassigned": true,
+    "largeNortheastIslandUnassigned": true,
+    "shattercapAllDetachedIslandsUnassigned": true,
+    "detachedComponentClaims": 0,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "portsWellsRiversWaterRoutesSaltBasinsPlaced": 0,
+    "noNewLegacyHexDependencies": true
+  },
+  "interpretation": "A sensitivity mask that permits unresolved shared ink is never a land/sea certification or political expansion."
+}
