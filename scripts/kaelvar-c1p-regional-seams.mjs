@@ -42,10 +42,12 @@ import {buildC1WPhysicalInterpretation}
  from './lib/kaelvar-c1w-component51-physical-adjudication.mjs';
 import {buildC1XPairedGates}
  from './lib/kaelvar-c1x-targeted-attached-tip-feasibility.mjs';
+import {buildC1YMainlandGaps}
+ from './lib/kaelvar-c1y-independent-mainland-gap-review.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg|--paired-gates-check|--paired-gates-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg','--mainland-gaps-check','--mainland-gaps-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg|--paired-gates-check|--paired-gates-svg|--mainland-gaps-check|--mainland-gaps-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -107,6 +109,16 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
+let mainlandGaps=null;
+if(mode==='--mainland-gaps-check'||mode==='--mainland-gaps-svg'){
+ const c1y=json('docs/design/kaelvar-c1y-independent-mainland-seam-options-2026-11-14.json');
+ mainlandGaps=buildC1YMainlandGaps({spec:c1y,p,c1pReport:report,
+  labels,ownership:imageMasks.refined,revised});
+ if(mode==='--mainland-gaps-check'){
+  process.stdout.write(JSON.stringify(mainlandGaps,null,2)+'\n');
+  process.exit(0);
+ }
+}
 let enclosure=null,component51=null,physicalReview=null,pairedGates=null;
 if(['--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg'].includes(mode)){
  const c1u=json('docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json');
@@ -608,6 +620,53 @@ if(mode==='--paired-gates-svg'){
   title(37,1004,'C1-P 52,449 assigned + 26,970 unassigned = 79,419 candidate mainland cells',18,'#FDE1AC')+
   title(37,1046,'Broad black+teal masks expose 22 possible contact samples to components 51, 78, 113. Micro-exception is NOT a real-world land claim.',17,'#FBD0B1')+
   title(37,1083,'No terrain pixels, island components, original coastline, headland owner, or canonical regions were changed.',18)+
+  '</svg>\n';
+ process.stdout.write(svg);
+ process.exit(0);
+}
+
+if(mode==='--mainland-gaps-svg'){
+ const W=2540,H=1360,baseY=[132,711],xs=[24,870,1716];
+ const rows=mainlandGaps.reviewWindows;
+ const pathDraw=(points,color)=>{
+  if(!points.length)return '';
+  return '<path d="'+points.map((p,i)=>(i?'L':'M')+
+   (p.x+.5)+' '+(p.y+.5)).join(' ')+
+   '" fill="none" stroke="'+color+
+   '" stroke-width="1.7" stroke-linecap="round" stroke-dasharray="2 1"/>';
+ };
+ const marker=(q,color,r=2.4)=>q?'<circle cx="'+(q.x+.5)+
+  '" cy="'+(q.y+.5)+'" r="'+r+'" fill="'+color+
+  '" stroke="#1B202A" stroke-width=".7"/>':'';
+ const card=(r,i)=>{
+  const x=xs[i%3],y=baseY[Math.floor(i/3)],b=r.boundedWindow,
+   view=[b.minX-8,b.minY-8,b.maxX-b.minX+17,b.maxY-b.minY+17],
+   route=pathDraw(r.pathSamples,'#64F2EF'),
+   cp=r.tentativeMidGapReviewPoint,
+   overlay=route+marker(r.endpointSamples[0],'#FDF8D4',2.1)+
+    marker(r.endpointSamples[1],'#FDF8D4',2.1)+marker(cp,'#F1BA57',3);
+  return panel(x,y,800,452,view,imgs[1],revised,overlay)+
+   title(x+6,y+486,r.id.replaceAll('_',' '),17)+
+   title(x+6,y+519,r.status==='STRICT_COMPONENT30_GAP_FOUND'?
+    'Shortest strict gap: '+r.minimumUnassignedIntermediateCells+
+    ' unassigned samples; route '+r.shortestPixelSteps+' steps':
+    'No strict component-30 path within fixed window',17,'#FFD4AB');
+ };
+ const traceSummary=mainlandGaps.nextTechnicalInspectionPriority.map(
+  x=>x.id.replaceAll('_',' ')+': '+x.unassignedGapSamples).join(' | ');
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+
+  '" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'+head+
+  title(30,48,'C1-Y / INDEPENDENT MAINLAND SEAM GAPS ON ORIGINAL TERRAIN',29)+
+  title(30,87,'Teal path: four-neighbor original component 30 only, across unassigned pixels; gold: inspection checkpoint, never a border',18,'#FFD4A6')+
+  rows.map(card).join('')+
+  title(1719,777,'SOURCE GAP AUDIT · NOT A REGION PROPOSAL',19)+
+  title(1719,815,'All original raster and vector sources held',17,'#C6D9EF')+
+  title(1719,853,'Kharuun option B edges 35-58 held',17,'#C6D9EF')+
+  title(1719,891,'Northeast headland / component 51 excluded',17,'#C6D9EF')+
+  title(1719,929,'Detached islands and canon held',17,'#C6D9EF')+
+  title(1719,967,'0 newly assigned political candidate cells',17,'#C6D9EF')+
+  title(28,1293,'MINIMUM SAMPLED GAP RANKING IS NOT A CULTURAL, CLIMATE OR POLITICAL RECOMMENDATION.',19,'#FFE1BC')+
+  title(28,1328,'C1-P: 52,449 provisionally assigned + 26,970 deliberately unassigned = 79,419 original mainland candidate samples.',18)+
   '</svg>\n';
  process.stdout.write(svg);
  process.exit(0);
