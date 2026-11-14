@@ -14,6 +14,9 @@ on:
       - 'tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs'
       - 'scripts/lib/kaelvar-c1s-headland-ink-sensitivity.mjs'
       - 'tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs'
+      - 'scripts/lib/kaelvar-c1t-source-pinch-and-island-contact.mjs'
+      - 'tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs'
+      - 'docs/design/kaelvar-c1t-teal-pinch-and-detached-component-contact-review-2026-11-14.json'
       - 'docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json'
       - 'docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json'
       - 'docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json'
@@ -44,14 +47,16 @@ jobs:
           node --check scripts/lib/kaelvar-c1q-headland-continuity.mjs
           node --check scripts/lib/kaelvar-c1r-headland-source-diagnostics.mjs
           node --check scripts/lib/kaelvar-c1s-headland-ink-sensitivity.mjs
+          node --check scripts/lib/kaelvar-c1t-source-pinch-and-island-contact.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
           node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
           node --check tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs
           node --check tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs
+          node --check tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -251,6 +256,46 @@ jobs:
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --ink-svg > "$RUNNER_TEMP/c1s-ink-sensitivity-preview.svg"
           test -s "$RUNNER_TEMP/c1s-ink-sensitivity-preview.svg"
+      - name: C1-T verify one-pixel teal influence and detached physical component contacts
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --pinch-check > "$RUNNER_TEMP/c1t-teal-and-detached-contacts.json"
+          node - "$RUNNER_TEMP/c1t-teal-and-detached-contacts.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1T_SOURCE_MICROMORPHOLOGY_AND_DETACHED_RISK_ONLY_NO_REGION_CHANGE');
+          assert.deepEqual(r.focus.reference,{x:400,y:317});
+          assert.deepEqual(r.focus.source,{x:837,y:675});
+          assert.deepEqual(r.focus.rgb,[4,159,169]);
+          assert.equal(r.focus.sharedNonblue,true);
+          assert.deepEqual(r.focus.exactTealUnknownSamplesOnC1SOnePixelPath,[{x:400,y:317}]);
+          assert.equal(r.focusPixelOneAtATime.originalTealSensitivity1px.found,true);
+          assert.equal(r.detachedContactAudit.sourcePixelAdjacencySamples,31);
+          assert.deepEqual(r.detachedContactAudit.eligibleUnresolvedSamples,{black:2289,teal:173,other:351});
+          assert.deepEqual(Object.keys(r.detachedContactAudit.byOriginalPhysicalComponent),['51','78','113']);
+          assert.equal(r.detachedContactAudit.sourceContactSamples.length,31);
+          assert.deepEqual(r.detachedContactAudit.scenarios.map(x=>x.id),
+            ['ORIGINAL_SOURCE_PAIR_ONLY','HYPOTHETICAL_TEAL_ONLY',
+             'HYPOTHETICAL_BLACK_AND_TEAL','HYPOTHETICAL_ALL_SHARED_NONBLUE']);
+          for(const c of r.detachedContactAudit.scenarios)
+            assert.equal(c.actuallyMergedOrClaimedPhysicalComponents,0);
+          assert.equal(r.noChanges.originalVectorEdges,599);
+          assert.equal(r.noChanges.acceptedTerrainCandidateCells,79419);
+          assert.equal(r.noChanges.acceptedC1PAssigned,52449);
+          assert.equal(r.noChanges.acceptedC1PUnassigned,26970);
+          assert.equal(r.noChanges.sourcePixelsChanged,0);
+          assert.equal(r.noChanges.originalTerrainLabelsChanged,0);
+          assert.equal(r.noChanges.polygonChanges,0);
+          assert.equal(r.noChanges.newHeadlandOwner,null);
+          assert.equal(r.noChanges.detachedPhysicalComponentsClaimed,0);
+          assert.equal(r.noChanges.canonicalWritable,false);
+          assert.equal(r.limits.hypotheticalLandCannotBeCertifiedFromSharedRgb,true);
+          console.log('C1-T focus one-pixel only '+r.focusPixelOneAtATime.focusOnlyHypotheticalTeal1px.found+
+           ', teal excluding focus '+r.focusPixelOneAtATime.allTealExceptFocus1px.found);
+          console.log('C1-T original component contact risks '+JSON.stringify(
+           r.detachedContactAudit.scenarios.map(x=>[x.id,x.potentialPhysicalComponentLabels])));
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --pinch-svg > "$RUNNER_TEMP/c1t-teal-detached-contact-preview.svg"
+          test -s "$RUNNER_TEMP/c1t-teal-detached-contact-preview.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -266,5 +311,7 @@ jobs:
             ${{ runner.temp }}/c1r-bottleneck-comparison.svg
             ${{ runner.temp }}/c1s-ink-sensitivity.json
             ${{ runner.temp }}/c1s-ink-sensitivity-preview.svg
+            ${{ runner.temp }}/c1t-teal-and-detached-contacts.json
+            ${{ runner.temp }}/c1t-teal-detached-contact-preview.svg
           if-no-files-found: warn
           retention-days: 7
