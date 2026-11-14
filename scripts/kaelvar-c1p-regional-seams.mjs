@@ -30,10 +30,12 @@ import {buildC1QHeadlandReview}
  from './lib/kaelvar-c1q-headland-continuity.mjs';
 import {buildC1RHeadlandDiagnostic}
  from './lib/kaelvar-c1r-headland-source-diagnostics.mjs';
+import {buildC1SSensitivity}
+ from './lib/kaelvar-c1s-headland-ink-sensitivity.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -95,8 +97,8 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let headland=null,bottleneck=null;
-if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg'].includes(mode)){
+let headland=null,bottleneck=null,ink=null;
+if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg'].includes(mode)){
  const q=json('docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json');
  headland=buildC1QHeadlandReview({
   c:q,p,r:report,revised,selected,labels,ownership:imageMasks.refined
@@ -105,7 +107,7 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg']
   process.stdout.write(JSON.stringify(headland,null,2)+'\n');
   process.exit(0);
  }
- if(mode==='--bottleneck-check'||mode==='--bottleneck-svg'){
+ if(['--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg'].includes(mode)){
   const c1r=json('docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json');
   bottleneck=buildC1RHeadlandDiagnostic({
    spec:c1r,q,p,baseline:headland,revised,labels,ownership:imageMasks.refined,
@@ -114,6 +116,18 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg']
   if(mode==='--bottleneck-check'){
    process.stdout.write(JSON.stringify(bottleneck,null,2)+'\n');
    process.exit(0);
+  }
+  if(mode==='--ink-check'||mode==='--ink-svg'){
+   const c1s=json('docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json');
+   ink=buildC1SSensitivity({
+    spec:c1s,c1rSpec:c1r,p,q,c1pReport:report,c1rReport:bottleneck,
+    originalLabels:labels,ownership:imageMasks.refined,revised,
+    biome:images.biome.img,elevation:images.elevation.img,
+   });
+   if(mode==='--ink-check'){
+    process.stdout.write(JSON.stringify(ink,null,2)+'\n');
+    process.exit(0);
+   }
   }
  }
 }
@@ -307,5 +321,43 @@ if(mode==='--bottleneck-svg'){
  title(38,1118,'C1-P: 52,449 assigned + 26,970 held = 79,419 terrain candidate samples; no allocation changed',17)+
  '</svg>\n';
  process.stdout.write(s);
+ process.exit(0);
+}
+
+if(mode==='--ink-svg'){
+ const W=2540,H=1560;
+ const drawPath=(pts,color,width,opacity=1,dashed=false)=>!pts?.length?'':(
+  '<path d="'+pts.map((q,i)=>(i?'L':'M')+(q.x+.5)+' '+(q.y+.5)).join(' ')+
+  '" fill="none" stroke="'+color+'" stroke-width="'+width+
+  '" stroke-opacity="'+opacity+'" stroke-linecap="round"'+
+  (dashed?' stroke-dasharray="2 2"':'')+'/>');
+ const selects=[
+  {id:'ORIGINAL_SOURCE_PAIR_ONLY',name:'A · ORIGINAL SOURCE-PAIR',x:25,y:122},
+  {id:'HYPOTHETICAL_BLACK_ONLY',name:'B · SHARED BLACK (0,0,0) ONLY',x:1280,y:122},
+  {id:'HYPOTHETICAL_TEAL_ONLY',name:'C · SHARED TEAL (4,159,169) ONLY',x:25,y:832},
+  {id:'HYPOTHETICAL_ALL_SHARED_NONBLUE',name:'D · ALL SHARED NONBLUE (BOUND ONLY)',x:1280,y:832},
+ ];
+ const tile=(row)=>{
+  const record=ink.scenarios.find(x=>x.id===row.id);
+  const paths=ink.paths[row.id];
+  const candidate=record.hypotheticalCandidateSamples;
+  const lines=drawPath(paths[0],'#54F9F2',2.1,.8,true)+
+   drawPath(paths[1],'#FF59F9',2.4)+
+   drawPath(paths[2],'#FFCB52',2.7);
+  const findings=record.clearance.map((x,i)=>i+'px:'+(x.found?'YES':'NO')).join('  ');
+  return panel(row.x,row.y,1235,615,[370,185,180,185],imgs[1],revised,lines)+
+    title(row.x+8,row.y+649,row.name,19)+
+    title(row.x+8,row.y+680,'Unknown sample pixels temporarily permitted: '+candidate+
+     '  / '+findings,17,'#FFDFAC');
+ };
+ const legend='Cyan: 0-clearance source path; Magenta: 1-pixel clearance; Gold: 2-pixel clearance';
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+
+  '" viewBox="0 0 '+W+' '+H+'">'+head+
+ title(30,44,'C1-S / ORIGINAL-SOURCE SHARED-INK SENSITIVITY · NO CLAIMS',29)+
+ title(30,82,'Comparative hypotheses only; all coastline, C1-P counts, Shattercap and headland ownership remain frozen',18,'#FFCE9A')+
+ selects.map(tile).join('')+
+ title(35,1536,legend+'; no color indicates certified land, water or political geography.',16,'#BDD5EC')+
+ '</svg>\n';
+ process.stdout.write(svg);
  process.exit(0);
 }
