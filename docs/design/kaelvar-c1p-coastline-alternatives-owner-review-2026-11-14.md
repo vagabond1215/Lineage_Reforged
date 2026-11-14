@@ -158,3 +158,61 @@ active catalogs or assign islands. Preserve all C1-P holds in the review JSON.
 
 The side-by-side and southeast owner visuals were produced outside the
 repository as review artifacts. They are not generated runtime assets.
+
+## C1-P hosted native raster acceptance (2026-11-14)
+
+The previously pending **native Node source-terrain remeasurement passed on
+GitHub Actions** at exact implementation SHA
+`4065dc6d5d00d2662a356d857082de1bd2f9d72f`.
+The successful run is
+[workflow #43627816681](https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43627816681)
+and its 7-day retained noncanonical artifact has ID `14127067241`
+(`c1p-noncanonical-native-terrain-review`).
+The machine-readable accepted evidence is
+[`kaelvar-c1p-hosted-native-terrain-acceptance-2026-11-14.json`](kaelvar-c1p-hosted-native-terrain-acceptance-2026-11-14.json).
+This was a **hosted Ubuntu Node 22 run**, not the owner's Windows native
+PowerShell detached-checkout acceptance. Do not promote a hosted pass into
+Windows-native proof.
+
+The workflow passed 18/18 C1-O plus C1-P unit tests; 872 files were scanned
+with zero new legacy-hex dependencies. The original biome and elevation
+fingerprints and source vector blob were verified; all 599 original source
+edges were conserved, no old catalog source was modified, and both
+full-size original-raster-underlaid SVG preview exports completed.
+
+Exact component-30 source terrain-candidate inventory:
+
+| Region/assignment | C1-O accepted baseline | C1-P revised | Delta |
+| --- | ---: | ---: | ---: |
+| Auric Marches | 6,050 | 5,632 | −418 |
+| Kharuun Drylands | 19,265 | 18,624 | −641 |
+| Verdant Thalos | 19,783 | 19,182 | −601 |
+| Veyrholm Shore | 8,060 | 9,011 | +951 |
+| **Total assigned** | **53,158** | **52,449** | **−709** |
+| **Still unassigned** | **26,261** | **26,970** | **+709** |
+| **Mainland component-30 total** | **79,419** | **79,419** | **0** |
+
+Four closed candidate rings retain zero regional collisions and zero proper
+source contour crossings. No detached physical component or protected
+original-source offshore contour was claimed. Kharuun continues to use
+the exact option B 35–58 edge interval. Verdant retains all three
+southeastern peninsula anchors. Veyrholm retains all three dryland
+exclusion anchors. The NE mainland headland remains unassigned.
+
+**Native review accepted; political and ecological publication still HELD.**
+The source's colors do not certify a land/water body, biome,
+topographic height, watershed, salt basin, potable well or navigable route.
+Shattercap and the large detached NE island remain whole and separately
+withheld. No canonical region geometry was published.
+
+### Next owner-visible C1-P to C1-Q decision
+
+Inspect the **native source-clipped** C1-O vs C1-P preview and enlarged
+north view, focusing on whether Veyrholm's additional 951 candidate cells
+produce the right northern width and whether Auric/Kharuun/Verdant losing
+418/641/601 cells leaves reasonable unclaimed transitions. Owner approval
+of each inland seam is distinct from the geometry/raster verification pass.
+After owner visual adjudication, either freeze these provisional rings or
+make a bounded revision and rerun the same native test/raster/preview
+gate on that exact SHA. No detached island, Shattercap, NE headland or
+canonical boundary may be filled to reduce unassigned pixels.
