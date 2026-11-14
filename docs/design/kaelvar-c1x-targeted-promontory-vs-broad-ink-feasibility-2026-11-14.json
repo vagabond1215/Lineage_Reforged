@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1x-targeted-attached-tip-hypothesis-feasibility.v1",
+  "date": "2026-11-14",
+  "status": "REVIEW_ONLY_TARGETED_INK_EXCEPTION_VS_BROAD_RECLASSIFICATION_NO_OWNER_DECISION",
+  "parentC1WHead": "1fc668e30f8700b62a5ffa0c56558add2a97074f",
+  "source": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalEdgeCount": 599,
+    "headlandEdgesInclusive": [
+      75,
+      115
+    ],
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "registration": {
+      "crop": {
+        "x": 60,
+        "y": 60,
+        "width": 3976,
+        "height": 2235
+      },
+      "reference": {
+        "width": 2048,
+        "height": 1152
+      }
+    }
+  },
+  "investigation": {
+    "provisionalPhysicalHypothesis": "COAST_ATTACHED_PROMONTORY",
+    "interpretationNotOwnerApproved": true,
+    "targetBlackGap": {
+      "reference": [
+        469,
+        213
+      ],
+      "originalPngPixel": [
+        971,
+        474
+      ],
+      "expectedRgb": [
+        0,
+        0,
+        0
+      ],
+      "originalTerrainLabel": 0,
+      "originalOwnerCode": 0,
+      "adjacentOriginalLabels": {
+        "north": 51,
+        "south": 30
+      }
+    },
+    "exactTealEligibleSamplesInBoundedSourceWindow": 173,
+    "territorialRouteWindow": {
+      "minX": 300,
+      "minY": 155,
+      "maxX": 590,
+      "maxY": 465
+    },
+    "territorialRouteSeed": {
+      "x": 390,
+      "y": 336
+    },
+    "territorialRouteTarget": {
+      "x": 492,
+      "y": 215
+    },
+    "fourNeighborOnly": true,
+    "territorialClearanceChecks": [
+      1,
+      2
+    ],
+    "allowedExistingOwnerCodes": [
+      0,
+      3
+    ],
+    "forbiddenExistingOwnerCodes": [
+      1,
+      2,
+      4
+    ],
+    "scenarios": [
+      {
+        "id": "STRICT_ORIGINAL",
+        "microBlack": false,
+        "teal": false,
+        "broadBlack": false
+      },
+      {
+        "id": "TARGETED_BLACK_GAP_ONLY",
+        "microBlack": true,
+        "teal": false,
+        "broadBlack": false
+      },
+      {
+        "id": "TEAL_ONLY",
+        "microBlack": false,
+        "teal": true,
+        "broadBlack": false
+      },
+      {
+        "id": "TEAL_PLUS_TARGETED_BLACK_GAP",
+        "microBlack": true,
+        "teal": true,
+        "broadBlack": false
+      },
+      {
+        "id": "BROAD_BLACK_AND_TEAL_WARNING",
+        "microBlack": false,
+        "teal": true,
+        "broadBlack": true
+      }
+    ]
+  },
+  "pinnedBaseline": {
+    "c1pMainlandCandidates": 79419,
+    "c1pAssigned": 52449,
+    "c1pUnassigned": 26970,
+    "c1pRegionCells": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "sourceHeadlandStrict1pxClearance": false,
+    "sourceHeadlandTealOnly1pxClearance": true,
+    "originalComponent51Pixels": 21,
+    "originalComponent51InsideCoast": 13,
+    "originalComponent51OutsideCoast": 8,
+    "originalComponent51StrictlySeparate": true,
+    "c1uValidReviewCapIds": [
+      "INSET_RETURN_CANDIDATE",
+      "COMPACT_RETURN_CANDIDATE"
+    ],
+    "c1uCapContainsOriginalComponent51Cells": 13,
+    "broadBlackAndTealPotentialComponentContactSamples": 22,
+    "broadBlackAndTealPotentialComponentLabels": [
+      51,
+      78,
+      113
+    ]
+  },
+  "holds": {
+    "noOwnerDecision": true,
+    "noAutomaticOriginalPhysicalComponentMerge": true,
+    "originalSourcePngsUnmodified": true,
+    "originalSourceCoastUnmodified": true,
+    "originalTerrainLabelsUnmodified": true,
+    "existingC1PRegionRingsUnchanged": true,
+    "kharuunOptionBSourceEdges": [
+      35,
+      58
+    ],
+    "southeasternVerdantPeninsulaIncluded": true,
+    "veyrholmInteriorExclusionAnchorsPreserved": true,
+    "headlandPoliticalOwner": null,
+    "component51PoliticalOwner": null,
+    "detachedOriginalComponentClaims": 0,
+    "largeNortheastIslandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "newPortsWellsRiversRoutesSaltBasins": 0,
+    "canonicalWritable": false,
+    "newLegacyHexDependencies": 0
+  },
+  "interpretation": "A deliberately targeted single black sample may avoid bulk black-ink side effects but remains hypothetical. Neither it nor the 173 hypothetical teal samples prove dry land, political contiguity, a valid Verdant extension, ownership of component 51, or an island merger."
+}
