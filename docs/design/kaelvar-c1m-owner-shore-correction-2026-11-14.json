@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1m-owner-northern-shore-geographic-intent.v1",
+  "date": "2026-11-14",
+  "status": "KHARUUN_SHORT_NORTHERN_SHORE_DESIGN_ACCEPTED_EXACT_GEOGRAPHY_HELD",
+  "predecessor": {
+    "stage": "C1-L",
+    "exactCommit": "7f42edd5dd2d7e87bf434091df610352956d4316",
+    "reviewPath": "docs/design/kaelvar-c1l-landmass-coast-arc-adjudication-2026-11-14.json",
+    "sourceContourId": "feature.coastline.first_world.part_10",
+    "originalSourceEdges": 599,
+    "northSectorEdgeCounts": [
+      90,
+      106,
+      114
+    ],
+    "otherSourceEdges": 289
+  },
+  "parentRegionId": "region.kaelvar",
+  "coordinateSpaceId": "world_map.first_world.reference",
+  "ownerVisualDecision": {
+    "observation": "Existing Veyrholm guide appears as an implausible northern corridor rather than an actual coastline-following region.",
+    "precedence": "SUPERSEDES_C1G_NO_KHARUUN_SEA_FRONTAGE_DEFAULT_AT_DESIGN_INTENT_ONLY",
+    "oldVeyrholmCorridorIsAcceptedBoundary": false,
+    "requirePhysicalCoastlineFollowNotRibbon": true,
+    "kharuunHasShortNorthernCoastAtDesignLevel": true,
+    "kharuunShoreIsNotEntireNortheastSector": true,
+    "frontageSourceEdgeIndices": null,
+    "frontageCoastStartPoint": null,
+    "frontageCoastEndPoint": null,
+    "frontageGeometryRef": null,
+    "northernInlandBoundaryGeometryRef": null,
+    "neighboringVeyrholmBoundaryGeometryRef": null,
+    "portCityConceptAllowed": true,
+    "portCityPlacementApproved": false,
+    "portCityCoordinates": null,
+    "portCityCanonicalId": null,
+    "portCityName": null,
+    "potableWaterSourceVerified": false,
+    "harborBathymetryOrShelterVerified": false,
+    "navigableConnectionVerified": false,
+    "portRoutePublished": false
+  },
+  "territorialIntents": [
+    {
+      "regionId": "region.auric_marches",
+      "role": "WESTERN_STEPPE_MINERAL_FRONTIER",
+      "status": "UNCHANGED_OWNER_DESCRIPTOR"
+    },
+    {
+      "regionId": "region.kharuun_drylands",
+      "role": "CENTRAL_DRYLANDS_WITH_LIMITED_REAL_NORTHERN_SHORE",
+      "status": "OWNER_SHORE_EXISTENCE_ACCEPTED_EXACT_FRONTAGE_HELD"
+    },
+    {
+      "regionId": "region.verdant_thalos",
+      "role": "SOUTHERN_WOODED_PENINSULA_WITH_SOUTHEAST_ANCHORS",
+      "status": "UNCHANGED_OWNER_DESCRIPTOR"
+    },
+    {
+      "regionId": "region.veyrholm_shore",
+      "role": "GEOGRAPHICALLY_SHAPED_NORTHERN_COASTAL_LANDS_NOT_UNIFORM_CORRIDOR",
+      "status": "OWNER_CORRIDOR_REJECTION_ACCEPTED_EXACT_BOUNDARY_HELD"
+    },
+    {
+      "regionId": "region.shattercap_isles",
+      "role": "DETACHED_WHOLE_ISLANDS_PENDING_OWNERSHIP",
+      "status": "UNPLACED_HELD"
+    }
+  ],
+  "retainedSourceClaims": {
+    "originalMainlandEdgesAccounted": 599,
+    "originalMainlandEdgesChanged": 0,
+    "sourceEdgeOwnershipClaims": [],
+    "sourceOceanCalibrated": false,
+    "physicalMainlandComponentId": 30,
+    "mainlandTerrainCandidateCells": 79419,
+    "unassignedMainlandTerrainCandidateCells": 26795,
+    "detachedPhysicalCandidates": 18,
+    "detachedPhysicalCandidateCells": 3693,
+    "northeastIslandWholeUnitHeld": true,
+    "coast40OwnerRegionId": null,
+    "foreignWindwardParent": "region.serathyl",
+    "originalOffshoreContourOwnershipClaims": [],
+    "saltBasinGeometryRef": null
+  },
+  "approval": {
+    "ownerDesignShoreExistenceAccepted": true,
+    "ownerVisualReviewOfExactFrontageApproved": false,
+    "coastlineSourceAsPoliticalBorderApproved": false,
+    "kharuunCoastalGeometryApproved": false,
+    "coastalPortSettlementPublished": false,
+    "newRouteOrFerryPublished": false,
+    "activeWorldGeographyWritable": false,
+    "canonicalWritable": false
+  }
+}
