@@ -16,6 +16,9 @@ on:
       - 'tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs'
       - 'scripts/lib/kaelvar-c1t-source-pinch-and-island-contact.mjs'
       - 'tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs'
+      - 'scripts/lib/kaelvar-c1u-headland-review-enclosures.mjs'
+      - 'tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs'
+      - 'docs/design/kaelvar-c1u-headland-review-enclosure-feasibility-2026-11-14.json'
       - 'docs/design/kaelvar-c1t-teal-pinch-and-detached-component-contact-review-2026-11-14.json'
       - 'docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json'
       - 'docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json'
@@ -48,15 +51,17 @@ jobs:
           node --check scripts/lib/kaelvar-c1r-headland-source-diagnostics.mjs
           node --check scripts/lib/kaelvar-c1s-headland-ink-sensitivity.mjs
           node --check scripts/lib/kaelvar-c1t-source-pinch-and-island-contact.mjs
+          node --check scripts/lib/kaelvar-c1u-headland-review-enclosures.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
           node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
           node --check tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs
           node --check tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs
           node --check tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs
+          node --check tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -312,6 +317,50 @@ jobs:
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --pinch-svg > "$RUNNER_TEMP/c1t-teal-detached-contact-preview.svg"
           test -s "$RUNNER_TEMP/c1t-teal-detached-contact-preview.svg"
+      - name: C1-U verify original-source headland cap feasibility without political annexation
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --enclosure-check > "$RUNNER_TEMP/c1u-headland-enclosure-review.json"
+          node - "$RUNNER_TEMP/c1u-headland-enclosure-review.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1U_SOURCE_ARC_REVIEW_ENCLOSURES_PASSED_NO_TERRITORIAL_APPROVAL');
+          assert.equal(r.sourceWitness.originalSourceEdgeCount,599);
+          assert.deepEqual(r.sourceWitness.heldHeadlandEdges,[75,115]);
+          assert.deepEqual(r.sourceWitness.sourceEndpointVertices,
+            [{x:460,y:224},{x:514,y:232}]);
+          assert.deepEqual(r.reviewEnclosures.map(x=>x.status),
+            ['REJECT_SOURCE_COAST_CROSSING','GEOMETRIC_REVIEW_ONLY','GEOMETRIC_REVIEW_ONLY']);
+          assert.deepEqual(r.reviewEnclosures.map(x=>x.sourceCoastReturnCrossings.properCrossings),
+            [1,0,0]);
+          assert.deepEqual(r.reviewEnclosures.slice(1)
+            .map(x=>x.sample.rawSourceReferencePixels),[1709,1482]);
+          for(const row of r.reviewEnclosures.slice(1)){
+            assert.equal(row.ringValidity.valid,true);
+            assert.equal(row.sample.outsideOriginalContourPixels,0);
+            assert.equal(row.sample.originalProvisionalRegionPixelCount,0);
+            assert.equal(row.protectedOffshore.properIntersections,0);
+            assert.equal(row.protectedOffshore.sourceContourVerticesEnclosed,0);
+            assert.equal(row.acceptedAsActiveRegion,false);
+            assert.equal(row.canonicalWritable,false);
+            assert.equal(row.sourceArcOriginalEdges.length,41);
+          }
+          assert.equal(r.naiveFullVerdantShortcut.originalCoastProperCrossings,1);
+          assert.ok(r.naiveFullVerdantShortcut.ownerCollisionSampleCounts.kharuun>0);
+          assert.equal(r.naiveFullVerdantShortcut.acceptedForPublication,false);
+          assert.equal(r.preservedC1P.candidateMainlandCells,79419);
+          assert.equal(r.preservedC1P.assigned,52449);
+          assert.equal(r.preservedC1P.unassigned,26970);
+          assert.equal(r.preservedC1P.newRegionCells,0);
+          assert.equal(r.preservedC1P.detachedComponentClaims,0);
+          assert.equal(r.preservedC1P.canonicalWritable,false);
+          assert.equal(r.holds.headlandUnassigned,true);
+          console.log('C1-U source-safe review cap candidate pixels '+
+            r.reviewEnclosures.slice(1).map(x=>x.sample.originalUnassignedMainlandCandidatePixels).join(', '));
+          console.log('C1-U rejected Verdant shortcut conflicts with Kharuun sampled cells '+
+            r.naiveFullVerdantShortcut.ownerCollisionSampleCounts.kharuun);
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --enclosure-svg > "$RUNNER_TEMP/c1u-headland-enclosure-options.svg"
+          test -s "$RUNNER_TEMP/c1u-headland-enclosure-options.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -329,5 +378,7 @@ jobs:
             ${{ runner.temp }}/c1s-ink-sensitivity-preview.svg
             ${{ runner.temp }}/c1t-teal-and-detached-contacts.json
             ${{ runner.temp }}/c1t-teal-detached-contact-preview.svg
+            ${{ runner.temp }}/c1u-headland-enclosure-review.json
+            ${{ runner.temp }}/c1u-headland-enclosure-options.svg
           if-no-files-found: warn
           retention-days: 7
