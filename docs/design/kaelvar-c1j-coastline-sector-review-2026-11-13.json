@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1j-original-vector-coastline-review.v1",
+  "status": "C1J_ORIGINAL_SOURCE_CONTOURS_NO_GEOGRAPHY_APPROVED",
+  "sourcePaths": {
+    "c1": "docs/design/kaelvar-c1-coordinate-geography-review-2026-11-13.json",
+    "c1f": "docs/design/kaelvar-c1f-owner-corrected-placement-guides-2026-11-13.json",
+    "c1g": "docs/design/kaelvar-c1g-coastline-salt-basin-evidence-2026-11-13.json"
+  },
+  "mapId": "world_map.first_world",
+  "coordinateSpaceId": "world_map.first_world.reference",
+  "sourceGeometryPath": "packages/content/base/world/world_map_features.json",
+  "originalCoastlineCount": 68,
+  "originalRiverCount": 8,
+  "sharedOceanRegionIds": [
+    "region.azure_vast"
+  ],
+  "mainlandSource": {
+    "id": "feature.coastline.first_world.part_10",
+    "vertices": 599,
+    "bounds": {
+      "minX": 64,
+      "minY": 130,
+      "maxX": 538,
+      "maxY": 482
+    },
+    "physicalComponentId": null,
+    "ownerRegionId": null,
+    "canonicalGeometryRef": null
+  },
+  "northSectorWindows": [
+    {
+      "id": "kaelvar_northwest_vector_sector",
+      "bbox": {
+        "minX": 70,
+        "minY": 120,
+        "maxX": 280,
+        "maxY": 235
+      },
+      "targetRegionId": "region.veyrholm_shore",
+      "status": "SOURCE_EDGE_REVIEW_ONLY",
+      "approvedGeometryRef": null
+    },
+    {
+      "id": "kaelvar_northcentral_vector_sector",
+      "bbox": {
+        "minX": 280,
+        "minY": 120,
+        "maxX": 420,
+        "maxY": 235
+      },
+      "targetRegionId": "region.veyrholm_shore",
+      "status": "SOURCE_EDGE_REVIEW_ONLY",
+      "approvedGeometryRef": null
+    },
+    {
+      "id": "kaelvar_northeast_vector_sector",
+      "bbox": {
+        "minX": 420,
+        "minY": 185,
+        "maxX": 540,
+        "maxY": 315
+      },
+      "targetRegionId": null,
+      "possibleRegions": [
+        "region.veyrholm_shore",
+        "region.kharuun_drylands"
+      ],
+      "status": "COMPETING_SHORE_FRONTAGE_REVIEW_ONLY",
+      "approvedGeometryRef": null
+    }
+  ],
+  "protectedOffshoreContours": [
+    {
+      "id": "feature.coastline.first_world.part_7",
+      "expectedVertices": 28,
+      "label": "northern offshore",
+      "physicalComponentId": null,
+      "ownerRegionId": null
+    },
+    {
+      "id": "feature.coastline.first_world.part_8",
+      "expectedVertices": 134,
+      "label": "NE island candidate",
+      "physicalComponentId": null,
+      "ownerRegionId": null
+    },
+    {
+      "id": "feature.coastline.first_world.part_31",
+      "expectedVertices": 312,
+      "label": "eastern detached chain",
+      "physicalComponentId": null,
+      "ownerRegionId": null
+    }
+  ],
+  "separatelyAuthoredRiver": {
+    "id": "feature.river_thalos_run",
+    "vertices": 5,
+    "regionIds": [
+      "region.kaelvar",
+      "region.verdant_thalos"
+    ],
+    "hydrologyApproved": false
+  },
+  "distinguishLegacyCoast40FromVectorPart40": true,
+  "retainWindwardParent": "region.serathyl",
+  "oldWindwardReassignmentAllowed": false,
+  "noIslandOwnership": true,
+  "noImplicitSnapToInkOrOcean": true,
+  "regionBorderApproved": false,
+  "northernShoreContinuityApproved": false,
+  "kharuunSeaAccessApproved": false,
+  "closedSaltBasinsApproved": false,
+  "riverCoursesCalibrated": false,
+  "sourceOceanCertified": false,
+  "approvedGeometryRefs": [],
+  "ownerApprovalRef": null,
+  "canonicalWritable": false
+}
