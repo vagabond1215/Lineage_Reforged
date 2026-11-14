@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1g-coastline-and-salt-basin-evidence.v1",
+  "status": "NONCANONICAL_ECOLOGICAL_BOUNDARY_REVIEW_HELD",
+  "date": "2026-11-13",
+  "sourcePaths": {
+    "c1Review": "docs/design/kaelvar-c1-coordinate-geography-review-2026-11-13.json",
+    "c1fGuides": "docs/design/kaelvar-c1f-owner-corrected-placement-guides-2026-11-13.json",
+    "localityPack": "docs/design/kaelvar-five-region-locality-environment-and-settlement-candidates-2026-11-13.json",
+    "ecologyPack": "docs/design/kaelvar-five-region-ecology-and-generation-candidates-2026-11-13.json"
+  },
+  "sourceAuthority": {
+    "mapId": "world_map.first_world",
+    "coordinateSpaceId": "world_map.first_world.reference",
+    "sourceVariantPolicy": "MATCH_PINNED_C1F_SOURCE_NOT_AUTOMATIC_CATALOG_TRANSFER",
+    "biomePaletteStatus": "SOURCE_RGB_UNCALIBRATED",
+    "elevationScaleStatus": "COLOR_RAMP_UNCALIBRATED",
+    "coastRiverInkStatus": "NOT_INDEPENDENTLY_APPROVED",
+    "sourceClassification": "TERRAIN_CANDIDATE_ONLY_NOT_CERTIFIED_LAND",
+    "parentAndIslandOwnership": "OWNER_REVIEW_PENDING"
+  },
+  "coast": {
+    "default": {
+      "scenarioId": "veyrholm_continuous_coast_variable_depth",
+      "status": "PREFERRED_DESIGN_HYPOTHESIS_NOT_APPROVED",
+      "mainlandRegionId": "region.veyrholm_shore",
+      "adjacentDrylandRegionId": "region.kharuun_drylands",
+      "shorelineCoverage": "CONTINUOUS_NORTHERN_MAINLAND_AS_PROPOSAL_TARGET",
+      "depthRule": "LANDFORM_DRAINAGE_SETTLEMENT_BASED_NOT_UNIFORM_PIXEL_DISTANCE",
+      "settlementConnections": "ROUTES_NOT_INFERRED_FROM_CONTINUOUS_POLYGON",
+      "directKharuunSeaAccess": false,
+      "geometryRef": null,
+      "evidenceRequirements": [
+        {
+          "id": "source_shoreline_and_ink",
+          "purpose": "Independent source coastline / sea / river / ink interpretation",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "northern_mainland_relief",
+          "purpose": "Coastal ridge, cliffs, flats and inland elevation transfer",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "climate_and_maritime_reach",
+          "purpose": "Coastal winds, seasonal rain and dryland boundary",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "coastal_freshwater",
+          "purpose": "Drinking water separated from tidal/brackish channels",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "habitable_continuity",
+          "purpose": "Viable connection between coastal population centers",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "owner_border_review",
+          "purpose": "Owner-signed complete shore and dryland boundary comparison",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        }
+      ]
+    },
+    "alternative": {
+      "scenarioId": "limited_kharuun_dry_coast_if_geography_demands",
+      "status": "CONDITIONAL_EXCEPTION_REQUIRES_SEPARATE_APPROVAL",
+      "mainlandRegionId": "region.kharuun_drylands",
+      "shoreRegionId": "region.veyrholm_shore",
+      "exceptionType": "SMALL_GEOLOGICALLY_SUPPORTED_ARID_FRONTAGE",
+      "directKharuunSeaAccessApproved": false,
+      "geometryRef": null,
+      "evidenceRequirements": [
+        {
+          "id": "dry_coast_geographic_evidence",
+          "purpose": "Evidence of genuinely arid shore or escarpment reaching salt water",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "coastal_frontage_identity",
+          "purpose": "Exact source-referenced coast frontage wholly within one verified mainland physical unit",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "dry_coast_route_water_plan",
+          "purpose": "Separate freshwater and trade feasibility review, without auto routes",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        }
+      ]
+    },
+    "coastlineEcologyBands": [
+      {
+        "environmentZoneId": "environment_zone.veyrholm_sheltered_inlets",
+        "localityId": "region_locality.veyrholm_sheltered_inlets",
+        "habitatId": "veyrholm.inlets",
+        "waterRule": "HARBOR_UPSTREAM_FRESHWATER_REQUIRED",
+        "sourceEvidenceRef": null,
+        "geometryRef": null,
+        "status": "DESCRIPTIVE_PLACEMENT_PENDING"
+      },
+      {
+        "environmentZoneId": "environment_zone.veyrholm_firshore_ridges",
+        "localityId": "region_locality.veyrholm_firshore_ridges",
+        "habitatId": "veyrholm.firshore",
+        "waterRule": "RELIABLE_STREAM_AND_STABLE_RIDGE_REQUIRED",
+        "sourceEvidenceRef": null,
+        "geometryRef": null,
+        "status": "DESCRIPTIVE_PLACEMENT_PENDING"
+      },
+      {
+        "environmentZoneId": "environment_zone.veyrholm_tidal_marshes",
+        "localityId": "region_locality.veyrholm_tidal_marshes",
+        "habitatId": "veyrholm.marsh",
+        "waterRule": "BRACKISH_WATER_NOT_POTABLE",
+        "sourceEvidenceRef": null,
+        "geometryRef": null,
+        "status": "DESCRIPTIVE_PLACEMENT_PENDING"
+      },
+      {
+        "environmentZoneId": "environment_zone.veyrholm_outer_capes",
+        "localityId": "region_locality.veyrholm_outer_capes",
+        "habitatId": "veyrholm.capes",
+        "waterRule": "CLIFF_REPLENISHMENT_AND_WATCHHOLD_SUPPLY_REQUIRED",
+        "sourceEvidenceRef": null,
+        "geometryRef": null,
+        "status": "DESCRIPTIVE_PLACEMENT_PENDING"
+      }
+    ],
+    "transitionNarrative": {
+      "stages": [
+        "OPEN_SEA_OR_TIDAL_COAST",
+        "SHELTERED_INLET_OR_WIND_EXPOSED_CAPE",
+        "VARIABLE_WIDTH_COASTAL_BENCH_OR_FIR_RIDGE",
+        "UPLAND_OR_ESCARPMENT_TRANSITION",
+        "INLAND_DRYLAND_BASINS"
+      ],
+      "status": "HYPOTHETICAL_NOT_SOURCE_CALIBRATED",
+      "coastWidthFixed": false,
+      "coastlineGuaranteesNoPhysicalSeaChannel": false,
+      "highlandRainShadowConfirmed": false
+    }
+  },
+  "drylands": {
+    "regionId": "region.kharuun_drylands",
+    "defaultAccess": "INLAND_CARAVAN_AND_APPROVED_PASS_CONNECTIONS_ONLY",
+    "saltFlat": {
+      "localityId": "region_locality.kharuun_salt_basins",
+      "environmentalZoneId": "environment_zone.kharuun_salt_basins",
+      "existingHabitatId": "kharuun.saltpan",
+      "settlementConceptId": "settlement_concept.tirash_saltworks",
+      "developmentModel": "MULTIPLE_CLOSED_BASINS_POSSIBLE_COUNT_UNVERIFIED",
+      "genesisHypotheses": [
+        "INTERNALLY_DRAINED_DEPRESSION",
+        "EPISODIC_MINERAL_BEARING_INFLOW",
+        "EVAPORATION_AND_EVAPORITE_CRUST",
+        "INTERMITTENT_FLOODING_OR_SEASONAL_SALT_HARVEST"
+      ],
+      "seasonalHazards": [
+        "FLASH_FLOODS",
+        "HEAT_EXPOSURE",
+        "CRUST_COLLAPSE",
+        "WATER_SCARCITY"
+      ],
+      "foodOrWaterGenerationAllowed": false,
+      "offshoreMarineSaltPanAssumed": false,
+      "geometryRef": null,
+      "mapCoordinates": null,
+      "physicalComponentId": null,
+      "verifiedBasinCount": null,
+      "evidenceRequirements": [
+        {
+          "id": "endorheic_drainage",
+          "purpose": "Closed or otherwise physically justified restricted drainage",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "basin_relief",
+          "purpose": "Depression / basin relief independently supported by registered source",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "mineral_evaporite",
+          "purpose": "Plausible soluble salt supply and evaporite retention",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "evaporation_cycle",
+          "purpose": "Water balance supports repeated seasonal drying",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "flood_hazard",
+          "purpose": "Flash flood, crust stability and seasonal traversability reviewed",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "freshwater_logistics",
+          "purpose": "Reliable outside water supply for extraction outposts; no invented wells",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        },
+        {
+          "id": "owner_saltpan_placement",
+          "purpose": "Owner-signed basin placement after other evidence is confirmed",
+          "status": "UNVERIFIED",
+          "evidenceRef": null
+        }
+      ],
+      "candidateReviewSlots": [
+        {
+          "slotId": "saltpan.hypothesis.inland_basin",
+          "status": "UNPLACED_HYPOTHESIS_NOT_A_NEW_CANONICAL_FEATURE",
+          "geometryRef": null,
+          "point": null,
+          "hydrologyEvidenceRef": null
+        }
+      ],
+      "status": "DESIGN_ACCEPTED_PLACEMENT_UNVERIFIED"
+    },
+    "waterDependencies": {
+      "oasisRegionLocalityId": "region_locality.kharuun_oasis_chain",
+      "wadisRegionLocalityId": "region_locality.kharuun_wadi_fans",
+      "wellLocationsVerified": false,
+      "riverCoursesApproved": false,
+      "noAutomaticLakeOasisOrSpringGeneration": true,
+      "noImplicitPortOrSeaRoute": true
+    }
+  },
+  "crossRegion": {
+    "allFiveRegionIds": [
+      "region.auric_marches",
+      "region.kharuun_drylands",
+      "region.verdant_thalos",
+      "region.veyrholm_shore",
+      "region.shattercap_isles"
+    ],
+    "foreignWindwardParent": "region.serathyl",
+    "foreignWindwardReassignmentApproved": false,
+    "coast40OwnerRegionId": null,
+    "northeasternLargeIslandOwnerRegionId": null,
+    "islandComponentClaims": [],
+    "forcedGapFillAllowed": false,
+    "canonicalSettlementPublicationAllowed": false
+  },
+  "approval": {
+    "ownerPlacementApprovalRef": null,
+    "sourceEcologyApprovalRef": null,
+    "canonicalWritable": false,
+    "newRoutePublicationAllowed": false,
+    "newSpawnPublicationAllowed": false,
+    "saltFlatGeometryApproved": false,
+    "regionBordersApproved": false
+  }
+}
