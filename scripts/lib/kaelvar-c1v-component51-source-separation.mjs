@@ -88,9 +88,6 @@ function outlineProximity(pts,contour){
   distancesAreUncalibrated:true};
 }
 function reviewPath(labels,owner,contour,classes,componentCells,allowed){
- if(!eq(neighborTypes,{black:18,teal:0,other:0,sourceBlue:0,
-  otherExcluded:0,invalidAlpha:0}))
-  hold('component 51 immediate boundary shared-black source status changed');
  const localW=win.maxX-win.minX+1,localH=win.maxY-win.minY+1;
  const lid=(x,y)=>(y-win.minY)*localW+x-win.minX;
  const xof=i=>win.minX+i%localW;
@@ -291,6 +288,9 @@ export function buildC1VComponent51Review({spec,c1uSpec,p,c1uReport,
    insideOriginalSourceContour:c1oPointInRing(
     {x:nb.x+.5,y:nb.y+.5},contour)});
  }
+ if(!eq(neighborTypes,{black:18,teal:0,other:0,sourceBlue:0,
+  otherExcluded:0,invalidAlpha:0}))
+  hold('component 51 immediate boundary shared-black source status changed');
  const localW=win.maxX-win.minX+1,localH=win.maxY-win.minY+1;
  const localClass=new Array(localW*localH).fill(null);
  const idx=(x,y)=>(y-win.minY)*localW+x-win.minX;
