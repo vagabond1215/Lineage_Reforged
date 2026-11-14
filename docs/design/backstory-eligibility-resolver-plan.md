@@ -1,5 +1,9 @@
 # Backstory Eligibility Resolver Plan
 
+> **2026-10-26 owner refinement:** First-line non-heir founders receive only minimally beneficial basic origin choices. Ordinary earned profession backgrounds unlock automatically for **actual descendants of the earning character**, not unrelated same-account characters, same-species lineages, or every lateral family member. Hunter is the concrete acceptance case. Family ancestry and source-labeled earned-skill events must reach the creator resolver; current creator input lacks them. The existing Village Hunter requirement for a separate Legacy purchase is superseded for this earned descendant pathway. See [focused direction](founder-backstory-lineage-skill-unlocks-and-dev-item-spawner-intent-2026-10-26.md). This is design clarification, not a live implementation.
+
+> **2026-10-26 refinement:** World-Stray is a special narrative unlock independent of normal family skill thresholds, with a future bounded boon. No backstory's starting skill/knowledge/attribute grant may yield initial/latent Echo or Echo-derived levels, even after a descendant unlock; Echo must be calculated from qualified earned growth rather than total starting stats. See [current owner decision](zero-inherited-echo-dev-console-and-environment-spawn-test-contract-2026-10-26.md).
+
 Source version/run: Version 0.5.51 - Backstory Eligibility Resolver Plan
 Date: 2026-05-17
 Status: planning-only design document
