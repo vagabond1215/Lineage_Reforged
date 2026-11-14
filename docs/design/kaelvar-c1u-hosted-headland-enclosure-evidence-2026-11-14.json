@@ -1,0 +1,201 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1u-source-indexed-headland-review-enclosure-native-evidence.v1",
+  "date": "2026-11-14",
+  "status": "C1U_HOSTED_NATIVE_GEOMETRY_FEASIBILITY_PASSED_PHYSICAL_AND_POLITICAL_HOLDS_OPEN",
+  "verifiedImplementationCommit": "e8a129a0b740a1eb3f19ad79f7a2eb851917519a",
+  "workflowRun": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43645233373",
+  "artifact": {
+    "id": 14133553312,
+    "name": "c1p-noncanonical-native-terrain-review",
+    "retentionDays": 7
+  },
+  "execution": "GitHub-hosted Ubuntu Node 22; no owner Windows-native execution claimed",
+  "tests": {
+    "passed": 46,
+    "failed": 0,
+    "scannedCodeFiles": 882,
+    "newLegacyHexDependencies": 0
+  },
+  "originalSource": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "coastlineEdgeCount": 599,
+    "headlandOriginalSourceEdges": [
+      75,
+      115
+    ],
+    "originalHeadlandVertexEndpoints": [
+      [
+        460,
+        224
+      ],
+      [
+        514,
+        232
+      ]
+    ],
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "localGeometryFindings": [
+    {
+      "id": "DIRECT_CHORD_DIAGNOSTIC",
+      "returnWaypoints": [],
+      "sourceCoastProperCrossings": 1,
+      "crossedOriginalSourceEdge": 117,
+      "rawRingPixelCenters": 1810,
+      "pixelCentersOutsideSourceContour": 2,
+      "originalUnassignedMainlandCandidateCells": 1343,
+      "originalOtherPhysicalComponents": {
+        "51": 13
+      },
+      "verdict": "REJECT_SHORE_CROSSING"
+    },
+    {
+      "id": "INSET_RETURN_CANDIDATE",
+      "returnWaypoints": [
+        [
+          500,
+          226
+        ],
+        [
+          477,
+          225
+        ]
+      ],
+      "validSimplePolygon": true,
+      "sourceCoastProperCrossings": 0,
+      "rawRingPixelCenters": 1709,
+      "pixelCentersOutsideSourceContour": 0,
+      "originalUnassignedMainlandCandidateCells": 1273,
+      "sourceExcludedOrUnregisteredPixelCenters": 423,
+      "originalOtherPhysicalComponents": {
+        "51": 13
+      },
+      "protectedOffshoreSourceContourIntersections": 0,
+      "existingC1PRegionCellsInside": 0,
+      "verdict": "GEOMETRIC_REVIEW_ONLY_PHYSICAL_COMPONENT_51_HOLD"
+    },
+    {
+      "id": "COMPACT_RETURN_CANDIDATE",
+      "returnWaypoints": [
+        [
+          503,
+          220
+        ],
+        [
+          479,
+          220
+        ]
+      ],
+      "validSimplePolygon": true,
+      "sourceCoastProperCrossings": 0,
+      "rawRingPixelCenters": 1482,
+      "pixelCentersOutsideSourceContour": 0,
+      "originalUnassignedMainlandCandidateCells": 1058,
+      "sourceExcludedOrUnregisteredPixelCenters": 411,
+      "originalOtherPhysicalComponents": {
+        "51": 13
+      },
+      "protectedOffshoreSourceContourIntersections": 0,
+      "existingC1PRegionCellsInside": 0,
+      "verdict": "GEOMETRIC_REVIEW_ONLY_PHYSICAL_COMPONENT_51_HOLD"
+    }
+  ],
+  "originalPhysicalComponent51": {
+    "candidateCellsInsideBothReviewEnclosures": 13,
+    "sampleCoordinates": [
+      [
+        466,
+        207
+      ],
+      [
+        467,
+        207
+      ],
+      [
+        467,
+        208
+      ],
+      [
+        468,
+        208
+      ],
+      [
+        467,
+        209
+      ],
+      [
+        468,
+        209
+      ],
+      [
+        469,
+        209
+      ],
+      [
+        470,
+        209
+      ],
+      [
+        468,
+        210
+      ],
+      [
+        469,
+        210
+      ],
+      [
+        470,
+        210
+      ],
+      [
+        469,
+        211
+      ],
+      [
+        469,
+        212
+      ]
+    ],
+    "classification": "ORIGINAL_TERRAIN_COMPONENT_DIFFERENT_FROM_MAINLAND_30_NOT_RECLASSIFIED"
+  },
+  "naiveVerdantShortcut": {
+    "sourceArc": [
+      75,
+      349
+    ],
+    "sameC1PVerdantInlandWaypoints": true,
+    "validSimpleRing": true,
+    "properSourceCoastCrossings": 1,
+    "crossedOriginalSourceEdge": 70,
+    "overlapOriginalProvisionalKharuunCandidateCells": 530,
+    "overlapOriginalVerdantCells": 19182,
+    "accepted": false,
+    "reason": "A topologically valid local ring can still cross original coast and overlap another review region. This shortcut fails physical-source and ownership collision gates."
+  },
+  "unchangedC1P": {
+    "mainlandTerrainCandidates": 79419,
+    "regions": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "assigned": 52449,
+    "unassigned": 26970,
+    "kharuunOptionBEdges": [
+      35,
+      58
+    ],
+    "verdantSoutheastPeninsulaAnchorsPreserved": 3,
+    "sourceVectorEdits": 0,
+    "sourcePixelEdits": 0,
+    "politicalRegionPolygonEdits": 0,
+    "detachedPhysicalComponentClaims": 0,
+    "newHeadlandOwner": null,
+    "canonicalWritable": false
+  },
+  "interpretation": "The two headland cap alternatives are local source-constrained geometric review windows, not valid permission to merge component 51, certify water/land ink, connect Verdant politically, or publish Shattercap mainland or detached islands.",
+  "nextGate": "C1-V: original physical component 51 identity and source coastline/inlet morphology, prior to any polygon ownership proposal."
+}
