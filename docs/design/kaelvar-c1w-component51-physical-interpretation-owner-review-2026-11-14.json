@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1w-component51-physical-interpretation-owner-review.v1",
+  "date": "2026-11-14",
+  "status": "OWNER_ADJUDICATION_REQUIRED_SOURCE_EVIDENCE_ONLY_NO_PHYSICAL_OR_POLITICAL_PUBLICATION",
+  "parentC1VHead": "ca43b359bd5c9232ed42721817dab11b6861d522",
+  "source": {
+    "originalVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalCoastEdgeCount": 599,
+    "reviewedHeadlandEdges": [
+      75,
+      115
+    ],
+    "componentCrossingSourceEdge": 81,
+    "originalBiomePngSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "originalElevationPngSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "sourceRegistration": {
+      "crop": {
+        "x": 60,
+        "y": 60,
+        "width": 3976,
+        "height": 2235
+      },
+      "reference": {
+        "width": 2048,
+        "height": 1152
+      }
+    }
+  },
+  "focus": {
+    "componentLabel": 51,
+    "mainlandLabel": 30,
+    "componentReferenceBounds": {
+      "minX": 466,
+      "minY": 206,
+      "maxX": 470,
+      "maxY": 212
+    },
+    "originalComponentCellCount": 21,
+    "insideOriginalCoastCellCount": 13,
+    "outsideOriginalCoastCellCount": 8,
+    "adjacentExcludedSharedBlackCells": 18,
+    "gapReferencePixel": [
+      469,
+      213
+    ],
+    "gapOriginalPngPixel": [
+      971,
+      474
+    ],
+    "originalComponentSide": [
+      469,
+      212
+    ],
+    "originalMainlandSide": [
+      469,
+      214
+    ],
+    "originalStrictPhysicalConnection": false,
+    "hypotheticalBlackConnection": false,
+    "sourceReferenceReviewWindow": {
+      "minX": 454,
+      "minY": 196,
+      "maxX": 516,
+      "maxY": 252
+    }
+  },
+  "interpretations": [
+    {
+      "id": "COAST_ATTACHED_PROMONTORY",
+      "ownerDecision": null,
+      "status": "UNDECIDED",
+      "evidenceFor": [
+        "Original 599-edge mainland vector crosses the 21-sample component near original coast edge 81",
+        "A single source-shared black raster gap separates original component 51 from original mainland 30"
+      ],
+      "notEstablished": [
+        "The gap represents solid connected land",
+        "The source vector correctly classifies every constituent coastline/reference sample",
+        "The 21-sample component can be reclassified without touching detached land"
+      ],
+      "mustNotDo": [
+        "Auto-merge component 51",
+        "Expand Verdant or another region",
+        "Write original source raster labels"
+      ]
+    },
+    {
+      "id": "PHYSICALLY_SEPARATE_ISLET",
+      "ownerDecision": null,
+      "status": "UNDECIDED",
+      "evidenceFor": [
+        "Original strict source-pair terrain raster has component 51 disconnected from component 30",
+        "No strictly classified component-51 sample has a direct cardinal edge to component 30"
+      ],
+      "notEstablished": [
+        "The shared-black gap is seawater",
+        "The coastline stroke traces independent islet shoreline rather than overlapping vector ink",
+        "The small feature belongs to Shattercap or any other island group"
+      ],
+      "mustNotDo": [
+        "Create a Shattercap island polygon",
+        "Treat black ink as certified water",
+        "Claim a detached original component"
+      ]
+    },
+    {
+      "id": "UNRESOLVED_CARTOGRAPHIC_LINEWORK",
+      "ownerDecision": null,
+      "status": "UNDECIDED",
+      "evidenceFor": [
+        "All 18 directly excluded neighboring original pixel samples share black RGB between source layers",
+        "The source vector splits component 51 into 13 interior and 8 exterior center samples"
+      ],
+      "notEstablished": [
+        "The source feature is only decorative ink rather than geographic land",
+        "Any authoritative coastline/biome interpretation"
+      ],
+      "mustNotDo": [
+        "Erase the component",
+        "Rewrite original 599-edge source vector",
+        "Publish an inferred waterway or regional border"
+      ]
+    }
+  ],
+  "reviewPolicy": {
+    "chooseNoAutomaticWinner": true,
+    "requiredOwnerAction": "Review paired original biome/elevation crops and exact vector overlay, then explicitly select an interpretation or continue HOLD.",
+    "noApprovalRecorded": true,
+    "visualMustShowOriginalSourcePairUnaltered": true,
+    "allHypothesisOverlaysClearlyDiagnostic": true,
+    "component51NotRelabeled": true,
+    "sourceRastersNotRewritten": true,
+    "sourceVectorNotRewritten": true,
+    "canonicalWritable": false,
+    "invalidFullVerdantShortcutStillRejected": true,
+    "newlyAssignedPoliticalCells": 0
+  },
+  "immutableHolds": {
+    "kharuunOptionBEdges": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaIncluded": true,
+    "veyrholmDryInlandExclusionsPreserved": true,
+    "northeasternHeadlandPoliticalOwner": null,
+    "component51PoliticalOwner": null,
+    "largeNortheasternIslandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "noPortWellRiverRouteSaltBasinPlacement": true,
+    "noNewLegacyHexDependencies": true
+  }
+}
