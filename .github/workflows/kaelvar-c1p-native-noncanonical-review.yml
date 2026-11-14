@@ -99,6 +99,13 @@ jobs:
           assert.equal(r.c1pTerrainConservation.detachedComponentsClaimed,0);
           assert.equal(r.limits.noNewPolygonOrCanonicalPublication,true);
           assert.equal(r.candidateCorridors.length,3);
+          assert.deepEqual(r.candidateCorridors.map(x=>x.clearancePx),[0,1,2]);
+          assert.deepEqual(r.candidateCorridors.map(x=>x.found),[true,false,false]);
+          assert.deepEqual(r.candidateCorridors.map(x=>x.startIsPermitted),[true,true,true]);
+          assert.deepEqual(r.candidateCorridors.map(x=>x.targetIsPermitted),[true,true,true]);
+          assert.equal(r.candidateCorridors[0].pixelSteps,223);
+          assert.equal(r.candidateCorridors[0].pathSha256,
+            '0147077f649823002cb7ef7a0d40d6617c0fc699ee3b34337fcfb8ff82b1b01a');
           for(const x of r.candidateCorridors){
             if(x.found){
               assert.ok(x.pixelSteps>0);
