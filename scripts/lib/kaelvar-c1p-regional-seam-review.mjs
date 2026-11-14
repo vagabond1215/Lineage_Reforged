@@ -128,6 +128,7 @@ export function buildC1PRegionalReview({p,o,f,n,j,m,selected,labels=null}){
    shattercapAndLargeNEIslandHeld:true,northeastHeadlandHeld:true,
    coast40AndWindwardHeld:true,portsRoutesWellsSaltBasinsHeld:true},
  };
+ let imageMasks=null;
  if(labels!==null){
   const b=measureC1OReviewTerrain(baseline,labels);
   if(b.previewAssignedMainlandTerrainCells!==53158||
@@ -136,6 +137,7 @@ export function buildC1PRegionalReview({p,o,f,n,j,m,selected,labels=null}){
      [6050,19265,19783,8060]))
    hold('C1-O raster baseline no longer reproduces accepted native totals');
   const next=measureC1OReviewTerrain(revised,labels);
+  imageMasks={baseline:b.ownership,refined:next.ownership};
   for(let i=0;i<4;i++){
    if(next.perRegion[i].rawPolygonInteriorPixelSamples!==
       p.regions[i].rawSourceContourInteriorPixelSamples)
@@ -156,5 +158,5 @@ export function buildC1PRegionalReview({p,o,f,n,j,m,selected,labels=null}){
    sourceColorBiomesCertified:false,canonicalWritable:false,
   };
  }
- return {report:result,baseline,revised};
+ return {report:result,baseline,revised,imageMasks};
 }
