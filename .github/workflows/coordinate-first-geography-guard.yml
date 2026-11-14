@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master]
+    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13]
 
 permissions:
   contents: read
@@ -37,3 +37,22 @@ jobs:
           node --check tests/unit/world-geographic-authority.test.mjs
           node --test tests/unit/world-geographic-authority.test.mjs
           node scripts/kaelvar-c1-geography-review.mjs --check
+
+      - name: C1-F source-pair clipped placement preview and island holds
+        run: |
+          node --check scripts/lib/kaelvar-c1f-source-png.mjs
+          node --check scripts/lib/kaelvar-c1f-source-raster.mjs
+          node --check scripts/lib/kaelvar-c1f-placement-intent.mjs
+          node --check scripts/kaelvar-c1f-placement-preview.mjs
+          node --test tests/unit/kaelvar-c1f-placement-intent.test.mjs
+          node scripts/kaelvar-c1f-placement-preview.mjs --report | tee "$RUNNER_TEMP/kaelvar-c1f-report.json"
+          node scripts/kaelvar-c1f-placement-preview.mjs --svg > "$RUNNER_TEMP/kaelvar-c1f-review.svg"
+          test -s "$RUNNER_TEMP/kaelvar-c1f-review.svg"
+      - name: Publish C1-F noncanonical comparison for visual review
+        uses: actions/upload-artifact@v4
+        with:
+          name: kaelvar-c1f-noncanonical-source-review
+          path: |
+            ${{ runner.temp }}/kaelvar-c1f-review.svg
+            ${{ runner.temp }}/kaelvar-c1f-report.json
+          retention-days: 7
