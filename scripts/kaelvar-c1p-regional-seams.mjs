@@ -32,10 +32,12 @@ import {buildC1RHeadlandDiagnostic}
  from './lib/kaelvar-c1r-headland-source-diagnostics.mjs';
 import {buildC1SSensitivity}
  from './lib/kaelvar-c1s-headland-ink-sensitivity.mjs';
+import {buildC1TReview}
+ from './lib/kaelvar-c1t-source-pinch-and-island-contact.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -97,8 +99,8 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let headland=null,bottleneck=null,ink=null;
-if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg'].includes(mode)){
+let headland=null,bottleneck=null,ink=null,pinch=null;
+if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)){
  const q=json('docs/design/kaelvar-c1q-northeast-headland-options-2026-11-14.json');
  headland=buildC1QHeadlandReview({
   c:q,p,r:report,revised,selected,labels,ownership:imageMasks.refined
@@ -107,7 +109,7 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg',
   process.stdout.write(JSON.stringify(headland,null,2)+'\n');
   process.exit(0);
  }
- if(['--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg'].includes(mode)){
+ if(['--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)){
   const c1r=json('docs/design/kaelvar-c1r-headland-source-bottleneck-probe-2026-11-14.json');
   bottleneck=buildC1RHeadlandDiagnostic({
    spec:c1r,q,p,baseline:headland,revised,labels,ownership:imageMasks.refined,
@@ -117,7 +119,7 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg',
    process.stdout.write(JSON.stringify(bottleneck,null,2)+'\n');
    process.exit(0);
   }
-  if(mode==='--ink-check'||mode==='--ink-svg'){
+  if(['--ink-check','--ink-svg','--pinch-check','--pinch-svg'].includes(mode)){
    const c1s=json('docs/design/kaelvar-c1s-headland-shared-ink-sensitivity-2026-11-14.json');
    ink=buildC1SSensitivity({
     spec:c1s,c1rSpec:c1r,p,q,c1pReport:report,c1rReport:bottleneck,
@@ -127,6 +129,16 @@ if(['--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg',
    if(mode==='--ink-check'){
     process.stdout.write(JSON.stringify(ink,null,2)+'\n');
     process.exit(0);
+   }
+   if(mode==='--pinch-check'||mode==='--pinch-svg'){
+    const c1t=json('docs/design/kaelvar-c1t-teal-pinch-and-detached-component-contact-review-2026-11-14.json');
+    pinch=buildC1TReview({spec:c1t,c1sSpec:c1s,c1s:ink,c1p:report,
+     labels,ownership:imageMasks.refined,revised,
+     biome:images.biome.img,elevation:images.elevation.img});
+    if(mode==='--pinch-check'){
+     process.stdout.write(JSON.stringify(pinch,null,2)+'\n');
+     process.exit(0);
+    }
    }
   }
  }
@@ -358,6 +370,34 @@ if(mode==='--ink-svg'){
  selects.map(tile).join('')+
  title(35,1536,legend+'; no color indicates certified land, water or political geography.',16,'#BDD5EC')+
  '</svg>\n';
+ process.stdout.write(svg);
+ process.exit(0);
+}
+
+if(mode==='--pinch-svg'){
+ const src=pinch.detachedContactAudit,pts=src.sourceContactSamples;
+ const A=pinch.focusPixelOneAtATime;
+ const line=ps=>ps.length?'<path d="'+ps.map((p,i)=>(i?'L':'M')+
+  (p.x+.5)+' '+(p.y+.5)).join(' ')+
+  '" fill="none" stroke="#60F3E2" stroke-width="1.8" stroke-dasharray="3 2"/>':'';
+ const critical='<circle cx="400.5" cy="317.5" r="3.1" fill="#E8FF56" stroke="#152A2D" stroke-width="1.1"/>';
+ const contactMarks=pts.map(p=>'<circle cx="'+(p.x+.5)+'" cy="'+(p.y+.5)+
+   '" r="2.5" fill="'+(p.category==='teal'?'#68EDED':p.category==='black'?'#FFAB70':'#EB81F5')+
+   '" stroke="#071B21" stroke-width=".6"/>').join('');
+ const route=ink.paths.HYPOTHETICAL_TEAL_ONLY[1];
+ const conn=src.scenarios.map(x=>x.id+':'+x.potentialPhysicalComponentLabels.join(',')).join(' | ');
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="2540" height="1160" viewBox="0 0 2540 1160">'+head+
+  title(30,43,'C1-T / CRITICAL TEAL PIXEL + DETACHED SOURCE-CONTACT AUDIT',28)+
+  title(30,78,'Yellow mark = hypothetical teal-only path sample (400,317); contact dots do not assign detached land',18,'#FFCE9A')+
+  panel(30,118,1215,868,[370,285,95,92],imgs[1],revised,line(route)+critical)+
+  panel(1295,118,1215,868,[295,148,300,325],imgs[1],revised,contactMarks+critical)+
+  title(35,1030,'TEAL: focus-only 1px '+(A.focusOnlyHypotheticalTeal1px.found?'CONNECTED':'NO')+
+   '  /  leave-focus-out 1px '+(A.allTealExceptFocus1px.found?'CONNECTED':'NO'),20)+
+  title(1300,1030,'31 original component-neighbor samples, labels 51 / 78 / 113',20)+
+  title(35,1074,'Original shared source RGB: (4,159,169); original pixel (837,675)',17,'#FFDFB8')+
+  title(35,1118,'C1-P: 52,449 assigned, 26,970 unassigned, 79,419 source mainland candidates. NO CANONICAL CHANGES.',17)+
+  title(1300,1074,'Orange = shared black, cyan = shared teal, violet = other unresolved ink.',16,'#FFDFB8')+
+  '</svg>\n';
  process.stdout.write(svg);
  process.exit(0);
 }
