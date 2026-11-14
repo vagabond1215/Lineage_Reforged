@@ -23,7 +23,8 @@ const expected={
   gapReferencePixel:[469,213],gapOriginalPngPixel:[971,474],
   originalComponentSide:[469,212],originalMainlandSide:[469,214],
   originalStrictPhysicalConnection:false,
-  hypotheticalBlackConnection:false,
+  hypotheticalBlackConnectionExists:true,
+  hypotheticalBlackConnectionCertifiesLand:false,
   sourceReferenceReviewWindow:bounds,
 };
 const policies={
