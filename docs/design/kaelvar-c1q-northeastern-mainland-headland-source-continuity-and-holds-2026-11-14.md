@@ -104,10 +104,13 @@ published.
    current bounded window, remaining source-safe and avoiding all
    already-assigned regions. Keep explicit sample reference and provenance.
 3. **Prove a well-formed region geometry before drawing sovereignty:**
-   the full outer source contour self-touches in the eastern bay/inlet
-   vicinity, so naively using original coastal vertices 75..349 in one
-   Verdant ring risks self-intersections. Do not silently repair the
-   original vector or use an unverified multiring workaround.
+   a *trial Verdant polygon* using the extended coastal vertices
+   75..349 and the current inland return self-intersected near
+   (408,325) in independent vector-only inspection. Separately, the
+   full 599-vertex original source contour has a self-touch near
+   (202,384). These are distinct findings, neither a new published
+   polygon nor permission to rewrite the source. Do not silently repair
+   the original vector or use an unverified multiring workaround.
 4. **Review Verdant vs unassigned political choice** only after a real
    geographic passage and valid reversible polygon are demonstrated.
    Shattercap's maritime influence may be a future narrative distinction
