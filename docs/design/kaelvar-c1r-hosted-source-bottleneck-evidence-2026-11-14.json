@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1r-hosted-native-source-pair-bottleneck-evidence.v1",
+  "date": "2026-11-14",
+  "status": "HOSTED_NATIVE_C1R_ACCEPTED_UNCALIBRATED_PIXEL_PAIR_POLITICAL_HOLD",
+  "exactTestedCommit": "17e4ae8dca0e5afc232274d04f6e8037f2e48843",
+  "workflowRun": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43639122650",
+  "workflowArtifactId": 14130834105,
+  "workflowArtifactName": "c1p-noncanonical-native-terrain-review",
+  "artifactRetentionDays": 7,
+  "executionEnvironment": "GitHub-hosted Ubuntu Node 22; no owner Windows native execution",
+  "tests": {
+    "passed": 30,
+    "failed": 0,
+    "scannedCodeFiles": 876,
+    "newLegacyHexDependencies": 0
+  },
+  "pinnedSources": {
+    "originalSourceVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceContourEdges": 599,
+    "originalMainlandTerrainCells": 79419,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "query": {
+    "fromVerdant": [
+      390,
+      336
+    ],
+    "toNortheastHeadland": [
+      492,
+      215
+    ],
+    "sourceHeadlandEdgesInclusive": [
+      75,
+      115
+    ],
+    "originalC1QWindowInclusive": [
+      375,
+      190,
+      540,
+      350
+    ],
+    "expandedC1RWindowInclusive": [
+      300,
+      155,
+      590,
+      465
+    ],
+    "connectivity": 4,
+    "clearanceCheckedPx": [
+      0,
+      1,
+      2
+    ],
+    "permittedTerrainComponent": 30,
+    "permittedPoliticalOwnershipCodes": [
+      0,
+      3
+    ],
+    "forbiddenOtherRegionOwnershipCodes": [
+      1,
+      2,
+      4
+    ]
+  },
+  "result": {
+    "original223StepPath": {
+      "connected": true,
+      "steps": 223,
+      "sha256": "0147077f649823002cb7ef7a0d40d6617c0fc699ee3b34337fcfb8ff82b1b01a"
+    },
+    "expandedWindow": {
+      "clearance0": {
+        "connected": true,
+        "steps": 223
+      },
+      "clearance1": {
+        "connected": false
+      },
+      "clearance2": {
+        "connected": false
+      }
+    },
+    "interiorDisjointAlternative": {
+      "connected": true,
+      "steps": 225,
+      "sha256": "8acf9d83cb43ac31d7085822fdd2e75859f71ffcbaa840700d2268ba8e8ee22b",
+      "sharesNoInteriorPixelWith223StepPath": true
+    },
+    "narrowOriginalPath": {
+      "samples": 224,
+      "onePixelClearanceFailures": 72,
+      "groupsOfFailingSteps": 35,
+      "adjacentRejectedSamples": 96,
+      "adjacentRejectedReasonCounts": {
+        "SOURCE_PAIR_RGB_EQUALITY": 96
+      }
+    },
+    "originalSourcePixelExamples": [
+      {
+        "sourceReferenceCoordinate": [
+          487,
+          240
+        ],
+        "nearbySourcePixel": [
+          1008,
+          538
+        ],
+        "biomeRGB": [
+          0,
+          0,
+          0
+        ],
+        "elevationRGB": [
+          0,
+          0,
+          0
+        ],
+        "classification": "SHARED_BLACK_INK_PIXEL_EXCLUDED_FROM_CANDIDATE_TERRAIN"
+      },
+      {
+        "sourceReferenceCoordinate": [
+          396,
+          315
+        ],
+        "nearbySourcePixel": [
+          825,
+          674
+        ],
+        "biomeRGB": [
+          4,
+          159,
+          169
+        ],
+        "elevationRGB": [
+          4,
+          159,
+          169
+        ],
+        "classification": "SHARED_TEAL_PIXEL_EXCLUDED_FROM_CANDIDATE_TERRAIN"
+      }
+    ],
+    "candidateRouteCellsWithSourceBlueRulePositive": 0,
+    "candidateRouteCellsWithIdenticalSourceRGB": 0,
+    "candidateRouteCellsWithInvalidAlpha": 0
+  },
+  "conservation": {
+    "C1PRegionTerrainCandidates": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "C1PAssigned": 52449,
+    "C1PUnassigned": 26970,
+    "C1PTotal": 79419,
+    "newlyAssignedHeadlandCells": 0,
+    "newlyAssignedDetachedCells": 0,
+    "originalCoastlineEdits": 0,
+    "shattercapIslandAssignments": 0,
+    "canonicalWritable": false
+  },
+  "interpretation": {
+    "sharedRGBDoesNotCertifySolidLand": true,
+    "sharedRGBDoesNotCertifyWater": true,
+    "apparentSinglePixelCorridorDoesNotCertifyUsableLandPassage": true,
+    "twoIndependentThinPathsDoNotProveRobustWidePassage": true,
+    "expandedSearchWindowDoesNotResolveOnePixelClearanceFailure": true,
+    "resolutionOfInkSemanticsRequiredBeforePoliticalAssignment": true
+  },
+  "nextGate": "C1-S original-source ink/water sensitivity and contour evidence, preserving all source and political holds."
+}
