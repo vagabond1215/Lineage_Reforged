@@ -94,3 +94,67 @@ new inland seams until the native source-raster calculation is repeated.
 Serathyl Windward, all new ports/wells/waterways/routes/salt placements,
 and all canonical publication. No sovereignty or environmental source
 classification is approved at C1-P.
+
+## C1-P inland seam authoring continuation (2026-11-14)
+
+The owner selected **Kharuun option B**: original source vertices
+`35..59`, inclusive edges `35..58`. No endpoint change or north-coast
+expansion was made. The owner also asked whether the southeastern mainland
+offshoot belongs in Verdant Thalos or Shattercap. The **working design
+preference** is to keep the physically attached peninsula in Verdant and
+treat offshore Shattercap ownership separately; this remains a reversible
+candidate, not canonical publication.
+
+Four refined inland-return waypoint sequences are authored in
+[`kaelvar-c1p-refined-mainland-seam-candidates-2026-11-14.json`](kaelvar-c1p-refined-mainland-seam-candidates-2026-11-14.json).
+All original coastal arcs retain C1-O indices:
+
+| Region | Coast source edges | Return-waypoint change | C1-P raw contour-interior samples | Change versus C1-O raw samples |
+| --- | --- | --- | ---: | ---: |
+| Auric Marches | 420–454 | 7 → 11 | 6,434 | −419 |
+| Kharuun Drylands | 35–58 | 13 → 21 | 18,940 | −649 |
+| Verdant Thalos | 195–348 | 6 → 11 | 21,464 | −601 |
+| Veyrholm Shore | 475–598; 0–23 | 13 → 18 | 11,131 | +925 |
+
+**These counts are raw pixel-center samples within source-contour rings,
+not the registered component-30 terrain-candidate counts.** They do not
+replace C1-O's native 79,419 mainland-candidate witness or 26,261
+remaining-unassigned baseline. New assigned/unassigned terrain totals are
+deliberately **unmeasured** until the C1-P native raster implementation.
+
+An independent Python review used the exact 599 source vertices from the
+owner-supplied native C1-O JSON, parsed the original verified biome PNG
+embedded in C1-O's SVG and checked its SHA-256 fingerprint
+`9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12`.
+It reproduced **all four** C1-O raw source-outline sample counts
+(6,853 / 19,589 / 22,065 / 10,206) using the C1-O parity algorithm before
+evaluating the new waypoints. The revised proposal showed:
+
+- 4 valid candidate region rings, no pairwise polygon-area intersection;
+- 0 sampled pixels outside the original source mainland contour;
+- 0 proper inland-segment crossings into the unchanged source coastline;
+- 0 intersection claims across the 3 original detached offshore source
+  contours traced in C1-O; no assignment of 18 separately registered
+  terrain physical components;
+- 3/3 Verdant southeastern peninsula inclusion anchors retained;
+- 3/3 Veyrholm dry-interior exclusion anchors retained;
+- Kharuun still exactly 24 source edges and the NE headland still held.
+
+The contour itself may self-touch at native source resolution; this check
+uses the original C1-O even-odd pixel inclusion rule, not a fabricated
+replacement land polygon. The visual underlay is original registered
+imagery, not a biome/sea/hydrology certification.
+
+### Remaining native acceptance gate
+
+No Node C1-P suite or native component-30 remeasurement has yet been run
+for these revised returns. Before any owner approval of political boundaries,
+extend the existing C1-O validator in a **bounded existing development
+checkout** to load this separate reversible proposal, reject input drift,
+rerun all C1-N/C1-O/physical component and no-new-hex checks, conservatively
+measure exact new source terrain-candidate counts and regenerate native
+review overlays. Do not overwrite C1-O's accepted candidate spec, mutate
+active catalogs or assign islands. Preserve all C1-P holds in the review JSON.
+
+The side-by-side and southeast owner visuals were produced outside the
+repository as review artifacts. They are not generated runtime assets.
