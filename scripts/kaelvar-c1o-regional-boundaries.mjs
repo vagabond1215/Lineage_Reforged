@@ -208,7 +208,7 @@ const markerLabels=(view,level)=>{
   '" fill="#FFFFFF" stroke="#16253B" stroke-width="1.05" paint-order="stroke">'+
   q.i+'</text>').join('');
 };
-const labels=f.regionGuides.slice(0,4).map((r,i)=>{
+const regionLabels=f.regionGuides.slice(0,4).map((r,i)=>{
  const p=i===3?{x:213,y:176}:r.labelAnchor;
  return '<text x="'+p.x+'" y="'+p.y+'" text-anchor="middle" font-size="10"'+
   ' font-weight="bold" fill="#FFFFFF" stroke="#1A2C38" stroke-width="2.6"'+
@@ -231,7 +231,7 @@ if(mode==='--svg'){
  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="2560" height="1150" viewBox="0 0 2560 1150">'+
  header+txt(30,42,'C1-O / KAELVAR / REVERSIBLE REGIONAL BOUNDARY CANDIDATES',29,'#FFFFFF')+
  txt(30,78,'SOURCE MAP UNDERLAY | NOT A CANONICAL GEOGRAPHIC PUBLICATION',18,'#FBD3A0')+
- panel(30,118,1240,960,whole,mapLayers+labels)+
+ panel(30,118,1240,960,whole,mapLayers+regionLabels)+
  txt(1350,149,'Northern bay + disputed northeastern headland',22,'#FFFFFF')+
  panel(1350,170,1168,536,north,mapLayers+markerLabels(north,'overview'))+
  legend+txt(1360,992,'Gray: still unassigned / disputed source-mainland interior',17)+
