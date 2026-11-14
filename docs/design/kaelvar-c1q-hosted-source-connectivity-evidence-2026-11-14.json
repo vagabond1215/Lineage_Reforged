@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1q-hosted-source-corridor-evidence.v1",
+  "date": "2026-11-14",
+  "status": "HOSTED_NATIVE_SOURCE_MASK_PROBE_PASSED_POLITICAL_EXPANSION_HELD",
+  "verifiedImplementationCommit": "62c2b48c17369e62fe2202a98ba3907db2b63cba",
+  "workflowRunUrl": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43637208036",
+  "artifactId": 14130960291,
+  "artifactName": "c1p-noncanonical-native-terrain-review",
+  "artifactRetentionDays": 7,
+  "executionEnvironment": "GitHub-hosted Ubuntu Node 22, not Windows PowerShell owner-native",
+  "tests": {
+    "passed": 25,
+    "failed": 0,
+    "codeFilesScanned": 874,
+    "newLegacyHexDependencies": 0
+  },
+  "sources": {
+    "originalVectorGitBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalSourceContourEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "headland": {
+    "originalMainlandEdgesInclusive": [
+      75,
+      115
+    ],
+    "vertexEndpoints": [
+      75,
+      116
+    ],
+    "countEdges": 41,
+    "coastlineOwner": "UNASSIGNED"
+  },
+  "corridor": {
+    "originalMainlandTerrainComponentId": 30,
+    "startVerdantSample": [
+      390,
+      336
+    ],
+    "targetHeadlandSample": [
+      492,
+      215
+    ],
+    "searchWindowInclusive": [
+      375,
+      190,
+      540,
+      350
+    ],
+    "connectivity": 4,
+    "allowedOwners": [
+      "UNASSIGNED",
+      "VERDANT_C1P"
+    ],
+    "forbiddenOwners": [
+      "AURIC_C1P",
+      "KHARUUN_C1P",
+      "VEYRHOLM_C1P"
+    ],
+    "clearancePx0": {
+      "found": true,
+      "steps": 223,
+      "pathSha256": "0147077f649823002cb7ef7a0d40d6617c0fc699ee3b34337fcfb8ff82b1b01a"
+    },
+    "clearancePx1": {
+      "found": false,
+      "startPermitted": true,
+      "targetPermitted": true
+    },
+    "clearancePx2": {
+      "found": false,
+      "startPermitted": true,
+      "targetPermitted": true
+    },
+    "interpretation": "One-pixel-wide candidate connectivity can be sampled but a source-candidate corridor with 1px or 2px Manhattan clearance was not demonstrated within the bounded window. This is not land-water calibration, safe traversal or political ownership."
+  },
+  "unchangedC1PAccounting": {
+    "mainlandSourceCandidateCells": 79419,
+    "assigned": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "assignedTotal": 52449,
+    "unassigned": 26970,
+    "additionalOwnership": 0,
+    "detachedPhysicalComponentsAssigned": 0
+  },
+  "holds": {
+    "kharuunEdgesInclusive": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaAnchorsRetained": 3,
+    "northeastHeadlandNotAssigned": true,
+    "shattercapRegionPolygon": null,
+    "largeDetachedNortheastIslandHeld": true,
+    "canonicalWritable": false,
+    "sourceContourModified": false,
+    "portsRoutesWellsSaltBasinsPlaced": 0
+  },
+  "nextGate": "Investigate whether narrow clearance failure reflects unresolved source ink, shoreline interpolation or a genuinely narrow passage; obtain independently source-calibrated land-water/relief support before drafting a connected Verdant headland political polygon."
+}
