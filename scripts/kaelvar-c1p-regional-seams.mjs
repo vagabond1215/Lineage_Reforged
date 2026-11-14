@@ -476,7 +476,9 @@ if(mode==='--component51-svg'){
   points.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ')+' Z'+
   '" fill="none" stroke="'+color+'" stroke-width="'+w+'"'+
   (dash?' stroke-dasharray="2 1"':'')+'/>';
- const coast=poly(revised.originalContour.slice(75,117),'#E8FCFF',false,1.4);
+ const coast='<path d="'+revised.originalContour.slice(75,117)
+  .map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ')+
+  '" fill="none" stroke="#E8FCFF" stroke-width="1.4"/>';
  const arrowRoute=c.localHypotheticalConnectivity.routeScenarios
   .find(x=>x.scenario==='SHARED_BLACK_AND_TEAL');
  const path=arrowRoute?.path??[];
