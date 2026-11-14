@@ -1,0 +1,355 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1p-reversible-mainland-seam-review.v1",
+  "date": "2026-11-14",
+  "status": "FOUR_SOURCE_INDEXED_REFINED_RINGS_AUTHOR_REVIEW_ONLY_NATIVE_REMEASUREMENT_HELD",
+  "baseC1OCommit": "7b1092c0aa71eb744182d4293859fb4b15fb5571",
+  "C1ORegionProposalPath": "docs/design/kaelvar-c1o-regional-boundary-candidates-2026-11-14.json",
+  "sourceVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+  "sourceBiomePngSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+  "originalContourId": "feature.coastline.first_world.part_10",
+  "originalSourceEdgeCount": 599,
+  "ownerReviewDirection": {
+    "kharuunFrontageOption": "B",
+    "kharuunSourceEdgeIndicesInclusive": [
+      35,
+      58
+    ],
+    "verdantAttachedSoutheasternPeninsula": "INCLUDED_IN_MAINLAND_CANDIDATE",
+    "shattercapDetachedIslandClaims": 0,
+    "northeastHeadlandOriginalEdgesInclusive": [
+      75,
+      115
+    ],
+    "northeastHeadlandOwnership": "HELD"
+  },
+  "regions": [
+    {
+      "regionId": "region.auric_marches",
+      "sourceArc": {
+        "startVertex": 420,
+        "endVertex": 455
+      },
+      "inlandWaypoints": [
+        [
+          124,
+          258
+        ],
+        [
+          154,
+          251
+        ],
+        [
+          172,
+          243
+        ],
+        [
+          188,
+          243
+        ],
+        [
+          203,
+          246
+        ],
+        [
+          213,
+          264
+        ],
+        [
+          213,
+          281
+        ],
+        [
+          219,
+          298
+        ],
+        [
+          205,
+          311
+        ],
+        [
+          182,
+          318
+        ],
+        [
+          155,
+          325
+        ]
+      ],
+      "rawSourceContourInteriorSamplePixels": 6434,
+      "reason": "Retune western boundary to inland transition while preserving a southern coastal indentation and unclaimed steppe gaps."
+    },
+    {
+      "regionId": "region.kharuun_drylands",
+      "sourceArc": {
+        "startVertex": 35,
+        "endVertex": 59
+      },
+      "inlandWaypoints": [
+        [
+          428,
+          253
+        ],
+        [
+          436,
+          267
+        ],
+        [
+          439,
+          281
+        ],
+        [
+          425,
+          296
+        ],
+        [
+          413,
+          300
+        ],
+        [
+          390,
+          303
+        ],
+        [
+          368,
+          308
+        ],
+        [
+          348,
+          312
+        ],
+        [
+          329,
+          318
+        ],
+        [
+          314,
+          320
+        ],
+        [
+          296,
+          313
+        ],
+        [
+          279,
+          309
+        ],
+        [
+          261,
+          305
+        ],
+        [
+          248,
+          292
+        ],
+        [
+          235,
+          275
+        ],
+        [
+          229,
+          254
+        ],
+        [
+          227,
+          245
+        ],
+        [
+          250,
+          219
+        ],
+        [
+          279,
+          202
+        ],
+        [
+          301,
+          193
+        ],
+        [
+          308,
+          190
+        ]
+      ],
+      "rawSourceContourInteriorSamplePixels": 18940,
+      "reason": "Retain exactly the option B 24-edge inner-bay frontage; taper eastern greenward and southern transition and keep interior gaps."
+    },
+    {
+      "regionId": "region.verdant_thalos",
+      "sourceArc": {
+        "startVertex": 195,
+        "endVertex": 349
+      },
+      "inlandWaypoints": [
+        [
+          264,
+          408
+        ],
+        [
+          266,
+          392
+        ],
+        [
+          272,
+          375
+        ],
+        [
+          280,
+          361
+        ],
+        [
+          289,
+          348
+        ],
+        [
+          304,
+          341
+        ],
+        [
+          320,
+          334
+        ],
+        [
+          338,
+          337
+        ],
+        [
+          352,
+          342
+        ],
+        [
+          367,
+          337
+        ],
+        [
+          382,
+          333
+        ]
+      ],
+      "rawSourceContourInteriorSamplePixels": 21464,
+      "reason": "Follow a more varied northern greenward seam; retain all three southeastern mainland peninsular anchors, with off-mainland islands withheld."
+    },
+    {
+      "regionId": "region.veyrholm_shore",
+      "sourceArc": {
+        "startVertex": 475,
+        "endVertex": 24
+      },
+      "inlandWaypoints": [
+        [
+          335,
+          170
+        ],
+        [
+          321,
+          176
+        ],
+        [
+          301,
+          181
+        ],
+        [
+          284,
+          190
+        ],
+        [
+          271,
+          194
+        ],
+        [
+          255,
+          184
+        ],
+        [
+          245,
+          178
+        ],
+        [
+          234,
+          189
+        ],
+        [
+          222,
+          194
+        ],
+        [
+          204,
+          192
+        ],
+        [
+          187,
+          200
+        ],
+        [
+          171,
+          205
+        ],
+        [
+          160,
+          204
+        ],
+        [
+          148,
+          223
+        ],
+        [
+          135,
+          219
+        ],
+        [
+          120,
+          221
+        ],
+        [
+          101,
+          222
+        ],
+        [
+          84,
+          207
+        ]
+      ],
+      "rawSourceContourInteriorSamplePixels": 11131,
+      "reason": "Variable-depth northern green/mountain frontage, not a uniform ribbon; stays clear of Kharuun's bay frontage and all three dry interior exclusion anchors."
+    }
+  ],
+  "previewChecks": {
+    "sourceBiomeOriginalPngHashVerified": true,
+    "originalSourceContourUnchanged": true,
+    "sourceIndexedArcsUnchanged": true,
+    "originalC1ORawContourSamplesReproduced": true,
+    "allRegionRingsGeometricallyValid": true,
+    "pairwisePolygonAreaCollisions": 0,
+    "polygonProperCrossingsIntoSourceCoast": 0,
+    "originalSourceContourEscapingPixelSamples": 0,
+    "protectedOffshoreContoursChecked": 3,
+    "protectedOffshoreContourClaims": 0,
+    "verdantPeninsulaInclusionAnchorsPreserved": 3,
+    "veyrholmInteriorExclusionAnchorsPreserved": 3,
+    "newComponent30TerrainCellMeasurements": null,
+    "sourceBiomeIsCertifiedLandWaterOrBiomes": false,
+    "nativeNodeAcceptanceClaimed": false
+  },
+  "c1oBaselineTerrainCells": {
+    "mainlandCandidateCells": 79419,
+    "previewAssignedMainlandCells": 53158,
+    "remainingUnassignedMainlandCells": 26261
+  },
+  "holds": {
+    "canonicalWritable": false,
+    "sourceContourCertified": false,
+    "politicalOwnershipApproved": false,
+    "newActiveRegionGeometryRefs": 0,
+    "detachedIslandClaims": 0,
+    "shattercapPolygon": null,
+    "largeNortheastIslandOwnershipApproved": false,
+    "northeasternHeadlandOwnershipApproved": false,
+    "coast40Claim": null,
+    "foreignWindwardParent": "region.serathyl",
+    "portPlacements": 0,
+    "wellOrRiverPlacements": 0,
+    "waterRoutePlacements": 0,
+    "saltBasinPlacements": 0,
+    "newLegacyHexDependencies": 0
+  }
+}
