@@ -1,0 +1,169 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1x-native-targeted-vs-broad-ink-two-gate-evidence.v1",
+  "date": "2026-11-14",
+  "status": "HOSTED_C1X_SOURCE_TWO_GATES_PASSED_PHYSICAL_AND_POLITICAL_OWNER_HOLD",
+  "testedImplementationCommit": "f547eadc4815b55a86f55e1ce985654d08761120",
+  "runUrl": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43652606951",
+  "artifactId": 14137075460,
+  "artifactName": "c1p-noncanonical-native-terrain-review",
+  "artifactRetentionDays": 7,
+  "reportSha256": "1ea0677984b06a4b311741764ea284dc63c6dfff396b0f39101c0f82d25b02fb",
+  "previewSvgSha256": "20cc873ca3c977fc8e40cfed74f3ac3aedf70a8f07d800dced9fe0cded95761f",
+  "execution": "GitHub-hosted Ubuntu Node 22; owner Windows PowerShell-native acceptance not claimed",
+  "verification": {
+    "testsPassed": 59,
+    "testsFailed": 0,
+    "scannedCodeFiles": 888,
+    "newLegacyHexDependencies": 0
+  },
+  "originalSources": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceCoastlineEdges": 599,
+    "headlandOriginalCoastEdgesInclusive": [
+      75,
+      115
+    ],
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "blackGapHypothesis": {
+    "reference": [
+      469,
+      213
+    ],
+    "originalPngPixel": [
+      971,
+      474
+    ],
+    "originalSharedRgb": [
+      0,
+      0,
+      0
+    ],
+    "originalTerrainLabel": 0,
+    "originalPoliticalOwnerCode": 0,
+    "northOriginalComponent51": [
+      469,
+      212
+    ],
+    "southOriginalComponent30": [
+      469,
+      214
+    ],
+    "temporarilyAdmittedOnlyInScratch": true,
+    "originalComponent51StillSeparatelyLabeled": true,
+    "certifiedPhysicalLandBridge": false
+  },
+  "tealHeadlandHypothesis": {
+    "eligibleReferenceSamplesInBoundedWindow": 173,
+    "fromProvisionalVerdant": [
+      390,
+      336
+    ],
+    "toHeldHeadland": [
+      492,
+      215
+    ],
+    "fourNeighborOnly": true,
+    "originalSourceContourRequired": true,
+    "originalOtherRegionOwnershipForbidden": true,
+    "onePixelClearancePathIfTealAdmitted": {
+      "found": true,
+      "steps": 223,
+      "sha256": "0cfbc0fac95776681b79b48d9903b73ee4c588a09e9526f268e06b801249c16b"
+    },
+    "twoPixelClearancePathIfTealAdmitted": {
+      "found": false
+    }
+  },
+  "scenarios": [
+    {
+      "id": "STRICT_ORIGINAL",
+      "temporarilyAdmittedUnknownSamples": 0,
+      "potentialComponent51InkConnection": false,
+      "headlandClearance1": false,
+      "headlandClearance2": false,
+      "potentialOtherComponentContactSamples": 0
+    },
+    {
+      "id": "TARGETED_BLACK_GAP_ONLY",
+      "temporarilyAdmittedUnknownSamples": 1,
+      "potentialComponent51InkConnection": true,
+      "headlandClearance1": false,
+      "headlandClearance2": false,
+      "potentialOtherComponentContactSamples": 0
+    },
+    {
+      "id": "TEAL_ONLY",
+      "temporarilyAdmittedUnknownSamples": 173,
+      "potentialComponent51InkConnection": false,
+      "headlandClearance1": true,
+      "headlandClearance2": false,
+      "potentialOtherComponentContactSamples": 0
+    },
+    {
+      "id": "TEAL_PLUS_TARGETED_BLACK_GAP",
+      "temporarilyAdmittedUnknownSamples": 174,
+      "potentialComponent51InkConnection": true,
+      "headlandClearance1": true,
+      "headlandClearance2": false,
+      "potentialOtherComponentContactSamples": 0
+    },
+    {
+      "id": "BROAD_BLACK_AND_TEAL_WARNING",
+      "temporarilyAdmittedUnknownSamples": 2462,
+      "potentialComponent51InkConnection": true,
+      "headlandClearance1": true,
+      "headlandClearance2": true,
+      "potentialOtherComponentContactSamples": 22,
+      "otherOriginalPhysicalComponentsPotentiallyExposed": [
+        51,
+        78,
+        113
+      ]
+    }
+  ],
+  "geometryLimitations": {
+    "bothC1UReviewCapOptionsLocallyValid": true,
+    "independentlyNumberedOriginalComponent51CellsInsideEachCap": 13,
+    "actualRegionPolygonConstructed": false,
+    "validConnectedVerdantAnnexationProven": false,
+    "originalSourceVectorCrossingAndKharuunCollisionShortcutStillRejected": true,
+    "proposedHeadlandOwner": null
+  },
+  "unchangedSourceTerrainAccounting": {
+    "mainlandComponent30Cells": 79419,
+    "fourRegionCandidateCells": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "assigned": 52449,
+    "unassigned": 26970,
+    "originalRasterEdits": 0,
+    "originalVectorEdits": 0,
+    "regionGeometryEdits": 0,
+    "newTerritorialCells": 0,
+    "originalDetachedComponentClaims": 0,
+    "canonicalWritable": false
+  },
+  "independentHolds": {
+    "physicalAttachedTipOwnerSelection": null,
+    "originalComponent51RemainsSeparate": true,
+    "KharuunOptionBOriginalEdgesInclusive": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaProtected": true,
+    "northeasternMainlandHeadlandUnassigned": true,
+    "largeNortheasternIslandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "coast40Unclaimed": true,
+    "foreignSerathylWindwardUntransferred": true,
+    "portsWellsRiversRoutesSaltBasinsUnchanged": true
+  },
+  "interpretation": "Two distinct uncalibrated source-ink classification gates must be resolved before an attached physical tip and wider Verdant headland political connection are supportable. A 174-pixel scratch experiment is not a validated landmass and cannot authorize terrain relabeling, island joining, roads or borders.",
+  "next": "Owner physical-interpretation choice and independently source-safe wider political seam proof are required. With both holds open, advance other mainland seams instead of endlessly widening unresolved source ink."
+}
