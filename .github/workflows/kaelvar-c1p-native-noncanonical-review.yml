@@ -214,6 +214,27 @@ jobs:
           assert.equal(r.scenarios[0].clearance[0].pathSha256,
             '0147077f649823002cb7ef7a0d40d6617c0fc699ee3b34337fcfb8ff82b1b01a');
           assert.equal(r.scenarios[0].hypotheticalCandidateSamples,0);
+          assert.deepEqual(r.classification.eligibleUncertainReferenceSamples,
+            {black:2289,teal:173,other:351});
+          assert.equal(r.classification.eligibleTotal,2813);
+          assert.equal(r.classification.candidatePixelsAdjacentToOtherOriginalPhysicalComponents,31);
+          assert.deepEqual(r.classification.neighboringOriginalNonMainlandComponentLabels,
+            [51,78,113]);
+          assert.deepEqual(r.scenarios.map(x=>x.hypotheticalCandidateSamples),
+            [0,2289,173,2462,2813]);
+          assert.deepEqual(r.scenarios.map(x=>x.clearance.map(c=>c.found)),[
+            [true,false,false],
+            [true,false,false],
+            [true,true,false],
+            [true,true,true],
+            [true,true,true]
+          ]);
+          assert.equal(r.scenarios[2].clearance[1].pixelSteps,223);
+          assert.equal(r.scenarios[2].clearance[1].pathSha256,
+            '0cfbc0fac95776681b79b48d9903b73ee4c588a09e9526f268e06b801249c16b');
+          assert.equal(r.scenarios[3].clearance[2].pixelSteps,223);
+          assert.equal(r.scenarios[3].clearance[2].pathSha256,
+            '3b8a527dbb6cbf835b4b123923b2f8e6fde72f509afba3783f498a9a12d20d25');
           assert.equal(r.scenarios[4].hypotheticalCandidateSamples,r.classification.eligibleTotal);
           for(const row of r.scenarios){
             assert.equal(row.originalMainlandLabelsChanged,0);
