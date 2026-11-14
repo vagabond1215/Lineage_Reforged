@@ -68,8 +68,8 @@ export function validateC1PReviewProposal(p,o,f){
    r.inlandWaypoints.length>128||!r.inlandWaypoints.every(pt=>
     Array.isArray(pt)&&pt.length===2&&pt.every(x=>Number.isInteger(x)&&
       x>=0&&x<=2048))||
-   !Number.isInteger(r.rawSourceContourInteriorPixelSamples)||
-   r.rawSourceContourInteriorPixelSamples<=0||!r.reason)
+   !Number.isInteger(r.rawSourceContourInteriorSamplePixels)||
+   r.rawSourceContourInteriorSamplePixels<=0||!r.reason)
    hold('source-indexed coast, inland waypoints or raw-pixel witness invalid: '+IDS[i]);
  }
  if(f?.reviewAnchors?.verdantMustIncludePeninsula?.length!==3||
@@ -140,7 +140,7 @@ export function buildC1PRegionalReview({p,o,f,n,j,m,selected,labels=null}){
   imageMasks={baseline:b.ownership,refined:next.ownership};
   for(let i=0;i<4;i++){
    if(next.perRegion[i].rawPolygonInteriorPixelSamples!==
-      p.regions[i].rawSourceContourInteriorPixelSamples)
+      p.regions[i].rawSourceContourInteriorSamplePixels)
     hold('C1-P raw source-contour pixel witness changed: '+IDS[i]);
   }
   result.regionCandidates.forEach((r,i)=>{
