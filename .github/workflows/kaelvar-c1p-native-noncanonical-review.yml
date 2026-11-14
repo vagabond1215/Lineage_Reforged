@@ -139,8 +139,24 @@ jobs:
           assert.equal(r.narrowRouteDiagnostics.sampledAlongZeroClearancePath,224);
           assert.ok(r.narrowRouteDiagnostics.samplesLackingOnePixelManhattanClearance>0);
           assert.deepEqual(r.widenedConnectivity.map(x=>x.clearancePx),[0,1,2]);
-          assert.equal(r.widenedConnectivity[0].found,true);
-          assert.ok(r.widenedConnectivity[0].pixelSteps<=223);
+          assert.deepEqual(r.widenedConnectivity.map(x=>x.found),[true,false,false]);
+          assert.equal(r.widenedConnectivity[0].pixelSteps,223);
+          assert.equal(r.widenedConnectivity[0].pathSha256,
+            '0147077f649823002cb7ef7a0d40d6617c0fc699ee3b34337fcfb8ff82b1b01a');
+          assert.equal(r.narrowRouteDiagnostics.samplesLackingOnePixelManhattanClearance,72);
+          assert.deepEqual(r.narrowRouteDiagnostics.adjacentRejectedPixelReasons,
+            {SOURCE_PAIR_RGB_EQUALITY:96});
+          assert.equal(r.narrowRouteDiagnostics.pathSampleRgbDiagnostics.sourceBlueRulePositive,0);
+          assert.equal(r.narrowRouteDiagnostics.pathSampleRgbDiagnostics.sourcePairRgbEquality,0);
+          const alt=r.alternateRouteWithAllC1QInteriorPathCellsExcluded;
+          assert.equal(alt.found,true);
+          assert.equal(alt.pixelSteps,225);
+          assert.equal(alt.pathSha256,
+            '8acf9d83cb43ac31d7085822fdd2e75859f71ffcbaa840700d2268ba8e8ee22b');
+          assert.equal(r.paths.alternativeDisjoint.length,226);
+          const primaryInterior=new Set(r.paths.c1q.slice(1,-1).map(p=>p.x+','+p.y));
+          assert.equal(r.paths.alternativeDisjoint.slice(1,-1)
+            .some(p=>primaryInterior.has(p.x+','+p.y)),false);
           assert.equal(r.paths.c1q.length,224);
           assert.equal(r.paths.expandedZero.length,r.widenedConnectivity[0].pixelSteps+1);
           for(const c of r.widenedConnectivity){
