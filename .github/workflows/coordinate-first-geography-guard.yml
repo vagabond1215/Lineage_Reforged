@@ -2,7 +2,7 @@ name: Coordinate-first geography guard
 
 on:
   push:
-    branches: [master]
+    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13]
   pull_request:
     branches: [master]
 
