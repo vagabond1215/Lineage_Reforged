@@ -426,11 +426,14 @@ if(mode==='--enclosure-svg'){
  const mark=(id,side)=>'<text x="'+(side+18)+'" y="1042" font-size="20" fill="#F3F6F9">'+esc(id)+'</text>';
  const cell=(x,y,rec)=>panel(x,y,1200,790,[430,180,138,102],imgs[1],revised,
   draw(rec.ringOriginalSourceFrame,'#46EED3',false,2.6)+
-  draw(direct.ringOriginalSourceFrame,'#FF686C',true,1.5));
+  draw(direct.ringOriginalSourceFrame,'#FF686C',true,1.5)+
+  rec.sample.otherOriginalPhysicalComponentExamples.map(p=>
+   '<circle cx="'+(p.x+.5)+'" cy="'+(p.y+.5)+
+   '" r="2.0" fill="#FFB23D" stroke="#1D1C29" stroke-width=".6"/>').join(''));
  const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+'" height="'+H+
   '" viewBox="0 0 '+W+' '+H+'">'+head+
   title(30,45,'C1-U / EXACT-SOURCE NORTHEASTERN HEADLAND ENCLOSURES',28)+
-  title(30,84,'Green = valid source-safe local review envelope; red dash = rejected shoreline-crossing chord',18,'#FFD1A1')+
+  title(30,84,'Teal = local geometry only; red dash = rejected chord; orange dots = distinct physical component cells HELD',18,'#FFD1A1')+
   cell(40,140,safe[0])+cell(1300,140,safe[1])+
   mark('INSET-RETURN · REVIEW ONLY',40)+mark('COMPACT-RETURN · REVIEW ONLY',1300)+
   title(45,1074,'Neither is a sovereign boundary. Direct Verdant expansion crosses source coast and conflicts with Kharuun.',16,'#FFD19C')+
