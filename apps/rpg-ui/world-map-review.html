@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>First World | Cartographic Review</title>
+  <link rel="stylesheet" href="./world-map-review.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="identity"><span class="eyebrow">LINEAGE: REFORGED / EVIDENCE WORKBENCH</span><h1>First World <span>Cartographic Review</span></h1></div>
+    <div class="bar-actions">
+      <label>Base image <select id="baseLayer"><option value="biome">Biome</option><option value="height">Elevation</option></select></label>
+      <button id="fit" title="Fit entire source image (F)">Fit atlas</button>
+      <button id="zoomOut" aria-label="Zoom out">−</button>
+      <span id="zoomLabel" class="mono">100%</span>
+      <button id="zoomIn" aria-label="Zoom in">+</button>
+      <button id="exportReview" class="accent">Export review JSON</button>
+    </div>
+  </header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="section-heading"><h2>Evidence layers</h2><span id="loadStatus" class="small">Loading sources…</span></div>
+      <div class="checks">
+        <label><input id="showSettlements" type="checkbox" checked> Settlements <small id="countSettlements">88</small></label>
+        <label><input id="showLabels" type="checkbox" checked> Settlement labels</label>
+        <label><input id="showRoutes" type="checkbox" checked> Named routes <small id="countRoutes">20</small></label>
+        <label><input id="showFlows" type="checkbox"> Trade relationships (not routes)</label>
+        <label><input id="showHexEdges" type="checkbox"> Coarse hex edges (inferred centers)</label>
+        <label><input id="showPoints" type="checkbox" checked> Passes & crossings</label>
+        <label><input id="showRivers" type="checkbox"> Rivers & ranges</label>
+        <label><input id="showContinents" type="checkbox" checked> Continent / island-system outlines <small>9 macro areas</small></label>
+        <label><input id="showRegions" type="checkbox"> Subregion footprint outlines <small>28 identities</small></label>
+        <label><input id="showSuspectSquares" type="checkbox"> Flag residual 8×8 squares <small id="squareCount"></small></label>
+        <div id="artifactRemovalSummary" class="help">Loading verified geometry removals…</div>
+        <label><input id="showSourceCoastline" type="checkbox"> Source coastlines (unaltered)</label>
+        <label><input id="showRegionLabels" type="checkbox"> Approximate region labels</label>
+        <label><input id="showLocalities" type="checkbox"> Locality centroids (inferred)</label>
+        <label><input id="showGrid" type="checkbox"> Pixel reference grid</label>
+      </div>
+      <div class="sidebar-section">
+        <h2>Independent landmask reference</h2>
+        <label class="field-label" for="landmaskFile">Overlay a locally prepared 2048×1152 PNG/WebP</label>
+        <input id="landmaskFile" type="file" accept="image/png,image/webp">
+        <label class="field-label" for="landmaskOpacity">Reference opacity</label>
+        <input id="landmaskOpacity" type="range" min="0" max="100" value="45">
+        <button id="clearLandmask" class="wide">Clear local landmask</button>
+        <div id="landmaskStatus" class="help">No landmask loaded. Source coastline remains independent.</div>
+      </div>
+      <div class="sidebar-section boundary-section">
+        <h2>Continent &amp; region review</h2>
+        <label class="field-label" for="boundaryScope">Boundary layer to work on</label>
+        <select id="boundaryScope">
+          <option value="continent">Continent / island system</option>
+          <option value="region">Subregion</option>
+        </select>
+        <label class="field-label" for="boundaryOwner">Geographic identity</label>
+        <select id="boundaryOwner"></select>
+        <div class="help" id="boundaryOwnership">Continents are assembled from child subregion footprint parts. Island systems retain their independent footprints.</div>
+        <div id="boundaryPartList" class="boundary-part-list"></div>
+        <details class="candidate-queue">
+          <summary>Remaining square candidates (<span id="squareQueueCount">0</span>)</summary>
+          <div id="squareCandidateList" class="boundary-part-list"></div>
+        </details>
+        <label class="toggle"><input type="checkbox" id="editBoundary"> Edit selected boundary part</label>
+        <label class="field-label" for="boundaryTool">Editing action</label>
+        <select id="boundaryTool">
+          <option value="vertex">Move vertices (Shift-click edge adds; Alt-click handle removes)</option>
+          <option value="translate">Move whole selected polygon</option>
+          <option value="draw">Draw new polygon (click vertices on map)</option>
+        </select>
+        <div class="boundary-actions">
+          <button id="finishBoundary" class="wide">Finish new polygon</button>
+          <button id="cancelBoundary" class="wide">Cancel drawing</button>
+          <button id="toggleBoundaryPart" class="wide">Exclude selected part from draft</button>
+          <button id="resetBoundaryPart" class="wide">Reset selected boundary part</button>
+        </div>
+        <label class="toggle"><input type="checkbox" id="showOriginalBoundary" checked> Show original boundary when edited</label>
+        <div class="help">42 manually verified offshore squares were removed from canonical footprint data and both overlays. This residual-square check detects reintroductions. Other coastal and island parts remain unchanged; no new landmask is generated here.</div>
+      </div>
+      <div class="sidebar-section">
+        <h2>Locate an anchor</h2>
+        <input id="search" placeholder="Find a settlement, locality or region…" autocomplete="off" aria-label="Search map locations">
+        <div id="searchResults" class="result-list" role="list"></div>
+      </div>
+      <div class="sidebar-section">
+        <h2>Route path review</h2>
+        <label class="field-label" for="routeFilter">Route kind</label>
+        <select id="routeFilter">
+          <option value="all">All named routes (20)</option>
+          <option value="sea_lane">Sea lanes</option>
+          <option value="road">Roads</option>
+          <option value="trail">Trails</option>
+          <option value="river">Rivers</option>
+        </select>
+        <div id="routeList" class="route-list"></div>
+        <div class="help">Dashed paths are provisional endpoint chords, not proven passable corridors. Select a route to insert and drag review checkpoints.</div>
+      </div>
+      <div class="sidebar-section">
+        <h2>Review tools</h2>
+        <label class="toggle"><input type="checkbox" id="moveAnchors"> Enable local settlement repositioning</label>
+        <label class="toggle"><input type="checkbox" id="addCheckpoint"> Click map to insert checkpoint on selected route</label>
+        <button id="resetSelected" class="wide">Reset selected draft geometry</button>
+        <button id="resetAll" class="wide danger">Clear all local review changes</button>
+        <label class="import-control">Import review JSON <input id="importReview" type="file" accept="application/json,.json"></label>
+        <div class="help">Edits exist only in browser local storage and exported JSON. Canonical settlements, route files, Save and runtime remain unchanged.</div>
+      </div>
+    </aside>
+    <main class="center">
+      <div id="viewport" class="viewport" tabindex="0" aria-label="Interactive First World map. Mouse wheel to zoom, drag background to pan, F to fit.">
+        <div id="stage" class="stage" style="width:2048px;height:1152px">
+          <img id="atlas" class="atlas" alt="Original First World biome raster" draggable="false">
+          <img id="landmaskImage" class="landmask" alt="Optional local independent landmask, visual reference only" draggable="false">
+          <svg id="overlay" viewBox="0 0 2048 1152" width="2048" height="1152" xmlns="http://www.w3.org/2000/svg" aria-label="World map evidence overlays"></svg>
+        </div>
+        <div class="map-badges"><span class="status-mark">NON-AUTHORITATIVE REVIEW</span><span id="layerBadge">BIOME / ORIGINAL</span></div>
+        <div class="compass">N ↑ <span>2048 × 1152 reference px</span></div>
+        <div id="busy" class="busy">Loading original atlas and geodata…</div>
+      </div>
+      <footer class="statusbar">
+        <div><strong>Cursor</strong> <span id="cursor" class="mono">outside map</span></div>
+        <div><strong>Selection</strong> <span id="selectionSummary">None</span></div>
+        <div><strong>Draft</strong> <span id="draftSummary" class="mono">0 moved · 0 routes</span></div>
+      </footer>
+    </main>
+    <aside class="inspector">
+      <div class="section-heading"><h2>Inspector</h2><span class="small">Source ⇢ draft</span></div>
+      <div id="inspectorContents" class="inspector-content">
+        <p>Select a settlement, route, continent, subregion or boundary part to inspect source identity and draft placement.</p>
+      </div>
+      <div class="sidebar-section notes-panel">
+        <label for="reviewStatus">Review classification</label>
+        <select id="reviewStatus"><option value="unreviewed">Unreviewed</option><option value="candidate">Candidate adjustment</option><option value="conflict">Potential conflict</option><option value="checked">Visual check completed</option></select>
+        <label for="reviewNotes">Review notes (local only)</label>
+        <textarea id="reviewNotes" rows="6" placeholder="Coastline, sea access, route checkpoints, outlier rationale, evidence…"></textarea>
+        <small>Notes and classifications export with draft geometry. “Checked” does not approve game content.</small>
+      </div>
+      <div class="sidebar-section">
+        <h2>Independent landmask witness</h2>
+        <div class="help">The original atlas and coastlines are reference evidence. Draft continent/region changes never feed back into land detection or settlement validation.</div>
+      </div>
+      <div class="sidebar-section">
+        <h2>Unplaced semantic identities</h2>
+        <div id="unplaced" class="help">Some planned named features have no accepted pixel geometry and must remain unpinned.</div>
+      </div>
+    </aside>
+  </div>
+  <script type="module" src="./world-map-review.js"></script>
+</body>
+</html>
