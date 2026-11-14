@@ -1,0 +1,86 @@
+name: C1-P native mainland seam review (noncanonical)
+
+on:
+  push:
+    branches:
+      - connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14
+    paths:
+      - 'scripts/kaelvar-c1p-regional-seams.mjs'
+      - 'scripts/lib/kaelvar-c1p-regional-seam-review.mjs'
+      - 'tests/unit/kaelvar-c1p-regional-seam-review.test.mjs'
+      - 'docs/design/kaelvar-c1p-refined-mainland-seam-candidates-2026-11-14.json'
+      - '.github/workflows/kaelvar-c1p-native-noncanonical-review.yml'
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  native-source-raster-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full source and frozen legacy baseline
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check native code syntax
+        run: |
+          node --check scripts/lib/kaelvar-c1p-regional-seam-review.mjs
+          node --check scripts/kaelvar-c1p-regional-seams.mjs
+          node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
+      - name: C1-O baseline and C1-P rejection tests
+        run: |
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
+          node scripts/check-no-new-hex-dependencies.mjs --check
+      - name: Source PNG and vector verified candidate raster measurements
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --check > "$RUNNER_TEMP/c1p-native-review.json"
+          node - "$RUNNER_TEMP/c1p-native-review.json" <<'NODE'
+          const fs=require('node:fs');
+          const assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1P_REFINED_FOUR_MAINLAND_RINGS_CANONICAL_HELD');
+          assert.equal(r.sourcePngFingerprintsVerified,true);
+          assert.equal(r.sourceOriginalContourUnmodified,true);
+          assert.equal(r.originalSourceEdgesConserved,599);
+          assert.equal(r.diagnostic.polygonOwnershipCollisions,0);
+          assert.equal(r.diagnostic.sourceContourCrossings,0);
+          assert.equal(r.diagnostic.protectedOffshoreSourceClaims,0);
+          assert.equal(r.measurements.candidateMainlandTerrainCells,79419);
+          assert.equal(r.measurements.baselineAssignedMainlandTerrainCells,53158);
+          assert.equal(r.measurements.baselineUnassignedMainlandTerrainCells,26261);
+          assert.ok(r.measurements.remainingUnassignedMainlandTerrainCells>0);
+          assert.equal(r.measurements.detachedPhysicalComponentsClaimed,0);
+          assert.equal(r.measurements.perRegion.length,4);
+          assert.equal(r.holds.canonicalWritable,false);
+          assert.equal(r.measurements.perRegion.reduce((n,x)=>n+x.terrainCandidateCells,0)
+            +r.measurements.remainingUnassignedMainlandTerrainCells,79419);
+          const k=r.regionCandidates.find(x=>x.regionId==='region.kharuun_drylands');
+          assert.equal(k.sourceEdgeIndices.length,24);
+          assert.equal(k.sourceEdgeIndices[0],35);
+          assert.equal(k.sourceEdgeIndices.at(-1),58);
+          console.log('C1-P native component-30 terrain allocation CONSERVED; publication HELD');
+          NODE
+      - name: Produce source-backed before-after and northern preview
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --svg > "$RUNNER_TEMP/c1p-original-versus-refined.svg"
+          node scripts/kaelvar-c1p-regional-seams.mjs --north-svg > "$RUNNER_TEMP/c1p-refined-north-coast.svg"
+          test -s "$RUNNER_TEMP/c1p-original-versus-refined.svg"
+          test -s "$RUNNER_TEMP/c1p-refined-north-coast.svg"
+      - name: Upload review-only outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: c1p-noncanonical-native-terrain-review
+          path: |
+            ${{ runner.temp }}/c1p-native-review.json
+            ${{ runner.temp }}/c1p-original-versus-refined.svg
+            ${{ runner.temp }}/c1p-refined-north-coast.svg
+          if-no-files-found: warn
+          retention-days: 7
