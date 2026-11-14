@@ -7,7 +7,10 @@
 import {c1oPointInRing} from './kaelvar-c1o-regional-boundaries.mjs';
 
 const fail=s=>{throw Error('C1-W source-owner HOLD: '+s);};
-const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+const normalized=v=>Array.isArray(v)?v.map(normalized):
+ (v!==null&&typeof v==='object')?
+  Object.fromEntries(Object.keys(v).sort().map(k=>[k,normalized(v[k])])):v;
+const eq=(a,b)=>JSON.stringify(normalized(a))===JSON.stringify(normalized(b));
 const hash='9cd6752e9dbca00796e5f7c013066bb0e5a96175';
 const biomeHash='9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12';
 const elevHash='02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d';
