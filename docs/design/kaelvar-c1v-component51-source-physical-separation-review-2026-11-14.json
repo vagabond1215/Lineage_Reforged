@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1v-physical-component51-source-pair-separation-review.v1",
+  "date": "2026-11-14",
+  "status": "ORIGINAL_COMPONENT51_INLET_SOURCE_MORPHOLOGY_NO_PHYSICAL_MERGE_OR_POLITICAL_APPROVAL",
+  "parentC1UHead": "02e3a0a0d42dde010c92c0fb086c9f3cdda54553",
+  "source": {
+    "originalVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceContourId": "feature.coastline.first_world.part_10",
+    "originalCoastEdges": 599,
+    "reviewedHeadlandEdgesInclusive": [
+      75,
+      115
+    ],
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "registeredCrop": {
+      "x": 60,
+      "y": 60,
+      "width": 3976,
+      "height": 2235
+    },
+    "registeredReference": {
+      "width": 2048,
+      "height": 1152
+    }
+  },
+  "study": {
+    "componentId": 51,
+    "mainlandComponentId": 30,
+    "representativeComponentPixel": {
+      "x": 466,
+      "y": 207
+    },
+    "localWindowInclusive": {
+      "minX": 440,
+      "minY": 185,
+      "maxX": 515,
+      "maxY": 255
+    },
+    "sourceInlandCheckAtPixelCenters": true,
+    "proximityToExactSourceHeadlandEdges": [
+      75,
+      115
+    ],
+    "hypotheticalScenarioClasses": [
+      {
+        "id": "STRICT_ORIGINAL",
+        "allow": []
+      },
+      {
+        "id": "SHARED_BLACK_ONLY",
+        "allow": [
+          "black"
+        ]
+      },
+      {
+        "id": "SHARED_TEAL_ONLY",
+        "allow": [
+          "teal"
+        ]
+      },
+      {
+        "id": "SHARED_BLACK_AND_TEAL",
+        "allow": [
+          "black",
+          "teal"
+        ]
+      },
+      {
+        "id": "ALL_SHARED_NONBLUE",
+        "allow": [
+          "black",
+          "teal",
+          "other"
+        ]
+      }
+    ],
+    "originalLabelZeroRequiredForUncertainPixels": true,
+    "forbiddenOtherPhysicalComponentTraversal": true,
+    "forbiddenPoliticalOwnerCodes": [
+      1,
+      2,
+      4
+    ],
+    "allowedPoliticalOwnerCodes": [
+      0,
+      3
+    ],
+    "fourNeighborOnly": true,
+    "sampleDistanceUnit": "UNCALIBRATED_SOURCE_REFERENCE_PIXEL"
+  },
+  "pinnedC1U": {
+    "geometryOptions": [
+      "DIRECT_CHORD_DIAGNOSTIC",
+      "INSET_RETURN_CANDIDATE",
+      "COMPACT_RETURN_CANDIDATE"
+    ],
+    "relevantReviewCapIds": [
+      "INSET_RETURN_CANDIDATE",
+      "COMPACT_RETURN_CANDIDATE"
+    ],
+    "expectedComponent51CandidateCellsInsideEach": 13,
+    "acceptedHeadlandPoliticalOwner": null,
+    "existingC1PAssignedCells": 52449,
+    "existingC1PUnassignedCells": 26970,
+    "originalMainlandCandidateCells": 79419
+  },
+  "immutableHolds": {
+    "canonicalWritable": false,
+    "headlandUnassigned": true,
+    "kharuunOptionBEdgesInclusive": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaAnchorsPreserved": 3,
+    "originalSourcePixelsUnchanged": true,
+    "originalTerrainLabelsUnchanged": true,
+    "originalSourceCoastlineUnchanged": true,
+    "originalC1PRegionRingsUnchanged": true,
+    "component51NotRelabeled": true,
+    "noDetachedPhysicalComponentClaims": true,
+    "largeNortheastIslandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "noPortsWellsRiversRoutesSaltBasins": true,
+    "newLegacyHexDependencies": 0
+  },
+  "interpretation": "Component 51 is an original terrain-mask connected component distinct from mainland 30. A hypothetical source-ink route is a sensitivity witness only, never physical island attachment, navigability, water classification, regional ownership or canonical publication."
+}
