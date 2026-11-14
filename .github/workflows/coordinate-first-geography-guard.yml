@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
   pull_request:
-    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13]
+    branches: [master, connector/c1-coordinate-geography-registry-2026-11-13, connector/c1f-kaelvar-placement-revision-2026-11-13, connector/c1g-kaelvar-coastal-salt-basin-evidence-2026-11-13]
 
 permissions:
   contents: read
@@ -64,3 +64,21 @@ jobs:
           node --check tests/unit/kaelvar-c1g-ecology-evidence.test.mjs
           node --test tests/unit/kaelvar-c1g-ecology-evidence.test.mjs
           node scripts/kaelvar-c1g-ecology-review.mjs --check
+
+      - name: C1-H source adjacency and raw elevation diagnostics (not certified hydrology)
+        run: |
+          node --check scripts/lib/kaelvar-c1h-source-diagnostics.mjs
+          node --check scripts/kaelvar-c1h-source-review.mjs
+          node --check tests/unit/kaelvar-c1h-source-diagnostics.test.mjs
+          node --test tests/unit/kaelvar-c1h-source-diagnostics.test.mjs
+          node scripts/kaelvar-c1h-source-review.mjs --check | tee "$RUNNER_TEMP/kaelvar-c1h-diagnostic.json"
+          node scripts/kaelvar-c1h-source-review.mjs --svg > "$RUNNER_TEMP/kaelvar-c1h-source-review.svg"
+          test -s "$RUNNER_TEMP/kaelvar-c1h-source-review.svg"
+      - name: Publish source evidence for review, never canonical
+        uses: actions/upload-artifact@v4
+        with:
+          name: kaelvar-c1h-source-evidence-not-certified-hydrology
+          path: |
+            ${{ runner.temp }}/kaelvar-c1h-diagnostic.json
+            ${{ runner.temp }}/kaelvar-c1h-source-review.svg
+          retention-days: 7
