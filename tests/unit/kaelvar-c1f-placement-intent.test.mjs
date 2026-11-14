@@ -26,6 +26,7 @@ test('Veyrholm cannot move inland into owner-marked yellow interior',()=>{
   v.guidePolygon=[
     {x:170,y:160},{x:360,y:160},{x:360,y:300},{x:170,y:300},
   ];
+  v.labelAnchor={x:275,y:185};
   assert.throws(()=>validate(s),/Veyrholm|overlapping|touching/);
 });
 test('Verdant cannot abandon its southern and southeastern peninsula anchors',()=>{
