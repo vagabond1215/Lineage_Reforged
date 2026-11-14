@@ -240,6 +240,7 @@ export function buildC1TReview({spec,c1sSpec,c1s,c1p,
   detachedContactAudit:{
    eligibleUnresolvedSamples:byClass,sourcePixelAdjacencySamples:touches.length,
    byClass:near,byOriginalPhysicalComponent:byComponent,
+   sourceContactSamples:touches,
    adjacencyIsNotPhysicalAttachment:true,
    scenarios:riskScenarios,
    originalPhysicalComponentLabelsUnchanged:true,
