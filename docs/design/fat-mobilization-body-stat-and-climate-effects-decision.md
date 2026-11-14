@@ -307,6 +307,8 @@ A future metabolism/body-composition contract must explicitly define:
 
 This work remains separate from static food profiles, generic item instances, crafting execution, market commands, and UI.
 
+**2026-10-21 related presentation:** [Metabolic Reserves And Nourishment Quick-Glance Design Decision](metabolic-reserve-and-nourishment-quick-glance-design-decision-2026-10-21.md) distinguishes dietary-fat availability from rate-limited stored body fat. It is a documentation-only product-direction record, not a change to the fat-reserve authority or mobilization rates.
+
 ## 17. Non-Goals
 
 - no exact medical claim or biochemical simulation;
