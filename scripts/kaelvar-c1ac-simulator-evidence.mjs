@@ -34,6 +34,19 @@ const expectedNames=[
  '10-kaelvar-elevation-gray-high-detail.png',
  '11-kaelvar-owner-district-proposal.png'
 ];
+const expectedScreenshotHashes=[
+ '1e4d4b701a08fa866c807a5795c5fc7ba48833894ed7b294ef580a3cc24d39cf',
+ 'fcd23903760bd03cbad47cdf23256189d16dcfa2913553013d91d25f737eac78',
+ '447c8f7b838cfd6d4447b405de5ca03373e5c8af97c5fa78127604882f89d591',
+ '2d5779c9a879e04cf50e00f2e1aa6f419e475baffb75d7a2c02f78b3db7f39ad',
+ '81004eb63f9d8d8618d604d775dab78292b813e81a83a2ec9612778a8522e5fa',
+ 'e0b3eca764cb9dc66ed632897db3d85e1e289319f94c3f2c55360d25605d06e2',
+ '9310c1798f33798a3b60677071fcbb12be92100cb9ede09d6cfd83d12ae6cadd',
+ 'a724e7d87ac30420e4fafd75dafa6d123bbaef7e360c13ad03394cdeac1833c2',
+ 'a43b9f0abb472e89486b95e79dd75b60e5030c136511b31d5a8ae35389fa6d31',
+ '5a2223b45af6ae6cc6730fabb860b063b5dbdb02cf97553212488352bed39ae7',
+ '0b05ac0e058aa64b48e9e1ec44e61ee0dfeff52cccc7fc48e7c9df039a387b55'
+];
 const expectedRegions=[
  ['region.veyrholm_shore',[6,0,112],7312],
  ['region.auric_marches',[191,71,0],7121],
@@ -73,6 +86,7 @@ export function validateC1ACOwnerViewManifest(m,c1aa){
   m.screenshotArchiveSha256!=='b3f564438c3f18bc802818e4667024fc2e0654dd0f3387ff94a0308f77473be4'||
   m.screenshotManifest?.length!==11||
   !same(m.screenshotManifest.map(x=>x.filename),expectedNames)||
+  !same(m.screenshotManifest.map(x=>x.sha256),expectedScreenshotHashes)||
   m.screenshotManifest.some((x,i)=>x.order!==i+1||
     !/^[a-f0-9]{64}$/.test(x.sha256)||x.sizeBytes<200000||
     x.dimensions?.length!==2||x.dimensions.some(v=>!Number.isInteger(v)||v<600)||
