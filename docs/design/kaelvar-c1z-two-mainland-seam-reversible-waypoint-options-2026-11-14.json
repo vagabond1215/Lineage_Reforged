@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1z-reversible-two-seam-inland-waypoint-alternatives.v1",
+  "date": "2026-11-14",
+  "status": "FOUR_SOURCE_BACKED_LOCAL_WAYPOINT_TRIALS_NO_ACCEPTED_C1P_OR_CANONICAL_CHANGE",
+  "parentC1YHead": "02b8013cab3b47a3bfbca3d3c1a9a37d3efe29ed",
+  "sources": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceCoastEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "mainlandComponent": 30,
+    "reference": {
+      "width": 2048,
+      "height": 1152
+    }
+  },
+  "priorC1Y": {
+    "sourceStatus": "C1Y_STRICT_MAINLAND_GAP_WINDOWS_MEASURED_NO_OWNER_OR_PIXEL_ALLOCATION",
+    "northernInterface": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+    "southernInterface": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+    "northernUnassignedGapSamples": 10,
+    "southernUnassignedGapSamples": 15,
+    "northernPathSha256": "fe195e3afa7ed20105bea1b23d7f32134abaee9152f02cf6c5412bd445bb9860",
+    "southernPathSha256": "5363789bd3854425a2e984ca736bf21518235d0ae91b57cbc209270c9015e577"
+  },
+  "trialPolicy": {
+    "singleWaypointReplacementPerTrial": true,
+    "allOtherSourceIndexedArcsAndWaypointsFrozen": true,
+    "permitOnlyOriginalComponent30PixelOwnershipDeltas": true,
+    "newPoliticalOwnershipNotPublished": true,
+    "requireChangesInsideSelectedC1YWindow": true,
+    "onlyAllowOwnerAndUnassignedTransitions": true,
+    "rejectThirdPartyOwnerChanges": true,
+    "noClaimOfPreviouslyHeldComponentOrSourceInk": true,
+    "minimumResidualUnassignedPathCells": 4,
+    "maximumChangedComponent30CellsPerTrial": 250,
+    "doNotAutomaticallySelectShortestGap": true
+  },
+  "alternatives": [
+    {
+      "id": "NORTH_VEYRHOLM_SOUTH_TWO",
+      "interfaceId": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "editedRegion": "region.veyrholm_shore",
+      "waypointIndex": 3,
+      "original": [
+        284,
+        190
+      ],
+      "candidate": [
+        284,
+        192
+      ]
+    },
+    {
+      "id": "NORTH_KHARUUN_NORTH_TWO",
+      "interfaceId": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "editedRegion": "region.kharuun_drylands",
+      "waypointIndex": 20,
+      "original": [
+        301,
+        193
+      ],
+      "candidate": [
+        301,
+        191
+      ]
+    },
+    {
+      "id": "SOUTH_KHARUUN_SOUTH_THREE",
+      "interfaceId": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "editedRegion": "region.kharuun_drylands",
+      "waypointIndex": 9,
+      "original": [
+        314,
+        320
+      ],
+      "candidate": [
+        314,
+        323
+      ]
+    },
+    {
+      "id": "SOUTH_VERDANT_NORTH_THREE",
+      "interfaceId": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "editedRegion": "region.verdant_thalos",
+      "waypointIndex": 6,
+      "original": [
+        320,
+        334
+      ],
+      "candidate": [
+        320,
+        331
+      ]
+    }
+  ],
+  "holds": {
+    "sourceVectorUnchanged": true,
+    "sourceBiomeElevationPngsUnchanged": true,
+    "originalTerrainLabelsUnchanged": true,
+    "acceptedC1PPolygonsUnchanged": true,
+    "originalC1PCounts": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "originalMainlandCandidates": 79419,
+    "originalAssigned": 52449,
+    "originalUnassigned": 26970,
+    "kharuunOptionBSourceEdges": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaAnchorsPreserved": 3,
+    "veyrholmInteriorExclusionAnchorsPreserved": 3,
+    "northeasternHeadlandEdges": [
+      75,
+      115
+    ],
+    "northeasternHeadlandOwner": null,
+    "component51Owner": null,
+    "shattercapDetachedIslandsUnassigned": true,
+    "largeNortheasternIslandUnassigned": true,
+    "noOtherDetachedComponentsClaimed": true,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "newPortsWellsRiversRoutesSaltBasins": 0,
+    "noNewLegacyHexDependencies": true,
+    "canonicalWritable": false
+  },
+  "interpretation": "Each candidate is an in-memory reversible polygon trial using an original C1-P single-waypoint replacement. Geometry and original-component-30 delta measurements are source-grounded but never political authorization or active game-content publication."
+}
