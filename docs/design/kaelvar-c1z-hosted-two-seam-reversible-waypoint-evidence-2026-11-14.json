@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1z-hosted-original-source-two-seam-reversible-trials.v1",
+  "date": "2026-11-14",
+  "status": "C1Z_HOSTED_NATIVE_WAYPOINT_TRIALS_PASSED_FOUR_ACCEPTED_C1P_REGIONS_UNALTERED",
+  "testedImplementationCommit": "5b89e2269634279a90dfef19cb2cb82e86a6fd88",
+  "workflowRun": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43656581731",
+  "nativeArtifact": {
+    "id": 14138301026,
+    "name": "c1p-noncanonical-native-terrain-review",
+    "retentionDays": 7
+  },
+  "nativeExactHashes": {
+    "reversibleTrialJsonSha256": "c88fb24050ca155d68509c1e2f4a192fa1491cab01a489f1916a0ac0a61f751f",
+    "reversibleTrialSvgSha256": "1ae94885aeffb7b279df21fa04b59d3d080340c9a3a1ef2953725cfea26a4f95"
+  },
+  "hostedAcceptance": {
+    "environment": "GitHub Actions Ubuntu Node 22; owner Windows PowerShell-native gate not run",
+    "testsPassed": 67,
+    "testsFailed": 0,
+    "scannedCodeFiles": 892,
+    "newLegacyHexDependencies": 0
+  },
+  "originalSources": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "mainlandSourceCoastEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "originalPhysicalMainlandComponent": 30
+  },
+  "acceptedC1PUnchanged": {
+    "originalMainlandCandidateCells": 79419,
+    "regionalCandidateCells": {
+      "auric": 5632,
+      "kharuun": 18624,
+      "verdant": 19182,
+      "veyrholm": 9011
+    },
+    "assigned": 52449,
+    "unassigned": 26970,
+    "originalKharuunOptionBSourceEdges": [
+      35,
+      58
+    ],
+    "sourceRasterEdits": 0,
+    "sourceVectorEdits": 0,
+    "originalTerrainLabelEdits": 0,
+    "acceptedPoliticalRegionRingEdits": 0,
+    "newPoliticalTerritoryCells": 0,
+    "originalDetachedComponentClaims": 0,
+    "canonicalWritable": false
+  },
+  "trials": [
+    {
+      "id": "NORTH_VEYRHOLM_SOUTH_TWO",
+      "interface": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "editedRegion": "region.veyrholm_shore",
+      "originalWaypointIndex": 3,
+      "originalWaypoint": [
+        284,
+        190
+      ],
+      "candidateWaypoint": [
+        284,
+        192
+      ],
+      "status": "VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY",
+      "baselineUnassignedGapSamples": 10,
+      "trialUnassignedGapSamples": 8,
+      "tentativeNewlyAssignedOriginalMainlandSamples": 30,
+      "temporaryReleasedSamples": 0,
+      "hypotheticalRegionCells": [
+        5632,
+        18624,
+        19182,
+        9041
+      ],
+      "newGapCheckpoint": [
+        285,
+        194
+      ],
+      "shortestOriginalComponent30TrialPathSha256": "adc58f2f45e47ab88bb77ef45fdafc36e2b2008eb3ffd69db30cb928e3286c7a"
+    },
+    {
+      "id": "NORTH_KHARUUN_NORTH_TWO",
+      "interface": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "editedRegion": "region.kharuun_drylands",
+      "originalWaypointIndex": 19,
+      "originalWaypoint": [
+        301,
+        193
+      ],
+      "candidateWaypoint": [
+        301,
+        191
+      ],
+      "status": "VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY",
+      "baselineUnassignedGapSamples": 10,
+      "trialUnassignedGapSamples": 9,
+      "tentativeNewlyAssignedOriginalMainlandSamples": 29,
+      "temporaryReleasedSamples": 0,
+      "hypotheticalRegionCells": [
+        5632,
+        18653,
+        19182,
+        9011
+      ],
+      "newGapCheckpoint": [
+        292,
+        190
+      ],
+      "shortestOriginalComponent30TrialPathSha256": "120351dc83719c6c46119daff1cb18f5aec75180ca57ce87b8b5874b0976f555"
+    },
+    {
+      "id": "SOUTH_KHARUUN_SOUTH_THREE",
+      "interface": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "editedRegion": "region.kharuun_drylands",
+      "originalWaypointIndex": 9,
+      "originalWaypoint": [
+        314,
+        320
+      ],
+      "candidateWaypoint": [
+        314,
+        323
+      ],
+      "status": "VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY",
+      "baselineUnassignedGapSamples": 15,
+      "trialUnassignedGapSamples": 13,
+      "tentativeNewlyAssignedOriginalMainlandSamples": 53,
+      "temporaryReleasedSamples": 0,
+      "hypotheticalRegionCells": [
+        5632,
+        18677,
+        19182,
+        9011
+      ],
+      "newGapCheckpoint": [
+        319,
+        327
+      ],
+      "shortestOriginalComponent30TrialPathSha256": "c6d37bafd51f8f5c5dfc85d09398c78271fa2d1a808ca02b97e15d8a75744dc4"
+    },
+    {
+      "id": "SOUTH_VERDANT_NORTH_THREE",
+      "interface": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "editedRegion": "region.verdant_thalos",
+      "originalWaypointIndex": 6,
+      "originalWaypoint": [
+        320,
+        334
+      ],
+      "candidateWaypoint": [
+        320,
+        331
+      ],
+      "status": "VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY",
+      "baselineUnassignedGapSamples": 15,
+      "trialUnassignedGapSamples": 12,
+      "tentativeNewlyAssignedOriginalMainlandSamples": 54,
+      "temporaryReleasedSamples": 0,
+      "hypotheticalRegionCells": [
+        5632,
+        18624,
+        19236,
+        9011
+      ],
+      "newGapCheckpoint": [
+        319,
+        324
+      ],
+      "shortestOriginalComponent30TrialPathSha256": "e55089e55354ca6901b57975621dfedf804d818946e4a1d43c53b0fef33795c0"
+    }
+  ],
+  "validationOfEachTrial": {
+    "allSourceIndexedCoastArcsUnchanged": true,
+    "allOriginalSourceCoastCrossingsZero": true,
+    "allRegionalPolygonCollisionsZero": true,
+    "allProtectedOffshoreContourCrossingsZero": true,
+    "allC1FProtectedPeninsulaAndInlandExclusionAnchorsPreserved": true,
+    "allOwnershipDeltasOnOriginalComponent30Only": true,
+    "allChangedCellsWithinRespectiveC1YInspectionWindow": true,
+    "noOtherPoliticalRegionChanged": true,
+    "minimumRequiredRemainingGapSamples": 4,
+    "allGapsRemainNonzero": true,
+    "allGeomTrialsIndependentNonAccumulative": true,
+    "noAlternativesAcceptedAsActiveOrCanonicalRegions": true
+  },
+  "holds": {
+    "headlandOriginalCoastEdges": [
+      75,
+      115
+    ],
+    "headlandPoliticalOwner": null,
+    "originalComponent51PoliticalOwner": null,
+    "component51StillSeparatelyLabeled": true,
+    "largeNortheasternIslandUnassigned": true,
+    "shattercapDetachedIslandsUnassigned": true,
+    "allOtherDetachedPhysicalComponentsHeld": true,
+    "verdantSoutheasternPeninsulaIncluded": true,
+    "veyrholmDryInlandExclusionsPreserved": true,
+    "coast40Claim": null,
+    "foreignSerathylWindwardParent": "region.serathyl",
+    "newPortsWellsRiversWaterRoutesSaltBasins": 0,
+    "sourceColorsNotCertifiedBiomesOrWater": true,
+    "ownerHasNotSelectedNewWaypoints": true,
+    "canonicalWritable": false
+  },
+  "recommendedNextGate": "C1-AA visually adjudicate northern Veyrholm-vs-Kharuun and southern Kharuun-vs-Verdant independent return variants against terrain texture, coast, protected anchors and desired unassigned reserve depth. A numerically smaller gap alone is not authority to allocate new cells."
+}
