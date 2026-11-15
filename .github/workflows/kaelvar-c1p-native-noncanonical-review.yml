@@ -684,6 +684,41 @@ jobs:
             'SOUTH_KHARUUN_SOUTH_THREE',
             'SOUTH_VERDANT_NORTH_THREE']);
           assert.equal(r.alternatives.length,4);
+          assert.deepEqual(r.alternatives.map(x=>x.status),[
+            'VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY',
+            'VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY',
+            'VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY',
+            'VALID_REVERSIBLE_REDUCED_GAP_REVIEW_ONLY'
+          ]);
+          assert.deepEqual(r.alternatives.map(x=>x.baselineUnassignedGapSamples),
+            [10,10,15,15]);
+          assert.deepEqual(r.alternatives.map(x=>x.trialUnassignedGapSamples),
+            [8,9,13,12]);
+          assert.deepEqual(r.alternatives.map(x=>x.changedOriginalMainlandSamples),
+            [30,29,53,54]);
+          assert.deepEqual(r.alternatives.map(x=>x.delta),[
+            {gained:30,released:0},{gained:29,released:0},
+            {gained:53,released:0},{gained:54,released:0}
+          ]);
+          assert.deepEqual(r.alternatives.map(x=>x.trialMidGapReviewPoint),[
+            {x:285,y:194},{x:292,y:190},
+            {x:319,y:327},{x:319,y:324}
+          ]);
+          assert.deepEqual(r.alternatives.map(x=>x.trialPathSha256),[
+            'adc58f2f45e47ab88bb77ef45fdafc36e2b2008eb3ffd69db30cb928e3286c7a',
+            '120351dc83719c6c46119daff1cb18f5aec75180ca57ce87b8b5874b0976f555',
+            'c6d37bafd51f8f5c5dfc85d09398c78271fa2d1a808ca02b97e15d8a75744dc4',
+            'e55089e55354ca6901b57975621dfedf804d818946e4a1d43c53b0fef33795c0'
+          ]);
+          assert.deepEqual(r.alternatives.map(x=>x.trialSourceTerrainCandidatesByRegion),[
+            [5632,18624,19182,9041],
+            [5632,18653,19182,9011],
+            [5632,18677,19182,9011],
+            [5632,18624,19236,9011]
+          ]);
+          assert.deepEqual(r.interfaceReadiness.map(x=>x.hasReducedGapOption),
+            [true,true]);
+          assert.equal(r.sourceGeometricValidReviewOptions.length,4);
           for(const row of r.alternatives){
             assert.equal(row.proposedPermanentSourceOrRegionEdit,false);
             assert.equal(row.ownerApproval,false);
