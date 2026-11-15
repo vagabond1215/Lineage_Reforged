@@ -14,6 +14,10 @@ on:
       - 'tests/unit/kaelvar-c1ac-simulator-evidence.test.mjs'
       - 'docs/design/kaelvar-c1ac-owner-fantasy-map-simulator-screenshot-evidence-2026-11-15.json'
       - 'docs/design/assets/kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg'
+      - 'scripts/lib/kaelvar-c1ad-voronoi-preflight.mjs'
+      - 'scripts/kaelvar-c1ad-voronoi-preflight.mjs'
+      - 'tests/unit/kaelvar-c1ad-voronoi-preflight.test.mjs'
+      - 'docs/design/kaelvar-c1ad-voronoi-provenance-and-geographic-region-preflight-2026-11-15.json'
       - 'docs/design/kaelvar-c1aa-relative-relief-native-evidence-2026-11-15.json'
       - 'docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json'
       - 'scripts/kaelvar-c1p-regional-seams.mjs'
@@ -946,6 +950,33 @@ jobs:
           console.log('C1-AC owner simulator screenshot metadata and registered source PNGs held');
           NODE
           sha256sum "$RUNNER_TEMP/c1ac-owner-simulator-capture-evidence.json"
+      - name: C1-AD original source and owner Voronoi cell hierarchy audit without imported mesh claims
+        run: |
+          node --check scripts/lib/kaelvar-c1ad-voronoi-preflight.mjs
+          node --check scripts/kaelvar-c1ad-voronoi-preflight.mjs
+          node --check tests/unit/kaelvar-c1ad-voronoi-preflight.test.mjs
+          node --test tests/unit/kaelvar-c1ad-voronoi-preflight.test.mjs
+          node scripts/kaelvar-c1ad-voronoi-preflight.mjs --check > "$RUNNER_TEMP/c1ad-voronoi-geography-preflight.json"
+          node - "$RUNNER_TEMP/c1ad-voronoi-geography-preflight.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1AD_VORONOI_CELL_PROVENANCE_DOCUMENTED_SAVE_AND_REGION_ADOPTION_HELD');
+          assert.equal(r.originalSourceRasterWitnessesVerified,true);
+          assert.equal(r.sourceMatchedVoronoiMesh,false);
+          assert.equal(r.screenshotDistrictInkPrimaryGeometryAuthority,false);
+          assert.deepEqual(r.hierarchy,[
+            'VORONOI_CELL','SIMULATOR_PROVINCE',
+            'SIMULATOR_DISTRICT','LINEAGE_GEOGRAPHIC_REGION'
+          ]);
+          assert.equal(r.recoveredVoronoiCellCount,null);
+          assert.equal(r.noProvisionalBorderSelection,true);
+          assert.equal(r.acceptedC1PAssignedCandidateCells,52449);
+          assert.equal(r.acceptedC1PUnassignedCandidateCells,26970);
+          assert.equal(r.detachedComponentClaims,0);
+          assert.equal(r.canonicalWritable,false);
+          console.log('C1-AD source-verified Voronoi hierarchy documented; no imported save, mesh, island or canonical writes');
+          NODE
+          sha256sum "$RUNNER_TEMP/c1ad-voronoi-geography-preflight.json"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -955,6 +986,7 @@ jobs:
             ${{ runner.temp }}/c1aa-relative-shared-seams.json
             ${{ runner.temp }}/c1ab-shared-seam-junction-audit.json
             ${{ runner.temp }}/c1ac-owner-simulator-capture-evidence.json
+            ${{ runner.temp }}/c1ad-voronoi-geography-preflight.json
             ${{ runner.temp }}/c1p-native-review.json
             ${{ runner.temp }}/c1p-original-versus-refined.svg
             ${{ runner.temp }}/c1p-refined-north-coast.svg
