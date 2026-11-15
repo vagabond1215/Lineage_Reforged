@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1aa-pinned-relief-first-paired-original-source-prework-evidence.v1",
+  "date": "2026-11-14",
+  "status": "C1AA_HOSTED_SOURCE_REVIEW_ACCEPTED_RELIEF_FEATURES_AND_REGION_SELECTION_HELD",
+  "testedImplementationCommit": "dc4a94f95762c52fec1ec1ce5a3016999b8bcb98",
+  "run": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43672993858",
+  "environment": "GitHub-hosted Ubuntu Node 22; Windows owner-local acceptance not executed",
+  "acceptance": {
+    "testsPassed": 71,
+    "testsFailed": 0,
+    "scannedCodeFiles": 894,
+    "newLegacyHexDependencies": 0
+  },
+  "artifact": {
+    "id": 14145207318,
+    "name": "c1p-noncanonical-native-terrain-review",
+    "sizeBytes": 85459232,
+    "retentionDays": 7,
+    "sourceReportSha256": "0ba7e4c03f3f94bcdf0cca84dd0c7038fb6bebd38fb20c95b32087806efedb5c",
+    "elevationSvgSha256": "84a398ec3eead1cb1de25dbfdad53bf805183e2821455e631ae09864c31e18a0",
+    "biomeSvgSha256": "291150f46d6c4e8fd1ed0a87176b11c06cb20e9b168a03ef9634350352bfc5f2"
+  },
+  "source": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalSourceCoastEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "originalPngSize": [
+      4096,
+      2355
+    ],
+    "registeredReferenceSize": [
+      2048,
+      1152
+    ],
+    "originalPngBitDepth": 8,
+    "originalPngColorType": 6,
+    "elevationRgbIsCalibratedAltitude": false,
+    "supportedClaim": "paired identical-reference original RGB sample and source-aligned image overlay only"
+  },
+  "interfaceMeasurements": [
+    {
+      "id": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "center": [
+        292,
+        190
+      ],
+      "originalPngSample": [
+        627,
+        429
+      ],
+      "biomeRGB": [
+        170,
+        230,
+        100
+      ],
+      "elevationRGB": [
+        249,
+        237,
+        210
+      ],
+      "alternatives": [
+        {
+          "id": "KEEP_C1P_UNCHANGED",
+          "remainingGapSourceSamples": 10
+        },
+        {
+          "id": "NORTH_VEYRHOLM_SOUTH_TWO",
+          "remainingGapSourceSamples": 8,
+          "beforeRef": [
+            284,
+            190
+          ],
+          "beforeOriginalElevationRGB": [
+            249,
+            237,
+            210
+          ],
+          "afterRef": [
+            284,
+            192
+          ],
+          "afterOriginalElevationRGB": [
+            248,
+            241,
+            215
+          ],
+          "beforeOriginalBiomeRGB": [
+            170,
+            230,
+            100
+          ],
+          "afterOriginalBiomeRGB": [
+            170,
+            230,
+            100
+          ]
+        },
+        {
+          "id": "NORTH_KHARUUN_NORTH_TWO",
+          "remainingGapSourceSamples": 9,
+          "beforeRef": [
+            301,
+            193
+          ],
+          "beforeOriginalElevationRGB": [
+            248,
+            239,
+            212
+          ],
+          "afterRef": [
+            301,
+            191
+          ],
+          "afterOriginalElevationRGB": [
+            248,
+            239,
+            212
+          ],
+          "beforeOriginalBiomeRGB": [
+            170,
+            230,
+            100
+          ],
+          "afterOriginalBiomeRGB": [
+            170,
+            230,
+            100
+          ]
+        }
+      ]
+    },
+    {
+      "id": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "center": [
+        319,
+        326
+      ],
+      "originalPngSample": [
+        680,
+        693
+      ],
+      "biomeRGB": [
+        230,
+        220,
+        110
+      ],
+      "elevationRGB": [
+        252,
+        209,
+        174
+      ],
+      "alternatives": [
+        {
+          "id": "KEEP_C1P_UNCHANGED",
+          "remainingGapSourceSamples": 15
+        },
+        {
+          "id": "SOUTH_KHARUUN_SOUTH_THREE",
+          "remainingGapSourceSamples": 13,
+          "beforeRef": [
+            314,
+            320
+          ],
+          "beforeOriginalElevationRGB": [
+            251,
+            217,
+            184
+          ],
+          "afterRef": [
+            314,
+            323
+          ],
+          "afterOriginalElevationRGB": [
+            252,
+            203,
+            166
+          ],
+          "beforeOriginalBiomeRGB": [
+            230,
+            220,
+            110
+          ],
+          "afterOriginalBiomeRGB": [
+            230,
+            220,
+            110
+          ]
+        },
+        {
+          "id": "SOUTH_VERDANT_NORTH_THREE",
+          "remainingGapSourceSamples": 12,
+          "beforeRef": [
+            320,
+            334
+          ],
+          "beforeOriginalElevationRGB": [
+            252,
+            201,
+            163
+          ],
+          "afterRef": [
+            320,
+            331
+          ],
+          "afterOriginalElevationRGB": [
+            252,
+            201,
+            163
+          ],
+          "beforeOriginalBiomeRGB": [
+            220,
+            222,
+            108
+          ],
+          "afterOriginalBiomeRGB": [
+            230,
+            220,
+            110
+          ]
+        }
+      ]
+    }
+  ],
+  "decisions": {
+    "northernSeam": null,
+    "southernSeam": null,
+    "noAutomaticWinner": true,
+    "noBiomeOnlyBorder": true,
+    "noNumericHeightSlopeWatershedConclusions": true,
+    "formerFourCellGapConstraintNotCanonicalCoveragePolicy": true,
+    "futureFinalizedLandPrimaryRegionResolution": "EXACTLY_ONE",
+    "environmentalInfluenceOptionalAndSecondary": true,
+    "unassignedCurrentLandIsAuthoringReserveNotPermanentNoMansLand": true,
+    "optionalFutureTravelLogsAndEcologyNotImplemented": true
+  },
+  "canonicalCatalogAudit": {
+    "separateEvidence": "kaelvar-c1aa-region-registry-integration-gap-audit-2026-11-14.json",
+    "provisionalMissingRegionRecords": [
+      "region.kharuun_drylands",
+      "region.veyrholm_shore"
+    ],
+    "existingShattercapCatalogRecordDoesNotApproveHeldIslands": true
+  },
+  "frozenC1P": {
+    "mainlandCandidateCells": 79419,
+    "perRegion": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "assigned": 52449,
+    "unassigned": 26970,
+    "kharuunOptionBOriginalSourceEdges": [
+      35,
+      58
+    ],
+    "northeastHeadlandOriginalSourceEdges": [
+      75,
+      115
+    ],
+    "component51Owner": null,
+    "shattercapDetachedIslandClaims": 0,
+    "otherDetachedPhysicalClaims": 0,
+    "sourceRasterEdits": 0,
+    "sourceVectorEdits": 0,
+    "originalTerrainRelabels": 0,
+    "acceptedRegionRingEdits": 0,
+    "newTerrainAllocationCells": 0,
+    "canonicalWritable": false
+  },
+  "nextStage": "Owner/Codex original-elevation interpretation and shared-edge coverage study, never an automatic elevation RGB-as-meters or 'close all gaps' job."
+}
