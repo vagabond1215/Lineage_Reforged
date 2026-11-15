@@ -10,6 +10,9 @@ on:
       - 'scripts/lib/kaelvar-c1ab-shared-seam-junction-audit.mjs'
       - 'scripts/kaelvar-c1ab-shared-seam-junctions.mjs'
       - 'tests/unit/kaelvar-c1ab-shared-seam-junction-audit.test.mjs'
+      - 'scripts/kaelvar-c1ac-simulator-evidence.mjs'
+      - 'tests/unit/kaelvar-c1ac-simulator-evidence.test.mjs'
+      - 'docs/design/kaelvar-c1ac-owner-fantasy-map-simulator-screenshot-evidence-2026-11-15.json'
       - 'docs/design/kaelvar-c1aa-relative-relief-native-evidence-2026-11-15.json'
       - 'docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json'
       - 'scripts/kaelvar-c1p-regional-seams.mjs'
@@ -920,6 +923,28 @@ jobs:
               .join(', ')).join('; '));
           NODE
           sha256sum "$RUNNER_TEMP/c1ab-shared-seam-junction-audit.json"
+      - name: C1-AC owner-supplied Fantasy Map Simulator multi-view capture and exact original raster gates
+        run: |
+          node --check scripts/kaelvar-c1ac-simulator-evidence.mjs
+          node --check tests/unit/kaelvar-c1ac-simulator-evidence.test.mjs
+          node --test tests/unit/kaelvar-c1ac-simulator-evidence.test.mjs
+          node scripts/kaelvar-c1ac-simulator-evidence.mjs --check > "$RUNNER_TEMP/c1ac-owner-simulator-capture-evidence.json"
+          node - "$RUNNER_TEMP/c1ac-owner-simulator-capture-evidence.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1AC_OWNER_SIMULATOR_VISUAL_REVIEW_ONLY_ORIGINAL_SOURCE_VERIFIED');
+          assert.equal(r.sourceOriginalRasterHashesVerified,true);
+          assert.deepEqual(r.stageCounts,[188,362,1915,884]);
+          assert.deepEqual(r.colorRegionNames,[
+            'region.veyrholm_shore','region.auric_marches','region.kharuun_drylands',
+            'region.verdant_thalos','region.shattercap_isles'
+          ]);
+          assert.equal(r.sourceImageFilesChanged,false);
+          assert.equal(r.originalC1AARegionChainsChanged,false);
+          assert.equal(r.canonicalWritable,false);
+          console.log('C1-AC owner simulator screenshot metadata and registered source PNGs held');
+          NODE
+          sha256sum "$RUNNER_TEMP/c1ac-owner-simulator-capture-evidence.json"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -928,6 +953,7 @@ jobs:
           path: |
             ${{ runner.temp }}/c1aa-relative-shared-seams.json
             ${{ runner.temp }}/c1ab-shared-seam-junction-audit.json
+            ${{ runner.temp }}/c1ac-owner-simulator-capture-evidence.json
             ${{ runner.temp }}/c1p-native-review.json
             ${{ runner.temp }}/c1p-original-versus-refined.svg
             ${{ runner.temp }}/c1p-refined-north-coast.svg
