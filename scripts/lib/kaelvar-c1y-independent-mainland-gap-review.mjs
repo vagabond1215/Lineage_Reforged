@@ -145,6 +145,10 @@ function sampleWindow(w,labels,owners,contour){
   interpretation:'REFERENCE_GRID_SOURCE_GAP_ONLY_NOT_SOVEREIGN_LINE_OR_ROAD'
  };
 }
+/** Shared strict original-mainland local gap metric for C1-Z scratch review. */
+export function measureC1YGapWindow(w,labels,ownership,originalContour){
+ return sampleWindow(w,labels,ownership,originalContour);
+}
 export function validateC1YSpec(s,p,c1pReport){
  if(s?.schemaVersion!==1||
   s.type!=='kaelvar-c1y-independent-mainland-gap-and-seam-priority.v1'||
