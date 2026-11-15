@@ -68,6 +68,7 @@ const expectedHeld=[
 const same=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
 const fail=s=>{throw Error('C1-AC simulator evidence HOLD: '+s);};
 export function validateC1ACOwnerViewManifest(m,c1aa){
+ const ink=m?.derivedScreenshotInkReferenceSvg;
  const s=m?.sourceProvenance,editor=m?.districtEditor,r=m?.registration,
   a=m?.authoringPolicy,c=m?.provisionalCandidateComparison;
  if(m?.schemaVersion!==1||
@@ -130,6 +131,18 @@ export function validateC1ACOwnerViewManifest(m,c1aa){
   a.newlyAssignedIslands!==0||
   a.canonicalPublication!==false||
   a.ownerVisualReconciliationStillRequired!==true||
+  ink?.path!=='docs/design/assets/kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg'||
+  ink.sha256!=='6a0aaedfb4a4551dcbff6103bb5ca8405d1d923c0496577956af05a0657d2a8d'||
+  ink.gitBlobSha!=='6dd36132a85b8c2a789f7e93c20edd06754ae0f8'||
+  ink.coordinateFrame!=='ORIGINAL_FIRST_WORLD_REFERENCE_GRID_2048_X_1152'||
+  ink.classification!=='SOURCE_REGISTERED_EXACT_SCREENSHOT_INK_STROKES_NOT_POLYGON_MEMBERSHIP'||
+  ink.derivedFromOriginalScreenshotOrder!==11||
+  ink.paletteLayerCount!==5||
+  ink.archiveOriginalScreenshotSourceStillExternal!==true||
+  ink.originalBiomeRasterChanged!==false||
+  ink.originalElevationRasterChanged!==false||
+  ink.acceptedPolygonGeometryChanged!==false||
+  ink.canonicalWritable!==false||
   !same(m.holds,expectedHeld))
   fail('screenshot identities, transformation, source hashes or geography holds drifted');
  if(c1aa?.type!=='C1AA_RELATIVE_RELIEF_SHARED_SEAMS_REVIEW_ONLY'||
@@ -190,8 +203,12 @@ function run(){
   const bytes=readFileSync(join(root,'packages/content/base/world/map_assets/First World '+layer+'.png'));
   if(sha256(bytes)!==expected)fail('original registered '+layer+' PNG hash changed');
  }
+ const registeredInk=readFileSync(join(root,m.derivedScreenshotInkReferenceSvg.path));
+ if(sha256(registeredInk)!==m.derivedScreenshotInkReferenceSvg.sha256)
+  fail('source-registered screenshot ink SVG changed');
  const out={
   status:'C1AC_OWNER_SIMULATOR_VISUAL_REVIEW_ONLY_ORIGINAL_SOURCE_VERIFIED',
+  derivedScreenshotInkSvgSha256:m.derivedScreenshotInkReferenceSvg.sha256,
   sourceOriginalRasterHashesVerified:true,
   registrationMethod:m.registration.method,
   stageCounts:m.registration.stages.map(x=>x.inliers),
