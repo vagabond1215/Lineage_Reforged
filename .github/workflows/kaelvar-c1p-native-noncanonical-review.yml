@@ -791,6 +791,10 @@ jobs:
             '9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12');
           assert.equal(r.source.originalElevationSha256,
             '02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d');
+          assert.deepEqual(r.source.imageFormats,{
+            biome:{bitDepth:8,colorType:6},
+            elevation:{bitDepth:8,colorType:6}
+          });
           assert.equal(r.elevationInterpretation.rampCalibration,'UNVERIFIED_COLOR_RAMP');
           assert.equal(r.elevationInterpretation.sourceRGBMeansMeters,false);
           assert.equal(r.elevationInterpretation.automaticRidgeOrWatershedProven,false);
@@ -832,6 +836,17 @@ jobs:
           assert.equal(r.baseline.canonicalWritable,false);
           console.log('C1-AA original elevation/biome pair verified; all six options held pending landform interpretation');
           console.log('C1-AA PNG formats '+JSON.stringify(r.source.imageFormats));
+          console.log('C1-AA paired original RGB witnesses: '+JSON.stringify(
+            r.comparedInterfaces.map(g=>({
+              interface:g.id,
+              centerOriginalRGB:g.options[0].originalSourceSample,
+              trialPointOriginalRGB:g.options.slice(1).map(t=>({
+                id:t.id,
+                before:t.originalOriginalPairSample,
+                after:t.trialOriginalPairSample
+              }))
+            }))
+          ));
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --relief-prework-elevation-svg > "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
           node scripts/kaelvar-c1p-regional-seams.mjs --relief-prework-biome-svg > "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
@@ -840,6 +855,7 @@ jobs:
           grep -q 'ORIGINAL ELEVATION COLOR RAMP' "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
           grep -q 'ORIGINAL BIOME ART' "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
           grep -q 'KEEP C1P UNCHANGED' "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
+          sha256sum "$RUNNER_TEMP/c1aa-relief-first-source-report.json" "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg" "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
