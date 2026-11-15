@@ -895,7 +895,15 @@ jobs:
           assert.deepEqual(r.inspectedSharedSeams[1].regionJoins[1]
             .beforeFirstSharedEndpoint.priorOriginalWaypoint,[289,348]);
           assert.deepEqual(r.inspectedSharedSeams[1].regionJoins[1]
-            .afterLastSharedEndpoint.nextOriginalWaypoint,[382,333]);
+            .afterLastSharedEndpoint.nextOriginalWaypoint,[367,337]);
+          assert.deepEqual(r.inspectedSharedSeams[0].regionJoins.map(j=>[
+            j.beforeFirstSharedEndpoint.connectingReferenceGridDistance,
+            j.afterLastSharedEndpoint.connectingReferenceGridDistance
+          ]),[[5,null],[15.81,8.54]]);
+          assert.deepEqual(r.inspectedSharedSeams[1].regionJoins.map(j=>[
+            j.beforeFirstSharedEndpoint.connectingReferenceGridDistance,
+            j.afterLastSharedEndpoint.connectingReferenceGridDistance
+          ]),[[29.68,18.79],[23.43,15.52]]);
           assert.equal(r.combinedNoncanonicalCoverage.originalMainlandCandidateCells,79419);
           assert.equal(r.combinedNoncanonicalCoverage.provisionalNewCandidateCells,1746);
           assert.equal(r.combinedNoncanonicalCoverage.combinedAssignedCandidateCells,54195);
