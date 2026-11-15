@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1aa-canonical-region-registry-gap-audit.v1",
+  "date": "2026-11-14",
+  "status": "READ_ONLY_CATALOG_CROSSWALK_NO_CANONICAL_REGISTRATION",
+  "source": {
+    "regionCatalogPath": "packages/content/base/world/regions.json",
+    "regionCatalogGitBlob": "04516952ad97d830d2f49d915137197947e22b3a",
+    "regionSchemaPath": "packages/schemas/world/region.schema.json",
+    "regionSchemaGitBlob": "14a967d122f7b38045d8a1eaad64936ee8c52948",
+    "catalogRecords": 41
+  },
+  "existingKaelvarSubregionRecords": [
+    {
+      "id": "region.auric_marches",
+      "name": "The Auric Marches",
+      "parentRegionId": "region.kaelvar",
+      "hasGeometryInRegionRecord": false
+    },
+    {
+      "id": "region.verdant_thalos",
+      "name": "Verdant Thalos",
+      "parentRegionId": "region.kaelvar",
+      "hasGeometryInRegionRecord": false
+    },
+    {
+      "id": "region.shattercap_isles",
+      "name": "The Shattercap Isles",
+      "parentRegionId": "region.kaelvar",
+      "hasGeometryInRegionRecord": false
+    }
+  ],
+  "c1pProvisionalRegionCrosswalk": [
+    {
+      "id": "region.auric_marches",
+      "regionRecordRegistered": true,
+      "sourceIndexGeometryStatus": "C1P_NONCANONICAL_REVIEW_ONLY"
+    },
+    {
+      "id": "region.kharuun_drylands",
+      "regionRecordRegistered": false,
+      "sourceIndexGeometryStatus": "C1P_NONCANONICAL_REVIEW_ONLY"
+    },
+    {
+      "id": "region.verdant_thalos",
+      "regionRecordRegistered": true,
+      "sourceIndexGeometryStatus": "C1P_NONCANONICAL_REVIEW_ONLY"
+    },
+    {
+      "id": "region.veyrholm_shore",
+      "regionRecordRegistered": false,
+      "sourceIndexGeometryStatus": "C1P_NONCANONICAL_REVIEW_ONLY"
+    }
+  ],
+  "findings": {
+    "twoProvisionalRegionIdsNotYetRegistered": [
+      "region.kharuun_drylands",
+      "region.veyrholm_shore"
+    ],
+    "shattercapHasExistingRegionRecordButPhysicalIslesHeld": true,
+    "regionCatalogGeometryFieldPresentForTheseKaelvarSubregions": false,
+    "noSourceApprovedContiguousRegionalCoverageYet": true,
+    "noDeterministicPrimaryRegionResolverAuthorizedHere": true
+  },
+  "followUp": "Reconcile requested region IDs, parentage, geometry resolution schema and physical island components only after owner-adjudicated source geometry. Do not insert provisional records to force coverage.",
+  "holds": {
+    "canonicalCatalogWrites": 0,
+    "regionSchemaEdits": 0,
+    "regionGeometryWrites": 0,
+    "shattercapIslandAssignmentChanges": 0,
+    "sourcePNGOrVectorWrites": 0,
+    "newBranches": 0
+  }
+}
