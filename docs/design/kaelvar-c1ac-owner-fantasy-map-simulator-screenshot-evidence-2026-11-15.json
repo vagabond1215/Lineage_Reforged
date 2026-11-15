@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "type": "KAELVAR_C1AC_OWNER_SIMULATOR_MULTI_VIEW_SOURCE_EVIDENCE_V1",
+  "date": "2026-11-15",
+  "status": "OWNER_PROPOSED_SIMULATOR_DISTRICT_VISUAL_REGISTERED_NOT_NATIVE_POLYGON_AUTHORITY",
+  "repositorySourceBase": "8739aa02431f6ed61a5f4076c4af9be7881cd55a",
+  "sourceProvenance": {
+    "application": "Fantasy Map Simulator",
+    "platform": "Steam",
+    "steamAppId": 3035500,
+    "origin": "Owner-supplied eleven simulator screenshots, including Map Editor/Edit District",
+    "userMeaning": "Proposed geographic regional breakdown, not political borders",
+    "originalFirstWorldBiomeSHA256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "originalFirstWorldElevationSHA256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "originalVectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "sourceOriginalPngSize": [
+      4096,
+      2355
+    ],
+    "originalCrop": [
+      60,
+      60,
+      3976,
+      2235
+    ],
+    "referenceGrid": [
+      2048,
+      1152
+    ],
+    "referenceRasterFilesChanged": false,
+    "simulatorSaveMatchedToSource": false,
+    "ordinalHeightOwnerAssumption": "ORANGE_RED_RELATIVELY_HIGHER_CREAM_RELATIVELY_LOWER",
+    "calibratedHeightAvailable": false,
+    "registeredRidgeOrWatershedCertified": false
+  },
+  "screenshotBytesPersistedInGit": false,
+  "screenshotArchiveForOwnerImport": "kaelvar-simulator-owner-views-and-district-registration-2026-11-15.zip",
+  "screenshotArchiveSha256": "b3f564438c3f18bc802818e4667024fc2e0654dd0f3387ff94a0308f77473be4",
+  "screenshotManifest": [
+    {
+      "order": 1,
+      "filename": "01-world-biome-no-heavy-outline.png",
+      "sha256": "1e4d4b701a08fa866c807a5795c5fc7ba48833894ed7b294ef580a3cc24d39cf",
+      "sizeBytes": 590526,
+      "dimensions": [
+        1919,
+        1079
+      ],
+      "role": "WORLD_BIOME_NO_HEAVY_INK",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 2,
+      "filename": "02-world-biome-heavy-outline.png",
+      "sha256": "fcd23903760bd03cbad47cdf23256189d16dcfa2913553013d91d25f737eac78",
+      "sizeBytes": 586818,
+      "dimensions": [
+        1919,
+        1079
+      ],
+      "role": "WORLD_BIOME_HEAVY_INK",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 3,
+      "filename": "03-world-biome-thin-outline.png",
+      "sha256": "447c8f7b838cfd6d4447b405de5ca03373e5c8af97c5fa78127604882f89d591",
+      "sizeBytes": 593001,
+      "dimensions": [
+        1919,
+        1079
+      ],
+      "role": "WORLD_BIOME_THIN_INK",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 4,
+      "filename": "04-world-elevation-gray-thin-outline.png",
+      "sha256": "2d5779c9a879e04cf50e00f2e1aa6f419e475baffb75d7a2c02f78b3db7f39ad",
+      "sizeBytes": 644248,
+      "dimensions": [
+        1919,
+        1079
+      ],
+      "role": "WORLD_GRAYSCALE_RELIEF_THIN_INK",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 5,
+      "filename": "05-world-elevation-gray-no-outline.png",
+      "sha256": "81004eb63f9d8d8618d604d775dab78292b813e81a83a2ec9612778a8522e5fa",
+      "sizeBytes": 662603,
+      "dimensions": [
+        1919,
+        1079
+      ],
+      "role": "WORLD_GRAYSCALE_RELIEF_NO_INK",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 6,
+      "filename": "06-world-elevation-gray-heavy-outline.png",
+      "sha256": "e0b3eca764cb9dc66ed632897db3d85e1e289319f94c3f2c55360d25605d06e2",
+      "sizeBytes": 637055,
+      "dimensions": [
+        1919,
+        1079
+      ],
+      "role": "WORLD_GRAYSCALE_RELIEF_HEAVY_INK",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 7,
+      "filename": "07-kaelvar-elevation-gray-crop.png",
+      "sha256": "9310c1798f33798a3b60677071fcbb12be92100cb9ede09d6cfd83d12ae6cadd",
+      "sizeBytes": 252371,
+      "dimensions": [
+        1100,
+        833
+      ],
+      "role": "KAELVAR_GRAYSCALE_RELIEF_CROP",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 8,
+      "filename": "08-kaelvar-biome-crop.png",
+      "sha256": "a724e7d87ac30420e4fafd75dafa6d123bbaef7e360c13ad03394cdeac1833c2",
+      "sizeBytes": 237180,
+      "dimensions": [
+        1097,
+        865
+      ],
+      "role": "KAELVAR_BIOME_CROP",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 9,
+      "filename": "09-kaelvar-biome-high-detail.png",
+      "sha256": "a43b9f0abb472e89486b95e79dd75b60e5030c136511b31d5a8ae35389fa6d31",
+      "sizeBytes": 322101,
+      "dimensions": [
+        1425,
+        1052
+      ],
+      "role": "KAELVAR_BIOME_LARGER_CROP",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 10,
+      "filename": "10-kaelvar-elevation-gray-high-detail.png",
+      "sha256": "5a2223b45af6ae6cc6730fabb860b063b5dbdb02cf97553212488352bed39ae7",
+      "sizeBytes": 345326,
+      "dimensions": [
+        1451,
+        1053
+      ],
+      "role": "KAELVAR_GRAYSCALE_RELIEF_LARGER_CROP",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    },
+    {
+      "order": 11,
+      "filename": "11-kaelvar-owner-district-proposal.png",
+      "sha256": "0b05ac0e058aa64b48e9e1ec44e61ee0dfeff52cccc7fc48e7c9df039a387b55",
+      "sizeBytes": 485620,
+      "dimensions": [
+        1919,
+        1079
+      ],
+      "role": "KAELVAR_OWNER_DISTRICT_EDITOR_PROPOSAL",
+      "source": "USER_UPLOAD_ORIGINAL_PNG_BYTES"
+    }
+  ],
+  "districtEditor": {
+    "screenshotOrder": 11,
+    "toolTitle": "MAP EDITOR",
+    "selector": "Edit District",
+    "visiblePageLabel": "Page 11 of 11",
+    "legend": [
+      {
+        "regionId": "region.veyrholm_shore",
+        "exactScreenshotInkRGB": [
+          6,
+          0,
+          112
+        ],
+        "restrictedRoiInkPixels": 7312,
+        "restrictedRoiInkBounds": [
+          90,
+          86,
+          880,
+          402
+        ],
+        "sourceReferenceProjectedInkPixels": 951
+      },
+      {
+        "regionId": "region.auric_marches",
+        "exactScreenshotInkRGB": [
+          191,
+          71,
+          0
+        ],
+        "restrictedRoiInkPixels": 7121,
+        "restrictedRoiInkBounds": [
+          170,
+          279,
+          724,
+          896
+        ],
+        "sourceReferenceProjectedInkPixels": 933
+      },
+      {
+        "regionId": "region.kharuun_drylands",
+        "exactScreenshotInkRGB": [
+          191,
+          0,
+          0
+        ],
+        "restrictedRoiInkPixels": 1052,
+        "restrictedRoiInkBounds": [
+          530,
+          296,
+          1065,
+          699
+        ],
+        "sourceReferenceProjectedInkPixels": 127
+      },
+      {
+        "regionId": "region.verdant_thalos",
+        "exactScreenshotInkRGB": [
+          0,
+          89,
+          15
+        ],
+        "restrictedRoiInkPixels": 7802,
+        "restrictedRoiInkBounds": [
+          569,
+          352,
+          1392,
+          899
+        ],
+        "sourceReferenceProjectedInkPixels": 1044
+      },
+      {
+        "regionId": "region.shattercap_isles",
+        "exactScreenshotInkRGB": [
+          188,
+          16,
+          107
+        ],
+        "restrictedRoiInkPixels": 8241,
+        "restrictedRoiInkBounds": [
+          706,
+          8,
+          1414,
+          387
+        ],
+        "sourceReferenceProjectedInkPixels": 1058
+      }
+    ],
+    "segmentationRule": "Exact RGB only, screenshot pixel ROI x=10..1414 and y=5..899; swatch panel excluded",
+    "labelsAreOriginalEditorLabels": true,
+    "visibleLegendNotProofOfCompleteGlobalDistrictList": true,
+    "lineIsInkNotOwnerResolvedPolygon": true
+  },
+  "registration": {
+    "method": "SIFT feature matching with affine-partial RANSAC, source-raster-corroborated",
+    "stages": [
+      {
+        "from": "editorScreenshot11",
+        "to": "KaelvarBiomeScreenshot09",
+        "mode": "edge",
+        "inliers": 188,
+        "matches": 244,
+        "medianResidualPixels": 0.531,
+        "p95ResidualPixels": 1.837,
+        "affine": [
+          [
+            0.884446,
+            -0.000133,
+            -58.555709
+          ],
+          [
+            0.000133,
+            0.884446,
+            8.95112
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "from": "KaelvarBiomeScreenshot09",
+        "to": "WorldBiomeScreenshot03",
+        "mode": "grayscale",
+        "inliers": 362,
+        "matches": 476,
+        "medianResidualPixels": 0.165,
+        "p95ResidualPixels": 1.123,
+        "affine": [
+          [
+            0.385074,
+            0.000041,
+            51.685037
+          ],
+          [
+            -0.000041,
+            0.385074,
+            90.799921
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "from": "WorldBiomeScreenshot03",
+        "to": "OriginalSourceBiomeDownscaled1919x1103",
+        "mode": "grayscale",
+        "inliers": 1915,
+        "matches": 1935,
+        "medianResidualPixels": 0.197,
+        "p95ResidualPixels": 0.886,
+        "affine": [
+          [
+            0.970652,
+            0.000016,
+            27.665463
+          ],
+          [
+            -0.000016,
+            0.970652,
+            27.396836
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      {
+        "from": "WorldGrayscaleElevationScreenshot04",
+        "to": "WorldBiomeScreenshot03",
+        "mode": "edge",
+        "inliers": 884,
+        "matches": 904,
+        "medianResidualPixels": 0.097,
+        "p95ResidualPixels": 0.871,
+        "affine": [
+          [
+            1.000013,
+            0.000005,
+            -0.007791
+          ],
+          [
+            -0.000005,
+            1.000013,
+            0.003198
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    ],
+    "editorToSourceReferenceApprox": [
+      [
+        0.363452,
+        -0.00001,
+        30.606672
+      ],
+      [
+        0.00001,
+        0.363805,
+        99.900773
+      ],
+      [
+        0,
+        0,
+        1
+      ]
+    ],
+    "sourceImageRegistrationStatus": "HIGH_CONFIDENCE_VIEW_ALIGNMENT_NOT_POLYGON_OR_LANDFORM_CERTIFICATION",
+    "pixelLevelTraceRequiresIndependentVisualReview": true
+  },
+  "provisionalCandidateComparison": {
+    "sourceProposal": "docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json",
+    "nearestMatchingEditorInkScreenshotPixelDistance": {
+      "northVeyrholmAtCandidateVertices": [
+        68.1,
+        41,
+        20,
+        11
+      ],
+      "southVerdantAtCandidateVertices": [
+        44,
+        5.8,
+        9.4,
+        3.2
+      ]
+    },
+    "interpretation": "Distances from projected C1-AA trial vertices to nearest any screenshot ink of indicated region color. Not pointwise correspondence between same natural feature or definitive geographic offsets.",
+    "northernProposalMateriallyDifferentInOwnerEditor": true,
+    "southernProposalPartlyNearOwnerEditorButNotEquivalent": true,
+    "replaceEarlierSharedSeamsAutomatically": false
+  },
+  "observations": [
+    "Northeastern Shattercap-colored island and northern detached islands appear in the owner editor proposal; these are design intent only and remain independently held physical components.",
+    "The Veyrholm southern region stroke in the editor is farther inland than the earlier northern C1-AA shared chain over much of the local comparison.",
+    "Auric, Kharuun, Verdant and Veyrholm editor outlines form broader, irregular regional shapes; assess full interface continuity before optimizing small shared segments.",
+    "Grayscale relief shows a southern-central Kaelvar highland-like shading pattern and drainage-like cyan courses; no metric elevation or certified volcanic origin.",
+    "Dark coast/ink variants and grayscale modes are presentation toggles, not separate source shoreline authorities."
+  ],
+  "authoringPolicy": {
+    "regionNotPoliticalTerritory": true,
+    "eventualPrimaryRegionPerFinalizedLandPoint": "EXACTLY_ONE",
+    "optionalEnvironmentalTransitionInfluences": true,
+    "noAutomaticTransitionBandWidth": true,
+    "sourceRasterOrVectorMutations": 0,
+    "acceptedC1POrC1AASharedChainMutations": 0,
+    "originalTerrainComponentRelabels": 0,
+    "newlyAssignedIslands": 0,
+    "canonicalPublication": false,
+    "ownerVisualReconciliationStillRequired": true
+  },
+  "holds": [
+    "KHARUUN_OPTION_B_35_58",
+    "VEYRHOLM_EXCLUSIONS",
+    "VERDANT_SE_PENINSULA",
+    "NORTHEAST_HEADLAND_75_115",
+    "PHYSICAL_COMPONENT_51",
+    "SHATTERCAP_DETACHED_ISLANDS",
+    "LARGE_NORTHEAST_ISLAND",
+    "ALL_OTHER_DETACHED_PHYSICAL_COMPONENTS",
+    "COAST_40",
+    "SERATHYL_WINDWARD",
+    "CANONICAL_PUBLICATION"
+  ]
+}
