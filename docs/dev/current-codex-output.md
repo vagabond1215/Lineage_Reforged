@@ -2799,3 +2799,50 @@ Source run C1-AA; unversioned, parent n/a, development impact `none`, game-versi
 **Lifecycle / risks:** inventoried refs/worktrees/open PRs; geography source 164 ahead / 2 behind master, merge base `831e15f5`; #82–#87 remain draft. No integration/deletion due; retain until independent geographic acceptance and explicitly scoped integration/consumer review. Source calibration and owner visual approval remain held despite Windows executable completion. No new permanent branch/worktree/PR. Registered task process already exited, verified by StopSession. Suggested commit: `docs(map): complete C1-AA qualitative seam review and native evidence`. Next: bounded source-semantic clarification / owner review, then only a justified reversible shared-edge candidate; no game-version decision.
 
 Publication receipt: review/evidence commit `947d349d469bf0008437b4b62e456ec1d06c41c5` was fast-forward pushed to the existing geography branch and independently read back at that exact SHA. The follow-up receipt changes documentation only; tested source identities above remain unchanged.
+
+
+## 2026-11-15 — C1-AA owner-authorized relative relief continuation
+
+**Source/run:** unversioned C1-AA regional geography review; parent development milestone not applicable. Game `0.1.1-prealpha`; playability `INTEGRATED_LOOP`. Development milestone impact `none`; game-version impact `none`. Base `d5f68ef349591eb696475a993e9c05e83a80af8d`; test-bearing source commit `7e41d35cabb22a2ae9010dd4e4860209c877be88`, pushed to existing `connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14`. Detached disposable checkout isolated this pass; root `codex/l1-branded-welcome-account-entry-2026-11-11` and its unrelated untracked work were preserved. This receipt does not change the installed Starfall/L2 prompt.
+
+### A. Files changed
+
+- `.github/workflows/kaelvar-c1p-native-noncanonical-review.yml`
+- `scripts/kaelvar-c1aa-relative-review.mjs`
+- `tests/unit/kaelvar-c1aa-shared-seam-review.test.mjs`
+- `docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json`
+- `docs/design/kaelvar-c1aa-relative-relief-decision-2026-11-15.md`
+- `docs/design/kaelvar-c1aa-relative-relief-native-evidence-2026-11-15.json`
+- `docs/design/kaelvar-c1aa-qualitative-relief-review-2026-11-15.md`
+- `docs/design/kaelvar-c1aa-relief-first-regional-topology-and-transition-prework-2026-11-14.md`
+- `docs/design/kaelvar-c1aa-connector-safe-prework-and-codex-resume-handoff-2026-11-14.md`
+- `docs/dev/current-codex-output.md`
+- `docs/dev/current-gpt-handoff.md`
+- `docs/dev/branch-disposition-register.md`
+
+### B. Patch summary
+
+Owner clarification establishes intended ordinal elevation semantics: orange/red higher, cream lower. Missing numerical calibration no longer imposes a selection HOLD. [Decision and comparison matrix](../design/kaelvar-c1aa-relative-relief-decision-2026-11-15.md) provisionally recommend a northern coastal/interior shared seam and a southern upland-apron shared seam, with named endpoint limitations. Geometry is a separate reversible JSON artifact, tested only through cloned in-memory C1-P proposals. Existing source images, masks, vector geometry, accepted C1-P, canonical records, settlement placement and gameplay code are unchanged. Historical calibration-dependent records gain explicit supersession links; their original evidence remains intact.
+
+One local Fantasy Map Simulator save was located and hashed read-only. Its decoded bytes remain opaque and it is not matched to First World; no save uploaded or game launched. No elevation meters, numerical slopes or computed watersheds are claimed. Independent visual review rejected a southern sketch crossing the visible drainage hook; native checks rejected an initial northern patch that exceeded the bounded change window. Both rejections are retained; source constraints were not relaxed.
+
+The combined in-memory candidate adds 1,746 original component-30 samples to regional candidate envelopes; 54,195 assigned + 25,224 unassigned = 79,419. Accepted C1-P stays 52,449 + 26,970. No previous regional sample changes owner. Forty-five additional label-zero samples remain unresolved and unassigned. The geographic interpretation, not area gain, selects the proposals.
+
+### C. Tests and evidence
+
+Windows Node v24.14.1: 77/77 tests (71 existing + 6 shared-seam tests), all 88 workflow command/assertion groups, syntax, original PNG/vector witnesses, coastline/anchor/collision/island accounting, frozen C1-P/C1-Z gates and no-new-hex pass. The final source worktree executed before commit; normalized source blobs match `7e41d35c`. Hosted Node v22.23.4 [run 43735351715](https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43735351715), job `132876616769`, on exact `7e41d35cabb22a2ae9010dd4e4860209c877be88`: 77/77 and every workflow step PASS; new review JSON SHA256 `5b7ddb86711b558f25109c13ccf834657655217532973e84bfd423d2964630b1` matches Windows bytes.
+
+Independent candidate-specific segment-splitting review found 0 interior intrusions across 1,290 / 1,281 / 1,293 intervals for north / south / both. This is not a completeness proof for a general-purpose polygon library. [Machine receipt](../design/kaelvar-c1aa-relative-relief-native-evidence-2026-11-15.json) records hashes, artifact locations, source identity, separate/combined counts and save evidence. New north/south PNG previews were visually checked against the original elevation and biome layers; large outputs remain external.
+
+FP-002: native execution and source preservation are distinguished from owner geographic acceptance and canonical publication. FP-007: bounded supersession/append-only coordination, with installed prompt unchanged. FP-009: exact base, test-bearing source and later receipt-only commit remain separate; no claim of fresh hosted execution on an untested documentation receipt.
+
+### D. Risks, lifecycle and next step
+
+Both proposals are PLAUSIBLE, approximate geographic boundaries, not certified ridges or watersheds. Northern endpoint taper and southern eastern drainage-crossing connector require wider continuation review. Keep all physical/source, headland, component-51, Shattercap/all-island, foreign-region and canonical-publication holds. Missing canonical Kharuun/Veyrholm records and production shared-edge resolution are still later integration requirements.
+
+Fresh branch/PR readback retains #82–#87 open/draft at unchanged heads and retains the existing geography branch for review. No merge, branch deletion, rebase, PR closure or new permanent worktree/branch/PR was due or performed. Review trigger for each retained geography PR: independent geographic/source approval, then separately authorized semantic integration with unique-commit and consumer checks. Other branch dispositions remain unchanged.
+
+Next recommended run: **C1-AA shared-boundary owner review and endpoint continuation**, unversioned. Review the concrete maps, refine full-interface continuation only where needed, independently validate any additional reversible geometry, then request explicit geographic adoption. Numeric legend recovery is optional, not a prerequisite. No game-version decision proposed. A connector-safe exact-commit review can check this evidence and route the approved next slice; another duplicate HOLD/packaging pass would not advance it.
+
+Suggested commit message: `Record C1-AA relative-relief native evidence and handoff`.
+Cleanup: task-owned Python PID 10180 verified already exited; StopSession reports 0 registered live processes. No server/browser/game started. Remove only this clean disposable checkout after final push/readback; retain requested external review images and evidence.

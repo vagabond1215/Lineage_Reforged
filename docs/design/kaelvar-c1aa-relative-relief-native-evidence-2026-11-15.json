@@ -1,0 +1,197 @@
+{
+  "type": "C1AA_OWNER_RELATIVE_RELIEF_NATIVE_RECEIPT",
+  "date": "2026-11-15",
+  "sourceBase": "d5f68ef349591eb696475a993e9c05e83a80af8d",
+  "testedSourceCommit": "7e41d35cabb22a2ae9010dd4e4860209c877be88",
+  "branch": "connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14",
+  "decision": "TWO_PLAUSIBLE_APPROXIMATE_SHARED_BOUNDARIES_RECOMMENDED_PROVISIONALLY",
+  "source": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "biome": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevation": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d"
+  },
+  "baseline": {
+    "assigned": 52449,
+    "unassigned": 26970,
+    "component30": 79419,
+    "perRegion": [
+      5632,
+      18624,
+      19182,
+      9011
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "NORTH_APPROXIMATE_COASTAL_TRANSITION",
+      "status": "VALID_REVERSIBLE_SHARED_SEAM_REVIEW_ONLY",
+      "perRegion": {
+        "region.auric_marches": 5632,
+        "region.kharuun_drylands": 18815,
+        "region.verdant_thalos": 19182,
+        "region.veyrholm_shore": 9207
+      },
+      "assigned": 52836,
+      "unassigned": 26583,
+      "changedOriginalComponent30Samples": 387,
+      "changedSamplesSha256": "10a48476028f2a9d4768e2d8ab362ee148cc4df7dccba32ceeed44cf234c7c3f",
+      "sharedEdgeSampleTies": 1,
+      "unresolvedNewEnvelopeSamples": 34,
+      "unresolvedSamplesAssigned": 0,
+      "detachedClaims": 0,
+      "regionalInteriorCollisions": 0,
+      "sourceCoastCrossings": 0,
+      "protectedAnchorsPreserved": true
+    },
+    {
+      "id": "SOUTH_APPROXIMATE_UPLAND_APRON",
+      "status": "VALID_REVERSIBLE_SHARED_SEAM_REVIEW_ONLY",
+      "perRegion": {
+        "region.auric_marches": 5632,
+        "region.kharuun_drylands": 19554,
+        "region.verdant_thalos": 19611,
+        "region.veyrholm_shore": 9011
+      },
+      "assigned": 53808,
+      "unassigned": 25611,
+      "changedOriginalComponent30Samples": 1359,
+      "changedSamplesSha256": "c1702ef16a114dd038b9fdfb1677d161b87e68de25e28479c694d428f89642ba",
+      "sharedEdgeSampleTies": 0,
+      "unresolvedNewEnvelopeSamples": 11,
+      "unresolvedSamplesAssigned": 0,
+      "detachedClaims": 0,
+      "regionalInteriorCollisions": 0,
+      "sourceCoastCrossings": 0,
+      "protectedAnchorsPreserved": true
+    },
+    {
+      "id": "BOTH_SHARED_SEAMS",
+      "status": "VALID_REVERSIBLE_SHARED_SEAM_REVIEW_ONLY",
+      "perRegion": {
+        "region.auric_marches": 5632,
+        "region.kharuun_drylands": 19745,
+        "region.verdant_thalos": 19611,
+        "region.veyrholm_shore": 9207
+      },
+      "assigned": 54195,
+      "unassigned": 25224,
+      "changedOriginalComponent30Samples": 1746,
+      "changedSamplesSha256": "596073fad8fefe9d275a2af23fe5def37f20aff9531f010d1b5691d8a065c649",
+      "sharedEdgeSampleTies": 1,
+      "unresolvedNewEnvelopeSamples": 45,
+      "unresolvedSamplesAssigned": 0,
+      "detachedClaims": 0,
+      "regionalInteriorCollisions": 0,
+      "sourceCoastCrossings": 0,
+      "protectedAnchorsPreserved": true
+    }
+  ],
+  "windows": {
+    "node": "v24.14.1",
+    "tests": 77,
+    "passed": 77,
+    "workflowCommandGroups": 88,
+    "status": "PASS",
+    "executionIdentity": "Executed the final source worktree before commit; normalized source blobs below match the committed tree. Receipt-only edits do not modify executable inputs."
+  },
+  "hosted": {
+    "runId": 43735351715,
+    "url": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43735351715",
+    "status": "PASS",
+    "jobId": 132876616769,
+    "attempt": 1,
+    "node": "v22.23.4",
+    "tests": 77,
+    "passed": 77,
+    "allWorkflowSteps": "success",
+    "artifactId": 14170206798,
+    "artifactZipSha256": "f8eab4f4220afae27e08d6b6c1f5fcfbbb4701b2c97f16975e8a879e1d5fad02",
+    "reviewJsonSha256": "5b7ddb86711b558f25109c13ccf834657655217532973e84bfd423d2964630b1",
+    "matchesWindowsReviewBytes": true
+  },
+  "inputGitBlobs": {
+    ".github/workflows/kaelvar-c1p-native-noncanonical-review.yml": "92278ecc1bade074c78444c7a991654d8bf19b9c",
+    "scripts/kaelvar-c1aa-relative-review.mjs": "4aca158dbfe1296060783f430d52c1af393b6722",
+    "tests/unit/kaelvar-c1aa-shared-seam-review.test.mjs": "c9fad5cd51024fbd0f4d9ae41f1b758b527bbf33",
+    "docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json": "3834c932f8a0ecbcc8d9c314ba530d2f57e34955"
+  },
+  "artifacts": {
+    "native-relative/windows-workflow.log": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\native-relative\\windows-workflow.log",
+      "sha256": "bb6ebbda44a895b2d6f8d66805c2ac065e7ba7ef0d6b3fef678190d4dcb64419"
+    },
+    "native-relative/c1aa-relative-shared-seams.json": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\native-relative\\c1aa-relative-shared-seams.json",
+      "sha256": "5b7ddb86711b558f25109c13ccf834657655217532973e84bfd423d2964630b1"
+    },
+    "north-relative-review.png": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\north-relative-review.png",
+      "sha256": "b2ce825c766df6bf2bf0cf8aab40f586297f5c87ace3479c3fab61b14bfef1e4"
+    },
+    "south-relative-review.png": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\south-relative-review.png",
+      "sha256": "7dc034893baba08c464cb2174c09f8bc22516bcce534e5ddd3bd44f4e1690e63"
+    },
+    "render-relative-review.ps1": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\render-relative-review.ps1",
+      "sha256": "9baf3611cde1fb39c7edff8a6304a520a10b5499a85e3b3fd7f9f46749b514c5"
+    },
+    "run-relative-native.py": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\run-relative-native.py",
+      "sha256": "4ac14f59737aa1d6bfd53a5c3d6b507cb4b58eb889658076fcc90f30ec91eeb3"
+    },
+    "rejected-initial-review-window.log": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\rejected-initial-review-window.log",
+      "sha256": "19ce763b724a53bebc911740b1b26ce5082068cf457c4b1f86052b2a0cc570aa"
+    },
+    "hosted-relative-job.log": {
+      "path": "C:\\Users\\vagab\\.codex\\visualizations\\2026\\11\\15\\01a1ddbf-b10a-7113-99f8-1353494f3147\\c1aa\\hosted-relative-job.log",
+      "sha256": "5b9d555a1fd9bfc91dfa8eddec1e54dcf9826ca6644cf2069d1bb754abce49e8"
+    }
+  },
+  "independentReview": {
+    "scope": "Actual candidate geometry, not a general-purpose validator proof",
+    "method": "Split each boundary segment at opposite-ring vertices/intersections, test interior intervals",
+    "northIntervals": 1290,
+    "southIntervals": 1281,
+    "combinedIntervals": 1293,
+    "interiorIntrusions": 0,
+    "sourceMutation": false
+  },
+  "saveDiscovery": {
+    "relativePath": "AppData/LocalLow/The Stranger Studio/FantasyMapSimulator/Saves/20260315141309.save",
+    "bytes": 2261696,
+    "sha256": "2c0c159b604e4b2deb059d8f8acd1e67a0b2b32dba2c3783dc133474fda3ff13",
+    "strictBase64DecodedBytes": 1696272,
+    "format": "OPAQUE_UNMATCHED",
+    "matchedToOriginal": false,
+    "gameLaunched": false,
+    "saveWritten": false,
+    "saveUploaded": false
+  },
+  "holds": [
+    "OPTION_B_35_58",
+    "VEYRHOLM_EXCLUSIONS",
+    "VERDANT_SE_PENINSULA",
+    "NE_HEADLAND_75_115",
+    "COMPONENT_51",
+    "SHATTERCAP",
+    "DETACHED_NE_ISLAND",
+    "ALL_OTHER_DETACHED_COMPONENTS",
+    "COAST_40",
+    "SERATHYL_WINDWARD",
+    "CANONICAL_PUBLICATION"
+  ],
+  "canonicalWritable": false,
+  "acceptedC1PChanged": false,
+  "physicalLabelsChanged": 0,
+  "sourcePixelsChanged": 0,
+  "cleanup": {
+    "sessionId": "c1aa-relative-20261115",
+    "registeredPid": 10180,
+    "stopSession": "already-exited",
+    "registeredLive": 0,
+    "disposableWorktree": "remove only after final push and readback",
+    "unrelatedResources": "PRESERVED"
+  }
+}
