@@ -442,5 +442,19 @@
     "COAST_40",
     "SERATHYL_WINDWARD",
     "CANONICAL_PUBLICATION"
-  ]
+  ],
+  "derivedScreenshotInkReferenceSvg": {
+    "path": "docs/design/assets/kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg",
+    "sha256": "6a0aaedfb4a4551dcbff6103bb5ca8405d1d923c0496577956af05a0657d2a8d",
+    "gitBlobSha": "6dd36132a85b8c2a789f7e93c20edd06754ae0f8",
+    "coordinateFrame": "ORIGINAL_FIRST_WORLD_REFERENCE_GRID_2048_X_1152",
+    "classification": "SOURCE_REGISTERED_EXACT_SCREENSHOT_INK_STROKES_NOT_POLYGON_MEMBERSHIP",
+    "derivedFromOriginalScreenshotOrder": 11,
+    "paletteLayerCount": 5,
+    "archiveOriginalScreenshotSourceStillExternal": true,
+    "originalBiomeRasterChanged": false,
+    "originalElevationRasterChanged": false,
+    "acceptedPolygonGeometryChanged": false,
+    "canonicalWritable": false
+  }
 }
