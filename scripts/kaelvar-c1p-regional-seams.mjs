@@ -44,10 +44,12 @@ import {buildC1XPairedGates}
  from './lib/kaelvar-c1x-targeted-attached-tip-feasibility.mjs';
 import {buildC1YMainlandGaps}
  from './lib/kaelvar-c1y-independent-mainland-gap-review.mjs';
+import {buildC1ZReversibleTrials}
+ from './lib/kaelvar-c1z-reversible-mainland-waypoint-trials.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg','--mainland-gaps-check','--mainland-gaps-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg|--paired-gates-check|--paired-gates-svg|--mainland-gaps-check|--mainland-gaps-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg','--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-trials-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg|--paired-gates-check|--paired-gates-svg|--mainland-gaps-check|--mainland-gaps-svg|--seam-trials-check|--seam-trials-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -109,14 +111,24 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let mainlandGaps=null;
-if(mode==='--mainland-gaps-check'||mode==='--mainland-gaps-svg'){
+let mainlandGaps=null,seamTrials=null;
+if(['--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-trials-svg'].includes(mode)){
  const c1y=json('docs/design/kaelvar-c1y-independent-mainland-seam-options-2026-11-14.json');
  mainlandGaps=buildC1YMainlandGaps({spec:c1y,p,c1pReport:report,
   labels,ownership:imageMasks.refined,revised});
  if(mode==='--mainland-gaps-check'){
   process.stdout.write(JSON.stringify(mainlandGaps,null,2)+'\n');
   process.exit(0);
+ }
+ if(mode==='--seam-trials-check'||mode==='--seam-trials-svg'){
+  const c1z=json('docs/design/kaelvar-c1z-two-mainland-seam-reversible-waypoint-options-2026-11-14.json');
+  seamTrials=buildC1ZReversibleTrials({spec:c1z,p,o,c1p:report,
+   ySpec:c1y,yReport:mainlandGaps,f,selected,c1n:n,
+   labels,ownership:imageMasks.refined,revised});
+  if(mode==='--seam-trials-check'){
+   process.stdout.write(JSON.stringify(seamTrials,null,2)+'\n');
+   process.exit(0);
+  }
  }
 }
 let enclosure=null,component51=null,physicalReview=null,pairedGates=null;
@@ -667,6 +679,54 @@ if(mode==='--mainland-gaps-svg'){
   title(1719,967,'0 newly assigned political candidate cells',17,'#C6D9EF')+
   title(28,1293,'MINIMUM SAMPLED GAP RANKING IS NOT A CULTURAL, CLIMATE OR POLITICAL RECOMMENDATION.',19,'#FFE1BC')+
   title(28,1328,'C1-P: 52,449 provisionally assigned + 26,970 deliberately unassigned = 79,419 original mainland candidate samples.',18)+
+  '</svg>\n';
+ process.stdout.write(svg);
+ process.exit(0);
+}
+
+if(mode==='--seam-trials-svg'){
+ const W=2540,H=1360,rows=seamTrials.alternatives;
+ const positions=[[25,132],[1295,132],[25,716],[1295,716]];
+ const local=(pts,col,w=2.4,dash=false)=>'<path d="'+pts.map((p,i)=>
+  (i?'L':'M')+p[0]+' '+p[1]).join(' ')+
+  '" fill="none" stroke="'+col+'" stroke-width="'+w+'" stroke-linecap="round"'+
+  (dash?' stroke-dasharray="3 2"':'')+'/>';
+ const render=(trial,i)=>{
+  const [x,y]=positions[i];
+  const view=trial.interfaceId==='VEYRHOLM_KHARUUN_NORTHERN_INLAND'?
+   [263,170,72,53]:[289,299,78,68];
+  const before=local(trial.originalLocalReturn,'#FFE0A6',2.25,true);
+  const after=local(trial.proposedLocalReturn,'#61F7E6',2.85);
+  const orange='<circle cx="'+trial.originalWaypoint[0]+
+   '" cy="'+trial.originalWaypoint[1]+'" r="2.7" fill="#FFD092"/>';
+  const teal='<circle cx="'+trial.trialWaypoint[0]+
+   '" cy="'+trial.trialWaypoint[1]+'" r="2.7" fill="#5EF3EB"/>';
+  const dots=(trial.changeCells??[]).slice(0,150).map(p=>
+   '<rect x="'+p.x+'" y="'+p.y+'" width="1" height="1" fill="'+
+   (p.to===0?'#FDBD83':'#AAFFAC')+'" fill-opacity=".8"/>').join('');
+  const originalPath=mainlandGaps.reviewWindows.find(p=>p.id===trial.interfaceId)?.pathSamples??[];
+  const route=originalPath.length?
+   '<path d="'+originalPath.map((p,i)=>(i?'L':'M')+
+     (p.x+.5)+' '+(p.y+.5)).join(' ')+
+     '" fill="none" stroke="#D4E9FA" stroke-width="1.0" stroke-dasharray="2 2"/>':'';
+  const content=panel(x,y,1210,425,view,imgs[1],revised,
+   route+before+after+dots+orange+teal);
+  const verdict=trial.status.startsWith('VALID_')?
+   'Review only: original gap '+trial.baselineUnassignedGapSamples+
+   ', trial gap '+trial.trialUnassignedGapSamples+
+   ', changed source candidates '+trial.changedOriginalMainlandSamples:
+   'REJECTED: '+(trial.reason??'unverified trial').slice(0,94);
+  return content+
+   title(x+8,y+459,trial.id.replaceAll('_',' '),18)+
+   title(x+8,y+490,verdict,16,'#FFDAAE');
+ };
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+
+  '" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'+head+
+  title(32,48,'C1-Z / FOUR REVERSIBLE C1-P INLAND WAYPOINT TESTS · NO ACCEPTED GEOMETRY EDIT',29)+
+  title(32,89,'Yellow dashed = accepted return; teal = trial return; pale line = original unassigned gap; green / amber cells = transient owner differences',17,'#FFD6A6')+
+  rows.map(render).join('')+
+  title(34,1267,'ALL SOURCE COASTLINE ARCS, KHARUUN OPTION B AND INDEPENDENT ISLAND HOLDS REMAIN FROZEN.',18,'#FFD8A3')+
+  title(34,1307,'Trial pixels and rings are NOT region claims; C1-P remains 52,449 assigned / 26,970 unassigned / 79,419 original mainland candidates.',17)+
   '</svg>\n';
  process.stdout.write(svg);
  process.exit(0);
