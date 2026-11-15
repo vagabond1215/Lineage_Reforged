@@ -7,6 +7,10 @@ on:
     paths:
       - 'scripts/kaelvar-c1aa-relative-review.mjs'
       - 'tests/unit/kaelvar-c1aa-shared-seam-review.test.mjs'
+      - 'scripts/lib/kaelvar-c1ab-shared-seam-junction-audit.mjs'
+      - 'scripts/kaelvar-c1ab-shared-seam-junctions.mjs'
+      - 'tests/unit/kaelvar-c1ab-shared-seam-junction-audit.test.mjs'
+      - 'docs/design/kaelvar-c1aa-relative-relief-native-evidence-2026-11-15.json'
       - 'docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json'
       - 'scripts/kaelvar-c1p-regional-seams.mjs'
       - 'scripts/lib/kaelvar-c1p-regional-seam-review.mjs'
@@ -866,6 +870,46 @@ jobs:
           node scripts/kaelvar-c1aa-relative-review.mjs --check > "$RUNNER_TEMP/c1aa-relative-shared-seams.json"
           test -s "$RUNNER_TEMP/c1aa-relative-shared-seams.json"
           sha256sum "$RUNNER_TEMP/c1aa-relative-shared-seams.json"
+      - name: C1-AB immutable relative relief seam junction and exact native source audit
+        run: |
+          node --check scripts/lib/kaelvar-c1ab-shared-seam-junction-audit.mjs
+          node --check scripts/kaelvar-c1ab-shared-seam-junctions.mjs
+          node --check tests/unit/kaelvar-c1ab-shared-seam-junction-audit.test.mjs
+          node --test tests/unit/kaelvar-c1ab-shared-seam-junction-audit.test.mjs
+          node scripts/kaelvar-c1ab-shared-seam-junctions.mjs --check > "$RUNNER_TEMP/c1ab-shared-seam-junction-audit.json"
+          node - "$RUNNER_TEMP/c1ab-shared-seam-junction-audit.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1AB_FOUR_ENDPOINTS_PINNED_GEOGRAPHIC_CONTINUATION_HELD');
+          assert.equal(r.originalNativeEvidenceCommit,'7e41d35cabb22a2ae9010dd4e4860209c877be88');
+          assert.equal(r.reportValidatedAgainstOriginalSource,true);
+          assert.deepEqual(r.inspectedSharedSeams.map(s=>s.sharedEndpoints),[
+            [[279,197],[308,185]],[[304,330],[352,333]]]);
+          assert.ok(r.inspectedSharedSeams.every(s=>
+            s.endpointContinuityStatus==='NEEDS_WIDER_SOURCE_BACKED_REVIEW'&&
+            s.regionJoins.length===2&&s.canonicalWritable===false));
+          assert.deepEqual(r.inspectedSharedSeams[0].regionJoins[0]
+            .beforeFirstSharedEndpoint.priorOriginalWaypoint,[279,202]);
+          assert.deepEqual(r.inspectedSharedSeams[1].regionJoins[0]
+            .beforeFirstSharedEndpoint.priorOriginalWaypoint,[368,308]);
+          assert.deepEqual(r.inspectedSharedSeams[1].regionJoins[1]
+            .afterLastSharedEndpoint.nextOriginalWaypoint,[382,333]);
+          assert.equal(r.combinedNoncanonicalCoverage.originalMainlandCandidateCells,79419);
+          assert.equal(r.combinedNoncanonicalCoverage.provisionalNewCandidateCells,1746);
+          assert.equal(r.combinedNoncanonicalCoverage.combinedAssignedCandidateCells,54195);
+          assert.equal(r.combinedNoncanonicalCoverage.combinedUnassignedCandidateCells,25224);
+          assert.equal(r.combinedNoncanonicalCoverage.unresolvedNewEnvelopeSamples,45);
+          assert.equal(r.combinedNoncanonicalCoverage.originalRegionGeometryChanged,false);
+          assert.equal(r.boundaryReviewRequirements.noCanonicalWriteOrIslandClaim,true);
+          assert.equal(r.boundaryReviewRequirements.noElevationMetersSlopeOrAutomatedHydrology,true);
+          console.log('C1-AB source-indexed endpoint junction audit: '+
+            r.inspectedSharedSeams.map(s=>s.candidateId+': '+
+              s.regionJoins.map(j=>j.regionId+' [before '+
+                j.beforeFirstSharedEndpoint.connectingReferenceGridDistance+
+                ', after '+j.afterLastSharedEndpoint.connectingReferenceGridDistance+']')
+              .join(', ')).join('; '));
+          NODE
+          sha256sum "$RUNNER_TEMP/c1ab-shared-seam-junction-audit.json"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -873,6 +917,7 @@ jobs:
           name: c1p-noncanonical-native-terrain-review
           path: |
             ${{ runner.temp }}/c1aa-relative-shared-seams.json
+            ${{ runner.temp }}/c1ab-shared-seam-junction-audit.json
             ${{ runner.temp }}/c1p-native-review.json
             ${{ runner.temp }}/c1p-original-versus-refined.svg
             ${{ runner.temp }}/c1p-refined-north-coast.svg
