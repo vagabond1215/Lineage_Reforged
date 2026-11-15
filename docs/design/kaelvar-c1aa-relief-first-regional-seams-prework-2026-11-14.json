@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1aa-relief-first-regional-seam-prework.v1",
+  "date": "2026-11-14",
+  "status": "PAIRED_SOURCE_REVIEW_ONLY_RELIEF_SCALE_UNCALIBRATED_NO_REGION_SELECTION",
+  "parentC1ZHead": "025d097eaf2947427447d3d62346046d8c4b1563",
+  "originalSource": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "coastlineEdges": 599,
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "registeredCrop": {
+      "x": 60,
+      "y": 60,
+      "width": 3976,
+      "height": 2235
+    },
+    "originalPng": {
+      "width": 4096,
+      "height": 2355
+    },
+    "referenceGrid": {
+      "width": 2048,
+      "height": 1152
+    },
+    "originalMainlandTerrainComponent": 30
+  },
+  "elevationInterpretation": {
+    "nativeSourceProvenance": "ORIGINAL_ELEVATION_PNG",
+    "rampCalibration": "UNVERIFIED_COLOR_RAMP",
+    "sourceRGBMeansMeters": false,
+    "relativeBrightnessMeansMeters": false,
+    "automaticSlopeOrAspectProven": false,
+    "automaticRidgeOrWatershedProven": false,
+    "classifiedRiversOrRavinesProven": false,
+    "outputAllowed": "ORIGINAL_COLOR_SAMPLES_AND_PAIRED_VISUAL_OVERLAYS",
+    "reliefBasedRegionSelectionAllowed": false
+  },
+  "regionalModel": {
+    "regionIsPoliticalTerritory": false,
+    "futureFinalizedLandPrimaryRegion": "EXACTLY_ONE",
+    "futureAdjacentCoverage": "SHARED_NONOVERLAPPING_BOUNDARY_WHERE_LAND_IS_FINALIZED",
+    "reserveIsNotAutomaticPermanentNoMansLand": true,
+    "authoringUnassignedLandAllowed": true,
+    "heldPhysicalComponentsNeverAutoclaimed": true,
+    "optionalEnvironmentalTransitionInfluence": "SECONDARY_NOT_ALTERNATIVE_PRIMARY_REGION",
+    "exactBackendEdgeOwnership": "DETERMINISTIC_RULE_REQUIRED_LATER",
+    "futureNarrativeAndSpawns": "DESIGN_HOOKS_ONLY_NOT_IN_SCOPE",
+    "namedBordersOrFencesImplied": false
+  },
+  "interfaces": [
+    {
+      "id": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "center": {
+        "x": 292,
+        "y": 190
+      },
+      "baselineUnassignedMainlandGap": 10,
+      "sourceView": [
+        265,
+        165,
+        72,
+        61
+      ],
+      "optionIds": [
+        "KEEP_C1P_UNCHANGED",
+        "NORTH_VEYRHOLM_SOUTH_TWO",
+        "NORTH_KHARUUN_NORTH_TWO"
+      ],
+      "sourceConcern": "NORTHERN_COAST_AND_INLAND_RELIEF_NEEDS_INDEPENDENT_INTERPRETATION"
+    },
+    {
+      "id": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "center": {
+        "x": 319,
+        "y": 326
+      },
+      "baselineUnassignedMainlandGap": 15,
+      "sourceView": [
+        291,
+        298,
+        82,
+        71
+      ],
+      "optionIds": [
+        "KEEP_C1P_UNCHANGED",
+        "SOUTH_KHARUUN_SOUTH_THREE",
+        "SOUTH_VERDANT_NORTH_THREE"
+      ],
+      "sourceConcern": "WARM_TO_GREEN_BIOME_COLOR_IS_NOT_CERTIFIED_ELEVATION_BREAK"
+    }
+  ],
+  "reviewRules": {
+    "compareOriginalElevationBeforeBiome": true,
+    "keepOriginalC1PAsRealCandidate": true,
+    "evaluateOnlySourceAndC1ZVerifiedGeometry": true,
+    "declineNumericElevationSlopeWatershedClaims": true,
+    "noAutomaticGapShrinkingPreference": true,
+    "doNotInferGeographicFeatureFromColorOnly": true,
+    "doNotInventTransitoryBandWidth": true,
+    "preserveOptionalFutureOverlappingInfluences": true,
+    "environmentalColorSecondaryToSupportedLandform": true,
+    "noAutomaticWinner": true,
+    "humanTopographicAdjudicationRequired": true
+  },
+  "lockedBaseline": {
+    "originalMainlandCandidateCells": 79419,
+    "provisionalAssigned": 52449,
+    "deliberatelyUnassigned": 26970,
+    "acceptedRegionCells": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "kharuunOptionBSourceEdges": [
+      35,
+      58
+    ],
+    "heldNortheasternHeadlandSourceEdges": [
+      75,
+      115
+    ],
+    "component51Owner": null,
+    "largeNortheastIslandOwner": null,
+    "shattercapIslandClaims": 0,
+    "southeasternVerdantPeninsulaPreserved": true,
+    "veyrholmDryInlandExclusionsPreserved": true,
+    "coast40Claim": null,
+    "serathylWindwardParent": "region.serathyl",
+    "sourceRasterEdits": 0,
+    "sourceVectorEdits": 0,
+    "originalTerrainComponentRelabels": 0,
+    "acceptedC1PRegionRingEdits": 0,
+    "newTerritorialCells": 0,
+    "newSettlementOrGameplayContent": 0,
+    "canonicalWritable": false
+  }
+}
