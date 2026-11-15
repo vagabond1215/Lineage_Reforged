@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1ab-hosted-shared-seam-original-return-junction-witness.v1",
+  "date": "2026-11-15",
+  "status": "NATIVE_ENDPOINT_CONTINUITY_SOURCE_AUDIT_PASSED_LARGER_GEOGRAPHIC_RETURNS_UNAPPROVED",
+  "parentOwnerQualitativeCommit": "7e41d35cabb22a2ae9010dd4e4860209c877be88",
+  "testedImplementationCommit": "85302bb5809e1986ac2d9061e8dee5cb184673f6",
+  "hostedRun": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43737081962",
+  "hostedArtifact": {
+    "id": 14171280531,
+    "name": "c1p-noncanonical-native-terrain-review",
+    "retentionDays": 7
+  },
+  "reportSha256": "7362b58f4576f607de55464cd04bbfe10ccde4217b7a172514f401232540e38c",
+  "execution": {
+    "platform": "GitHub-hosted Ubuntu Node 22",
+    "testGroups": {
+      "sourceC1OThroughC1AA": 71,
+      "sharedSeamC1AA": 6,
+      "newEndpointC1AB": 4
+    },
+    "allPassed": true,
+    "scannedCodeFiles": 899,
+    "newLegacyHexDependencies": 0,
+    "windowsNativeRunForThisCommit": false
+  },
+  "relativeHeightInterpretation": {
+    "generator": "Fantasy Map Simulator",
+    "ownerAssumption": "ORANGE_RED_HIGHER_CREAM_LOWER",
+    "numericElevationCertified": false,
+    "saveMatchedToSource": false,
+    "southernDrawnDrainageCertifiedRiver": false
+  },
+  "source": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalElevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "originalBiomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "originalMainlandSourceEdges": 599
+  },
+  "seams": [
+    {
+      "id": "NORTH_APPROXIMATE_COASTAL_TRANSITION",
+      "sharedChain": [
+        [
+          279,
+          197
+        ],
+        [
+          291,
+          192
+        ],
+        [
+          301,
+          188
+        ],
+        [
+          308,
+          185
+        ]
+      ],
+      "affectedRegions": [
+        "region.kharuun_drylands",
+        "region.veyrholm_shore"
+      ],
+      "sourceGridTerminalJunctions": [
+        {
+          "regionId": "region.kharuun_drylands",
+          "before": {
+            "originalNeighbor": [
+              279,
+              202
+            ],
+            "join": [
+              279,
+              197
+            ],
+            "length": 5
+          },
+          "after": {
+            "sharedEndpoint": [
+              308,
+              185
+            ],
+            "inlandNeighbor": null,
+            "length": null,
+            "joinsOriginalCoastArc": true
+          }
+        },
+        {
+          "regionId": "region.veyrholm_shore",
+          "before": {
+            "originalNeighbor": [
+              321,
+              176
+            ],
+            "join": [
+              308,
+              185
+            ],
+            "length": 15.81
+          },
+          "after": {
+            "sharedEndpoint": [
+              279,
+              197
+            ],
+            "inlandNeighbor": [
+              271,
+              194
+            ],
+            "length": 8.54
+          }
+        }
+      ],
+      "geographicReview": "COASTAL_TO_INLAND_CONTINUATION_REQUIRES_WIDER_CONTEXT"
+    },
+    {
+      "id": "SOUTH_APPROXIMATE_UPLAND_APRON",
+      "sharedChain": [
+        [
+          304,
+          330
+        ],
+        [
+          320,
+          331
+        ],
+        [
+          338,
+          332
+        ],
+        [
+          352,
+          333
+        ]
+      ],
+      "affectedRegions": [
+        "region.kharuun_drylands",
+        "region.verdant_thalos"
+      ],
+      "sourceGridTerminalJunctions": [
+        {
+          "regionId": "region.kharuun_drylands",
+          "before": {
+            "originalNeighbor": [
+              368,
+              308
+            ],
+            "join": [
+              352,
+              333
+            ],
+            "length": 29.68
+          },
+          "after": {
+            "sharedEndpoint": [
+              304,
+              330
+            ],
+            "inlandNeighbor": [
+              296,
+              313
+            ],
+            "length": 18.79
+          }
+        },
+        {
+          "regionId": "region.verdant_thalos",
+          "before": {
+            "originalNeighbor": [
+              289,
+              348
+            ],
+            "join": [
+              304,
+              330
+            ],
+            "length": 23.43
+          },
+          "after": {
+            "sharedEndpoint": [
+              352,
+              333
+            ],
+            "inlandNeighbor": [
+              367,
+              337
+            ],
+            "length": 15.52
+          }
+        }
+      ],
+      "geographicReview": "EASTERN_WIDER_DRAWN_DRAINAGE_CROSSING_STILL_NEEDS_ASSESSMENT"
+    }
+  ],
+  "distanceDefinition": "Straight source-reference-grid vertex distances, not measured kilometers, elevation change, slope, biome transition width or approval of landscape features.",
+  "noncanonicalCombinedOnly": {
+    "originalMainlandCandidateCells": 79419,
+    "previouslyAssigned": 52449,
+    "hypotheticalAddedMainlandCells": 1746,
+    "hypotheticalAssigned": 54195,
+    "hypotheticalUnassigned": 25224,
+    "newlyEnclosedUnresolvedLabelZeroSamples": 45,
+    "newPoliticallyOrCanonicallyAssignedCells": 0,
+    "physicalComponentsReclassified": 0,
+    "originalSourcePixelOrVectorEdits": 0,
+    "acceptedC1PPolygonEdits": 0
+  },
+  "nextGate": "C1-AC broader paired original-elevation and source-vector relief continuation around all four terminal junctions, especially southern Kharuun eastern connector and Verdant western continuation, then a separate reversible whole-interface candidate if geographically justified.",
+  "holds": {
+    "northeasternHeadlandEdges": [
+      75,
+      115
+    ],
+    "component51StillHeld": true,
+    "kharuunOptionBEdges": [
+      35,
+      58
+    ],
+    "verdantSoutheasternPeninsulaPreserved": true,
+    "veyrholmDryInteriorExclusionsPreserved": true,
+    "shattercapUnassigned": true,
+    "largeNortheastIslandUnassigned": true,
+    "allOtherDetachedComponentsHeld": true,
+    "coast40Unclaimed": true,
+    "serathylWindwardParent": "region.serathyl",
+    "noCanonicalRegionOrSettlementPublication": true
+  }
+}
