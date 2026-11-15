@@ -60,7 +60,9 @@ This is a **reference overlay transform**, not a promise that a one-pixel screen
 
 The evidence packet includes exact-color district-ink extraction from screenshot #11 (UI panel excluded), an overlay registered to the **original First World biome**, the same district ink on the grayscale relief source view, and a comparative screenshot with both C1-AA shared subchains. Derived previews preserve underlying original source assets and carry no terrain ownership claims.
 
-The full eleven-image evidence packet remains **outside Git** for now because this connector pass can validate/commit text records and code without adding screenshot binaries to the growing repository. The owner's downloadable packet includes original screenshot PNGs, SHA256 hashes, derived inspection previews and optional local registration scripts. Its exact ZIP SHA256 is
+A small [transparent original-source-reference district-ink SVG](assets/kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg) is **committed to Git** (17,203 bytes, SHA256 `6a0aaedfb4a4551dcbff6103bb5ca8405d1d923c0496577956af05a0657d2a8d`). It preserves the five approximate colored screenshot stroke groups in the 2048×1152 authoring frame and is intentionally **not a polygon set**. This lightweight reference layer does not change or include the original biome/elevation PNGs.
+
+The full eleven-image **original PNG screenshot** packet remains **outside Git** for now, while its compact derived coordinate-reference SVG, source ledger and regression checks are committed without adding large screenshot binaries to the growing repository. The owner's downloadable packet includes original screenshot PNGs, SHA256 hashes, derived inspection previews and optional local registration scripts. Its exact ZIP SHA256 is
 `b3f564438c3f18bc802818e4667024fc2e0654dd0f3387ff94a0308f77473be4`.
 The repo's [manifest](kaelvar-c1ac-owner-fantasy-map-simulator-screenshot-evidence-2026-11-15.json) pins every original screenshot filename, dimensions, byte count and SHA256 so Codex can import the packet without ambiguity.
 
