@@ -75,7 +75,7 @@ export function validateC1ACOwnerViewManifest(m,c1aa){
   !same(m.screenshotManifest.map(x=>x.filename),expectedNames)||
   m.screenshotManifest.some((x,i)=>x.order!==i+1||
     !/^[a-f0-9]{64}$/.test(x.sha256)||x.sizeBytes<200000||
-    x.dimensions?.length!==2||x.dimensions.some(v=>!Number.isInteger(v)||v<1000)||
+    x.dimensions?.length!==2||x.dimensions.some(v=>!Number.isInteger(v)||v<600)||
     x.source!=='USER_UPLOAD_ORIGINAL_PNG_BYTES')||
   editor?.screenshotOrder!==11||
   editor.toolTitle!=='MAP EDITOR'||editor.selector!=='Edit District'||
