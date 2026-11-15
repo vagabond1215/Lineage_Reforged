@@ -1,0 +1,162 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1ad-voronoi-source-and-geographic-region-preflight.v1",
+  "date": "2026-11-15",
+  "status": "VORONOI_PROVENANCE_SUPPORTED_SOURCE_MESH_UNRECOVERED_REGION_ADOPTION_HELD",
+  "sourceEvidence": {
+    "generator": "Fantasy Map Simulator",
+    "steamAppId": 3035500,
+    "ownerAttestedVoronoiMap": true,
+    "developerNotes": [
+      {
+        "published": "2025-01-16",
+        "url": "https://steamdb.info/patchnotes/17025175/",
+        "claim": "Voronoi polygons (cells) group into provinces; heightmap precedes biome map and province generation"
+      },
+      {
+        "published": "2026-04-20",
+        "url": "https://steamcommunity.com/app/3035500/announcements/",
+        "claim": "District layer groups multiple provinces; boundaries need not follow states; map painting assigns provinces to districts"
+      }
+    ],
+    "hierarchy": [
+      {
+        "level": "VORONOI_CELL",
+        "relation": "ADJACENT_POLYGONS_UNDERLY_PROVINCES",
+        "recoverableFromCurrentScreenshots": false
+      },
+      {
+        "level": "SIMULATOR_PROVINCE",
+        "relation": "MULTIPLE_ADJACENT_VORONOI_CELLS",
+        "recoverableFromCurrentScreenshots": false
+      },
+      {
+        "level": "SIMULATOR_DISTRICT",
+        "relation": "GROUPS_SIMULATOR_PROVINCES",
+        "recoverableFromCurrentScreenshots": false
+      },
+      {
+        "level": "LINEAGE_GEOGRAPHIC_REGION",
+        "relation": "OWNER_PROPOSED_GEOGRAPHIC_IDENTITY_NOT_SIMULATOR_POLITICAL_AREA",
+        "recoverableFromCurrentScreenshots": "APPROXIMATE_EDITOR_STROKES_ONLY"
+      }
+    ],
+    "originalGameSaveMatched": false,
+    "recoveredCellIds": false,
+    "recoveredVoronoiSites": false,
+    "recoveredAdjacencyGraph": false,
+    "recoveredProvinceMembership": false,
+    "recoveredDistrictMembership": false,
+    "recoveredOriginalHeightScalar": false,
+    "numericElevationMetersCertified": false,
+    "sourceDataFormatRecognized": false
+  },
+  "exactSource": {
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "originalBiomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "originalElevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "originalMainlandComponent": 30,
+    "originalMainlandCandidateCells": 79419,
+    "acceptedC1PAssigned": 52449,
+    "acceptedC1PUnassigned": 26970,
+    "acceptedC1PRegionCells": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "originalCoastlineEdges": 599,
+    "originalKharuunOptionBEdges": [
+      35,
+      58
+    ],
+    "heldNEHeadlandEdges": [
+      75,
+      115
+    ]
+  },
+  "ownerOverlay": {
+    "screenshotManifest": "docs/design/kaelvar-c1ac-owner-fantasy-map-simulator-screenshot-evidence-2026-11-15.json",
+    "originalScreenshotCount": 11,
+    "referenceSvg": "docs/design/assets/kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg",
+    "referenceSvgSha256": "6a0aaedfb4a4551dcbff6103bb5ca8405d1d923c0496577956af05a0657d2a8d",
+    "coordinateFrame": "ORIGINAL_FIRST_WORLD_REFERENCE_GRID_2048_X_1152",
+    "proposalPalette": [
+      "region.veyrholm_shore",
+      "region.auric_marches",
+      "region.kharuun_drylands",
+      "region.verdant_thalos",
+      "region.shattercap_isles"
+    ],
+    "screenshotInkOnly": true,
+    "polygonBoundaryAuthority": false,
+    "islandOwnershipAuthority": false
+  },
+  "potentialLocalSaveRecovery": {
+    "platform": "Windows",
+    "likelyDirectory": "%USERPROFILE%/AppData/LocalLow/The Stranger Studio/FantasyMapSimulator/Saves",
+    "fileSuffixCandidate": ".save",
+    "readOnlyInventoryOnly": true,
+    "searchExistingSavesWithoutRewriting": true,
+    "exactFileIdentificationNeeded": true,
+    "matchToFirstWorldBeforeParsingMembership": true,
+    "recordFileHashSizeDateAndSchemaVersionWhereAvailable": true,
+    "doNotUploadPrivateOrUnverifiedSavesToGit": true,
+    "noAssumedSerializationSchema": true,
+    "avoidFullSaveBinaryInRepository": true,
+    "ownerImportCanBeDeferred": true
+  },
+  "proposedFutureMeshAudit": {
+    "acceptedOnlyIfMatchedToOriginalSource": true,
+    "verifyCoordinateTransformFromSaveToOriginalSource": true,
+    "requireUniqueCellIds": true,
+    "requireValidNonzeroAreaPolygons": true,
+    "requireReciprocalCellAdjacency": true,
+    "requireSharedEdgeGeometryConsistency": true,
+    "requireCellToProvinceMembershipIntegrity": true,
+    "requireProvinceToDistrictMembershipIntegrity": true,
+    "distinguishCellAndProvinceAndDistrictFromGeographicRegion": true,
+    "noAutomaticVoronoiCellNearestSeedOwnership": true,
+    "sharedPrimaryRegionCoverageOnFinalizedPhysicalLand": true,
+    "exactOnePrimaryRegionPerFinalizedLandPoint": true,
+    "deterministicSharedBoundaryTieBreaker": true,
+    "noImplicitRegionlessEcotones": true,
+    "optionalSecondaryEnvironmentalInfluences": true,
+    "noHardPoliticalBorderAssumption": true,
+    "noForcedCellEdgeWhenSupportedNaturalFeatureDiffers": true,
+    "originalCoastlineAndComponentLabelsRemainAuthoritative": true,
+    "noAutomaticOffshoreComponentAssignment": true,
+    "unresolvedContourAndSourceInkRemainHeld": true
+  },
+  "geometryReview": {
+    "compareEditorWholeRegionSilhouettesBeforeLocalWaypointOptimization": true,
+    "northernVeyrholmKharuunC1AADiffersFromOwnerEditor": true,
+    "southernKharuunVerdantC1AAOnlyPartlyAgreesWithOwnerEditor": true,
+    "auricKharuunWholeInterfaceRequiresReview": true,
+    "screenshotInkIsNeitherRiverNorRidgeProof": true,
+    "ownerRelativeHeight": "ORANGE_RED_RELATIVELY_HIGHER_CREAM_RELATIVELY_LOWER",
+    "noNumericSlopeOrHydrologyClaims": true,
+    "noSavedGraphAvailableYet": true,
+    "acceptedC1PPolygonsChanged": false,
+    "acceptedC1AASharedChainsChanged": false,
+    "canonicalPublication": false
+  },
+  "sourceHolds": {
+    "northeastHeadlandHeld": true,
+    "originalPhysicalComponent51Held": true,
+    "shattercapDetachedIslesHeld": true,
+    "largeNortheastIslandHeld": true,
+    "allOtherDetachedComponentsHeld": true,
+    "verdantSoutheasternPeninsulaPreserved": true,
+    "veyrholmDryInlandExclusionsPreserved": true,
+    "coast40Unclaimed": true,
+    "serathylWindwardPreserved": true,
+    "sourceRasterEdits": 0,
+    "sourceVectorEdits": 0,
+    "originalTerrainRelabels": 0,
+    "newCanonicallyAssignedRegionCells": 0,
+    "newGameContentOrSettlements": 0,
+    "canonicalWritable": false
+  },
+  "nextStage": "C1-AE inspect matched simulator save if available, normalize cell/province/district topology as auxiliary evidence, otherwise continue reversible source-aligned whole-interface design against original elevation and owner district strokes"
+}
