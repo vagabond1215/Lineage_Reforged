@@ -21,7 +21,7 @@ const OPTIONS=[
  {id:'NORTH_VEYRHOLM_SOUTH_TWO',interfaceId:INTERFACES[0],
   editedRegion:REGION[3],waypointIndex:3,original:[284,190],candidate:[284,192]},
  {id:'NORTH_KHARUUN_NORTH_TWO',interfaceId:INTERFACES[0],
-  editedRegion:REGION[1],waypointIndex:20,original:[301,193],candidate:[301,191]},
+  editedRegion:REGION[1],waypointIndex:19,original:[301,193],candidate:[301,191]},
  {id:'SOUTH_KHARUUN_SOUTH_THREE',interfaceId:INTERFACES[1],
   editedRegion:REGION[1],waypointIndex:9,original:[314,320],candidate:[314,323]},
  {id:'SOUTH_VERDANT_NORTH_THREE',interfaceId:INTERFACES[1],
