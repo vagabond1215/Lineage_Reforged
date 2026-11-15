@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "proposalStatus": "REVIEW_ONLY_NOT_CANONICAL",
+  "date": "2026-11-15",
+  "source": {
+    "repository": "vagabond1215/Lineage_Reforged",
+    "ref": "a3dd0057727c7b74743a30eb403a05996ed751d1",
+    "path": "packages/content/base/world/regions.json",
+    "blobSha": "04516952ad97d830d2f49d915137197947e22b3a"
+  },
+  "ownerApproved": "MACRO_GEOGRAPHY_DIRECTION_ONLY",
+  "finalSimulatorOption2SaveVerified": false,
+  "regionLevelChangesApproved": false,
+  "parentRecordCount": 9,
+  "records": [
+    {
+      "regionId": "region.kaelvar",
+      "recordType": "continent",
+      "name": "Kaelvar",
+      "originalPositionLabel": "northwest_continent",
+      "proposedPositionLabel": "northwest_continent",
+      "positionLabelStatus": "UNCHANGED",
+      "originalSummary": "A northwestern continent of dry interior uplands, fertile southern coasts, and island-studded northern waters.",
+      "proposedSummary": "A northwestern continent with dry inland uplands, fertile southern coasts and an island-studded northern maritime fringe facing the intercontinental trading seas.",
+      "reason": "Maintain approved northwest placement while avoiding implicit old child-polygon authority.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.valtherion",
+      "recordType": "continent",
+      "name": "Valtherion",
+      "originalPositionLabel": "northeastern_supercontinent",
+      "proposedPositionLabel": "northeastern_supercontinent",
+      "positionLabelStatus": "UNCHANGED",
+      "originalSummary": "The largest and most fertile landmass, dominated by major rivers, forested northlands, and vast agricultural basins.",
+      "proposedSummary": "The largest northeastern supercontinent, with vast river basins, forested northern lands and fertile agricultural heartlands facing the Myridian and northern seas.",
+      "reason": "Preserve greatest landmass and river-basin ecology; Dawnreach stays separate.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.serathyl",
+      "recordType": "continent",
+      "name": "Serathyl",
+      "originalPositionLabel": "southwestern_continent",
+      "proposedPositionLabel": "southwestern_continent",
+      "positionLabelStatus": "UNCHANGED",
+      "originalSummary": "A long maritime continent of complex coasts, forested interiors, and merchant-friendly sea lanes.",
+      "proposedSummary": "A southwestern maritime continent of forested interiors, intricate coasts and long-distance western trade routes.",
+      "reason": "Preserve independent southwestern marine/forest identity without implying Windward land on Kaelvar.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.draemor",
+      "recordType": "continent",
+      "name": "Draemor",
+      "originalPositionLabel": "southern_central_continent",
+      "proposedPositionLabel": "southern_central_continent",
+      "positionLabelStatus": "UNCHANGED",
+      "originalSummary": "A fertile southern central continent defined by large river systems and powerful agricultural belts.",
+      "proposedSummary": "A fertile south-central continent of broad rivers and agricultural basins, linked to Talmyra by a jointly managed natural tidal-rock land crossing.",
+      "reason": "Retain wet-temperate agrarian identity; add normally passable overland contact without inventing executable route geometry.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.talmyra",
+      "recordType": "continent",
+      "name": "Talmyra",
+      "originalPositionLabel": "southeast_continent",
+      "proposedPositionLabel": "southeast_continent",
+      "positionLabelStatus": "UNCHANGED",
+      "originalSummary": "A wilder southeastern continent of tribal confederacies, volcanic strongholds, jungled interiors, and contested frontiers.",
+      "proposedSummary": "A hot, seasonal and rugged southeastern continent of tropical forests, savanna, resource-rich uplands and frontier valleys, connected to Draemor by a jointly managed tidal-rock isthmus.",
+      "reason": "Preserve independent tropical frontier ecology, complementary trade and normal overland access.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.myridian_chain",
+      "recordType": "island_system",
+      "name": "The Myridian Chain",
+      "originalPositionLabel": "northern_archipelago",
+      "proposedPositionLabel": "northern_archipelago",
+      "positionLabelStatus": "UNCHANGED",
+      "originalSummary": "A busy archipelago between Kaelvar and Valtherion made up of pirate states, trade ports, and naval staging points.",
+      "proposedSummary": "A northern intercontinental island network and naval-oriented trade power between Kaelvar and Valtherion, including a detached central island amid contested commercial approaches and independently sovereign neighboring merfolk waters.",
+      "reason": "Align parent-level detached island assignment and maritime rivalry without attributing underwater sovereignty.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.lantern_isles",
+      "recordType": "island_system",
+      "name": "The Lantern Isles",
+      "originalPositionLabel": "central_ocean_isles",
+      "proposedPositionLabel": "east_central_ocean_isles",
+      "positionLabelStatus": "CANDIDATE_NEW_LABEL_REQUIRES_SCHEMA_AND_SOURCE_REGISTRATION",
+      "originalSummary": "Small central-ocean islands used as trade outposts, hidden anchorages, and pirate refuges.",
+      "proposedSummary": "A warm-water, east-central maritime island network whose trading ports compete with Myridian and link the southern continents to the eastern seas.",
+      "reason": "Make central/eastern trade sphere explicit; new token is a proposed label, not approved schema.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.serpents_wake",
+      "recordType": "island_system",
+      "name": "The Serpent's Wake",
+      "originalPositionLabel": "southern_island_arc",
+      "proposedPositionLabel": "remote_eastern_island_chain",
+      "positionLabelStatus": "CANDIDATE_NEW_LABEL_REQUIRES_SCHEMA_AND_SOURCE_REGISTRATION",
+      "originalSummary": "A storm-lashed southern island arc infamous for pirate tribes, wrecking seas, and undersea kingdoms.",
+      "proposedSummary": "A remote eastern island confederation of traders, local authorities, maritime guilds and private patrols, renowned for reefs, tourism and seaborne commerce while concealing some privateering and piracy.",
+      "reason": "Replace obsolete southern/pirate-dominated shorthand with approved eastern confederation.",
+      "canonicalWriteApproved": false
+    },
+    {
+      "regionId": "region.dawnreach_isles",
+      "recordType": "island_system",
+      "name": "The Dawnreach Isles",
+      "originalPositionLabel": "eastern_ocean_isles",
+      "proposedPositionLabel": "northern_polar_archipelago",
+      "positionLabelStatus": "CANDIDATE_NEW_LABEL_REQUIRES_SCHEMA_AND_SOURCE_REGISTRATION",
+      "originalSummary": "Sparse eastern islands far from the main continental centers, valuable mainly as waypoints and remote outposts.",
+      "proposedSummary": "A remote northern U-shaped arctic and subarctic archipelago of rugged cold islands, winter ice, sheltered inner waters and cold-water maritime settlements.",
+      "reason": "Owner-selected Option 2, northern polar identity, not old far-eastern geography.",
+      "canonicalWriteApproved": false
+    }
+  ],
+  "holds": [
+    "NO_CHILD_REGION_EDITS",
+    "NO_SOURCE_POLYGON_WRITES",
+    "NO_SETTLEMENT_OR_ROUTE_MUTATION",
+    "NO_POLITY_ID_INFERENCE",
+    "NO_NACRE_SHELF_TRANSFER",
+    "NO_UNDERWATER_MERFOLK_SUBORDINATION",
+    "NO_TIDAL_ARCH_TRAVERSAL_WITHOUT_LOCAL_GEOMETRY",
+    "NO_POSITION_LABEL_UPDATE_BEFORE_SOURCE_AND_SCHEMA_REVIEW"
+  ],
+  "note": "The new summaries and optional position-label tokens are editorial proposals requiring owner/source acceptance and field/schema validation before canonical integration."
+}
