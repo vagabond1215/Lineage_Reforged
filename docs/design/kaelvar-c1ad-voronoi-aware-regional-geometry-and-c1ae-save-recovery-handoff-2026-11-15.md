@@ -4,7 +4,10 @@ Date: 2026-11-15
 Status: **SOURCE-VERIFIED STRUCTURAL PREWORK; NO MATCHED SIMULATOR CELL GRAPH OR NEW REGIONAL OWNERSHIP**  
 Existing branch: `connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14`  
 Prior work: [C1-AC owner screenshot district review](kaelvar-c1ac-owner-simulator-district-and-relative-relief-review-2026-11-15.md)  
-Read-only ledger: [C1-AD strict Voronoi provenance and topology preflight](kaelvar-c1ad-voronoi-provenance-and-geographic-region-preflight-2026-11-15.json)  
+Read-only ledger: [C1-AD strict Voronoi provenance and topology preflight](kaelvar-c1ad-voronoi-provenance-and-geographic-region-preflight-2026-11-15.json)
+Pinned accepted native evidence: [C1-AD hosted result and SHA ledger](kaelvar-c1ad-hosted-voronoi-source-and-topology-preflight-evidence-2026-11-15.json)  
+Verified implementation SHA: `3267e63b5341e733b2baadbff7d4c2d14f49a9d4`  
+[Successful GitHub Actions native run #43745376469](https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43745376469)  
 Review overlay: [C1-AC screenshot-derived district ink in the original authoring frame](assets/kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg)
 
 ## Newly established simulator mechanics
@@ -65,6 +68,12 @@ node scripts/kaelvar-c1ac-simulator-evidence.mjs --check
 ```
 
 If the owner's eleven-image packet is extracted on the machine, separately verify exact original screenshot bytes using the C1-AC `--verify-dir` mode. Neither command writes a source PNG or a region polygon.
+
+## Native acceptance
+
+The exact hosted Ubuntu/Node 22 run at `3267e63b5341e733b2baadbff7d4c2d14f49a9d4` passed **88/88** tests: 71 inherited, 6 existing shared-seam, 4 existing endpoint, 3 original screenshot and 4 new C1-AD topology/preflight tests. A no-new-legacy-hex scan covered **904 code files** with **zero new dependencies**. The pinned artifact is `c1p-noncanonical-native-terrain-review`, ID `14174181553`, seven-day retention. The native `c1ad-voronoi-geography-preflight.json` SHA256 is `6b8dd4d5eab5613efae8b2ee6477dac514e2bc292bac4e129ae3d81d2a8c5893`.
+
+This is source and synthetic-tool acceptance **only**: it neither proves that a matching original save has been found nor validates a real Voronoi cell graph, an authentic river or any new region geometry. Owner-local Windows execution for this new pass remains outstanding.
 
 ## C1-AE: bounded read-only save reconnaissance
 
