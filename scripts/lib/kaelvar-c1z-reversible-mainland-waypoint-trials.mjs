@@ -155,9 +155,15 @@ function oneTrial({opt,proposal,baseGeom,baselineOwner,labels,
  const cloned=structuredClone(proposal);
  const i=REGION.indexOf(opt.editedRegion);
  cloned.regions[i].inlandWaypoints[opt.waypointIndex]=[...opt.candidate];
+ const baseWaypoints=proposal.regions[i].inlandWaypoints;
+ const neighbors=[baseWaypoints[opt.waypointIndex-1],baseWaypoints[opt.waypointIndex+1]];
+ if(neighbors.some(p=>!Array.isArray(p)||p.length!==2))
+  fail('C1-Z trial local comparison neighbors missing');
  const record={
   id:opt.id,interfaceId:opt.interfaceId,editedRegion:opt.editedRegion,
   originalWaypoint:opt.original,trialWaypoint:opt.candidate,
+  originalLocalReturn:[neighbors[0],opt.original,neighbors[1]],
+  proposedLocalReturn:[neighbors[0],opt.candidate,neighbors[1]],
   waypointIndex:opt.waypointIndex,sourceArcChanged:false,
   proposedPermanentSourceOrRegionEdit:false,ownerApproval:false,
   status:'NOT_EVALUATED',reason:null
