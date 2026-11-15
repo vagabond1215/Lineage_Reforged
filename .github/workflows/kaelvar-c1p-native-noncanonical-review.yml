@@ -26,6 +26,9 @@ on:
       - 'tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs'
       - 'scripts/lib/kaelvar-c1y-independent-mainland-gap-review.mjs'
       - 'tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs'
+      - 'scripts/lib/kaelvar-c1z-reversible-mainland-waypoint-trials.mjs'
+      - 'tests/unit/kaelvar-c1z-reversible-mainland-waypoint-trials.test.mjs'
+      - 'docs/design/kaelvar-c1z-two-mainland-seam-reversible-waypoint-options-2026-11-14.json'
       - 'docs/design/kaelvar-c1y-independent-mainland-seam-options-2026-11-14.json'
       - 'docs/design/kaelvar-c1x-targeted-promontory-vs-broad-ink-feasibility-2026-11-14.json'
       - 'docs/design/kaelvar-c1w-component51-physical-interpretation-owner-review-2026-11-14.json'
@@ -68,6 +71,7 @@ jobs:
           node --check scripts/lib/kaelvar-c1w-component51-physical-adjudication.mjs
           node --check scripts/lib/kaelvar-c1x-targeted-attached-tip-feasibility.mjs
           node --check scripts/lib/kaelvar-c1y-independent-mainland-gap-review.mjs
+          node --check scripts/lib/kaelvar-c1z-reversible-mainland-waypoint-trials.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
           node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
@@ -79,9 +83,10 @@ jobs:
           node --check tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs
           node --check tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs
           node --check tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs
+          node --check tests/unit/kaelvar-c1z-reversible-mainland-waypoint-trials.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs tests/unit/kaelvar-c1v-component51-source-separation.test.mjs tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs tests/unit/kaelvar-c1v-component51-source-separation.test.mjs tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs tests/unit/kaelvar-c1z-reversible-mainland-waypoint-trials.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -660,6 +665,80 @@ jobs:
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --mainland-gaps-svg > "$RUNNER_TEMP/c1y-original-mainland-seam-gaps.svg"
           test -s "$RUNNER_TEMP/c1y-original-mainland-seam-gaps.svg"
+      - name: C1-Z reversible northern and southern mainland waypoint alternatives
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --seam-trials-check > "$RUNNER_TEMP/c1z-reversible-waypoint-trials.json"
+          node - "$RUNNER_TEMP/c1z-reversible-waypoint-trials.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1Z_FOUR_SOURCE_INDEXED_REVERSIBLE_WAYPOINT_TRIALS_CANONICAL_HELD');
+          assert.equal(r.sourceWitness.sourceCoastlineEdges,599);
+          assert.equal(r.sourceWitness.originalMainlandPhysicalComponent,30);
+          assert.equal(r.baseline.politicallyAssigned,52449);
+          assert.equal(r.baseline.unassigned,26970);
+          assert.equal(r.baseline.totalMainland,79419);
+          assert.deepEqual(r.baseline.perRegion,[5632,18624,19182,9011]);
+          assert.deepEqual(r.alternatives.map(x=>x.id),[
+            'NORTH_VEYRHOLM_SOUTH_TWO',
+            'NORTH_KHARUUN_NORTH_TWO',
+            'SOUTH_KHARUUN_SOUTH_THREE',
+            'SOUTH_VERDANT_NORTH_THREE']);
+          assert.equal(r.alternatives.length,4);
+          for(const row of r.alternatives){
+            assert.equal(row.proposedPermanentSourceOrRegionEdit,false);
+            assert.equal(row.ownerApproval,false);
+            assert.equal(row.sourceArcChanged,false);
+            assert.equal(row.acceptedAsC1PRegion,false);
+            assert.equal(row.canonicalWritable,false);
+            assert.ok(row.status.startsWith('VALID_')||
+              row.status==='REJECTED_NO_SOURCE_OR_POLITICAL_CHANGE');
+            assert.equal(row.originalLocalReturn.length,3);
+            assert.equal(row.proposedLocalReturn.length,3);
+            if(row.status.startsWith('VALID_')){
+              assert.equal(row.regionSourceCoastEdgesUnchanged,true);
+              assert.equal(row.originalProtectedAnchorsPreserved,true);
+              assert.equal(row.regionalCollisions,0);
+              assert.equal(row.originalCoastCrossings,0);
+              assert.equal(row.protectedOffshoreContourCrossings,0);
+              assert.equal(row.originalComponent30Only,true);
+              assert.ok(row.changedOriginalMainlandSamples>0);
+              assert.ok(row.changedOriginalMainlandSamples<=250);
+              assert.equal(row.changedOriginalMainlandSamples,row.changeCells.length);
+              assert.ok(row.trialUnassignedGapSamples>=4);
+              assert.ok(row.trialUnassignedGapSamples<=row.baselineUnassignedGapSamples);
+              assert.equal(row.trialAssignedCandidateCells+
+                row.trialUnassignedCandidateCells,79419);
+              assert.match(row.trialPathSha256,/^[0-9a-f]{64}$/);
+              assert.ok(row.changeCells.every(x=>
+                x.from===0||x.to===0));
+            }else{
+              assert.ok(row.reason?.length>0);
+            }
+          }
+          assert.equal(r.interpretation.trialPolygonsAreNotAcceptedWorldContent,true);
+          assert.equal(r.interpretation.noTrialAutomaticallySelected,true);
+          assert.equal(r.unchanged.acceptedC1PRegionRingChanges,0);
+          assert.equal(r.unchanged.acceptedC1POwnerChanges,0);
+          assert.equal(r.unchanged.originalSourceRasterChanges,0);
+          assert.equal(r.unchanged.originalComponentLabelChanges,0);
+          assert.equal(r.unchanged.newTerritorialClaims,0);
+          assert.equal(r.unchanged.originalDetachedPhysicalComponentClaims,0);
+          assert.equal(r.unchanged.canonicalWritable,false);
+          assert.deepEqual(r.unchanged.originalKharuunOptionBSourceEdges,[35,58]);
+          assert.deepEqual(r.unchanged.northeasternHeadlandOriginalEdges,[75,115]);
+          assert.equal(r.unchanged.northeasternHeadlandOwner,null);
+          assert.equal(r.unchanged.component51Owner,null);
+          assert.equal(r.unchanged.shattercapUnassigned,true);
+          assert.equal(r.unchanged.largeNEIslandUnassigned,true);
+          console.log('C1-Z waypoint trial results: '+r.alternatives.map(x=>
+            x.id+': '+x.status+
+            (x.trialUnassignedGapSamples===undefined?'':', gap '+x.baselineUnassignedGapSamples+
+              ' -> '+x.trialUnassignedGapSamples)+
+            (x.changedOriginalMainlandSamples===undefined?'':', delta '+x.changedOriginalMainlandSamples)
+          ).join('; '));
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --seam-trials-svg > "$RUNNER_TEMP/c1z-reversible-mainland-seam-options.svg"
+          test -s "$RUNNER_TEMP/c1z-reversible-mainland-seam-options.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -687,5 +766,7 @@ jobs:
             ${{ runner.temp }}/c1x-targeted-ink-vs-teal-source-review.svg
             ${{ runner.temp }}/c1y-strict-mainland-seam-gaps.json
             ${{ runner.temp }}/c1y-original-mainland-seam-gaps.svg
+            ${{ runner.temp }}/c1z-reversible-waypoint-trials.json
+            ${{ runner.temp }}/c1z-reversible-mainland-seam-options.svg
           if-no-files-found: warn
           retention-days: 7
