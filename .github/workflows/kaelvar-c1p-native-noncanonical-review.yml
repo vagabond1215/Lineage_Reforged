@@ -893,6 +893,8 @@ jobs:
           assert.deepEqual(r.inspectedSharedSeams[1].regionJoins[0]
             .beforeFirstSharedEndpoint.priorOriginalWaypoint,[368,308]);
           assert.deepEqual(r.inspectedSharedSeams[1].regionJoins[1]
+            .beforeFirstSharedEndpoint.priorOriginalWaypoint,[289,348]);
+          assert.deepEqual(r.inspectedSharedSeams[1].regionJoins[1]
             .afterLastSharedEndpoint.nextOriginalWaypoint,[382,333]);
           assert.equal(r.combinedNoncanonicalCoverage.originalMainlandCandidateCells,79419);
           assert.equal(r.combinedNoncanonicalCoverage.provisionalNewCandidateCells,1746);
