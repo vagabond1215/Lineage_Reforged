@@ -28,6 +28,9 @@ on:
       - 'tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs'
       - 'scripts/lib/kaelvar-c1z-reversible-mainland-waypoint-trials.mjs'
       - 'tests/unit/kaelvar-c1z-reversible-mainland-waypoint-trials.test.mjs'
+      - 'scripts/lib/kaelvar-c1aa-relief-first-prework.mjs'
+      - 'tests/unit/kaelvar-c1aa-relief-first-prework.test.mjs'
+      - 'docs/design/kaelvar-c1aa-relief-first-regional-seams-prework-2026-11-14.json'
       - 'docs/design/kaelvar-c1z-two-mainland-seam-reversible-waypoint-options-2026-11-14.json'
       - 'docs/design/kaelvar-c1y-independent-mainland-seam-options-2026-11-14.json'
       - 'docs/design/kaelvar-c1x-targeted-promontory-vs-broad-ink-feasibility-2026-11-14.json'
@@ -72,6 +75,7 @@ jobs:
           node --check scripts/lib/kaelvar-c1x-targeted-attached-tip-feasibility.mjs
           node --check scripts/lib/kaelvar-c1y-independent-mainland-gap-review.mjs
           node --check scripts/lib/kaelvar-c1z-reversible-mainland-waypoint-trials.mjs
+          node --check scripts/lib/kaelvar-c1aa-relief-first-prework.mjs
           node --check scripts/kaelvar-c1p-regional-seams.mjs
           node --check tests/unit/kaelvar-c1p-regional-seam-review.test.mjs
           node --check tests/unit/kaelvar-c1q-headland-continuity.test.mjs
@@ -84,9 +88,10 @@ jobs:
           node --check tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs
           node --check tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs
           node --check tests/unit/kaelvar-c1z-reversible-mainland-waypoint-trials.test.mjs
+          node --check tests/unit/kaelvar-c1aa-relief-first-prework.test.mjs
       - name: C1-O baseline and C1-P rejection tests
         run: |
-          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs tests/unit/kaelvar-c1v-component51-source-separation.test.mjs tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs tests/unit/kaelvar-c1z-reversible-mainland-waypoint-trials.test.mjs
+          node --test tests/unit/kaelvar-c1o-regional-boundaries.test.mjs tests/unit/kaelvar-c1p-regional-seam-review.test.mjs tests/unit/kaelvar-c1q-headland-continuity.test.mjs tests/unit/kaelvar-c1r-headland-source-diagnostics.test.mjs tests/unit/kaelvar-c1s-headland-ink-sensitivity.test.mjs tests/unit/kaelvar-c1t-source-pinch-and-island-contact.test.mjs tests/unit/kaelvar-c1u-headland-review-enclosures.test.mjs tests/unit/kaelvar-c1v-component51-source-separation.test.mjs tests/unit/kaelvar-c1w-component51-physical-adjudication.test.mjs tests/unit/kaelvar-c1x-targeted-attached-tip-feasibility.test.mjs tests/unit/kaelvar-c1y-independent-mainland-gap-review.test.mjs tests/unit/kaelvar-c1z-reversible-mainland-waypoint-trials.test.mjs tests/unit/kaelvar-c1aa-relief-first-prework.test.mjs
           node scripts/check-no-new-hex-dependencies.mjs --check
       - name: Source PNG and vector verified candidate raster measurements
         run: |
@@ -774,6 +779,67 @@ jobs:
           NODE
           node scripts/kaelvar-c1p-regional-seams.mjs --seam-trials-svg > "$RUNNER_TEMP/c1z-reversible-mainland-seam-options.svg"
           test -s "$RUNNER_TEMP/c1z-reversible-mainland-seam-options.svg"
+      - name: C1-AA paired original elevation-first vs biome-secondary region seams
+        run: |
+          node scripts/kaelvar-c1p-regional-seams.mjs --relief-prework-check > "$RUNNER_TEMP/c1aa-relief-first-source-report.json"
+          node - "$RUNNER_TEMP/c1aa-relief-first-source-report.json" <<'NODE'
+          const fs=require('node:fs'),assert=require('node:assert/strict');
+          const r=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+          assert.equal(r.status,'C1AA_PAIRED_ORIGINAL_RELIEF_PREWORK_SOURCE_VERIFIED_SELECTION_HELD');
+          assert.equal(r.source.originalCoastlineEdges,599);
+          assert.equal(r.source.originalBiomeSha256,
+            '9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12');
+          assert.equal(r.source.originalElevationSha256,
+            '02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d');
+          assert.equal(r.elevationInterpretation.rampCalibration,'UNVERIFIED_COLOR_RAMP');
+          assert.equal(r.elevationInterpretation.sourceRGBMeansMeters,false);
+          assert.equal(r.elevationInterpretation.automaticRidgeOrWatershedProven,false);
+          assert.equal(r.primaryRegionAndTransitionDesign.futureFinalizedLandPrimaryRegion,'EXACTLY_ONE');
+          assert.equal(r.primaryRegionAndTransitionDesign.regionIsPoliticalTerritory,false);
+          assert.equal(r.comparedInterfaces.length,2);
+          assert.deepEqual(r.comparedInterfaces.map(x=>x.options.length),[3,3]);
+          assert.deepEqual(r.comparedInterfaces.map(x=>x.options.map(o=>o.id)),[
+            ['KEEP_C1P_UNCHANGED','NORTH_VEYRHOLM_SOUTH_TWO','NORTH_KHARUUN_NORTH_TWO'],
+            ['KEEP_C1P_UNCHANGED','SOUTH_KHARUUN_SOUTH_THREE','SOUTH_VERDANT_NORTH_THREE']
+          ]);
+          assert.deepEqual(r.comparedInterfaces.map(x=>
+            x.options.map(o=>o.residualUnassignedGapSamples)),[[10,8,9],[15,13,12]]);
+          for(const region of r.comparedInterfaces){
+            assert.equal(region.reliefJudgment,'HOLD_UNCALIBRATED_ELEVATION_RAMP');
+            assert.equal(region.recommendedCanonicalChange,null);
+            assert.equal(region.acceptedC1PKept,true);
+            for(const opt of region.options){
+              assert.equal(opt.independentOwnerSelection,false);
+              assert.equal(opt.topographicRanking,'INSUFFICIENT_CALIBRATED_RELIEF');
+              assert.equal(opt.transitoryWidthClaim,null);
+              assert.equal(opt.sourceVerifiedGeographicFeature,null);
+            }
+          }
+          assert.equal(r.conclusions.ownerTopographicDecision,null);
+          assert.equal(r.conclusions.noMeasuredElevationOrWatershedClaim,true);
+          assert.equal(r.conclusions.noBiomeColorOnlyWinner,true);
+          assert.equal(r.conclusions.noAutomaticGapClosing,true);
+          assert.equal(r.conclusions.noApprovedRegionalRegionGeometryChanges,true);
+          assert.equal(r.baseline.originalMainlandCandidates,79419);
+          assert.equal(r.baseline.provisionalAssigned,52449);
+          assert.equal(r.baseline.unassigned,26970);
+          assert.deepEqual(r.baseline.perRegion,[5632,18624,19182,9011]);
+          assert.equal(r.baseline.originalSourcePixelEdits,0);
+          assert.equal(r.baseline.sourceVectorEdits,0);
+          assert.equal(r.baseline.originalTerrainLabelsChanged,0);
+          assert.equal(r.baseline.acceptedRegionRingsChanged,0);
+          assert.equal(r.baseline.detachedComponentClaims,0);
+          assert.equal(r.baseline.canonicalWritable,false);
+          console.log('C1-AA original elevation/biome pair verified; all six options held pending landform interpretation');
+          console.log('C1-AA PNG formats '+JSON.stringify(r.source.imageFormats));
+          NODE
+          node scripts/kaelvar-c1p-regional-seams.mjs --relief-prework-elevation-svg > "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
+          node scripts/kaelvar-c1p-regional-seams.mjs --relief-prework-biome-svg > "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
+          test -s "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
+          test -s "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
+          grep -q 'ORIGINAL ELEVATION COLOR RAMP' "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
+          grep -q 'ORIGINAL BIOME ART' "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
+          grep -q 'KEEP C1P UNCHANGED' "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
@@ -803,5 +869,8 @@ jobs:
             ${{ runner.temp }}/c1y-original-mainland-seam-gaps.svg
             ${{ runner.temp }}/c1z-reversible-waypoint-trials.json
             ${{ runner.temp }}/c1z-reversible-mainland-seam-options.svg
+            ${{ runner.temp }}/c1aa-relief-first-source-report.json
+            ${{ runner.temp }}/c1aa-original-elevation-seam-comparison.svg
+            ${{ runner.temp }}/c1aa-original-biome-seam-comparison.svg
           if-no-files-found: warn
           retention-days: 7
