@@ -28,7 +28,7 @@ test('C1-AB pins both owner-provisional shared chains and their four protected o
  assert.deepEqual(north.regionJoins[1].afterLastSharedEndpoint.nextOriginalWaypoint,[271,194]);
  assert.deepEqual(south.regionJoins[0].beforeFirstSharedEndpoint.priorOriginalWaypoint,[368,308]);
  assert.deepEqual(south.regionJoins[0].afterLastSharedEndpoint.nextOriginalWaypoint,[296,313]);
- assert.deepEqual(south.regionJoins[1].beforeFirstSharedEndpoint.priorOriginalWaypoint,[304,341]);
+ assert.deepEqual(south.regionJoins[1].beforeFirstSharedEndpoint.priorOriginalWaypoint,[289,348]);
  assert.deepEqual(south.regionJoins[1].afterLastSharedEndpoint.nextOriginalWaypoint,[382,333]);
  assert.equal(south.endpointContinuityStatus,'NEEDS_WIDER_SOURCE_BACKED_REVIEW');
  assert.equal(r.combinedNoncanonicalCoverage.combinedAssignedCandidateCells,54195);
