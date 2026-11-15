@@ -132,8 +132,9 @@ export function validateC1ADVoronoiPreflight(spec,c1ac,c1aa){
 // It never identifies the owner save, approves region membership, or
 // substitutes for the native source coastline/terrain-component gates.
 const vertex=v=>{
- if(!Array.isArray(v)||v.length!==2||v.some(n=>typeof n!=='number'||
-  !Number.isFinite(n)||n<0||n>2048))
+ if(!Array.isArray(v)||v.length!==2||
+  v.some((n,i)=>typeof n!=='number'||!Number.isFinite(n)||
+    n<0||n>(i===0?2048:1152)))
   hold('invalid normalized mesh vertex');
  return v.join(',');
 };
@@ -161,8 +162,29 @@ export function auditSyntheticVoronoiTopology(graph){
    !Array.isArray(c.neighborIds)||new Set(c.neighborIds).size!==c.neighborIds.length||
    !c.provinceId||typeof c.provinceId!=='string')
    hold('duplicate, owner-bearing or malformed synthetic cell');
-  if(Math.abs(signedArea(c.ring))<1e-8)
+  if(!Number.isFinite(signedArea(c.ring))||Math.abs(signedArea(c.ring))<1e-8)
    hold('degenerate synthetic cell polygon');
+  // Catch proper crossings, including collinear overlapping nonadjacent
+  // edges. A normalized polygon with bow-tie geometry is not a Voronoi cell.
+  const cross=(a,b,p)=>(b[0]-a[0])*(p[1]-a[1])-
+    (b[1]-a[1])*(p[0]-a[0]);
+  const overlap=(a,b,p)=>p[0]>=Math.min(a[0],b[0])&&
+    p[0]<=Math.max(a[0],b[0])&&p[1]>=Math.min(a[1],b[1])&&
+    p[1]<=Math.max(a[1],b[1]);
+  const intersect=(a,b,c,d)=>{
+   const abC=cross(a,b,c),abD=cross(a,b,d),
+     cdA=cross(c,d,a),cdB=cross(c,d,b);
+   if(abC===0&&overlap(a,b,c)||abD===0&&overlap(a,b,d)||
+      cdA===0&&overlap(c,d,a)||cdB===0&&overlap(c,d,b))return true;
+   return Math.sign(abC)!==Math.sign(abD)&&
+     Math.sign(cdA)!==Math.sign(cdB);
+  };
+  for(let i=0;i<c.ring.length;i++)for(let k=i+1;k<c.ring.length;k++){
+   if(k===i+1||i===0&&k===c.ring.length-1)continue;
+   if(intersect(c.ring[i],c.ring[(i+1)%c.ring.length],
+      c.ring[k],c.ring[(k+1)%c.ring.length]))
+    hold('self-intersecting synthetic cell polygon');
+  }
   cells.set(c.id,c);
   for(let i=0;i<c.ring.length;i++){
    const a=c.ring[i],b=c.ring[(i+1)%c.ring.length],key=edge(a,b);
