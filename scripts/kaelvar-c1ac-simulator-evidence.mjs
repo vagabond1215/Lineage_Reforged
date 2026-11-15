@@ -17,7 +17,7 @@ const sha256=buf=>createHash('sha256').update(buf).digest('hex');
 const expectSource={
  biome:'9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12',
  elevation:'02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d',
- vector:'9cd6752e9dbca00796e5a96175'
+ vector:'9cd6752e9dbca00796e5f7c013066bb0e5a96175'
 };
 // Keep the exact source vector SHA in the manifest separate from this
 // script's registered PNG checks; never infer meaning from generated ink.
@@ -73,7 +73,7 @@ export function validateC1ACOwnerViewManifest(m,c1aa){
   s.steamAppId!==3035500||
   s.originalFirstWorldBiomeSHA256!==expectSource.biome||
   s.originalFirstWorldElevationSHA256!==expectSource.elevation||
-  s.originalVectorBlob!=='9cd6752e9dbca00796e5a96175'||
+  s.originalVectorBlob!=='9cd6752e9dbca00796e5f7c013066bb0e5a96175'||
   !same(s.sourceOriginalPngSize,[4096,2355])||
   !same(s.originalCrop,[60,60,3976,2235])||
   !same(s.referenceGrid,[2048,1152])||
