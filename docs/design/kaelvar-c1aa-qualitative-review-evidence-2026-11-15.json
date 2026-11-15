@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "status": "C1AA_QUALITATIVE_REVIEW_COMPLETE_GEOGRAPHIC_SELECTION_HELD",
+  "date": "2026-11-15",
+  "sourceHead": "faaf6dc94fad157e960bac6d0eb21b4237954348",
+  "branch": "connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14",
+  "sourceEncoding": {
+    "png": "8-bit RGBA",
+    "dimensions": [
+      4096,
+      2355
+    ],
+    "chunkTypes": [
+      "IHDR",
+      "IDAT",
+      "IEND"
+    ],
+    "elevationSemantics": "UNVERIFIED_RENDERED_COLOR_IMAGE",
+    "calibratedHeight": false,
+    "relativeHeightOrderingVerified": false,
+    "numericSlopeFlowWatershedComputed": false
+  },
+  "hashes": {
+    "elevation": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "biome": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "vectorBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "report": "0ba7e4c03f3f94bcdf0cca84dd0c7038fb6bebd38fb20c95b32087806efedb5c",
+    "elevationSvg": "84a398ec3eead1cb1de25dbfdad53bf805183e2821455e631ae09864c31e18a0",
+    "biomeSvg": "291150f46d6c4e8fd1ed0a87176b11c06cb20e9b168a03ef9634350352bfc5f2",
+    "northReviewPng": "63197756dba1a27f4d48c0540bf1c1eec81abdc0920235df782c71dde78d33aa",
+    "southReviewPng": "8b6ce4ef4bbd8aacdd89f96d546c2ceb4acc206271f6e4ad5ddc611826c7d258"
+  },
+  "interfaces": [
+    {
+      "id": "VEYRHOLM_KHARUUN_NORTHERN_INLAND",
+      "center": [
+        292,
+        190
+      ],
+      "reviewWindow": [
+        265,
+        165,
+        72,
+        61
+      ],
+      "operationalRecommendation": "KEEP_C1P_UNCHANGED",
+      "geographicSelection": "HOLD_INSUFFICIENT_SOURCE_EVIDENCE"
+    },
+    {
+      "id": "KHARUUN_VERDANT_SOUTHERN_TRANSITION",
+      "center": [
+        319,
+        326
+      ],
+      "reviewWindow": [
+        291,
+        298,
+        82,
+        71
+      ],
+      "operationalRecommendation": "KEEP_C1P_UNCHANGED",
+      "geographicSelection": "HOLD_INSUFFICIENT_SOURCE_EVIDENCE"
+    }
+  ],
+  "hypotheticalTransition": {
+    "geographicExtent": null,
+    "width": null,
+    "schematicOnly": true
+  },
+  "baseline": {
+    "component30": 79419,
+    "assigned": 52449,
+    "unassigned": 26970,
+    "regionCounts": [
+      5632,
+      18624,
+      19182,
+      9011
+    ],
+    "sourceEdits": 0,
+    "acceptedGeometryEdits": 0,
+    "detachedClaims": 0,
+    "canonicalWritable": false
+  },
+  "hosted": {
+    "runId": 43672993858,
+    "jobId": 132716937122,
+    "sha": "dc4a94f95762c52fec1ec1ce5a3016999b8bcb98",
+    "platform": "Ubuntu / Node 22",
+    "result": "SUCCESS",
+    "tests": 71,
+    "failures": 0,
+    "scannedCodeFiles": 894,
+    "newHexDependencies": 0,
+    "artifactId": 14149127344,
+    "artifactRetentionDays": 7
+  },
+  "windows": {
+    "sha": "faaf6dc94fad157e960bac6d0eb21b4237954348",
+    "node": "v24.14.1",
+    "tests": 71,
+    "failures": 0,
+    "workflowCommandGroups": 83,
+    "allPassed": true,
+    "sourceAndWorkflowEqualToHosted": true,
+    "exactReportAndSvgHashesEqualToHosted": true,
+    "ownerVisualApproval": false
+  },
+  "previews": {
+    "localArtifactDirectory": "C:/Users/vagab/.codex/visualizations/2026/11/15/01a1ddbf-b10a-7113-99f8-1353494f3147/c1aa",
+    "files": [
+      "north-review.png",
+      "south-review.png",
+      "render-review.ps1",
+      "windows-workflow.log",
+      "run-native.py"
+    ],
+    "largeFilesTracked": false
+  },
+  "prs": [
+    {
+      "number": 82,
+      "head": "connector/c1-coordinate-geography-registry-2026-11-13",
+      "sha": "6efb4a81583911c13657eb87d2c0ab009048c909",
+      "draft": true,
+      "state": "open",
+      "disposition": "RETAIN_PENDING_INDEPENDENT_GEOGRAPHIC_ACCEPTANCE_AND_INTEGRATION"
+    },
+    {
+      "number": 83,
+      "head": "connector/c1f-kaelvar-placement-revision-2026-11-13",
+      "sha": "f646a504e34d63fa6bbe44def222a9dffdeeac30",
+      "draft": true,
+      "state": "open",
+      "disposition": "RETAIN_PENDING_INDEPENDENT_GEOGRAPHIC_ACCEPTANCE_AND_INTEGRATION"
+    },
+    {
+      "number": 84,
+      "head": "connector/c1g-kaelvar-coastal-salt-basin-evidence-2026-11-13",
+      "sha": "ccbdcd41a48e48ffdd558a027bc55e808813e18f",
+      "draft": true,
+      "state": "open",
+      "disposition": "RETAIN_PENDING_INDEPENDENT_GEOGRAPHIC_ACCEPTANCE_AND_INTEGRATION"
+    },
+    {
+      "number": 85,
+      "head": "connector/c1h-kaelvar-source-landform-diagnostics-2026-11-13",
+      "sha": "4295621d7ead2d4b0659604268b7ac16af6feb39",
+      "draft": true,
+      "state": "open",
+      "disposition": "RETAIN_PENDING_INDEPENDENT_GEOGRAPHIC_ACCEPTANCE_AND_INTEGRATION"
+    },
+    {
+      "number": 86,
+      "head": "connector/c1i-kaelvar-ink-water-separation-2026-11-13",
+      "sha": "78dca6f777fbec1423ffdd0229b8c432cb30a388",
+      "draft": true,
+      "state": "open",
+      "disposition": "RETAIN_PENDING_INDEPENDENT_GEOGRAPHIC_ACCEPTANCE_AND_INTEGRATION"
+    },
+    {
+      "number": 87,
+      "head": "connector/c1j-kaelvar-vector-coastline-intake-2026-11-13",
+      "sha": "9ece169f29c4560603060607aeb3d66abf09e08d",
+      "draft": true,
+      "state": "open",
+      "disposition": "RETAIN_PENDING_INDEPENDENT_GEOGRAPHIC_ACCEPTANCE_AND_INTEGRATION"
+    }
+  ],
+  "cleanup": {
+    "sessionId": "c1aa-20261115-relief",
+    "registeredPid": 18584,
+    "stopSessionResult": "already-exited",
+    "treeInspectionAvailable": true
+  },
+  "failurePatterns": [
+    "FP-002",
+    "FP-007",
+    "FP-009"
+  ]
+}

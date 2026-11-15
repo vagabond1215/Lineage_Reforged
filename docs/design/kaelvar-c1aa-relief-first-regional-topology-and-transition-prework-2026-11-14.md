@@ -1,5 +1,7 @@
 # Kaelvar C1-AA: relief-first region topology and environmental transitions
 
+**2026-11-15 continuation:** [qualitative visual review and native result](kaelvar-c1aa-qualitative-relief-review-2026-11-15.md) keeps both C1-P seams unchanged and holds final geographic selection. Hosted and Windows executable gates now pass; source semantics and owner approval remain held.
+
 Date: 2026-11-14  
 Status: **CONNECTOR-SAFE PREWORK ONLY; NATIVE GATE AND OWNER GEOGRAPHIC INTERPRETATION SEPARATE**  
 Previous accepted review: [C1-Z source-indexed seam trials](kaelvar-c1z-reversible-northern-and-southern-mainland-seams-handoff-2026-11-14.md)  
@@ -217,3 +219,55 @@ After the read-only C1-AA evidence is reviewed:
 
 **No region selection, transition width, active polygon, island claim
 or source elevation calibration is approved by this document.**
+
+## Minimal proposed resolution contract (2026-11-15; documentation only)
+
+Use a versioned geographic geometry set, with `mapId`, `coordinateSpaceId`,
+`geometryVersion`, source/approval references and stable `regionId` polygons.
+Store each shared edge once, referenced in opposite directions by neighboring
+region rings, or enforce exactly identical shared coordinates at authoring
+validation. Nonoverlapping interiors and complete coverage of **finalized
+land** are the invariant. Physical surface and political control have separate
+owners; neither is inferred from region membership.
+
+A future `resolvePrimaryRegion(point, geometryVersion)` should return a
+tagged result: `RESOLVED` with `primaryRegionId`, or `UNRESOLVED_AUTHORING`,
+`SOURCE_UNCERTAIN`, `HELD_COMPONENT`, `NON_LAND`, or `OUTSIDE_FRAME` with an
+explicit reason. On finalized land, absence or overlapping interiors is a
+validation error, not nearest-region fallback. Authoring-unresolved statuses
+remain useful during development but may not silently pass final coverage.
+
+For exact shared edges/vertices, use the lexicographically smallest stable
+region ID among the approved incident regions **at the same geographic
+hierarchy level**. Apply this only after topology validation: it must never
+hide interior overlaps, uncertain land or held components. Parent continent
+membership is separate from the primary child-region decision. Normalize
+coordinates in one versioned fixed-point representation; quantization and
+edge predicates must be shared by authoring and lookup, not chosen ad hoc by
+callers. Changes to precision or the tie rule require a geometry version.
+
+Settlement locations should call this same coordinate resolver. Any cached
+`primaryRegionId` must also carry the geometry version and be checked against
+the settlement coordinate; neither settlement text nor existing administrative
+affiliation overrides geographic lookup. No settlements are placed here.
+
+Optional `transitionAreas` can later contain `id`, neighboring `regionIds`,
+an approved `geometryRef`, descriptive environmental tags and provenance.
+They may overlap both primary regions without changing either primary ID.
+An intentional ecological transition is **resolved geography**, not an
+unassigned primary strip. Omit unapproved transition geometry; do not turn a
+review window or current polygon gap into a band. No numeric blend weights,
+fixed width, extra region, encounter distribution or runtime engine is needed.
+Future narrative, encounters, resources, monsters and travel-condition owners
+may consume the primary ID and optional influences under their own contracts.
+
+Compatibility gap: `findCoordinateAreasAtPoint` in
+`scripts/lib/world-geographic-authority.mjs` currently throws when multiple
+REGION polygons contain a point; `coordinatePolygonContains` includes edges.
+That review helper does not implement the proposed shared-edge tie rule.
+A later authorized resolver must distinguish shared-boundary ties from
+interior collisions and test edge interiors, multi-region vertices, holes,
+points on either side, reordered input, held components and version changes.
+Do not weaken today's fail-closed helper or C1-Z's four-sample trial reserve
+as a shortcut. Kharuun/Veyrholm canonical records are separate held
+registration dependencies. This section is a proposal, not deployed behavior.
