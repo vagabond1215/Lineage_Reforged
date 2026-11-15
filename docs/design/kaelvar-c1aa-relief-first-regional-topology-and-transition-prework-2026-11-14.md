@@ -1,5 +1,7 @@
 # Kaelvar C1-AA: relief-first region topology and environmental transitions
 
+> **2026-11-15 owner clarification supersedes calibration-dependent selection holds below.** Use the [relative-relief decision and reversible shared seams](kaelvar-c1aa-relative-relief-decision-2026-11-15.md): orange/red is intended to mean relatively higher ground, cream lower, cross-checked with terrain shape and drainage. Numeric calibration is not required for a provisional geographic recommendation. Earlier findings and native evidence remain historical; physical, island, source-integrity and canonical-publication holds remain active.
+
 **2026-11-15 continuation:** [qualitative visual review and native result](kaelvar-c1aa-qualitative-relief-review-2026-11-15.md) keeps both C1-P seams unchanged and holds final geographic selection. Hosted and Windows executable gates now pass; source semantics and owner approval remain held.
 
 Date: 2026-11-14  

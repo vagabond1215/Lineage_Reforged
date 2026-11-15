@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "type": "C1AA_RELATIVE_RELIEF_SHARED_SEAMS_REVIEW_ONLY",
+  "sourceHead": "d5f68ef349591eb696475a993e9c05e83a80af8d",
+  "canonicalWritable": false,
+  "acceptedC1PChanged": false,
+  "physicalLabelsChanged": false,
+  "sourceAssumption": {
+    "origin": "OWNER_CLARIFICATION_2026_11_15",
+    "generator": "Fantasy Map Simulator",
+    "ordinalElevation": "ORANGE_RED_HIGHER_CREAM_LOWER",
+    "numericElevation": false,
+    "hydrologicalModel": false,
+    "saveMatched": false
+  },
+  "boundaryRule": "LEXICOGRAPHIC_REGION_ID_ON_DECLARED_SHARED_EDGE_ONLY",
+  "candidates": [
+    {
+      "id": "NORTH_APPROXIMATE_COASTAL_TRANSITION",
+      "confidence": "PLAUSIBLE",
+      "regionIds": [
+        "region.kharuun_drylands",
+        "region.veyrholm_shore"
+      ],
+      "sharedChain": [
+        [
+          279,
+          197
+        ],
+        [
+          291,
+          192
+        ],
+        [
+          301,
+          188
+        ],
+        [
+          308,
+          185
+        ]
+      ],
+      "changeWindow": {
+        "minX": 270,
+        "maxX": 326,
+        "minY": 170,
+        "maxY": 205
+      },
+      "replacements": [
+        {
+          "regionId": "region.kharuun_drylands",
+          "start": 19,
+          "deleteCount": 2,
+          "reverse": false
+        },
+        {
+          "regionId": "region.veyrholm_shore",
+          "start": 2,
+          "deleteCount": 2,
+          "reverse": true
+        }
+      ],
+      "rationale": "Approximate lower coastal margin / rising interior boundary; no claimed ridge or measured contour."
+    },
+    {
+      "id": "SOUTH_APPROXIMATE_UPLAND_APRON",
+      "confidence": "PLAUSIBLE",
+      "regionIds": [
+        "region.kharuun_drylands",
+        "region.verdant_thalos"
+      ],
+      "sharedChain": [
+        [
+          304,
+          330
+        ],
+        [
+          320,
+          331
+        ],
+        [
+          338,
+          332
+        ],
+        [
+          352,
+          333
+        ]
+      ],
+      "changeWindow": {
+        "minX": 289,
+        "maxX": 369,
+        "minY": 308,
+        "maxY": 349
+      },
+      "replacements": [
+        {
+          "regionId": "region.kharuun_drylands",
+          "start": 7,
+          "deleteCount": 3,
+          "reverse": true
+        },
+        {
+          "regionId": "region.verdant_thalos",
+          "start": 5,
+          "deleteCount": 4,
+          "reverse": false
+        }
+      ],
+      "rationale": "Approximate northern apron of southern uplands, south of the visible drainage hook; not a watershed or exact river trace."
+    }
+  ],
+  "rejectedInitialNorthPatch": {
+    "kharuunReplacement": {"start": 18, "deleteCount": 3},
+    "reason": "Removing the (279,202) approach vertex changed sample (269,204) outside the bounded review. Rejected; preserve the approach vertex instead of broadening the review window.",
+    "accepted": false
+  },
+  "rejectedSketch": {
+    "id": "SOUTH_CROSSING_DRAINAGE_HOOK_SKETCH",
+    "sharedChain": [
+      [
+        304,
+        326
+      ],
+      [
+        320,
+        327
+      ],
+      [
+        338,
+        326
+      ],
+      [
+        352,
+        325
+      ]
+    ],
+    "reason": "Visual review found likely repeated crossings of the cyan hook; superseded before adoption by smoother southern-apron option.",
+    "geometricAcceptance": "NOT_CLAIMED"
+  },
+  "holds": [
+    "OPTION_B_35_58",
+    "VEYRHOLM_EXCLUSIONS",
+    "VERDANT_SE_PENINSULA",
+    "NE_HEADLAND_75_115",
+    "COMPONENT_51",
+    "SHATTERCAP",
+    "DETACHED_NE_ISLAND",
+    "ALL_OTHER_DETACHED_COMPONENTS",
+    "COAST_40",
+    "SERATHYL_WINDWARD",
+    "CANONICAL_PUBLICATION"
+  ],
+  "scope": "LOCAL_SHARED_SUBCHAINS_ONLY_NOT_COMPLETE_FINALIZED_LAND_COVERAGE"
+}

@@ -1,5 +1,7 @@
 # C1-AA: qualitative relief review and regional coverage decision
 
+> **2026-11-15 owner clarification supersedes calibration-dependent selection holds below.** Use the [relative-relief decision and reversible shared seams](kaelvar-c1aa-relative-relief-decision-2026-11-15.md): orange/red is intended to mean relatively higher ground, cream lower, cross-checked with terrain shape and drainage. Numeric calibration is not required for a provisional geographic recommendation. Earlier findings and native evidence remain historical; physical, island, source-integrity and canonical-publication holds remain active.
+
 Date: 2026-11-15. Unversioned geography review; development and game-version impacts `none`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`.
 
 **Result: KEEP_C1P_UNCHANGED for both interfaces; final geographic selection HOLD (INSUFFICIENT_SOURCE_EVIDENCE).** This is a conservative authoring disposition, not proof that the existing returns are natural boundaries. Adopt eventual touching primary regions on finalized land as the design direction; do not convert current reserves into permanent regionless belts.

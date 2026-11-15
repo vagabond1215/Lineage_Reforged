@@ -5,6 +5,9 @@ on:
     branches:
       - connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14
     paths:
+      - 'scripts/kaelvar-c1aa-relative-review.mjs'
+      - 'tests/unit/kaelvar-c1aa-shared-seam-review.test.mjs'
+      - 'docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json'
       - 'scripts/kaelvar-c1p-regional-seams.mjs'
       - 'scripts/lib/kaelvar-c1p-regional-seam-review.mjs'
       - 'tests/unit/kaelvar-c1p-regional-seam-review.test.mjs'
@@ -856,12 +859,20 @@ jobs:
           grep -q 'ORIGINAL BIOME ART' "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
           grep -q 'KEEP C1P UNCHANGED' "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg"
           sha256sum "$RUNNER_TEMP/c1aa-relief-first-source-report.json" "$RUNNER_TEMP/c1aa-original-elevation-seam-comparison.svg" "$RUNNER_TEMP/c1aa-original-biome-seam-comparison.svg"
+      - name: C1-AA owner-authorized relative relief and shared seam review
+        run: |
+          node --check scripts/kaelvar-c1aa-relative-review.mjs
+          node --test tests/unit/kaelvar-c1aa-shared-seam-review.test.mjs
+          node scripts/kaelvar-c1aa-relative-review.mjs --check > "$RUNNER_TEMP/c1aa-relative-shared-seams.json"
+          test -s "$RUNNER_TEMP/c1aa-relative-shared-seams.json"
+          sha256sum "$RUNNER_TEMP/c1aa-relative-shared-seams.json"
       - name: Upload review-only outputs
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: c1p-noncanonical-native-terrain-review
           path: |
+            ${{ runner.temp }}/c1aa-relative-shared-seams.json
             ${{ runner.temp }}/c1p-native-review.json
             ${{ runner.temp }}/c1p-original-versus-refined.svg
             ${{ runner.temp }}/c1p-refined-north-coast.svg
