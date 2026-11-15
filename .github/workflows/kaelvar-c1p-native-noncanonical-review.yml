@@ -13,6 +13,7 @@ on:
       - 'scripts/kaelvar-c1ac-simulator-evidence.mjs'
       - 'tests/unit/kaelvar-c1ac-simulator-evidence.test.mjs'
       - 'docs/design/kaelvar-c1ac-owner-fantasy-map-simulator-screenshot-evidence-2026-11-15.json'
+      - 'docs/design/assets/kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg'
       - 'docs/design/kaelvar-c1aa-relative-relief-native-evidence-2026-11-15.json'
       - 'docs/design/kaelvar-c1aa-relative-relief-shared-seams-2026-11-15.json'
       - 'scripts/kaelvar-c1p-regional-seams.mjs'
