@@ -47,6 +47,11 @@ const expectedScreenshotHashes=[
  '5a2223b45af6ae6cc6730fabb860b063b5dbdb02cf97553212488352bed39ae7',
  '0b05ac0e058aa64b48e9e1ec44e61ee0dfeff52cccc7fc48e7c9df039a387b55'
 ];
+const expectedScreenshotSizes=[590526,586818,593001,644248,662603,637055,252371,237180,322101,345326,485620];
+const expectedScreenshotDimensions=[
+ [1919,1079],[1919,1079],[1919,1079],[1919,1079],[1919,1079],[1919,1079],
+ [1100,833],[1097,865],[1425,1052],[1451,1053],[1919,1079]
+];
 const expectedRegions=[
  ['region.veyrholm_shore',[6,0,112],7312],
  ['region.auric_marches',[191,71,0],7121],
@@ -87,6 +92,8 @@ export function validateC1ACOwnerViewManifest(m,c1aa){
   m.screenshotManifest?.length!==11||
   !same(m.screenshotManifest.map(x=>x.filename),expectedNames)||
   !same(m.screenshotManifest.map(x=>x.sha256),expectedScreenshotHashes)||
+  !same(m.screenshotManifest.map(x=>x.sizeBytes),expectedScreenshotSizes)||
+  !same(m.screenshotManifest.map(x=>x.dimensions),expectedScreenshotDimensions)||
   m.screenshotManifest.some((x,i)=>x.order!==i+1||
     !/^[a-f0-9]{64}$/.test(x.sha256)||x.sizeBytes<200000||
     x.dimensions?.length!==2||x.dimensions.some(v=>!Number.isInteger(v)||v<600)||
