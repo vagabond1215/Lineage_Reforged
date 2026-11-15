@@ -46,10 +46,12 @@ import {buildC1YMainlandGaps}
  from './lib/kaelvar-c1y-independent-mainland-gap-review.mjs';
 import {buildC1ZReversibleTrials}
  from './lib/kaelvar-c1z-reversible-mainland-waypoint-trials.mjs';
+import {buildC1AAReliefPrework}
+ from './lib/kaelvar-c1aa-relief-first-prework.mjs';
 
 const mode=process.argv[2];
-if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg','--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-trials-svg'].includes(mode)||process.argv.length!==3){
- console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg|--paired-gates-check|--paired-gates-svg|--mainland-gaps-check|--mainland-gaps-svg|--seam-trials-check|--seam-trials-svg');
+if(!['--check','--svg','--north-svg','--headland-check','--headland-svg','--bottleneck-check','--bottleneck-svg','--ink-check','--ink-svg','--pinch-check','--pinch-svg','--enclosure-check','--enclosure-svg','--component51-check','--component51-svg','--physical-review-check','--physical-review-svg','--paired-gates-check','--paired-gates-svg','--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-trials-svg','--relief-prework-check','--relief-prework-elevation-svg','--relief-prework-biome-svg'].includes(mode)||process.argv.length!==3){
+ console.error('Usage: node scripts/kaelvar-c1p-regional-seams.mjs --check|--svg|--north-svg|--headland-check|--headland-svg|--bottleneck-check|--bottleneck-svg|--ink-check|--ink-svg|--pinch-check|--pinch-svg|--enclosure-check|--enclosure-svg|--component51-check|--component51-svg|--physical-review-check|--physical-review-svg|--paired-gates-check|--paired-gates-svg|--mainland-gaps-check|--mainland-gaps-svg|--seam-trials-check|--seam-trials-svg|--relief-prework-check|--relief-prework-elevation-svg|--relief-prework-biome-svg');
  process.exit(2);
 }
 const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
@@ -111,8 +113,9 @@ report.sourcePngFingerprintsVerified=true;
 report.sourceOriginalContourUnmodified=true;
 report.c1oBaselineCommit=p.baseC1OCommit;
 report.visualMode='READ_ONLY_NONCANONICAL_RASTER_CLIPPED_REVIEW';
-let mainlandGaps=null,seamTrials=null;
-if(['--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-trials-svg'].includes(mode)){
+let mainlandGaps=null,seamTrials=null,reliefPrework=null;
+if(['--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-trials-svg',
+ '--relief-prework-check','--relief-prework-elevation-svg','--relief-prework-biome-svg'].includes(mode)){
  const c1y=json('docs/design/kaelvar-c1y-independent-mainland-seam-options-2026-11-14.json');
  mainlandGaps=buildC1YMainlandGaps({spec:c1y,p,c1pReport:report,
   labels,ownership:imageMasks.refined,revised});
@@ -120,7 +123,8 @@ if(['--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-
   process.stdout.write(JSON.stringify(mainlandGaps,null,2)+'\n');
   process.exit(0);
  }
- if(mode==='--seam-trials-check'||mode==='--seam-trials-svg'){
+ if(['--seam-trials-check','--seam-trials-svg','--relief-prework-check',
+ '--relief-prework-elevation-svg','--relief-prework-biome-svg'].includes(mode)){
   const c1z=json('docs/design/kaelvar-c1z-two-mainland-seam-reversible-waypoint-options-2026-11-14.json');
   seamTrials=buildC1ZReversibleTrials({spec:c1z,p,o,c1p:report,
    ySpec:c1y,yReport:mainlandGaps,f,selected,c1n:n,
@@ -128,6 +132,18 @@ if(['--mainland-gaps-check','--mainland-gaps-svg','--seam-trials-check','--seam-
   if(mode==='--seam-trials-check'){
    process.stdout.write(JSON.stringify(seamTrials,null,2)+'\n');
    process.exit(0);
+  }
+  if(['--relief-prework-check','--relief-prework-elevation-svg',
+   '--relief-prework-biome-svg'].includes(mode)){
+   const c1aa=json('docs/design/kaelvar-c1aa-relief-first-regional-seams-prework-2026-11-14.json');
+   reliefPrework=buildC1AAReliefPrework({
+    spec:c1aa,c1p:report,z:seamTrials,
+    biome:images.biome.img,elevation:images.elevation.img
+   });
+   if(mode==='--relief-prework-check'){
+    process.stdout.write(JSON.stringify(reliefPrework,null,2)+'\n');
+    process.exit(0);
+   }
   }
  }
 }
@@ -727,6 +743,71 @@ if(mode==='--seam-trials-svg'){
   rows.map(render).join('')+
   title(34,1267,'ALL SOURCE COASTLINE ARCS, KHARUUN OPTION B AND INDEPENDENT ISLAND HOLDS REMAIN FROZEN.',18,'#FFD8A3')+
   title(34,1307,'Trial pixels and rings are NOT region claims; C1-P remains 52,449 assigned / 26,970 unassigned / 79,419 original mainland candidates.',17)+
+  '</svg>\n';
+ process.stdout.write(svg);
+ process.exit(0);
+}
+
+if(mode==='--relief-prework-elevation-svg'||mode==='--relief-prework-biome-svg'){
+ const LAYER=mode==='--relief-prework-elevation-svg'?'elevation':'biome';
+ const SOURCE_NAME=LAYER==='elevation'?'ORIGINAL ELEVATION COLOR RAMP':'ORIGINAL BIOME ART';
+ const W=2630,H=1535;
+ const group=reliefPrework.comparedInterfaces;
+ const xCoords=[25,900,1775],yCoords=[140,800];
+ const src=images[LAYER];
+ const imageRef='c1aa-'+LAYER+'-original-source';
+ const def='<defs><image id="'+imageRef+'" x="'+(-crop.x*width/crop.width)+
+  '" y="'+(-crop.y*height/crop.height)+
+  '" width="'+(src.img.width*width/crop.width)+
+  '" height="'+(src.img.height*height/crop.height)+
+  '" preserveAspectRatio="none" href="data:image/png;base64,'+
+  src.bytes.toString('base64')+'"/></defs>';
+ const ring=(g,color,weight)=>{
+  const d=g.polygonRing.map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ')+' Z';
+  return '<path d="'+d+'" fill="none" stroke="'+color+
+   '" stroke-opacity=".8" stroke-width="'+weight+'"/>';
+ };
+ const local=(arr,color,weight,dashed)=>{
+  if(!arr?.length)return '';
+  const d=arr.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ');
+  return '<path d="'+d+'" fill="none" stroke="'+color+
+   '" stroke-width="'+weight+'"'+
+   (dashed?' stroke-dasharray="2 1"':'')+'/>';
+ };
+ const center=p=>'<circle cx="'+(p.x+.5)+'" cy="'+(p.y+.5)+
+  '" r="2.1" fill="#FF6CCB" stroke="#161823" stroke-width=".35"/>';
+ const panelAA=(g,opt,k,row)=>{
+  const x=xCoords[k],y=yCoords[row],view=g.sourceView;
+  const source='<use href="#'+imageRef+'"/>';
+  const regions=(row===0?[revised.regions[1],revised.regions[3]]:
+   [revised.regions[1],revised.regions[2]]);
+  const coast=revised.originalContour.slice(row===0?35:195,
+   row===0?60:350).map((p,i)=>(i?'L':'M')+p.x+' '+p.y).join(' ');
+  const coastPath='<path d="'+coast+'" stroke="#F5E7CB" stroke-opacity=".63" stroke-width=".6" fill="none"/>';
+  const outline=regions.map((r,i)=>ring(r,
+   i===0?'#F0BC79':'#9DE5D9',.8)).join('');
+  const variants=seamTrials.alternatives.filter(x=>x.interfaceId===g.id);
+  const original=variants.map(x=>local(x.originalLocalReturn,'#FFE6A6',1.6,true)).join('');
+  const trial=opt.id==='KEEP_C1P_UNCHANGED'?'':local(
+   variants.find(x=>x.id===opt.id)?.proposedLocalReturn,'#4AFFF0',2.6,false);
+  const overlay=source+coastPath+outline+original+trial+center(g.center);
+  const field='<svg x="'+x+'" y="'+y+'" width="830" height="515" viewBox="'+
+   view.join(' ')+'" preserveAspectRatio="xMidYMid meet">'+overlay+'</svg>'+
+   '<rect x="'+x+'" y="'+y+'" width="830" height="515" fill="none" stroke="#98B1C5" stroke-width="1.8"/>';
+  const label=opt.id.replaceAll('_',' ');
+  const gap='Reference gap '+opt.baselineUnassignedGapSamples+' → '+
+   opt.residualUnassignedGapSamples+
+   ' unassigned original component-30 samples';
+  return field+title(x+9,y+550,label,18)+
+   title(x+9,y+580,gap,15,'#FCE1AD');
+ };
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+W+
+  '" height="'+H+'" viewBox="0 0 '+W+' '+H+'">'+head+def+
+  title(25,46,'C1-AA / RELIEF-FIRST ORIGINAL SOURCE PAIR REVIEW',30)+
+  title(25,84,SOURCE_NAME+' · NO CALIBRATED ELEVATIONS, RIDGELINES, FLOW OR WATERSHEDS',19,'#FFD4A6')+
+  group.map((g,i)=>g.options.map((opt,k)=>panelAA(g,opt,k,i)).join('')).join('')+
+  title(27,1480,'Yellow dashed: original C1-P inland returns. Turquoise: individual C1-Z trial. Magenta: original-source review center.',17,'#FCE1AE')+
+  title(27,1514,'All six are source-image comparisons only; no physical feature, new region, transition width or canonical region was certified.',17)+
   '</svg>\n';
  process.stdout.write(svg);
  process.exit(0);
