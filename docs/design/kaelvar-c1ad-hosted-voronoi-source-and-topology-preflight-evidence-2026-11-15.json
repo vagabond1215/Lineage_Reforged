@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "type": "kaelvar-c1ad-pinned-voronoi-source-topology-preflight-evidence.v1",
+  "date": "2026-11-15",
+  "status": "HOSTED_NATIVE_PASS_VORONOI_HIERARCHY_SUPPORTED_REAL_SAVE_AND_CANONICAL_HELD",
+  "testBearingCommit": "3267e63b5341e733b2baadbff7d4c2d14f49a9d4",
+  "nativeRun": "https://github.com/vagabond1215/Lineage_Reforged/actions/runs/43745376469",
+  "hostedEnvironment": "GitHub Actions ubuntu-26.04, Node 22; owner Windows-local C1-AD not run",
+  "tests": {
+    "inheritedC1OThroughC1AA": 71,
+    "existingOwnerSharedSeams": 6,
+    "existingC1ABEndpointAudit": 4,
+    "existingC1ACSimulator": 3,
+    "newC1ADVoronoi": 4,
+    "totalPassed": 88,
+    "totalFailed": 0
+  },
+  "dependencyScan": {
+    "scannedCodeFiles": 904,
+    "newLegacyHexDependencies": 0
+  },
+  "runArtifact": {
+    "id": 14174181553,
+    "name": "c1p-noncanonical-native-terrain-review",
+    "retentionDays": 7,
+    "reportName": "c1ad-voronoi-geography-preflight.json",
+    "reportSha256": "6b8dd4d5eab5613efae8b2ee6477dac514e2bc292bac4e129ae3d81d2a8c5893"
+  },
+  "sourceWitnesses": {
+    "originalVectorGitBlob": "9cd6752e9dbca00796e5f7c013066bb0e5a96175",
+    "biomeSha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+    "elevationSha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+    "ownerScreenshotReferenceSvgSha256": "6a0aaedfb4a4551dcbff6103bb5ca8405d1d923c0496577956af05a0657d2a8d",
+    "originalMainlandCandidateCells": 79419,
+    "acceptedC1PAssigned": 52449,
+    "acceptedC1PUnassigned": 26970,
+    "originalCoastlineEdges": 599
+  },
+  "sourceSemantics": {
+    "creator": "Fantasy Map Simulator",
+    "voronoiProvenance": "Owner-attested and corroborated by Jan 2025 developer notes",
+    "actualCellGraphRecovered": false,
+    "actualProvinceMembershipRecovered": false,
+    "actualDistrictMembershipRecovered": false,
+    "actualSaveMatched": false,
+    "syntheticTopologyFixtureValidated": true,
+    "syntheticFixturesAreRealKaelvarCells": false,
+    "nonnumericRelativeHeightOnly": true,
+    "developerSaveFormatMayVaryByVersion": true
+  },
+  "holds": {
+    "sharedC1PPolygonsChanged": false,
+    "C1AASharedSeamTrialsChanged": false,
+    "sourcePngOrVectorChanged": false,
+    "physicalLabelsChanged": false,
+    "detachedIslandClaims": 0,
+    "canonicalWorldDataChanged": false,
+    "newSettlementsOrGameplayContent": 0,
+    "additionalPermanentWorktrees": 0,
+    "newBranches": 0,
+    "canonicalWritable": false
+  },
+  "nextStage": "C1-AE safely inventory actual simulator save metadata, establish exact First World source match and decode cell-province-district topology only with known format; otherwise author whole-region source-indexed reversible proposals from original height/biome and registered editor ink."
+}
