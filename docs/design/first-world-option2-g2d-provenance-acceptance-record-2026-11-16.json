@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "kind": "G2D_PROVENANCE_IMPLEMENTATION_AND_NATIVE_SEMANTIC_HOLD",
+  "date": "2026-11-16",
+  "status": "SEMANTIC_LAND_AUTHORITY_HELD",
+  "implementation": {
+    "tool": "scripts/first-world-option2-g2d-provenance.py",
+    "dependencies": "Python 3 standard library only",
+    "readsSavesHeaderBytesAtMost": 24,
+    "readsSourceImagesForSha256": true,
+    "decodesPrivateSavePayload": false,
+    "writesOutputsWithinRepo": false,
+    "overwritesExistingReceipt": false,
+    "outputs": [
+      "g2d_private_provenance_*.json",
+      "g2d_shareable_summary_*.json"
+    ],
+    "shareableSummaryExcludesPrivateSaveNamesAndHashes": true,
+    "manualWindowsCheckoutExecutionRequiredForCurrentInstalledBuild": true
+  },
+  "sourceOriginals": {
+    "sourceImageRoles": [
+      "Option2 State",
+      "Option2 Height",
+      "Option2 Biome",
+      "Legacy First World Biome",
+      "Legacy First World Elevation"
+    ],
+    "previouslyVerifiedExactHashes": true,
+    "newWindowsRunForCurrentInstalledGame": false,
+    "priorG2CExactSourceCrosswalkPassed": true
+  },
+  "saveProvenance": {
+    "sampleSource": "Historical owner-provided save file (not proved as source of Option 2)",
+    "observedHeaderAscii": "NFW_SAVE_BIN",
+    "fieldAtOffset12LittleEndianU32": 1,
+    "fieldMeaningVerified": false,
+    "sampleByteLength": 1182168,
+    "previousWindowsInventorySameNameByteLength": 1235224,
+    "priorAndSampleExactByteIdentity": false,
+    "sourceToOption2ImagesVerified": false,
+    "currentInstalledGameLoadedSaveVerified": false,
+    "privateSaveBytesPublishedToRepo": false
+  },
+  "simulator": {
+    "steamAppId": "3035500",
+    "developer": "The Stranger Studio",
+    "product": "Fantasy Map Simulator",
+    "differentFromAzgaarFantasyMapGenerator": true,
+    "steamBuildIdCurrentOwnerMachine": "UNKNOWN",
+    "supportedNativeTerrainExportVerified": false,
+    "nativeLandWaterSemanticFieldRecovered": false,
+    "nativeVoronoiMeshDecoded": false
+  },
+  "crosswalkReview": {
+    "v1ValtherionRoiExclusive": [
+      8164,
+      1592,
+      8223,
+      1658
+    ],
+    "v2ValtherionRoiExclusive": [
+      8744,
+      2391,
+      8823,
+      2452
+    ],
+    "physicalIslandIdentityApproved": false,
+    "colorMaskAsIndependentSemanticAuthority": false,
+    "draemorTalmyraTravelEdgesPublished": false
+  },
+  "acceptance": {
+    "sourceOnlyToolingEligibleForIntegration": true,
+    "g2dProvenanceEvidenceStatus": "REVIEW_READY_WITH_PRIVATE_LOCAL_RUN_PENDING",
+    "g2eSemanticLandAuthorityStatus": "HELD",
+    "coordinateMapPublicationAuthorized": false,
+    "geographicRegionBoundaryPublicationAuthorized": false,
+    "politicalSovereigntyChanged": false,
+    "canonicalWritable": false
+  }
+}
