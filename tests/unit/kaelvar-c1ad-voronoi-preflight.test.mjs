@@ -102,3 +102,59 @@ test('C1-AD synthetic mesh audit refuses malformed geometry, mismatched neighbor
   assert.throws(()=>auditSyntheticVoronoiTopology(g),/C1-AD VORONOI HOLD/);
  }
 });
+
+const rect=(x0,y0,x1,y1)=>[
+ [x0,y0],[x1,y0],[x1,y1],[x0,y1]
+];
+const syntheticPair=(ringA,ringB,sharedBoundary=false)=>({
+ role:'SYNTHETIC_UNIT_FIXTURE_ONLY',
+ coordinateFrame:'ORIGINAL_FIRST_WORLD_REFERENCE_GRID_2048_X_1152',
+ sourceSaveMatched:false,canonicalWritable:false,
+ cells:[
+  {id:'a',ring:ringA,neighborIds:sharedBoundary?['b']:[],provinceId:'p1'},
+  {id:'b',ring:ringB,neighborIds:sharedBoundary?['a']:[],provinceId:'p2'}
+ ],
+ provinces:[
+  {id:'p1',cellIds:['a'],districtId:'d1'},
+  {id:'p2',cellIds:['b'],districtId:'d1'}
+ ],
+ districts:[{id:'d1',provinceIds:['p1','p2']}]
+});
+test('C1-AD rejects contained, duplicate, partial and edge-aligned cell interior overlaps',()=>{
+ const outer=rect(10,10,30,30);
+ const failures=[
+  [outer,rect(15,15,25,25),false],             // fully nested, no shared edges
+  [outer,rect(20,20,40,40),false],             // transverse crossing
+  [outer,rect(20,10,40,30),false],             // same y extents, no strict inner corners
+  [outer,[...outer].reverse(),true],           // identical shapes with reciprocal edge IDs
+  [outer,rect(29.999,15,39,20),false],        // very narrow overlap
+  [outer,rect(10,20,25,35),false]             // overlap along common border runs
+ ];
+ for(const [a,b,neighbors] of failures)
+  assert.throws(()=>auditSyntheticVoronoiTopology(
+   syntheticPair(a,b,neighbors)),
+   /C1-AD VORONOI HOLD: overlapping synthetic cell interiors/);
+});
+test('C1-AD accepts valid edge contact, corner contact and disconnected cell interiors',()=>{
+ const valid=[
+  [rect(10,10,20,20),rect(20,10,30,20),true],
+  [rect(10,10,20,20),rect(20,20,30,30),false],
+  [rect(10,10,20,20),rect(21,10,30,20),false],
+  [rect(10,10,20,20),rect(20,15,30,25),false]
+ ];
+ for(const [a,b,neighbors] of valid){
+  const r=auditSyntheticVoronoiTopology(syntheticPair(a,b,neighbors));
+  assert.equal(r.cells,2);
+  assert.equal(r.canonicalWritable,false);
+  assert.equal(r.sharedCellEdges,neighbors?1:0);
+ }
+});
+test('C1-AD rejects overlap but not an empty concave indentation',()=>{
+ const u=[[10,10],[40,10],[40,40],[30,40],
+          [30,20],[20,20],[20,40],[10,40]];
+ assert.doesNotThrow(()=>auditSyntheticVoronoiTopology(
+  syntheticPair(u,rect(22,22,28,35))));
+ assert.throws(()=>auditSyntheticVoronoiTopology(
+  syntheticPair(u,rect(28,25,32,35))),
+  /C1-AD VORONOI HOLD: overlapping synthetic cell interiors/);
+});
