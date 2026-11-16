@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-16",
+  "kind": "MAP_SOURCE_UPLOAD_AND_LOCAL_CLEANUP_RECEIPT_NOT_GEOMETRY_ACCEPTANCE",
+  "sourceMaster": "fed669de69f2da9333eb8addd0885ca4a2c4c100",
+  "assetCommit": "abc15835e61b0c9a0ea7e33fe07f8277c205167e",
+  "inspectedC1Head": "e4a9f20f769e94e7493de1e955f8c5a8697203a8",
+  "branch": "codex/first-world-option2-16k-source-intake-2026-11-15",
+  "pullRequest": 90,
+  "localOriginals": {
+    "date": "2026-11-15",
+    "manifestBase": "fed669de69f2da9333eb8addd0885ca4a2c4c100",
+    "files": [
+      {
+        "layer": "State",
+        "filename": "WorldMap_20261115_201735_State.png",
+        "bytes": 14269354,
+        "width": 16384,
+        "height": 9421,
+        "sha256": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de",
+        "zipCRC32": "4e2f6964",
+        "sourcePath": "C:\\Users\\vagab\\OneDrive\\Desktop\\WorldMap_20261115_201735_State.png",
+        "modifiedUtc": "2026-11-16T01:17:46.601396+00:00",
+        "pngCRC": "PASS",
+        "idatScanlineIntegrity": "PASS",
+        "pngEncoding": "RGBA8 noninterlaced",
+        "decodedScanlineBytes": 617424077,
+        "filterTypes": [
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "layer": "Height",
+        "filename": "WorldMap_20261115_201753_Height.png",
+        "bytes": 18484528,
+        "width": 16384,
+        "height": 9421,
+        "sha256": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce",
+        "zipCRC32": "cbc7b6d2",
+        "sourcePath": "C:\\Users\\vagab\\OneDrive\\Desktop\\WorldMap_20261115_201753_Height.png",
+        "modifiedUtc": "2026-11-16T01:18:02.842014+00:00",
+        "pngCRC": "PASS",
+        "idatScanlineIntegrity": "PASS",
+        "pngEncoding": "RGBA8 noninterlaced",
+        "decodedScanlineBytes": 617424077,
+        "filterTypes": [
+          1,
+          2,
+          4
+        ]
+      },
+      {
+        "layer": "Biome",
+        "filename": "WorldMap_20261115_201806_Biome.png",
+        "bytes": 17092660,
+        "width": 16384,
+        "height": 9421,
+        "sha256": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2",
+        "zipCRC32": "29fc5393",
+        "sourcePath": "C:\\Users\\vagab\\OneDrive\\Desktop\\WorldMap_20261115_201806_Biome.png",
+        "modifiedUtc": "2026-11-16T01:18:15.502443+00:00",
+        "pngCRC": "PASS",
+        "idatScanlineIntegrity": "PASS",
+        "pngEncoding": "RGBA8 noninterlaced",
+        "decodedScanlineBytes": 617424077,
+        "filterTypes": [
+          1,
+          2,
+          4
+        ]
+      }
+    ],
+    "zipSha256": "4e0563a71fa225c5433e69c55131275f3fa49c831fbd3091c1eda3dd2575c87d",
+    "desktopMatchesManifestAndZip": true,
+    "saveCorrespondenceProven": false,
+    "sourceCoordinateRegistrationProven": false
+  },
+  "remoteFreshLfsReadback": [
+    {
+      "filename": "WorldMap_20261115_201735_State.png",
+      "sha256": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de",
+      "bytes": 14269354,
+      "downloadedFresh": true
+    },
+    {
+      "filename": "WorldMap_20261115_201753_Height.png",
+      "sha256": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce",
+      "bytes": 18484528,
+      "downloadedFresh": true
+    },
+    {
+      "filename": "WorldMap_20261115_201806_Biome.png",
+      "sha256": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2",
+      "bytes": 17092660,
+      "downloadedFresh": true
+    }
+  ],
+  "validation": {
+    "pngCRCAndIdat": "PASS_ALL_THREE",
+    "desktopZipManifestEquality": "PASS_ALL_THREE",
+    "lfsFsck": "PASS",
+    "coordinateTests": {
+      "passed": 21,
+      "failed": 0
+    },
+    "noNewHexDependencies": 0,
+    "noNewHexScannedFiles": 832,
+    "fiveRegionGate": "FIVE_REGION_AUTHORING_COMPLETE_CANONICAL_HELD",
+    "hostedAssetCommitRun": 43872339284,
+    "hostedConclusion": "success"
+  },
+  "worktreeCleanup": {
+    "date": "2026-11-16",
+    "worktreesBefore": 61,
+    "diskFreeBefore": 74639962112,
+    "removed": [
+      {
+        "path": "C:\\Codex\\EoL-coordinate-first-c0-verify",
+        "head": "831e15f5cf7504a30208daa54949db7789954f81",
+        "bytes": 828456729,
+        "retainedRef": "refs/remotes/origin/connector/c1-coordinate-geography-registry-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Codex\\EoL-kaelvar-five-region-verify",
+        "head": "997d2d7b49c592214cf764270dd00e29c42b3eb0",
+        "bytes": 828415742,
+        "retainedRef": "refs/remotes/origin/connector/c1-coordinate-geography-registry-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Codex\\EoL-kaelvar-layout-a-r3-verify",
+        "head": "0db193e3fc30502bbfcd4eb7e8388586aec239a5",
+        "bytes": 828887672,
+        "retainedRef": "refs/remotes/origin/connector/first-world-kaelvar-layout-a-r3-sketch-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Codex\\EoL-landmass-r0r3-verify",
+        "head": "8731864d809bb8a18d6d74f4003b9cc941eb0e00",
+        "bytes": 828837118,
+        "retainedRef": "refs/remotes/origin/connector/first-world-kaelvar-layout-a-r3-sketch-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Codex\\EoL-macro-raster-pass0",
+        "head": "08a4a9dbe1ce0160be4f040473a52731d7b7cbe9",
+        "bytes": 828767191,
+        "retainedRef": "refs/remotes/origin/connector/first-world-kaelvar-layout-a-r3-sketch-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1-native-6efb4a815839",
+        "head": "6efb4a81583911c13657eb87d2c0ab009048c909",
+        "bytes": 828509847,
+        "retainedRef": "refs/remotes/origin/connector/c1-coordinate-geography-registry-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1-native-c1624cb07f20",
+        "head": "c1624cb07f203aa2015ae92163432fc9bca1b347",
+        "bytes": 828502360,
+        "retainedRef": "refs/remotes/origin/connector/c1-coordinate-geography-registry-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1g-native-ccbdcd41a48e",
+        "head": "ccbdcd41a48e48ffdd558a027bc55e808813e18f",
+        "bytes": 828597296,
+        "retainedRef": "refs/remotes/origin/connector/c1g-kaelvar-coastal-salt-basin-evidence-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1h-native-4295621d7ead",
+        "head": "4295621d7ead2d4b0659604268b7ac16af6feb39",
+        "bytes": 828628123,
+        "retainedRef": "refs/remotes/origin/connector/c1h-kaelvar-source-landform-diagnostics-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1i-native-78dca6f777fb",
+        "head": "78dca6f777fbec1423ffdd0229b8c432cb30a388",
+        "bytes": 828658882,
+        "retainedRef": "refs/remotes/origin/connector/c1i-kaelvar-ink-water-separation-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1j-native-9ece169f29c4",
+        "head": "9ece169f29c4560603060607aeb3d66abf09e08d",
+        "bytes": 828694547,
+        "retainedRef": "refs/remotes/origin/connector/c1j-kaelvar-vector-coastline-intake-2026-11-13",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1k-native-dc640a5e689f",
+        "head": "dc640a5e689f31c0634fa0ba356b9adba0a8f1ef",
+        "bytes": 828723666,
+        "retainedRef": "refs/remotes/origin/connector/c1k-kaelvar-coast-informed-boundary-review-2026-11-14",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1l-native-7f42edd5dd2d",
+        "head": "7f42edd5dd2d7e87bf434091df610352956d4316",
+        "bytes": 828756529,
+        "retainedRef": "refs/remotes/origin/connector/c1l-kaelvar-landmass-coast-arc-adjudication-2026-11-14",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1m-native-95e871700ef0",
+        "head": "95e871700ef0e1b992990bbd9e942092293520ea",
+        "bytes": 828784697,
+        "retainedRef": "refs/remotes/origin/connector/c1m-kharuun-shore-design-correction-2026-11-14",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1n-native-69a4c5e67c66",
+        "head": "69a4c5e67c6656b2b9bcc0a3b5ed787f98154d1e",
+        "bytes": 828818496,
+        "retainedRef": "refs/remotes/origin/connector/c1n-kaelvar-indexed-north-coast-atlas-2026-11-14",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1n-native-8c317d48ef40",
+        "head": "8c317d48ef405ca29830d4dc4959ce21f07693bb",
+        "bytes": 828818521,
+        "retainedRef": "refs/remotes/origin/connector/c1n-kaelvar-indexed-north-coast-atlas-2026-11-14",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      },
+      {
+        "path": "C:\\Users\\vagab\\AppData\\Local\\Temp\\lr-c1o-native-7b1092c0aa71",
+        "head": "7b1092c0aa71eb744182d4293859fb4b15fb5571",
+        "bytes": 829054074,
+        "retainedRef": "refs/remotes/origin/connector/c1o-kaelvar-regional-boundary-candidates-2026-11-14",
+        "status": "REMOVED_CLEAN_WITHOUT_FORCE"
+      }
+    ],
+    "fileBytesRemoved": 14087911490,
+    "worktreesAfter": 44,
+    "diskFreeAfter": 88448569344,
+    "diskFreeDelta": 13808607232
+  },
+  "branchRetirement": {
+    "Branch": "connector/first-world-macro-geography-lore-v1-2026-11-15",
+    "RetiredHead": "630223a1f0508b252fd60e7458ccfd23abc502e2",
+    "SixFilesPreservedOnMaster": true,
+    "RemoteAbsent": true
+  },
+  "retainedMapWorktrees": [
+    {
+      "worktree": "C:/Codex/EoL-map-review",
+      "HEAD": "735020177638b1f5b69ac8327e06b5210e83f4c5",
+      "statusCount": 175,
+      "ignoredCount": 4766,
+      "regularFileBytes": 1595847256
+    },
+    {
+      "worktree": "C:/Codex/EoL-mixed-map-review",
+      "HEAD": "41a8ab1dd8c35cae12c8b392fa12da55c74401db",
+      "statusCount": 175,
+      "ignoredCount": 4761,
+      "regularFileBytes": 1596774644
+    }
+  ],
+  "retentionReason": "Both map UI checkouts contain 175 untracked build files plus ignored dependencies; preserve pending output retention/reproducibility and consumer review.",
+  "storageSnapshot": {
+    "measuredUtc": "2026-11-16T02:04:34.396741+00:00",
+    "primaryRegularFileBytes": 43006866989,
+    "symlinkJunctionsFollowed": false,
+    "mapSiblingBytesBefore": 7335986352,
+    "mapTemporaryCheckoutBytesBefore": 9944547038,
+    "largestBuildDependencyDirectories": [
+      {
+        "path": "C:\\Codex\\EoL\\apps\\rpg-ui\\dist",
+        "bytes": 485455175
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.native-v3-staging-candidate\\apps\\rpg-ui\\dist",
+        "bytes": 485403254
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.native-v3-staging-packaging\\apps\\rpg-ui\\dist",
+        "bytes": 485403254
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.native-v3-character-panel\\apps\\rpg-ui\\dist",
+        "bytes": 485382545
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.native-v3-survey-four-stage\\apps\\rpg-ui\\dist",
+        "bytes": 485355797
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.landscape-resource-composed\\apps\\rpg-ui\\dist",
+        "bytes": 474902914
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.inventory-ui-selection-composed\\apps\\rpg-ui\\dist",
+        "bytes": 474898098
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.ui-stack-readiness-review\\apps\\rpg-ui\\dist",
+        "bytes": 474898086
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.inventory-bag-exact-composed\\apps\\rpg-ui\\dist",
+        "bytes": 474897537
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.inventory-consume-composed\\apps\\rpg-ui\\dist",
+        "bytes": 474897277
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.equipment-inventory-composed\\apps\\rpg-ui\\dist",
+        "bytes": 474896224
+      },
+      {
+        "path": "C:\\Codex\\EoL\\.mobile-shell-integration\\apps\\rpg-ui\\dist",
+        "bytes": 474892119
+      }
+    ],
+    "gitObjectUsage": "count: 2239\nsize: 48.31 MiB\nin-pack: 25428\npacks: 10\nsize-pack: 1.07 GiB\nprune-packable: 12\ngarbage: 0\nsize-garbage: 0 bytes",
+    "note": "Primary includes nested unrelated worktrees. File-byte deletion and observed free-space delta are distinct; concurrent disk activity affects free space."
+  },
+  "holds": [
+    "SAVE_EXPORT_CORRESPONDENCE",
+    "SOURCE_TO_LEGACY_TRANSFORM",
+    "DISCONNECTED_COMPONENT_INVENTORY",
+    "LOCAL_ISTHMUS_TOPOLOGY",
+    "CANONICAL_GEOGRAPHY_PUBLICATION",
+    "C1_SOURCE_BRANCH_INTEGRATION"
+  ],
+  "connectorReview": {
+    "deltaBase": "3ebdc92dbb94478d707b3b388c2f2db4ea536d99",
+    "deltaHead": "e4a9f20f769e94e7493de1e955f8c5a8697203a8",
+    "files": 17,
+    "insertions": 2569,
+    "canonicalPathsChanged": false,
+    "finding": "C1AD synthetic shared-edge checker accepts fully contained overlapping cell polygons; repair before real-cell reuse. Not a source upload blocker."
+  },
+  "processCleanup": "All foreground validation/Git commands completed; no server/browser/game or persistent process created."
+}

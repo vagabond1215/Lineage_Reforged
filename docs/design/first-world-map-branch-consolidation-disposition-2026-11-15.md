@@ -1,5 +1,7 @@
 # First World map work: Option 2 consolidation and branch disposition review
 
+> **2026-11-16 local intake update:** The exact desktop 16K triad is now archived with scoped Git LFS in [draft PR #90](https://github.com/vagabond1215/Lineage_Reforged/pull/90), with fresh remote-byte verification. See the [source-sync and cleanup receipt](../dev/first-world-map-source-sync-and-cleanup-2026-11-16.md). Earlier missing-upload statements are historical. Save correspondence, coordinate registration, physical topology and canonical publication remain held; PR #89 branch retirement and verified local cleanup are recorded separately.
+
 Date: 2026-11-15 (current connector audit after 16K ZIP arrival)  
 Status: **READ-ONLY HEAD / DIFF REVIEW; PRESERVE ACTIVE UNIQUE EVIDENCE; NO BULK MERGE, DELETE OR MASK PROMOTION**  
 Related: [owner macro-lore v1](first-world-macro-geography-lore-revision-v1-2026-11-15.md); [16K source archive manifest](first-world-option2-16k-export-triad-manifest-2026-11-15.json).

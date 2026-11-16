@@ -1376,3 +1376,12 @@ Relevant open map PRs #77–#87 retain named evidence consumers; #81 preliminary
 ## 2026-11-15 Kaelvar Layout A R3 sketch PR closeout
 
 Draft PR [#81](https://github.com/vagabond1215/Lineage_Reforged/pull/81), exact head `0db193e3fc30502bbfcd4eb7e8388586aec239a5` (five unique sketch/docs/test paths), was **closed without merge** after documenting `SUPERSEDED_PRESERVE_EVIDENCE` for its preliminary candidate geometry in its PR discussion and the master Option 2 consolidation ledger. Its unique source witnesses, code/tests, and original remote branch remain intentionally available to the later child-region comparison consumer; the branch was **not deleted**, rebased, force-moved, or locally pruned. Closure does not reject the underlying landmass-first analysis or imply owner approval of replacement region borders. Later region acceptance, source alignment and evidence promotion remain held.
+
+
+## 2026-11-16 — Completed Option 2 source intake and bounded map cleanup
+
+Master baseline `fed669de69f2da9333eb8addd0885ca4a2c4c100` and local master synchronized. New source-intake branch `codex/first-world-option2-16k-source-intake-2026-11-15`, asset `abc15835e61b0c9a0ea7e33fe07f8277c205167e`, [draft PR #90](https://github.com/vagabond1215/Lineage_Reforged/pull/90): `ACTIVE_WORK` for archival provenance review, not canonical geometry. Retire only after accepted archive/receipt integration and reachability proof. Existing active C1 head `e4a9f20f769e94e7493de1e955f8c5a8697203a8` unchanged.
+
+`MERGED_RETIRE` completed for PR #89 remote `connector/first-world-macro-geography-lore-v1-2026-11-15` at exact `630223a1f0508b252fd60e7458ccfd23abc502e2`: merge 1061b17a reachable on master, all 6 files byte-identical, no checkout/local branch/descendant ref/open targeting PR/named consumer; ordinary remote deletion succeeded and absence verified. PR #81 remote `0db193e3` remains held for five unique comparison paths despite its earlier PR closure.
+
+Removed 17 clean detached map checkouts without force after fresh identity/status/untracked/ignored/ancestry/lock/process checks; 61→44 registered, 13.12 GiB duplicate regular files removed. No commits pruned. Two map UI worktrees remain due untracked outputs/ignored dependencies. All other map lanes retain individually documented triggers in the [source-sync/cleanup receipt](first-world-map-source-sync-and-cleanup-2026-11-16.md). No other PR closure/merge/retarget, branch deletion/rewrite or native-v3 cleanup performed.

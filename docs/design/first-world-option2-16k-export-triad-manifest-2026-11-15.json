@@ -89,9 +89,13 @@
     "intakeBranch": "codex/first-world-option2-16k-source-intake-2026-11-15",
     "sourceMaster": "fed669de69f2da9333eb8addd0885ca4a2c4c100",
     "validationDate": "2026-11-16",
-    "status": "LOCAL_BYTES_VERIFIED_REMOTE_RECEIPT_FOLLOWS",
+    "status": "REMOTE_LFS_BYTES_VERIFIED",
     "original4kSourcesReplaced": false,
     "zipCommitted": false,
-    "saveCommitted": false
+    "saveCommitted": false,
+    "assetCommit": "abc15835e61b0c9a0ea7e33fe07f8277c205167e",
+    "pullRequest": 90,
+    "remoteFreshDownloadMatchesAllThree": true,
+    "lfsFsck": "PASS"
   }
 }

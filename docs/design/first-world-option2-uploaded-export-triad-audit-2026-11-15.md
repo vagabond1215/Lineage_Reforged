@@ -1,5 +1,7 @@
 # First World Option 2: uploaded State / Height / Biome export triad audit
 
+> **2026-11-16 local intake update:** The exact desktop 16K triad is now archived with scoped Git LFS in [draft PR #90](https://github.com/vagabond1215/Lineage_Reforged/pull/90), with fresh remote-byte verification. See the [source-sync and cleanup receipt](../dev/first-world-map-source-sync-and-cleanup-2026-11-16.md). Earlier missing-upload statements are historical. Save correspondence, coordinate registration, physical topology and canonical publication remain held; PR #89 branch retirement and verified local cleanup are recorded separately.
+
 Date: 2026-11-15  
 Status: **MATCHED CHAT-UPLOADED IMAGE EVIDENCE / NOT FULL SOURCE REGISTRATION / SAVE LINKAGE HELD**  
 Related: [macro geography lore revision](first-world-macro-geography-lore-revision-v1-2026-11-15.md), [Option 2 source registration gate](first-world-macro-geography-option2-source-registration-gate-2026-11-15.md).
