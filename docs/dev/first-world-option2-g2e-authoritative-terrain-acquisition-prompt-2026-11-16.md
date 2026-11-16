@@ -1,39 +1,32 @@
-# G2-E: authoritative terrain acquisition or explicitly authored coastlines
+# G2-E: owner-authored derived cartography from available History and Image exports
 
-Status: **IMPLEMENTATION PROMPT PREPARED; NATIVE LAND SEMANTICS HELD**  
-Read first: [G2-D provenance](../design/first-world-option2-g2d-native-source-provenance-and-certification-plan-2026-11-16.md), [G2-C native render crosswalk](../design/first-world-option2-g2c-semantic-land-authority-and-island-review-plan-2026-11-16.md), and [First World nine-parent roadmap](../design/first-world-option2-world-plan-and-geometry-roadmap-2026-11-16.md).
+Status: **NEXT IMPLEMENTATION PROMPT; OWNER-CONFIRMED_HISTORY_AND_IMAGE_ONLY; CANONICAL_HELD**  
+Current source authority: [G2-E image/history decision](../design/first-world-option2-g2e-image-history-derived-geography-gate-2026-11-16.md), [G2-C native comparison](../design/first-world-option2-g2c-semantic-land-authority-and-island-review-plan-2026-11-16.md), [nine-parent world roadmap](../design/first-world-option2-world-plan-and-geometry-roadmap-2026-11-16.md).
 
-## Paste-ready execution prompt
+## Copyable execution prompt: G2-E1 owner-review coast and component alternatives
 
-> Continue First World Option 2 G2-E source registration from current `origin/master`. Preserve every original map source PNG, simulator save, active C1 worktree, authored region/settlement/route file, legacy hex dependency and runtime. Before touching a checkout, verify `git status --porcelain=v1`, `git worktree list --porcelain`, active branch, source hashes and related pull requests. Never reset or delete occupied worktrees.
+> Continue First World Option 2 G2-E in `vagabond1215/Lineage_Reforged`, using current `origin/master` only in a safe isolated worktree. Preserve active C1, all original map assets, old simulator save files, Lineage canonical regions, routes and runtime.
 >
-> **1. Establish native provenance.** Run `scripts/first-world-option2-g2d-provenance.py` with the actual installed simulator Saves location, original 16K+4K source paths, previous `source_inventory.json` and Steam app `3035500` manifest. Keep the detailed save receipt locally and use only the redacted summary in public reports. Earlier differently sized same-named Saves are separate byte identities, not proof of corruption or source correspondence.
+> **Export reality:** the owner confirms that the installed Fantasy Map Simulator UI exports **History** and **Image** only. Do not ask for an official native terrain/cell/province polygon export. Do not decode unknown `NFW_SAVE_BIN` payloads or claim a recovered Voronoi mesh. Available images are sufficient for **owner-authored derived cartography**, but not native semantic topology. A History export, if provided, is optional narrative provenance, **not a geometry source**.
 >
-> **2. Inspect the actual Fantasy Map Simulator, not Azgaar FMG.** Record running build/version and current loaded map identity if exposed. Verify whether the installed game's supported UI/documentation offers an export with *native land/water cell classification or terrain geometry*, including schema and coordinates. Do not extract undocumented binary save fields or try unknown decryption. If only colorized Height, Biome and State PNGs exist, those are rendered terrain witnesses, **not** independent source classification.
+> **1. Verify source bytes.** Read the three original archived 16384×9421 PNGs from scoped Git LFS, confirm original SHA-256: State `419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de`; Height `776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce`; Biome `c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2`. Preserve original 4096×2355 Biome/Elevation as well, with known crop `Rectangle(60,60,3976,2235)`. The 16K→2048×1152 numerical registration remains a candidate until independently selected shoreline landmarks and pixel-center rules validate it.
 >
-> **3. Prove pairing before geometry.** A legitimate independent semantic layer must be demonstrably from the Option 2 source map underlying the archived November 15 16K triad, rather than a March-named save, different map version or unrelated Workshop map. Require traceable source identity, coordinate conversion and held-out coast measurements.
+> **2. Produce two review-only coast candidates.** Implement a reproducible, read-only generator for A (State exact rendered ocean `R=64,B=255`) and B (Biome+Height broad blue-water chromatic consensus). Treat source coast ink and rivers as uncertain. Overlay both outlines on State, Height and Biome ROIs. Record where A/B disagree and where a disconnected component exists only under one. Log per-contour area, bbox, holes, source bytes and simplification scale. Store all generated outputs outside Git and mark `OWNER_AUTHORED_DERIVED_CANDIDATE`.
 >
-> **4. If a true native layer exists:** build classifier C with source land/water tags and source-matched geometry. Compare C against the existing G2 A/B crosswalk, using full 16K pixel geometry, four/eight-neighbor connectivity, inlets, river strokes, holes and erosion sensitivity. First inspect Valtherion V1 `[8164,1592,8223,1658)` and V2 `[8744,2391,8823,2452)`, the Dawnreach white U arc, detached Myridian islands and nearby independent underwater merfolk city, Kaelvar NE island/Shattercap, Serpent's Wake and the Draemor–Talmyra natural tidal stone neck. Do not create a land route or deep-ship channel from visual connectedness.
+> **3. Prepare an owner-review queue.** The first two bounded issues are Valtherion V1 source bbox `[8164,1592,8223,1658)` and V2 `[8744,2391,8823,2452)`, which attach under A and detach under B. Do not infer an approved island. Next inspect Dawnreach U-arc, northern and detached central Myridian island, Kaelvar northeast/Shattercap, Serpent's Wake and Draemor–Talmyra tidal stone neck. Preserve disputed or sub-100-pixel candidates as `HELD`, not discarded noise. State colors indicate geographic parent groups, **never political sovereignty**. Nearby merfolk undersea city remains independent.
 >
-> **5. If no native semantic export is supported:** return `SEMANTIC_LAND_AUTHORITY_HELD` with exact blocker evidence. Prepare a bounded owner decision to certify an **owner-authored derived** coastline source from the verified PNGs, labeled `OWNER_AUTHORED_DERIVED` and never represented as recovered simulator Voronoi topology. Show V1/V2 and whole-island exceptions for approval before permanent island IDs.
+> **4. Record owner decisions, without preselecting them.** For every bounded ROI produce a source-native contact sheet, `separate_island | connected_land | held` options, evidence notes, potential narrow ink bridge and mask difference coordinates. Include source hash, immutable decision key, review status `PENDING_OWNER`, source pixel geometry and a field for future owner approval. The owner chooses physical identity; the tool may propose but cannot approve.
 >
-> **6. Review exit:** produce a machine-readable source register, private/redacted provenance separation, source-matched terrain/classifier-C tests or a definitive hold; a new evidence-only PR with exact-head CI if warranted. Do not modify `regions.json`, `world_maps.json`, `world_map_features.json`, biome/ecology/settlement/travel JSON, saves, runtime, source media or active C1 branch. Changes to canonical geographical boundaries need a distinct owner approval.
+> **5. Validate topology and content safety.** Test exact hash gating, image registration provenance, ring closure and winding, polygon holes, self-intersections, edge reciprocal symmetry, duplicate IDs, one- and three-pixel erosion sensitivity and zero modifications of original images or canonical files. Confirm no world component is inferred from state-color islands alone. Do not create land/sea routes, small-craft arch clearances or political borders.
 >
-> Report exact hashes, build/source facts, what was actually verified, unresolved risks and the next safe owner action. Don't claim a source save/landmask you cannot substantiate.
+> **6. Deliver source-only PR.** Put reproducible generator, unit/CI, review ledger schema, README and sourced summary into an isolated PR against latest master. Keep generated heavy images and full provisional contours in a downloadable external evidence ZIP; do not republish the original large source PNGs. Run the exact-head source-native CI and existing coordinate-first guard. Accept `DERIVED_COAST_REVIEW_READY` or `AMBIGUITY_HELD`, not canon.
+>
+> Only in a **later separately owner-approved geometry PR** may the reviewed mask be promoted to `OWNER_AUTHORED_DERIVED` stable islands and child-region base polygons; do not claim it reconstructs the simulator's original Voronoi graph. Preserve legacy save and hex compatibility.
 
-## Manual PowerShell path now, without Codex
+## Manual now without Codex
 
-Extract the standalone G2-D ZIP to `C:\Users\vagab\OneDrive\Desktop\FirstWorld_G2D_Kit`, then run:
+The previously published G2 and G2-C Python tools already run from the existing NumPy/OpenCV venv. They can produce source-only counts and contact evidence without requiring any unavailable simulator export. Prefer the original 16K images and the already validated G2-C owner-review ZIP, and keep files outside the repository.
 
-```powershell
-$py = "$env:LOCALAPPDATA\LineageReborn\first-world-registration-venv\Scripts\python.exe"
-$kit = "C:\Users\vagab\OneDrive\Desktop\FirstWorld_G2D_Kit"
-$saves = Join-Path $env:USERPROFILE "AppData\LocalLow\The Stranger Studio\FantasyMapSimulator\Saves"
-$prior = "C:\Users\vagab\OneDrive\Desktop\FirstWorld_Option2_Registration_Audit\source_inventory.json"
-$manifest = "C:\Program Files (x86)\Steam\steamapps\appmanifest_3035500.acf"
-$out = "C:\Users\vagab\OneDrive\Desktop\FirstWorld_Option2_G2D_Provenance"
-& $py "$kit\first_world_option2_g2d_provenance.py" --self-test
-& $py "$kit\first_world_option2_g2d_provenance.py" --repo-root "C:\Codex\EoL" --save-dir $saves --prior-receipt $prior --steam-manifest $manifest --output-dir $out
-```
+G2-D's private save provenance command is **optional** to support history/asset linkage and should not block E1. History export text should only be used after explicit owner upload and a separate narrative/source provenance review. Never treat it as a polygon export.
 
-Use the actual Steam manifest if the game is on another library; the script does not search the machine. Upload **`g2d_shareable_summary_*.json` only**. Keep `g2d_private_provenance_*.json` and all original Saves private. A good report can legitimately end at `SEMANTIC_LAND_AUTHORITY_HELD`; that is more useful than manufacturing a cell ID.
+**Gate:** `OWNER_CONFIRMED_IMAGE_HISTORY_EXPORT_ONLY`; `NATIVE_MESH_NOT_RECOVERED`; `DERIVED_GEOGRAPHY_REVIEW_PENDING`; `CANONICAL_WRITABLE_FALSE`.
