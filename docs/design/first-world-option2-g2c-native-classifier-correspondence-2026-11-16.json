@@ -1,0 +1,217 @@
+{
+  "schemaVersion": 1,
+  "type": "FIRST_WORLD_OPTION2_G2C_RENDERED_COMPONENT_CORRESPONDENCE_NOT_SEMANTIC_TERRAIN",
+  "date": "2026-11-16",
+  "status": "G2C_RENDERED_CORRESPONDENCE_MEASURED_SEMANTIC_LAND_AUTHORITY_HELD",
+  "originalSource": {
+    "resolution": [
+      16384,
+      9421
+    ],
+    "cropFullExclusive": [
+      240,
+      240,
+      16144,
+      9176
+    ],
+    "sha256": {
+      "State": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de",
+      "Height": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce",
+      "Biome": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2"
+    }
+  },
+  "classifiers": {
+    "A": "State exact rendered ocean RGB R=64,B=255",
+    "B": "Shared-render chromatic blue from Biome AND Height (OpenCV HSV H93..125 S>=125 V>=195 and BGR blue>=195 red<=135 green>=70)",
+    "semanticIndependence": false
+  },
+  "comparison": {
+    "pixels": 142118144,
+    "landA": 36095836,
+    "landB": 36051120,
+    "aOnlyLandPixels": 44716,
+    "bOnlyLandPixels": 0,
+    "landBsubsetLandA": true,
+    "retainedFractionOfALand": 0.99876119
+  },
+  "crosswalk": [
+    {
+      "connectivity": 4,
+      "AComponents": 169,
+      "BComponents": 171,
+      "AUnmatched": 0,
+      "BUnmatched": 0,
+      "ASplit": 1,
+      "BFuse": 0,
+      "AStable99PctOneToOne": 138,
+      "AStableAreaFraction": 0.52365713,
+      "splitALabel": 1,
+      "splitBLabels": [
+        1,
+        37,
+        60
+      ]
+    },
+    {
+      "connectivity": 8,
+      "AComponents": 161,
+      "BComponents": 163,
+      "AUnmatched": 0,
+      "BUnmatched": 0,
+      "ASplit": 1,
+      "BFuse": 0,
+      "AStable99PctOneToOne": 130,
+      "AStableAreaFraction": 0.52365713,
+      "splitALabel": 1,
+      "splitBLabels": [
+        1,
+        36,
+        59
+      ]
+    }
+  ],
+  "valtherionCoastSplit": {
+    "AComponentAreaPixels": 17003582,
+    "AComponentBoundingBoxFull16kExclusive": [
+      8060,
+      318,
+      14872,
+      5373
+    ],
+    "BMainOverlapPixels": 16963893,
+    "BMainOverlapFractionOfA": 0.99766584,
+    "renderedDetachedCandidates": [
+      {
+        "candidate": "V1",
+        "intersectionPixels": 2916,
+        "bboxFull16kExclusive": [
+          8164,
+          1592,
+          8223,
+          1658
+        ],
+        "centerFull16k": [
+          8192,
+          1626
+        ],
+        "B4Label": 37,
+        "B8Label": 36,
+        "status": "SOURCE_ONLY_SPLIT_NEEDS_NATIVE_SEMANTIC_AND_OWNER_REVIEW"
+      },
+      {
+        "candidate": "V2",
+        "intersectionPixels": 3169,
+        "bboxFull16kExclusive": [
+          8744,
+          2391,
+          8823,
+          2452
+        ],
+        "centerFull16k": [
+          8780,
+          2422
+        ],
+        "B4Label": 60,
+        "B8Label": 59,
+        "status": "SOURCE_ONLY_SPLIT_NEEDS_NATIVE_SEMANTIC_AND_OWNER_REVIEW"
+      }
+    ],
+    "notes": "A darker coastline stroke or narrow rendered pixel bridge may connect visually separate land patches. No claim of new physical islands or independent sovereignty."
+  },
+  "otherCandidateStability": {
+    "sameUniqueBComponentAtLeast99pctAandB": [
+      {
+        "sourcePlace": "Draemor–Talmyra",
+        "a4Label": 110,
+        "b4Label": 112,
+        "areaAPixels": 6745062,
+        "overlapFractionA": 0.99993951
+      },
+      {
+        "sourcePlace": "Kaelvar mainland",
+        "a4Label": 25,
+        "b4Label": 25,
+        "areaAPixels": 5300293,
+        "overlapFractionA": 0.99994623
+      },
+      {
+        "sourcePlace": "Serathyl mainland",
+        "a4Label": 98,
+        "b4Label": 100,
+        "areaAPixels": 2167485,
+        "overlapFractionA": 0.99990588
+      },
+      {
+        "sourcePlace": "Lantern Isles largest",
+        "a4Label": 138,
+        "b4Label": 140,
+        "areaAPixels": 1224319,
+        "overlapFractionA": 0.99987912
+      },
+      {
+        "sourcePlace": "Myridian Chain main island candidate",
+        "a4Label": 70,
+        "b4Label": 72,
+        "areaAPixels": 383672,
+        "overlapFractionA": 0.99981234
+      },
+      {
+        "sourcePlace": "Kaelvar NE island candidate",
+        "a4Label": 21,
+        "b4Label": 21,
+        "areaAPixels": 249557,
+        "overlapFractionA": 0.99985574
+      },
+      {
+        "sourcePlace": "Myridian detached center island candidate",
+        "a4Label": 85,
+        "b4Label": 87,
+        "areaAPixels": 234732,
+        "overlapFractionA": 0.99982959
+      },
+      {
+        "sourcePlace": "Serpent's Wake island candidate",
+        "a4Label": 89,
+        "b4Label": 91,
+        "areaAPixels": 194391,
+        "overlapFractionA": 0.99962447
+      },
+      {
+        "sourcePlace": "Dawnreach north island candidate",
+        "a4Label": 28,
+        "b4Label": 28,
+        "areaAPixels": 179875,
+        "overlapFractionA": 0.99986657
+      }
+    ],
+    "scope": "Rendered-pixel correspondence only. Candidate area, location and ID are noncanonical."
+  },
+  "saveProvenance": {
+    "uploadedHistoricalExampleMagic": "NFW_SAVE_BIN",
+    "versionFieldReadAtOffset12": 1,
+    "exampleBytes": 1182168,
+    "priorWindowsAuditBytes": 1235224,
+    "sameNamedFilesVerifiedSameBytes": false,
+    "fullSaveDataInRepo": false,
+    "nativeVoronoiDecoded": false,
+    "independentSemanticTerrainRecovered": false,
+    "note": "High-entropy opaque payload; do not assign compression or encryption scheme without decoder. Samples cannot be linked to 2026-11-15 PNG exports."
+  },
+  "reproducibility": {
+    "sourceReviewArchiveName": "FirstWorld_Option2_G2C_CrossClassifier_Review.zip",
+    "sha256": "a9ce35eed24240cfe13c97e9bc998b75600357c170a5ac5bc3c2b7c1644d5edf",
+    "archiveBytes": 102474,
+    "fullRowCrosswalkOutsideRepo": true,
+    "rawSourceImagesNotRepublished": true,
+    "rawPrivateSaveNotRepublished": true
+  },
+  "governance": {
+    "semanticLandmaskAvailable": false,
+    "physicalIslandIdentityApproved": false,
+    "geographicParentPolygonsApproved": false,
+    "politicalSovereigntyApproved": false,
+    "tidalCrossingRouteApproved": false,
+    "simulatorSaveToExportLinkVerified": false,
+    "canonicalWritable": false
+  }
+}
