@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "type": "FIRST_WORLD_OPTION2_FIXED_WINDOW_PREVIEW_COAST_AUDIT_SUMMARY",
+  "status": "PREVIEW_COAST_REVIEW_PASS_GEOMETRY_ADOPTION_HELD",
+  "date": "2026-11-16",
+  "archive": {
+    "file": "FirstWorld_Option2_Registration_Audit.zip",
+    "bytes": 5244922,
+    "sha256": "3ee73eeb11fc1dadaae74e3f2f9b7b89d0b47fba7c43c82e85795d26f52458e2",
+    "archiveStoredInRepository": false,
+    "crcCheck": "PASS"
+  },
+  "input": {
+    "oldBiome": "legacy_biome_preview.png",
+    "newBiome": "option2_biome_preview.png",
+    "oldHeight": "legacy_height_preview.png",
+    "newHeight": "option2_height_preview.png",
+    "ownerState": "option2_state_preview.png",
+    "sizePx": [
+      2048,
+      1177
+    ],
+    "roiRadiusPreviewPx": 78
+  },
+  "method": {
+    "waterHeuristic": "RGB R=64 and B=255; green unconstrained",
+    "edge": "cv2 morphological gradient 3x3",
+    "metric": "symmetric 3x3 Euclidean distance transform; 95% edge samples <= 2 preview pixels",
+    "windowsPreselectedOn": "Option 2 State preview",
+    "siftKeypointsUsed": false,
+    "manualCertifiedCorrespondence": false,
+    "reviewWindowsChosenAfterPreviousSiftFit": true,
+    "biomeAndHeightWaterMasksMayShareSameRenderLayer": true,
+    "source16kPhysicalTopologyAudited": false
+  },
+  "outcomes": {
+    "biome": {
+      "informative": 18,
+      "passed": 18
+    },
+    "height": {
+      "informative": 18,
+      "passed": 18
+    },
+    "minSymmetricCoastEdgeWithin2PreviewPxFraction": 0.993096,
+    "maxPerWindowSymmetricCoastEdgeP95PreviewPx": 0.955,
+    "localWaterColorDifferenceCountSum": 2055,
+    "localWaterColorDifferenceCountUniqueGlobalPixels": false
+  },
+  "windowMetrics": [
+    {
+      "id": "kaelvar_west_fjord",
+      "centerPreviewPx": [
+        126,
+        261
+      ],
+      "minSymmetricWithin2Px": 0.994802,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 116
+    },
+    {
+      "id": "kaelvar_north_cap",
+      "centerPreviewPx": [
+        347,
+        158
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 125
+    },
+    {
+      "id": "kaelvar_southeast_cape",
+      "centerPreviewPx": [
+        510,
+        466
+      ],
+      "minSymmetricWithin2Px": 0.99666,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 181
+    },
+    {
+      "id": "dawnreach_northern_arc",
+      "centerPreviewPx": [
+        815,
+        201
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 111
+    },
+    {
+      "id": "myridian_intercontinental_isles",
+      "centerPreviewPx": [
+        606,
+        374
+      ],
+      "minSymmetricWithin2Px": 0.996912,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 139
+    },
+    {
+      "id": "myridian_detached_island",
+      "centerPreviewPx": [
+        930,
+        472
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 93
+    },
+    {
+      "id": "valtherion_northern_fjords",
+      "centerPreviewPx": [
+        1458,
+        111
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 60
+    },
+    {
+      "id": "valtherion_eastern_cape",
+      "centerPreviewPx": [
+        1821,
+        374
+      ],
+      "minSymmetricWithin2Px": 0.993096,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 61
+    },
+    {
+      "id": "valtherion_southern_isles",
+      "centerPreviewPx": [
+        1483,
+        571
+      ],
+      "minSymmetricWithin2Px": 0.999258,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 209
+    },
+    {
+      "id": "serathyl_west_coast",
+      "centerPreviewPx": [
+        406,
+        623
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 89
+    },
+    {
+      "id": "serathyl_south_spur",
+      "centerPreviewPx": [
+        658,
+        801
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 100
+    },
+    {
+      "id": "draemor_west_coast",
+      "centerPreviewPx": [
+        765,
+        872
+      ],
+      "minSymmetricWithin2Px": 0.99638,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 93
+    },
+    {
+      "id": "draemor_south_tip",
+      "centerPreviewPx": [
+        996,
+        1022
+      ],
+      "minSymmetricWithin2Px": 0.997965,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 127
+    },
+    {
+      "id": "draemor_talmyra_neck",
+      "centerPreviewPx": [
+        1059,
+        789
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 103
+    },
+    {
+      "id": "talmyra_south_coast",
+      "centerPreviewPx": [
+        1187,
+        1025
+      ],
+      "minSymmetricWithin2Px": 0.998156,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 121
+    },
+    {
+      "id": "lantern_isles_south",
+      "centerPreviewPx": [
+        1307,
+        967
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 125
+    },
+    {
+      "id": "serpents_wake_north",
+      "centerPreviewPx": [
+        1780,
+        543
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 122
+    },
+    {
+      "id": "serpents_wake_south",
+      "centerPreviewPx": [
+        1711,
+        876
+      ],
+      "minSymmetricWithin2Px": 1,
+      "maxSymmetricP95Px": 0.955,
+      "localWaterMaskDifferencePixels": 80
+    }
+  ],
+  "authority": {
+    "approvedNineGeographicParentsOnly": true,
+    "sourceMatchedRealVoronoiMesh": false,
+    "original16kToReferenceTransformApproved": false,
+    "independentIslandInventoryApproved": false,
+    "politicalSovereigntyFromColors": false,
+    "routeFromColorAdjacency": false,
+    "canonicalWritable": false
+  },
+  "notes": [
+    "Window metrics were computed from owner-provided ZIP with a locally tested equivalent mask/distance algorithm. The committed reproducibility script should be independently run at the reviewed Git commit before treating its exact implementation as native-validated.",
+    "The 18 windows are source preview review ROIs, not manually certified independently matched shoreline control points; their two image pairs use a common water-render palette.",
+    "The local difference count of 2055 sums ROIs and is not necessarily a unique-pixel global difference count.",
+    "Zero region polygons, island ownership and travel routes were published."
+  ]
+}
