@@ -66,7 +66,7 @@ def make_contact_sheet(key, crops, a, b):
     diff = make_mask_view(a & b, uncertain)
     pictures = [crops[k] for k in ("State", "Height", "Biome")]
     pictures += [make_mask_view(a, uncertain), make_mask_view(b, uncertain), diff]
-    sheet = np.full((377, 1830, 3), (29, 25, 18), np.uint8)
+    sheet = np.full((377, 1860, 3), (29, 25, 18), np.uint8)
     cv2.putText(sheet, key + "  |  SOURCE RENDER, NOT CANONICAL ISLAND",
                 (18, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.68, (239, 238, 230), 1, cv2.LINE_AA)
     names = ["STATE", "HEIGHT", "BIOME", "MASK A", "MASK B", "A/B UNCERTAINTY"]
@@ -149,7 +149,11 @@ def self_test():
     assert len(ISSUES) == 2 and len({x[0] for x in ISSUES}) == 2
     assert all(x0 < x1 and y0 < y1
                for _, (x0, y0, x1, y1), _, _ in ISSUES)
-    print("PASS G2E1 synthetic blue classifier, review schema and issue coordinates")
+    fake = np.zeros((10, 10, 3), np.uint8)
+    masks = np.ones((10, 10), np.bool_)
+    sheet = make_contact_sheet("SYNTHETIC", {"State": fake, "Height": fake, "Biome": fake}, masks, masks)
+    assert sheet.shape == (377, 1860, 3)
+    print("PASS G2E1 synthetic blue classifier, panel bounds and issue coordinates")
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
