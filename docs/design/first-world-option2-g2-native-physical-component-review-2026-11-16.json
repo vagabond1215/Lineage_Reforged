@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "kind": "G2_NATIVE_RENDERED_COMPONENT_AUDIT_NOT_CANONICAL",
+  "date": "2026-11-16",
+  "status": "G2_AMBIGUITY_HELD",
+  "sources": {
+    "zipSha256": "4e0563a71fa225c5433e69c55131275f3fa49c831fbd3091c1eda3dd2575c87d",
+    "dimensions": [
+      16384,
+      9421
+    ],
+    "cropFullExclusive": [
+      240,
+      240,
+      16144,
+      9176
+    ],
+    "files": [
+      {
+        "layer": "State",
+        "sha256": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de"
+      },
+      {
+        "layer": "Height",
+        "sha256": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce"
+      },
+      {
+        "layer": "Biome",
+        "sha256": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2"
+      }
+    ]
+  },
+  "classifiers": {
+    "A": "State exact rendered ocean pixel RGB R=64 and B=255, independent of G; all other interior pixels treated as land candidates. Source-only, may include river/ink.",
+    "B": "Biome AND Height votes: OpenCV HSV H 93..125 S>=125 V>=195, plus BGR blue>=195 red<=135 green>=70. Uses a broader spectral palette, but both exports share visual rendering and yielded identical votes; not independent simulator semantic terrain."
+  },
+  "comparison": {
+    "pixelsInCrop": 142118144,
+    "classifierAWaterPixels": 106022308,
+    "classifierBWaterPixels": 106067024,
+    "classifiersDifferPixels": 44716,
+    "biomeHeightBlueVoteDisagreements": 0
+  },
+  "sensitivity": [
+    {
+      "classifier": "A_exact_state_ocean",
+      "connectivity": 4,
+      "erosionCrossIterations": 0,
+      "componentCount": 169,
+      "componentsAtLeast100Px": 163,
+      "renderedLandPixels": 36095836,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 110
+    },
+    {
+      "classifier": "A_exact_state_ocean",
+      "connectivity": 8,
+      "erosionCrossIterations": 0,
+      "componentCount": 161,
+      "componentsAtLeast100Px": 161,
+      "renderedLandPixels": 36095836,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 109
+    },
+    {
+      "classifier": "A_exact_state_ocean",
+      "connectivity": 4,
+      "erosionCrossIterations": 1,
+      "componentCount": 166,
+      "componentsAtLeast100Px": 165,
+      "renderedLandPixels": 35859784,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 112
+    },
+    {
+      "classifier": "A_exact_state_ocean",
+      "connectivity": 4,
+      "erosionCrossIterations": 2,
+      "componentCount": 166,
+      "componentsAtLeast100Px": 165,
+      "renderedLandPixels": 35623567,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 113
+    },
+    {
+      "classifier": "A_exact_state_ocean",
+      "connectivity": 4,
+      "erosionCrossIterations": 3,
+      "componentCount": 170,
+      "componentsAtLeast100Px": 165,
+      "renderedLandPixels": 35387125,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 117
+    },
+    {
+      "classifier": "B_dual_layer_chromatic",
+      "connectivity": 4,
+      "erosionCrossIterations": 0,
+      "componentCount": 171,
+      "componentsAtLeast100Px": 165,
+      "renderedLandPixels": 36051120,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 112
+    },
+    {
+      "classifier": "B_dual_layer_chromatic",
+      "connectivity": 8,
+      "erosionCrossIterations": 0,
+      "componentCount": 163,
+      "componentsAtLeast100Px": 163,
+      "renderedLandPixels": 36051120,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 111
+    },
+    {
+      "classifier": "B_dual_layer_chromatic",
+      "connectivity": 4,
+      "erosionCrossIterations": 1,
+      "componentCount": 167,
+      "componentsAtLeast100Px": 165,
+      "renderedLandPixels": 35814010,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 113
+    },
+    {
+      "classifier": "B_dual_layer_chromatic",
+      "connectivity": 4,
+      "erosionCrossIterations": 2,
+      "componentCount": 166,
+      "componentsAtLeast100Px": 165,
+      "renderedLandPixels": 35576408,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 113
+    },
+    {
+      "classifier": "B_dual_layer_chromatic",
+      "connectivity": 4,
+      "erosionCrossIterations": 3,
+      "componentCount": 172,
+      "componentsAtLeast100Px": 165,
+      "renderedLandPixels": 35338463,
+      "draemorTalmyraConnected": true,
+      "ephemeralLabel": 119
+    }
+  ],
+  "mixedLandParent": {
+    "onlySubstantialMixedExactFillCandidate": "Draemor and Talmyra share the same rendered land component under both classifiers and 4/8 connectivity and 1–3px four-neighbor erosion",
+    "sourceSampleFull16k": {
+      "draemor": [
+        7428,
+        6552
+      ],
+      "talmyra": [
+        9240,
+        7436
+      ]
+    },
+    "A4": {
+      "ephemeralLabel": 110,
+      "areaPixels": 6745062,
+      "bboxFullExclusive": [
+        5964,
+        4948,
+        10030,
+        8666
+      ],
+      "sampledExactStateFillAtStride4": {
+        "draemor": 261310,
+        "talmyra": 99054
+      }
+    },
+    "B4": {
+      "ephemeralLabel": 112,
+      "areaPixels": 6744654
+    },
+    "traversableRouteAuthorized": false,
+    "localWidthMeasured": false,
+    "tidalArchGeometryProven": false
+  },
+  "perParentSourceFillCandidateNotes": "Exact State RGB fills sampled every fourth full-resolution pixel; no component label is a stable physical island ID; no political sovereignty follows from color.",
+  "nativeFullLedgerOutsideGit": {
+    "file": "g2_land_component_ledgers.json",
+    "sha256": "8b330a30bd10dea6bba1b1ed989f64225efa79df080a4fd9dff150cb56eaef8f",
+    "totalRecordsAcrossA4A8B4B8": 664,
+    "status": "SOURCE_ONLY",
+    "userArchive": "FirstWorld_Option2_G2_Physical_Component_Review.zip",
+    "userArchiveSha256": "e0f8d86addbf6d7a1d27bb09fb2de4cca7aef714807b5f65b3823e35381ffa47",
+    "originalPngsRepublished": false
+  },
+  "nativeSummaryOutsideGit": {
+    "file": "g2_audit_summary.json",
+    "sha256": "b981a32f05fbbcbe0884191f1c8f866380c29dabcc7cf4db0cee7b3f73b9ab0a"
+  },
+  "governance": {
+    "sourceRegistrationApproved": false,
+    "physicalComponentIdentityApproved": false,
+    "secondSemanticWaterClassifierApproved": false,
+    "nativeVoronoiMeshRecovered": false,
+    "simulatorSaveExportMatched": false,
+    "geographicParentSeamsPublished": false,
+    "politicalSovereigntyChanged": false,
+    "traversableRoutePublished": false,
+    "canonicalWritable": false
+  },
+  "holds": [
+    "Second classifier is chromatic rendering, not independent native land/water semantics",
+    "Rendered shoreline ink and rivers may make nonphysical bridges",
+    "Exact tidal-neck minimum passage width unavailable",
+    "Mixed and very small islands need owner-review ledger and local source save",
+    "No stable source-simulator cell graph or 2048x1152 registration approval"
+  ]
+}
