@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "kind": "RENDERED_LAND_COMPONENT_PROBE_NOT_REGISTERED_SOURCE_GEOMETRY",
+  "date": "2026-11-16",
+  "source": {
+    "source": "Owner's three unmodified 16K simulator exports, archived through scoped Git LFS on master",
+    "resolution": [
+      16384,
+      9421
+    ],
+    "files": [
+      {
+        "layer": "State",
+        "name": "WorldMap_20261115_201735_State.png",
+        "sha256": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de"
+      },
+      {
+        "layer": "Height",
+        "name": "WorldMap_20261115_201753_Height.png",
+        "sha256": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce"
+      },
+      {
+        "layer": "Biome",
+        "name": "WorldMap_20261115_201806_Biome.png",
+        "sha256": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2"
+      }
+    ]
+  },
+  "method": {
+    "interiorCropFullImagePxExclusive": [
+      240,
+      240,
+      16144,
+      9176
+    ],
+    "interiorPixelCount": 142118144,
+    "renderedOceanPixelRule": "RGB red == 64 and blue == 255; green channel unconstrained; river, coastline stroke and fill pixels not meeting the rule count as rendered land candidates",
+    "meaning": "Rendered-color heuristic, not simulator semantic land class, not recovered original Voronoi province/district graph",
+    "connectivity4": "orthogonal neighbor; conservative for land passages",
+    "connectivity8": "orthogonal or diagonal; sensitivity only",
+    "pureFillParentPixels": "Exact RGB state interior fill sampled on the same 16K raster, not full parent boundaries",
+    "sourceToReferenceTransform": "UNREGISTERED"
+  },
+  "results": {
+    "fourConnected": {
+      "landComponentCount": 169,
+      "landComponentsAtLeast100Pixels": 163,
+      "renderedLandPixels": 36095836,
+      "renderedWaterPixels": 106022308
+    },
+    "eightConnected": {
+      "landComponentCount": 161,
+      "landComponentsAtLeast100Pixels": 161
+    },
+    "crossLayerWaterPattern": {
+      "stateWaterPixels": 106022308,
+      "heightWaterPixels": 106022307,
+      "biomeWaterPixels": 106022307,
+      "stateVsHeightDisagreeingPixels": 7,
+      "stateVsBiomeDisagreeingPixels": 7,
+      "heightVsBiomeDisagreeingPixels": 0,
+      "waterPatternNote": "The 7 pixels are differences in the R=64, B=255 water-color test, not a claim of only 7 RGB differences overall",
+      "discordantFullImagePixels": [
+        [
+          7313,
+          2086
+        ],
+        [
+          9876,
+          3032
+        ],
+        [
+          13346,
+          3732
+        ],
+        [
+          4814,
+          5422
+        ],
+        [
+          4815,
+          5422
+        ],
+        [
+          4816,
+          5422
+        ],
+        [
+          10201,
+          6656
+        ]
+      ]
+    },
+    "draemorTalmyra": {
+      "sampleFullImagePixels": {
+        "draemor": [
+          7428,
+          6552
+        ],
+        "talmyra": [
+          9240,
+          7436
+        ]
+      },
+      "sameFourConnectedRenderedLandComponentAllThreeLayers": true,
+      "stateFourConnectedComponentLabel": 110,
+      "componentLandPixels": 6745062,
+      "componentBoundingBoxFullImageExclusive": [
+        5964,
+        4948,
+        10030,
+        8666
+      ],
+      "pureFillCorePixelsWithinComponent": {
+        "draemor": 4181465,
+        "talmyra": 1585206
+      },
+      "meaning": "Rendered land-connectivity witness consistent with owner-approved narrow tidal isthmus; not proof of traversable terrestrial route, tidal arches or exact bridge width"
+    },
+    "exactPureStateFillCorePixelsByParent": {
+      "kaelvar": 4808056,
+      "valtherion": 15833593,
+      "serathyl": 1735359,
+      "draemor": 4211554,
+      "talmyra": 1600984,
+      "myridian_chain": 669222,
+      "lantern_isles": 1004862,
+      "serpents_wake": 143646,
+      "dawnreach_isles": 226358
+    },
+    "topFourConnectedRenderedLandComponents": [
+      {
+        "id": 1,
+        "areaPixels": 17003582,
+        "bbox": [
+          8060,
+          318,
+          14872,
+          5373
+        ],
+        "parent": "valtherion"
+      },
+      {
+        "id": 110,
+        "areaPixels": 6745062,
+        "bbox": [
+          5964,
+          4948,
+          10030,
+          8666
+        ],
+        "parents": [
+          "draemor",
+          "talmyra"
+        ]
+      },
+      {
+        "id": 25,
+        "areaPixels": 5300293,
+        "bbox": [
+          723,
+          1248,
+          4418,
+          3970
+        ],
+        "parent": "kaelvar"
+      },
+      {
+        "id": 98,
+        "areaPixels": 2167485,
+        "bbox": [
+          3271,
+          4161,
+          5537,
+          6564
+        ],
+        "parent": "serathyl"
+      },
+      {
+        "id": 138,
+        "areaPixels": 1224319,
+        "bbox": [
+          9365,
+          5681,
+          10923,
+          7971
+        ],
+        "parent": "lantern_isles"
+      },
+      {
+        "id": 70,
+        "areaPixels": 383672,
+        "bbox": [
+          4533,
+          2840,
+          5186,
+          4357
+        ],
+        "parent": "myridian_chain"
+      }
+    ],
+    "metadata": {
+      "componentIdEphemeral": true,
+      "completePhysicalIslandInventoryVerified": false,
+      "independentLargeNortheastIslandProven": false,
+      "sourcePNGto2048x1152AlignmentVerified": false,
+      "option2SaveLinkProven": false,
+      "canonicalParentPolygonsApproved": false,
+      "regionChildBoundariesApproved": false,
+      "realVoronoiDecoded": false,
+      "exactIsthmusLocalTopologyVerified": false,
+      "routeGraphPublished": false,
+      "originalSourceImagesModified": false,
+      "gameRuntimeModified": false,
+      "canonicalWritable": false
+    }
+  },
+  "notes": [
+    "Connected-component counts depend on a render-specific ocean-classification rule; coastline strokes, rivers, islands under 100 pixels and antialiasing require source validation.",
+    "Only the Draemor/Talmyra pair shares a large component among the nine exact fill core associations in this probe.",
+    "The north white fill must be distinguished from the cropped-out white frame; no Nacre Shelf or merfolk ownership follows from color.",
+    "Do not turn component labels or color fills into political sovereignty or routes."
+  ]
+}
