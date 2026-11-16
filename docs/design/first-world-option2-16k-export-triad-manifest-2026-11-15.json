@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "artifactKind": "source_evidence_manifest_not_registered_geometry",
+  "date": "2026-11-15",
+  "origin": "User-uploaded ZIP, inspected unmodified in conversation; not yet committed as binary files",
+  "zip": {
+    "filename": "WorldMap_20261115_201735_State.zip",
+    "bytes": 43724779,
+    "sha256": "4e0563a71fa225c5433e69c55131275f3fa49c831fbd3091c1eda3dd2575c87d",
+    "crcCheck": "PASS"
+  },
+  "recommendedRepositoryDirectory": "packages/content/base/world/map_assets/first_world_simulator_option2_2026_11_15",
+  "files": [
+    {
+      "layer": "State",
+      "filename": "WorldMap_20261115_201735_State.png",
+      "bytes": 14269354,
+      "width": 16384,
+      "height": 9421,
+      "sha256": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de",
+      "zipCRC32": "4e2f6964"
+    },
+    {
+      "layer": "Height",
+      "filename": "WorldMap_20261115_201753_Height.png",
+      "bytes": 18484528,
+      "width": 16384,
+      "height": 9421,
+      "sha256": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce",
+      "zipCRC32": "cbc7b6d2"
+    },
+    {
+      "layer": "Biome",
+      "filename": "WorldMap_20261115_201806_Biome.png",
+      "bytes": 17092660,
+      "width": 16384,
+      "height": 9421,
+      "sha256": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2",
+      "zipCRC32": "29fc5393"
+    }
+  ],
+  "totals": {
+    "uncompressedBytes": 49846542,
+    "rawResolution": [
+      16384,
+      9421
+    ]
+  },
+  "observedOwnerMap": {
+    "layout": "Dawnreach Option 2 accepted",
+    "parentColors": "State/administrative export, not actual political boundaries",
+    "regionIds": [
+      "region.kaelvar",
+      "region.valtherion",
+      "region.serathyl",
+      "region.draemor",
+      "region.talmyra",
+      "region.myridian_chain",
+      "region.lantern_isles",
+      "region.serpents_wake",
+      "region.dawnreach_isles"
+    ],
+    "detachedJellyfishIsland": "Myridian geographic parent; neighboring merfolk polity independent"
+  },
+  "integrity": {
+    "zipCRC": true,
+    "allThreePngRead": true,
+    "directComparisonToWindowsOriginals": false,
+    "directSaveToExportsLink": false,
+    "voronoiSaveDecoded": false,
+    "registeredToCanonical2048x1152": false,
+    "exactLandIsthmusTopologyVerified": false
+  },
+  "notes": [
+    "Previously reviewed 2048x1177 PNG attachments are lower-resolution conversation copies; their hashes and crop cannot be silently substituted for these files.",
+    "These 16K full images contain a framing border. Do not use raw canvas coordinates as canonical world-map coordinates until registered.",
+    "Keep original First World biome/elevation images and old map-review scripts until source-transform/land-component parity is independently validated.",
+    "Do not claim the current March-named save encodes Option 2 merely because the game loaded it.",
+    "Prefer repository-local Git LFS with scoped tracking for archival source PNGs if available and approved; otherwise review the large regular-Git asset cost before uploading."
+  ]
+}
