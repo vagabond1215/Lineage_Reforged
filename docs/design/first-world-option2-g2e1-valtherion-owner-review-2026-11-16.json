@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "kind": "FIRST_WORLD_G2E1_SOURCE_DERIVED_REVIEW_NOT_CANONICAL",
+  "date": "2026-11-16",
+  "status": "DERIVED_COAST_OWNER_REVIEW_READY",
+  "source": {
+    "full16kDimensions": [
+      16384,
+      9421
+    ],
+    "cropFullExclusive": [
+      240,
+      240,
+      16144,
+      9176
+    ],
+    "originalSha256": {
+      "State": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de",
+      "Height": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce",
+      "Biome": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2"
+    },
+    "provenance": "Original verified Option 2 16K rendered PNGs, no simulator-native semantic export or Voronoi graph"
+  },
+  "classifiers": {
+    "A": "Rendered State pixel red==64, blue==255 means ocean",
+    "B": "Biome AND Height shared-render HSV H93..125 S>=125 V>=195 plus BGR blue>=195 red<=135 green>=70",
+    "independentSemanticLandMask": false
+  },
+  "originalFullNativeCrosswalk": {
+    "A4": 169,
+    "B4": 171,
+    "A8": 161,
+    "B8": 163,
+    "splitAComponentCount": 1,
+    "splitParentRenderedName": "Valtherion",
+    "splitBFragments": 2,
+    "classificationDifferencePixelsInFullCrop": 44716,
+    "sourceDocument": "docs/design/first-world-option2-g2c-native-classifier-correspondence-2026-11-16.json"
+  },
+  "ownerReviewIssues": [
+    {
+      "id": "G2E1_VALTHERION_V1",
+      "sourceBBoxFull16kExclusive": [
+        8164,
+        1592,
+        8223,
+        1658
+      ],
+      "sourceCropFull16kExclusive": [
+        8074,
+        1502,
+        8313,
+        1748
+      ],
+      "centerFull16k": [
+        8192,
+        1626
+      ],
+      "BFragmentLandPixelsGlobal": 2916,
+      "ABDisagreementPixelsInReviewWindow": 341,
+      "proposedGeographicParentForReview": "Valtherion",
+      "status": "PENDING_OWNER",
+      "ownerDecision": null,
+      "allowableDecisions": [
+        "CONNECTED_LAND",
+        "SEPARATE_ISLAND",
+        "HELD"
+      ],
+      "candidateIslandIdentity": "UNASSIGNED_PENDING_OWNER",
+      "reviewAnnotation": "Thin A-only rendered bridge to mainland; B renders an offshore piece detached, not yet certified"
+    },
+    {
+      "id": "G2E1_VALTHERION_V2",
+      "sourceBBoxFull16kExclusive": [
+        8744,
+        2391,
+        8823,
+        2452
+      ],
+      "sourceCropFull16kExclusive": [
+        8654,
+        2301,
+        8913,
+        2542
+      ],
+      "centerFull16k": [
+        8780,
+        2422
+      ],
+      "BFragmentLandPixelsGlobal": 3169,
+      "ABDisagreementPixelsInReviewWindow": 293,
+      "proposedGeographicParentForReview": "Valtherion",
+      "status": "PENDING_OWNER",
+      "ownerDecision": null,
+      "allowableDecisions": [
+        "CONNECTED_LAND",
+        "SEPARATE_ISLAND",
+        "HELD"
+      ],
+      "candidateIslandIdentity": "UNASSIGNED_PENDING_OWNER",
+      "reviewAnnotation": "Narrow State outline near mainland; B renders offshore piece detached, not yet certified"
+    }
+  ],
+  "reviewArtifact": {
+    "filename": "g2e1_valtherion_owner_review.png",
+    "scope": "unchanged source image crops and render-mask alternatives",
+    "rawOriginalPNGsIncluded": false,
+    "rawPrivateSavesIncluded": false
+  },
+  "holds": {
+    "landWaterSemanticClassifierIndependent": false,
+    "stableGeographyPolygonsApproved": false,
+    "ownerIslandDecisionsComplete": false,
+    "terrainOriginalVoronoiRecovered": false,
+    "nativeMapRegistrationApproved": false,
+    "politicalSovereigntyAssigned": false,
+    "traversableRoutesPublished": false,
+    "canonicalWritable": false
+  }
+}
