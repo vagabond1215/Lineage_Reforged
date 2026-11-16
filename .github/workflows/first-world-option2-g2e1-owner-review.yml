@@ -1,0 +1,81 @@
+name: First World Option 2 G2-E1 owner coast review
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - 'scripts/first-world-option2-g2e1-owner-coast-review.py'
+      - 'docs/design/first-world-option2-g2e1-valtherion-owner-review-2026-11-16.*'
+      - 'tests/unit/first-world-option2-g2e1-owner-review.test.mjs'
+      - '.github/workflows/first-world-option2-g2e1-owner-review.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'scripts/first-world-option2-g2e1-owner-coast-review.py'
+      - 'docs/design/first-world-option2-g2e1-valtherion-owner-review-2026-11-16.*'
+      - 'tests/unit/first-world-option2-g2e1-owner-review.test.mjs'
+      - '.github/workflows/first-world-option2-g2e1-owner-review.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  source-only-owner-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout exact source PNGs from scoped LFS
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install original-image audit dependencies
+        run: python -m pip install numpy opencv-python-headless
+      - name: Compile and run synthetic source-coast tests
+        run: |
+          python -m py_compile scripts/first-world-option2-g2e1-owner-coast-review.py
+          python scripts/first-world-option2-g2e1-owner-coast-review.py --self-test
+      - name: Generate two original 16K source ROIs outside repository
+        run: |
+          python scripts/first-world-option2-g2e1-owner-coast-review.py \
+            --source-dir packages/content/base/world/map_assets/first_world_simulator_option2_2026_11_15 \
+            --output-dir "$RUNNER_TEMP/g2e1-valtherion-owner-review"
+      - name: Verify measured uncertainty and owner approval hold
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          path = Path(os.environ["RUNNER_TEMP"]) / "g2e1-valtherion-owner-review/g2e1_owner_review_ledger.json"
+          report = json.loads(path.read_text())
+          assert report["schemaVersion"] == 1
+          assert report["status"] == "DERIVED_COAST_OWNER_REVIEW_READY"
+          assert report["canonicalWritable"] is False
+          assert report["islandIdentityApproved"] is False
+          assert report["ownerApprovalRecorded"] is False
+          assert report["nativeVoronoiRecovered"] is False
+          assert [x["ABDisagreementPixelsInWindow"] for x in report["issues"]] == [341, 293]
+          assert [x["BOnlyLandPixelsInWindow"] for x in report["issues"]] == [0, 0]
+          assert [x["renderedBFragmentPixelsGlobal"] for x in report["issues"]] == [2916, 3169]
+          assert all(x["ownerDecision"] is None and x["status"] == "PENDING_OWNER" for x in report["issues"])
+          for issue in report["issues"]:
+              png = path.parent / (issue["id"].lower() + "_source_review.png")
+              assert png.is_file() and png.stat().st_size > 1000
+          print("PASS G2-E1 16K original-image review panels and pending owner choices")
+          PY
+      - name: Upload review images and machine ledger without original PNGs
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-world-option2-g2e1-owner-review-source-only
+          path: |
+            ${{ runner.temp }}/g2e1-valtherion-owner-review/g2e1_owner_review_ledger.json
+            ${{ runner.temp }}/g2e1-valtherion-owner-review/*_source_review.png
+          retention-days: 21
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify no unintended geographic promotion
+        run: node --test tests/unit/first-world-option2-g2e1-owner-review.test.mjs
