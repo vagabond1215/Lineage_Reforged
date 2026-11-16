@@ -1,4 +1,5 @@
 # First World MG-0/MG-2: Option 2 simulator source registration gate
+> **2026-11-15 source update (supersedes the stale missing-image part of the initial status below):** The owner has since supplied the actual **16,384 × 9,421 State, Height and Biome PNGs** inside ZIP `WorldMap_20261115_201735_State.zip`; their verified hashes, sizes and archive CRC are recorded in [the 16K triad manifest](first-world-option2-16k-export-triad-manifest-2026-11-15.json). **The 16K full-map raster evidence is received and verified**. What remains held is (a) physical transfer of the binary assets into GitHub, (b) proof that the current simulator `.save` exactly corresponds to the exported state, (c) explicit source-to-legacy-coordinate registration and connected-island inventory, and (d) tiny-isthmus local topology. Earlier paragraphs describing the triad as missing are historical initial-state requirements, not the present evidence inventory.
 
 Date: 2026-11-15  
 Status: **OWNER OPTION 2 VISUALLY APPROVED; FINAL SOURCE-ALIGNED SAVE/EXPORT MISSING; EXACT GEOMETRY HELD**  
