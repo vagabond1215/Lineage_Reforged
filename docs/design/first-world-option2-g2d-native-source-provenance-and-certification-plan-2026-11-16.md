@@ -2,6 +2,11 @@
 
 Date: 2026-11-16  
 **Status: G2D_PROVENANCE_TOOL_IMPLEMENTED; SEMANTIC_LAND_AUTHORITY_HELD**  
+
+## 2026-11-16 owner export-UI correction (supersedes native-export search as a blocking step)
+
+The owner confirms the installed Fantasy Map Simulator exposes **History and Image** as export choices, not a landmask, province mesh or native Voronoi geometry export. Thus the G2-D provenance tool is **optional local metadata/asset verification**, not a prerequisite to continue map authoring. It does not certify a simulator save to the November 16K PNGs. Current G2-E work proceeds via verified images, two explicitly nonsemantic render masks and **owner-authored derived coastlines for review**, documented in [G2-E revised authority gate](first-world-option2-g2e-image-history-derived-geography-gate-2026-11-16.md). Never present image-derived polygons as native recovered simulator cells. History export can provide narrative context, but not coordinates.
+
 Predecessors: [G2-C rendered component crosswalk](first-world-option2-g2c-semantic-land-authority-and-island-review-plan-2026-11-16.md) · [Nine-parent world plan](first-world-option2-world-plan-and-geometry-roadmap-2026-11-16.md) · [G2-D local provenance tool](../../scripts/first-world-option2-g2d-provenance.py) · [G2-E implementation prompt](../dev/first-world-option2-g2e-authoritative-terrain-acquisition-prompt-2026-11-16.md).
 
 ## Scope and evidence
