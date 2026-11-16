@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "type": "FIRST_WORLD_OPTION2_ZIPPED_PREVIEW_ALIGNMENT_EVIDENCE_NOT_CANONICAL",
+  "date": "2026-11-16",
+  "status": "SOURCE_PREVIEW_ALIGNMENT_SUPPORTED_REFERENCE_ADOPTION_HELD",
+  "archive": {
+    "name": "FirstWorld_Option2_Registration_Audit.zip",
+    "sha256": "3ee73eeb11fc1dadaae74e3f2f9b7b89d0b47fba7c43c82e85795d26f52458e2",
+    "bytes": 5244922,
+    "zipCrc": "PASS",
+    "previewPngCount": 7,
+    "otherJsonCount": 2,
+    "raw16kImagesIncluded": false,
+    "previewSize": [
+      2048,
+      1177
+    ]
+  },
+  "audit": {
+    "sourceInventorySha256": "0184f19d1c1fd64b723280ff7226132d0924cdc5e643d6cff844360e9c2aeb6a",
+    "registrationCandidateSha256": "6d4073dfaba9ca1561c81ccda06ad2b572e28b99aac5371aaa3384664c21f6b7",
+    "reportHead": "805754e118f23cc8f4cc21e0eaa9d1ac44ddf8bc",
+    "preexistingUntrackedContent": true,
+    "save": {
+      "name": "20260315141309.save",
+      "sha256": "db27f0ce24d66bb168a08744fdf58965f42a1cc0163fcde9902a0ff03787ddd3",
+      "bytes": 1235224,
+      "rasterLinked": false
+    },
+    "files": [
+      {
+        "layer": "Option2 State",
+        "width": 16384,
+        "height": 9421,
+        "bytes": 14269354,
+        "sha256": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de",
+        "hashStatus": "PASS"
+      },
+      {
+        "layer": "Option2 Height",
+        "width": 16384,
+        "height": 9421,
+        "bytes": 18484528,
+        "sha256": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce",
+        "hashStatus": "PASS"
+      },
+      {
+        "layer": "Option2 Biome",
+        "width": 16384,
+        "height": 9421,
+        "bytes": 17092660,
+        "sha256": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2",
+        "hashStatus": "PASS"
+      },
+      {
+        "layer": "Original Biome",
+        "width": 4096,
+        "height": 2355,
+        "bytes": 2562408,
+        "sha256": "9828eb8970dc0aa7ec1f046f51ee0542ab11c2fe7776eeaa52605d42f00cff12",
+        "hashStatus": "PASS"
+      },
+      {
+        "layer": "Original Elevation",
+        "width": 4096,
+        "height": 2355,
+        "bytes": 2840400,
+        "sha256": "02c3b133f2b3f08aed56f98bde4c846d6e3316c71de171837cb61a02785ec56d",
+        "hashStatus": "PASS"
+      }
+    ]
+  },
+  "sift": {
+    "trainSplitFromSameDetector": true,
+    "independentHumanLandmarks": false,
+    "quadrantsCovered": 4,
+    "models": [
+      {
+        "pair": "Biome",
+        "mode": "gray",
+        "trainInliers": 807,
+        "trainCount": 897,
+        "heldOutCount": 225,
+        "heldOutWithin3PreviewPx": 0.8622
+      },
+      {
+        "pair": "Biome",
+        "mode": "gradient",
+        "trainInliers": 1993,
+        "trainCount": 2049,
+        "heldOutCount": 513,
+        "heldOutWithin3PreviewPx": 0.9747
+      },
+      {
+        "pair": "Biome",
+        "mode": "canny",
+        "trainInliers": 884,
+        "trainCount": 926,
+        "heldOutCount": 232,
+        "heldOutWithin3PreviewPx": 0.9181
+      },
+      {
+        "pair": "Height",
+        "mode": "gray",
+        "trainInliers": 1138,
+        "trainCount": 1268,
+        "heldOutCount": 317,
+        "heldOutWithin3PreviewPx": 0.9054
+      },
+      {
+        "pair": "Height",
+        "mode": "gradient",
+        "trainInliers": 1990,
+        "trainCount": 2079,
+        "heldOutCount": 520,
+        "heldOutWithin3PreviewPx": 0.9654
+      },
+      {
+        "pair": "Height",
+        "mode": "canny",
+        "trainInliers": 895,
+        "trainCount": 957,
+        "heldOutCount": 240,
+        "heldOutWithin3PreviewPx": 0.9417
+      }
+    ],
+    "chosen": {
+      "pair": "Biome",
+      "mode": "gradient",
+      "ratioMatches": 2562,
+      "trainInliers": 1993,
+      "trainCount": 2049,
+      "heldOutCount": 513,
+      "within3Fraction": 0.9747,
+      "heldOutWithin3MedianPx": 0.289,
+      "heldOutWithin3P95Px": 1.0224,
+      "heldOutAllMaxPx": 1199.3463,
+      "matrixPreviewNewToLegacy": [
+        [
+          0.9999187252146904,
+          0.000017036339543544656,
+          0.0799944905932981
+        ],
+        [
+          -0.000017036339543544656,
+          0.9999187252146904,
+          0.05735427572997089
+        ]
+      ]
+    }
+  },
+  "directPreviewComparison": {
+    "innerRectExclusive": [
+      30,
+      30,
+      2018,
+      1147
+    ],
+    "innerPixels": 2220596,
+    "oceanPreviewRule": "RGB red=64 and blue=255; green from 115 to 200 inclusive, unlike 16K connectivity classifier",
+    "biome": {
+      "overallExactRgbFraction": 0.80616354,
+      "innerExactRgbFraction": 0.87230635,
+      "commonNonOceanExactRgbFraction": 0.72557564,
+      "innerBlueWaterClassDisagreements": 5292
+    },
+    "height": {
+      "overallExactRgbFraction": 0.78894551,
+      "innerExactRgbFraction": 0.85361588,
+      "commonNonOceanExactRgbFraction": 0.6516309,
+      "innerBlueWaterClassDisagreements": 5292
+    }
+  },
+  "cropAuthority": {
+    "source": "world_maps.json + scripts/regenerate_world_map_features.ps1",
+    "semantics": "Rectangle(x,y,width,height)",
+    "legacySourceSize": [
+      4096,
+      2355
+    ],
+    "legacyCrop": [
+      60,
+      60,
+      3976,
+      2235
+    ],
+    "authoredReference": [
+      2048,
+      1152
+    ],
+    "verifiedViaCode": true
+  },
+  "candidateFullOption2ToAuthoredReference": {
+    "status": "NUMERICAL_HYPOTHESIS",
+    "from": [
+      16384,
+      9421
+    ],
+    "to": [
+      2048,
+      1152
+    ],
+    "matrix": [
+      [
+        0.12876217,
+        0.00000219265,
+        -30.8230238
+      ],
+      [
+        -0.000002196219,
+        0.128834911,
+        -30.8670244
+      ]
+    ],
+    "noFitFrameMatrix": [
+      [
+        0.12877263581488935,
+        0,
+        -30.90543259557344
+      ],
+      [
+        0,
+        0.12884537940324267,
+        -30.926174496644293
+      ]
+    ],
+    "approved": false
+  },
+  "holds": [
+    "independent predeclared landmark and outlier review",
+    "pixel-center/GDI crop equivalence",
+    "separate semantic land/water classifier and tiny-island inventory",
+    "draemor-talmyra local tidal arches and traversal",
+    "save-to-exports correspondence",
+    "Voronoi cell graph and provinces",
+    "all geographic/political region boundaries and routes",
+    "canonical geometry writes"
+  ],
+  "canonicalWritable": false,
+  "originalSourcesEdited": false,
+  "activeC1Modified": false
+}
