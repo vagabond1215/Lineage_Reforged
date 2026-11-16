@@ -1,0 +1,73 @@
+name: First World Option 2 G2-D provenance gate
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - 'scripts/first-world-option2-g2d-provenance.py'
+      - 'tests/unit/test_first_world_option2_g2d_provenance.py'
+      - '.github/workflows/first-world-option2-g2d-provenance-gate.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'scripts/first-world-option2-g2d-provenance.py'
+      - 'tests/unit/test_first_world_option2_g2d_provenance.py'
+      - '.github/workflows/first-world-option2-g2d-provenance-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-cross-platform:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile exact provenance source
+        run: python -m py_compile scripts/first-world-option2-g2d-provenance.py
+      - name: Self-test without simulator or saves
+        run: python scripts/first-world-option2-g2d-provenance.py --self-test
+      - name: Test mismatch, header, source-hold and private redaction
+        run: python -m unittest discover -s tests/unit -p 'test_first_world_option2_g2d_provenance.py' -v
+
+  original-five-image-witnesses:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check original 16K plus legacy 4K identities outside Git
+        run: |
+          python scripts/first-world-option2-g2d-provenance.py \
+            --repo-root "$GITHUB_WORKSPACE" \
+            --output-dir "$RUNNER_TEMP/first-world-g2d"
+      - name: Verify all five image hashes and prohibit source/simulator claims
+        run: |
+          python - <<'PY'
+          import os,json
+          from pathlib import Path
+          root=Path(os.environ["RUNNER_TEMP"])/"first-world-g2d"
+          private=json.loads(next(root.glob("g2d_private_provenance_*.json")).read_text())
+          public=json.loads(next(root.glob("g2d_shareable_summary_*.json")).read_text())
+          assert private["inputImageVerification"]["allFiveVerified"] is True
+          assert all(x["status"]=="PASS" for x in private["inputImageVerification"]["files"])
+          assert private["status"]=="SEMANTIC_LAND_AUTHORITY_HELD"
+          assert private["nativeSemanticLandmask"]["status"]=="NOT_RECOVERED"
+          assert private["sourceToExportRelation"]["status"]=="UNVERIFIED"
+          assert private["canonicalWritable"] is False
+          assert public["privateSaveNamesAndHashesExcluded"] is True
+          assert public["inputImagesAllVerified"] is True
+          assert "saveInventory" not in public
+          print("PASS 5 original files; native source/save and canonical authority remain HELD")
+          PY
