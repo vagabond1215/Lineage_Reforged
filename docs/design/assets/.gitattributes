@@ -1,0 +1,3 @@
+# The C1-AC source-evidence SVG is SHA-256 witnessed byte-for-byte.
+# Force LF on every platform; Windows CRLF checkout would trip the C1-AD native integrity gate.
+kaelvar-c1ac-owner-simulator-district-ink-reference-only-2026-11-15.svg text eol=lf

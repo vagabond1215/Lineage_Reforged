@@ -147,6 +147,62 @@ const signedArea=points=>points.reduce((sum,p,i)=>{
  const q=points[(i+1)%points.length];
  return sum+p[0]*q[1]-q[0]*p[1];
 },0)/2;
+// Check interior-area intersections, not just exact shared edges. Neighbor
+// reciprocity alone cannot detect contained, duplicate, or partly overlapping
+// cells. Sweep at vertex/edge-intersection y events to handle concave rings,
+// collinear edges and thin overlaps while allowing edge/corner contact.
+function polygonInteriorsOverlap(a,b) {
+  const bounds=ring=>ring.reduce((v,p)=>[
+    Math.min(v[0],p[0]),Math.max(v[1],p[0]),
+    Math.min(v[2],p[1]),Math.max(v[3],p[1])
+  ],[Infinity,-Infinity,Infinity,-Infinity]);
+  const A=bounds(a),B=bounds(b);
+  const minX=Math.max(A[0],B[0]), maxX=Math.min(A[1],B[1]);
+  const minY=Math.max(A[2],B[2]), maxY=Math.min(A[3],B[3]);
+  if(maxX<=minX||maxY<=minY)return false;
+  const ys=new Set([...a,...b].map(p=>p[1]));
+  // Intersections between polygon edges are sweep events. Without them
+  // a thin overlap can be missed by a single test scanline.
+  for(let i=0;i<a.length;i++){
+    const p=a[i],p2=a[(i+1)%a.length];
+    const dx=p2[0]-p[0],dy=p2[1]-p[1];
+    for(let j=0;j<b.length;j++){
+      const q=b[j],q2=b[(j+1)%b.length];
+      const ex=q2[0]-q[0],ey=q2[1]-q[1];
+      const det=dx*ey-dy*ex;
+      if(det===0)continue;
+      const rx=q[0]-p[0],ry=q[1]-p[1];
+      const t=(rx*ey-ry*ex)/det,u=(rx*dy-ry*dx)/det;
+      if(t>0&&t<1&&u>0&&u<1)ys.add(p[1]+t*dy);
+    }
+  }
+  const spans=(ring,y)=>{
+    const xs=[];
+    for(let i=0;i<ring.length;i++){
+      const p=ring[i],q=ring[(i+1)%ring.length];
+      if((p[1]<y&&q[1]>y)||(q[1]<y&&p[1]>y))
+        xs.push(p[0]+(y-p[1])*(q[0]-p[0])/(q[1]-p[1]));
+    }
+    xs.sort((x,y)=>x-y);
+    const intervals=[];
+    for(let i=0;i+1<xs.length;i+=2)intervals.push([xs[i],xs[i+1]]);
+    return intervals;
+  };
+  const events=[...ys].sort((x,y)=>x-y);
+  for(let i=0;i+1<events.length;i++){
+    const lower=Math.max(events[i],minY),upper=Math.min(events[i+1],maxY);
+    if(upper<=lower)continue;
+    const y=lower+(upper-lower)/2;
+    for(const [leftA,rightA] of spans(a,y)){
+      for(const [leftB,rightB] of spans(b,y)){
+        if(Math.min(rightA,rightB)-Math.max(leftA,leftB)>1e-9)
+          return true;
+      }
+    }
+  }
+  return false;
+}
+
 export function auditSyntheticVoronoiTopology(graph){
  if(graph?.role!=='SYNTHETIC_UNIT_FIXTURE_ONLY'||
   graph.coordinateFrame!=='ORIGINAL_FIRST_WORLD_REFERENCE_GRID_2048_X_1152'||
@@ -191,6 +247,13 @@ export function auditSyntheticVoronoiTopology(graph){
    if(!edgeRecords.has(key))edgeRecords.set(key,[]);
    edgeRecords.get(key).push({id:c.id,from:vertex(a),to:vertex(b)});
   }
+ }
+ // Fail closed on any positive-area intersection of distinct cell interiors.
+ // This is synthetic-fixture QA, not proof of a recovered simulator mesh.
+ const allCells=[...cells.values()];
+ for(let i=0;i<allCells.length;i++)for(let j=i+1;j<allCells.length;j++){
+  if(polygonInteriorsOverlap(allCells[i].ring,allCells[j].ring))
+   hold('overlapping synthetic cell interiors '+allCells[i].id+' / '+allCells[j].id);
  }
  for(const [key,rec] of edgeRecords){
   if(rec.length>2||rec.length===2&&(rec[0].from!==rec[1].to||
