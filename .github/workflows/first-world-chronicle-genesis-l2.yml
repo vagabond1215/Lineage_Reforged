@@ -1,0 +1,49 @@
+name: First World Chronicle L2 genesis owner contract
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'apps/rpg-ui/src/game-shell/firstWorldCreationContract.ts'
+      - 'tests/unit/first-world-creation-contract.test.mjs'
+      - 'docs/design/first-world-playable-vertical-slice-implementation-plan-2026-11-17.md'
+      - '.github/workflows/first-world-chronicle-genesis-l2.yml'
+  pull_request:
+    branches: [master]
+    paths:
+      - 'apps/rpg-ui/src/game-shell/firstWorldCreationContract.ts'
+      - 'tests/unit/first-world-creation-contract.test.mjs'
+      - '.github/workflows/first-world-chronicle-genesis-l2.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  pure-l2-no-persistence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Prove Chronicle template, pure creation preflight and Welcome isolation
+        run: |
+          node --test \
+            tests/unit/first-world-creation-contract.test.mjs \
+            tests/unit/starfall-world-template.test.mjs \
+            tests/unit/launcher-welcome-routing.test.mjs
+      - name: Forbid new legacy-cell implementation coupling
+        run: npm run tool:no-new-hex-dependencies
+      - name: Confirm this slice cannot upgrade the v7 account database
+        run: |
+          node --input-type=module - <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          const owner=fs.readFileSync('apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts','utf8');
+          const candidate=fs.readFileSync('apps/rpg-ui/src/game-shell/firstWorldCreationContract.ts','utf8');
+          assert.match(owner,/CLEAN_EPOCH_DATABASE_VERSION = 7;/);
+          assert.match(candidate,/allowedToWriteExistingEpochV7: false/);
+          assert.doesNotMatch(candidate,/indexedDB\.open|factory\.open|createObjectStore|\.transaction\(/);
+          console.log('PASS v7 unchanged; L2 is not a database migration');
+          NODE

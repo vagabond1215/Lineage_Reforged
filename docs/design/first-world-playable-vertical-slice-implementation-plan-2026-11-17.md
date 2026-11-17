@@ -1,0 +1,78 @@
+# First World: Chronicle → World → Character → Starfall playable slice
+
+Date: 2026-11-17  
+Status: **DETAILED_IMPLEMENTATION_PLAN; L2_PURE_GENESIS_IMPLEMENTED_IN_SOURCE; L3–L10_NOT_ACTIVATED**  
+Base evidence: `master` `4e727e4047ae45700242092e4cee0627db8ce898` at entry. Stage authority: [launcher dependency process map](first-world-launcher-implementation-process-map-2026-11-11.md), [Welcome/World/Character design](welcome-world-library-character-entry-and-loading-plan-2026-11-11.md), [Starfall geography-to-World economy owner](starfall-geography-to-world-economy-owner-contract-2026-11-12.md), [Starfall authored World/area seed](starfall-first-world-save-template-and-local-area-seed-2026-11-12.md), [current Codex handoff](../dev/current-codex-prompt.md). Preserved: [coordinate-first map and migration contract](coordinate-first-world-geography-migration-contract-2026-11-13.md) and [full First World representative atlas](first-world-option2-g2e4a-full-source-global-overview-reproduction-2026-11-17.md).
+
+## Product outcome and smallest proof of play
+
+An owner on a new, isolated synthetic account signs in, chooses **Chronicle**, creates **one** durable Individual World from the **developer-authored First World**, selects or creates one real character in that World, starts at the authored Starfall Port harbor approach, makes one legitimate gameplay mutation, saves, closes/reopens the browser, and resumes that *same* World/character/Save and action history. Existing ordinary launcher behavior must still work unchanged when the Welcome feature is disabled. The user-visible World Library must never be a renamed Save-slot list.
+
+Do **not** expand the playable proof into an entire generated continent, all cities, simulated ecology, political overlays, maritime passages, NPC services, trade, weather or persistent/hardcore mode. Those are later content/feature lanes. The source-backed representative world atlas is enough for overview UI, while the Starfall local 28×18 authored blueprint is a **draft scene** that still needs collision/shore and owner validation.
+
+## Dependency graph and bounded stages
+
+| Stage | Implementation slice | Entry/preconditions | Required evidence and result |
+| --- | --- | --- | --- |
+| **L2** owner contract | Typed immutable World-creation genesis, source fingerprint, intent/identity/retry constraints, store/archive/retention decision | Exact v7 account source and draft template inspected; no runtime migration | Executable pure candidate tests, failure matrix, documented v8 schema plan; **never persist a candidate directly** |
+| **L3a** migration gate | Additive v7→v8 `worldsV8` and `worldCreationReceiptsV8` stores, keys/indexes and *complete* archive/destructive lifecycle inclusion | L2 tested/accepted; real offline v7 fixtures, scoped staging branch | Upgrade/reopen, 14-family legacy archive admission after explicit migration rules, new v8 archive export/restore, rollback block, deleted-account sweep and corrupted-row rejection |
+| **L3b** durable create | Atomic account-fenced World + genesis receipt + engine-backed economy initialization, exact post-commit readback | L3a tests and migration proof; appropriate epoch owner API | One World per account, same-intent retry, conflicting intent rejection, same-generation CAS, two-account/two-tab contention, interruption before/after commit, durable complete economy snapshot; no character auto-creation |
+| **L4** truthful World Library | Chronicle Continue → list actual persisted Worlds; empty/create/select/World Overview and error states | L3 accepted read/write APIs and source bindings | Reopen retains World ID; storage blocked/corrupt not shown as empty; Back/Logout/keyboard/mobile and feature-OFF parity; Persistent Coming Soon |
+| **L5** selected-world character inventory | Associate native-v3 campaign/Save/character addresses with selected World under explicit authority | L3/4 accepted; migration policy for existing Saves selected | No silent v7 Save reparenting, exact retained slot classifications, no leak between accounts or Worlds, valid save association and terminal-history handling |
+| **L6** Starfall playable local scene | Realize only the Starfall starter local `28×18` map, water/blocked tiles, safe start and one real area instance | Source macro coast evidence and appropriately scaled local authoring accepted; no fabricated tide/height conversion | Spawn (10,9), collision/walkability, stable area ID on reload, no auto-spawned entities/loot/markets, source provenance and consistent transitions |
+| **L7–L8** World Entry/creator | Preserve current creator and add World-specific entry binding and legal supported scenario(s) | Selected World and real local spawn owner; actual traits/lineage source validated | Selected character bound to World and specific starting scenario, no unsupported options or fake starter items; creator Back and stale-head failures |
+| **L9** exact Save/load | Native-v3 session + selected World + real player/area Save with an authoritative mutation | L3/4/5/6/8, native-v3 owners and Save lineage ready | Reboot/readback proves same account, World, character, campaign head, mutable gameplay state, action receipt and source provenance |
+| **L10** controlled UI cutover | End-to-end selected browser proof and feature-on transition, with feature-off preserved | All previous stages accepted | 375/768/1280 px, keyboard and a11y, two tabs/accounts, restart, quota/blocked IndexedDB, export/restore, exact-source build and no canonical geometry mutation |
+
+**Stop/hold:** A segment failing a prerequisite remains `CODE_READY_BROWSER_HELD` or `STOP_HOLD`, never silently marked accepted. Success of an isolated unit test does not approve the live persistence owner.
+
+## L2 implementation decision made in this slice
+
+The checked-in, pure [L2 candidate validator/projection](../../apps/rpg-ui/src/game-shell/firstWorldCreationContract.ts) and [negative tests](../../tests/unit/first-world-creation-contract.test.mjs) deliberately **do not call IndexedDB or any Save owner**. They refuse malformed/mutable source data, pin an exact SHA-256 of the UTF-8 template text, retain a single First World/Starfall template and locked Chronicle/Individual/non-Hardcore settings, and produce **candidate-only** World and receipt records. They verify account revision/lifecycle generation, candidate naming and IDs, empty associations and zero-tick clock, no invented resource/monster/economy state, and exact repeated creation source. A missing receipt or mismatched identity is not accepted as an empty account.
+
+This constitutes **L2 implementation**, not L3 durable storage. The world `candidateOnly: true`, receipt `state: PREPARED_NOT_COMMITTED`, and `allowedToWriteExistingEpochV7: false` are intentional. A later persistent owner must strip candidate-only markers only in its explicit, versioned approved transaction and **replace the read-only economy preview with an engine-owned immutable initial state**, or keep creation held until that can be done safely. The source JSON `runtimeEligible: false` is not silently toggled by this pure helper.
+
+### Exact identity and lifecycle ownership
+
+`accountId` identifies the credential/epoch estate; `worldInstanceId` identifies **one durable instance** of `world_map.first_world`; `creationIntentId` gives exact-once create semantics; `campaignId` identifies a native-v3 campaign owner; `characterId` the actor; `saveSlotId` a mutable address, not a World. `localAreaInstanceId` identifies the later instantiation of Starfall area template. `continuityId` stays separate. No equality or implicit derivation between these IDs.
+
+An initial Chronicle Individual account may create **one World**. A World with **zero** characters and zero Saves is legitimate. Legacy v7 active and closed Saves remain **unassociated** unless a future explicitly approved compatibility bridge validates their provenance. Do not infer World membership from a Save's `worldState`, default Starfall location or a user-facing slot title. A World may be paused under the World clock, but opening a menu does not advance time, and timed actions may not silently skip it.
+
+A duplicate exact intent returns the retained World+receipt *after checking complete source and account generation*. Another intent, mismatched name/source fingerprint or missing half of a committed pair must fail, not manufacture another World. A transaction must check the account lifecycle and revision **inside the same IndexedDB READWRITE transaction** as its World/receipt inserts. Compare-and-swap on the World revision for all later authoritative mutations.
+
+## L3 storage migration design; do not edit version 7 casually
+
+**Current inspected source truth:** `cleanEpochAccountStore.ts` declares `CLEAN_EPOCH_DATABASE_VERSION = 7`. It owns an exact `ARCHIVE_VERSION = 1` and **14** ordered archive families (accounts, lifecycle, attempts, recoveries, address generations/deletions, artifacts, controls, slots, witnesses); archive validation checks the database version, family count, keypaths, row version, SHA-256 and prefix/lifecycle graph. Account reset/delete validates and deletes every `ACCOUNT_DATA_STORES` family transactionally. Adding two stores without updating every archive and cleanup path is **data-loss / backup breakage**.
+
+Proposed **v8-only** additive families:
+
+| Family | Key path | Mandatory index / uniqueness | Purpose |
+| --- | --- | --- | --- |
+| `worldsV8` | `[accountId, worldInstanceId]` | `byAccount(accountId)`; a one-World-per-account constraint enforced **in the same account transaction** | Versioned World state and clock; engine-owned initial economy snapshot, account generation and source manifest |
+| `worldCreationReceiptsV8` | `[accountId, creationIntentId]` | `byAccount(accountId)`; singular cross-check with World row | Exact-once intent and original requested source; committed receipt separate from display state |
+
+The L3 implementation should include these in the **versioned** archive family set, `ACCOUNT_DATA_STORES`, account deletion/reset graph validation, `onupgradeneeded` index/keypath tests and `onsuccess` schema verification. **Do not change the v7 archive wire format retroactively.** Accept a v7 archive only through a dedicated migration-validated path into a *fresh empty v8 target*, recomputing a complete v8 archive after upgrade and proving every v7 family digest/record preserved. No v8-to-v7 downgrade or one-family omission. Existing 14-family v7 source remains readable for historical forensic recovery, even when v8 is added.
+
+**Failure injection:** blocked upgrade from another tab, aborted quota/write, corrupted account, malformed World row, orphan World/receipt, stale generation, account deletion/recreation, exact retry, duplicate second create, interrupted commit, old v7 restore, new v8 restore/export, and two concurrently writing tabs. On blocked or invalid archive show explicit recoverable failure instead of an empty World Library. Preserve old-Save feature-off launcher and native-v3 operations throughout.
+
+## L3 transactional owner and readback acceptance
+
+In the owner-backed `createWorld` transaction, validate account and lifecycle receipt, existing World and intent receipt, immutable template manifest, one-World limit, locked rules/clock and all five real economy settlement references. Build the initial economy snapshot **once** using `buildStarfallBaseEconomyPreview(world.clock)` and its existing civilization-engine dependencies; keep local Starfall/Harbormast/Foammarket members separate from external Pearlwake/Chainlight context. Persist World and creation receipt atomically, then *separately reopen/read back* both, economy tick, template fingerprint, rules and revision. No placeholder `stockSnapshot:null` can be accepted as a finished L3 World, and do not clone a second merchant or resource owner. Idempotent retry returns the retained exact authoritative result even if the screen closed after commit.
+
+## Later UI, data and local-map boundary
+
+The L1 Welcome is currently development/loopback-gated by `?welcomeL1=1`, with `WORLD_LIBRARY_GATE` intentionally unavailable. L4 should **replace the gate only after L3**, never route Continue through the old latest-Save menu pretending it is a World selector. World library cards show real source-linked name, revision, character count and last-played status only when owner backed. The existing Persistent card remains disabled; no version/production deployment without controlled acceptance. Save/load and character ownership must use current native-v3 boundaries, not a new localStorage or in-memory parallel inventory.
+
+The authored 28×18 Starfall scene (initial position 10,9) can support a first movement/action proof. Water, rocks and buildings remain blocked; no automatic NPC, monster, loot, fishing, pearl or service spawn. It needs its own local-coordinate and shoreline/collision acceptance, independent of representative 2048×1152 world pixels. Additional city placement, ecology expansion, detailed region maps and grid-based continent partitioning do **not** block the first playable route.
+
+## Single-lane integration protocol and validation matrix
+
+- Work on `master` for safe additive L2 code/doc/tests. Isolate **L3 v8 schema and account data writes** in one bounded branch/PR, not multiple overlapping worktrees; retain the existing C1 and World-map branches/holds. No force pushes, DB mutations on a user-owned origin, deletion of drafts or reset of real accounts.
+- For the pure L2 slice, run `node --test tests/unit/first-world-creation-contract.test.mjs tests/unit/starfall-world-template.test.mjs` plus the existing `launcher-welcome-routing` test on Node 22 and the no-new-hex gate. Record exact SHA, failures and output in CI. Source tests **do not** substitute for browser or v8 archive tests.
+- In L3, run DB fixtures in a task-owned IndexedDB origin with two accounts, old and new archives, crash/retry and destructive lifecycle. Run `typecheck:node`, targeted Save tests, baseline-delta UI typecheck, actual Vite build, then a verified browser with a unique port/profile at 375/768/1280 widths. On mismatch label `CODE_READY_BROWSER_HELD`.
+- Every subsequent segment must record **PASS / FAIL / NOT_RUN** per gate, exact commit, artifact/harness, negative cases, unchanged historical Save digests and the feature-OFF path. Only then merge and activate the next dependent segment. Keep `HOLD_SELECTED_ATOMIC_ACTIVATION`, `HOLD_STAGING_PUBLICATION`, real production user data and game-version increments untouched unless a separate approved release gate consumes the proof.
+
+### Current slice disposition
+
+**Implemented:** pure source-pinned Chronicle World candidate and receipt preflight, exact-source negative tests, bounded L2 test workflow, and this concrete L2→L10 plan.  
+**Not implemented:** v8 schema, transactional registry/economy bootstrap, active World Library, World-scoped character/Save, local Starfall runtime, selected browser gameplay or deployment. Those are separately test-gated implementation steps; no UI should imply otherwise.
