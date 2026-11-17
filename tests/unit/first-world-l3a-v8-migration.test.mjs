@@ -341,3 +341,22 @@ test('L3b malformed or missing retained receipt fails closed for list, archive a
   assert.ok(await broken.read(account.accountId));
   broken.close();
 });
+
+test('L3b rejects changed Starfall source bytes even when fields still pass L2 structural review',async()=>{
+  const modified=starfallSource.replace('"purpose":', '"unreviewedNote": "not-authorized", "purpose":');
+  assert.notEqual(modified,starfallSource);
+  assert.doesNotThrow(()=>JSON.parse(modified));
+  await assert.rejects(
+    prepareDurableChronicleWorld({...worldInput(),sourceTemplateJson:modified}),
+    err=>/source bytes changed without an approved template version/.test(err?.message)
+  );
+  const name=unique('manifest-mismatch');
+  const owner=await openCleanEpochAccountStore({name,factory:indexedDB});
+  await syntheticAccount(owner);
+  await assert.rejects(
+    owner.createChronicleWorld({...worldInput(),sourceTemplateJson:modified}),
+    err=>err?.code==='invalid_record'
+  );
+  assert.deepEqual(await owner.listChronicleWorlds('account.synthetic.world'),[]);
+  owner.close();
+});

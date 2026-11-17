@@ -13,6 +13,12 @@ import {
   type ChronicleWorldGenesisPlan
 } from "./firstWorldCreationContract.js";
 
+/** Exact UTF-8 hash of the developer-authored Starfall v1 source in master.
+ * Changing authoring content requires a deliberate versioned World migration.
+ */
+export const FIRST_WORLD_STARFALL_SOURCE_SHA256 =
+  "sha256:72bffd19f80900849795bbbf143a60d856d03a2622bf8533cf0b31a010510255";
+
 export type RetainedChronicleWorld = Omit<ChronicleWorldGenesisCandidate,
   "candidateOnly" | "canonicalWritable" | "economyBootstrap"> & {
   status: "CREATED_EMPTY";
@@ -74,7 +80,10 @@ function portableEngineProjection<T>(value: T): T {
     if (current === null || typeof current === "string" || typeof current === "boolean") return current;
     if (typeof current === "number" && Number.isFinite(current)) return current;
     if (Array.isArray(current)) {
-      return current.map((entry, i) => {
+      if (Object.keys(current).length !== current.length)
+        throw Error("L3b economy has a sparse or decorated array: " + path);
+      return Array.from({ length: current.length }, (_, i) => {
+        const entry = current[i];
         if (!Object.prototype.hasOwnProperty.call(current, i) || entry === undefined)
           throw Error("L3b economy has an unsupported array element: " + path + "." + i);
         return walk(entry, path + "." + i);
@@ -108,6 +117,8 @@ export async function prepareDurableChronicleWorld(input: ChronicleWorldCreation
   const genesis = await prepareChronicleWorldGenesis(input);
   if (genesis.allowedToWriteExistingEpochV7 !== false ||
       genesis.receipt.state !== "PREPARED_NOT_COMMITTED") throw Error("L3b genesis source was promoted.");
+  if (genesis.world.sourceManifestFingerprint !== FIRST_WORLD_STARFALL_SOURCE_SHA256)
+    throw Error("L3b Starfall source bytes changed without an approved template version.");
   const clock = createInitialClock();
   if (clock.tick !== 0) throw Error("L3b initial civilization clock must be at tick zero.");
   const economy = buildStarfallBaseEconomyPreview(clock);
