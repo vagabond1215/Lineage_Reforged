@@ -65,6 +65,33 @@ function emptyLists(x: ObjectRecord): boolean {
     "scheduledActionRecords", "pendingPublicationReceipts", "committedWorldEvents",
     "inventoryMutationRecords"].every(key => Array.isArray(x[key]) && (x[key] as unknown[]).length === 0);
 }
+/** Canonicalize only optional undefined OBJECT fields from engine projections.
+ * Undefined/holes in arrays, Map/Set, nonfinite numbers, and prototypes fail
+ * closed rather than being silently serialized to null or empty objects.
+ */
+function portableEngineProjection<T>(value: T): T {
+  const walk = (current: unknown, path: string): unknown => {
+    if (current === null || typeof current === "string" || typeof current === "boolean") return current;
+    if (typeof current === "number" && Number.isFinite(current)) return current;
+    if (Array.isArray(current)) {
+      return current.map((entry, i) => {
+        if (!Object.prototype.hasOwnProperty.call(current, i) || entry === undefined)
+          throw Error("L3b economy has an unsupported array element: " + path + "." + i);
+        return walk(entry, path + "." + i);
+      });
+    }
+    if (!current || typeof current !== "object" ||
+        Object.getPrototypeOf(current) !== Object.prototype ||
+        Object.getOwnPropertySymbols(current).length)
+      throw Error("L3b economy has an unsupported record value: " + path);
+    const result: Record<string, unknown> = {};
+    for (const [key, entry] of Object.entries(current))
+      if (entry !== undefined) result[key] = walk(entry, path + "." + key);
+    return result;
+  };
+  return walk(value, "economy") as T;
+}
+
 function jsonSafe(value: unknown): boolean {
   if (value === null || typeof value === "string" || typeof value === "boolean") return true;
   if (typeof value === "number") return Number.isFinite(value);
@@ -102,8 +129,8 @@ export async function prepareDurableChronicleWorld(input: ChronicleWorldCreation
       localSettlementIds: economy.localSettlementIds,
       externalTradeContextSettlementIds: economy.externalContextSettlementIds,
       authoredPosture: economy.authoredPosture,
-      projection: economy.projection,
-      warnings: economy.warnings,
+      projection: portableEngineProjection(economy.projection),
+      warnings: portableEngineProjection(economy.warnings),
       servicesEnabled: false,
       inventoryItemsMinted: false
     }
