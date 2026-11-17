@@ -1,5 +1,7 @@
 # Welcome, World Library, Character Entry, and World Loading: Consolidated Product and Owner Plan
 
+> **2026-11-17 World-genesis design direction:** [First World blueprint, default scenario and seeded-state boundary](first-world-blueprint-scenario-seeded-genesis-design-intent-2026-11-17.md) clarifies that the **global World scenario** is not a character-entry narrative scene or a new atlas. The first Create World flow uses **one authored First World + one default Chronicle scenario** with a hidden, retained generation seed and the real civilization-engine initial economy. Alternative global scenario picks, political eras, user-entered seeds, mass-generated settlements and religion/geopolitics remain deferred. This adds a **L2-G design gate before L3b**, not permission to activate World Library or merge draft [PR #102](https://github.com/vagabond1215/Lineage_Reforged/pull/102).
+
 > **2026-11-12 Starfall area and empty World seed authored:** [Starfall template and proposed World Save seed](starfall-first-world-save-template-and-local-area-seed-2026-11-12.md) supplies one static 28×18 harbor-approach collision-grid, region/hex/route anchors, candidate ecology/guild facts, and an initial **empty** Chronicle/Individual World-state shape. This is a new **authoring draft**, not an accepted native-v3 serialized Save, a registered World, live NPC station, local monster spawn, functional boarding route or an activated World Library. The immediate user priority is making Chronicle → World → Character → In Game work; gate L2 World ownership and L3 persistent registry first, then reuse existing character/Save owners, and execute full path-specific Save acceptance after the skeleton exists. Do not recreate inaccessible current Save screens for screenshot-only validation.
 
 > **2026-11-11 implementation sequencing:** Use the [gated implementation process map](first-world-launcher-implementation-process-map-2026-11-11.md) for all stage entry/exit, stop, evidence, cleanup and handoff rules. The first narrowly scoped executable plan is [L1 Branded Welcome / Account Gate](first-world-launcher-l1-welcome-account-entry-implementation-plan-2026-11-11.md), **held until the currently installed exact-master Vite/browser gate passes**. This document is a product/owner target, not permission to bypass native-v3 activation or expose a fake World Library.
@@ -114,11 +116,12 @@ A small form, **not a world editor**:
 | --- | --- | --- |
 | `worldDisplayName` | User text; trim/validate; permit default generated label | World registry owner; name not unique identity |
 | `worldBlueprintId` | Fixed `world_map.first_world` / First World | Authored canonical world content, not random terrain |
+| `globalScenarioId` / version | Read-only fixed default Chronicle starting situation; no selector at launch | Authored scenario manifest; distinct from character-entry opening, map ID, and progression mode |
 | `worldKind` | Individual World | Living World Coming Soon until shared-world coordinator exists |
 | `contentManifest/version` | Read-only pinned approved content | Content owner + materialization compatibility |
 | `worldRules`, difficulty, Stakes | Show only if rules owner supports configuration at world vs campaign level | Do **not** conflate Hardcore narrative, difficulty preset, Grim World or irreversible Stakes |
 | `creationIntentId` / `expectedAccountRevision` | Internal, stable during retry | New world registry/publisher |
-| `internalRealizationSeed` | Hidden/pinned for replayable local initialization, if owner supports it | Not user-editable and not Prestige-gated at launch |
+| `internalRealizationSeed` | Hidden, versioned and retained with source/generator manifest; consumed only by eligible seeded/local systems | Not user-editable, never substitutes for retained World state, and not Prestige-gated at launch |
 | `worldInstanceId` | Allocated/retained by one owner at prepare | Durable identity distinct from map/campaign/slot |
 
 Click **Create World**: validate authorization/content availability, prepare immutable intent under account ownership, commit new empty world exactly once with version/manifest/clock initial posture, read back exact identity and enter World Overview. A retry after interrupted write must find the **same** world, not create two. A newly created empty world should not invent a character or advance world time.
@@ -295,7 +298,7 @@ All browser acceptance must be run against a **specific authorized exact source 
 
 ## 13. Decision register
 
-**Owner selected:** authored First World only now; Welcome before slots; sign-in/account-name welcome; Continue+Logout; Continue to visibly distinct World Library; world choice/create before character; no player world editor; Core Backstory and authored World Entry separate; Standard near society / Hardcore wilderness; manual entry choice and one-click submitting Surprise Me; no Review; large historical variation / world expansions deferred.
+**Owner selected:** authored First World only now; one default authored **global** Chronicle scenario, pinned seed/initial-state policy without player seed UI; named capital/site identities and starting population baselines authored; later local RNG only within valid source owners; Welcome before slots; sign-in/account-name welcome; Continue+Logout; Continue to visibly distinct World Library; world choice/create before character; no player world editor; Core Backstory and authored World Entry separate; Standard near society / Hardcore wilderness; manual entry choice and one-click submitting Surprise Me; no Review; large historical variation / world expansions deferred.
 
 **Proposed, pending owner/system acceptance:** world registry persistence/schema, precise new screen IDs/component owners, full world-create transaction, world/Save head association and migration, exact per-area instance schema, supported dynamic local generation, two-ungated-entry release threshold, first exact settlement site/scene, multi-world count/quota, precedence of account/world/character rule settings, final stat/trait prices.
 
@@ -304,6 +307,7 @@ All browser acceptance must be run against a **specific authorized exact source 
 ## 14. Related documents and precedence
 
 - [Design-intent audit and supersession matrix](launcher-world-character-design-intent-audit-2026-11-11.md).
+- [First World blueprint, global scenario and seeding design intent](first-world-blueprint-scenario-seeded-genesis-design-intent-2026-11-17.md), **newer owner direction on what World genesis may vary, not new runtime activation**.
 - [Core World Entry/Hardcore/Prestige/Succession direction](core-world-entry-hardcore-prestige-and-succession-product-direction-2026-11-09.md).
 - [World Entry editorial scenarios](core-world-entry-scenario-contract-and-editorial-seed-2026-11-09.md), **draft not live**.
 - [Exact geography candidate inventory](core-world-entry-exact-geography-anchor-candidate-inventory-2026-11-09.md).
