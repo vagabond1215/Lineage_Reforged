@@ -1,0 +1,98 @@
+name: First World Option 2 G2-E2 seven-site source review
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - 'scripts/first-world-option2-g2e2-source-review.py'
+      - 'docs/design/first-world-option2-g2e2-seven-site-source-review-2026-11-16.*'
+      - 'tests/unit/first-world-option2-g2e2-source-review.test.mjs'
+      - '.github/workflows/first-world-option2-g2e2-source-review.yml'
+  push:
+    branches: [master]
+    paths:
+      - 'scripts/first-world-option2-g2e2-source-review.py'
+      - 'docs/design/first-world-option2-g2e2-seven-site-source-review-2026-11-16.*'
+      - 'tests/unit/first-world-option2-g2e2-source-review.test.mjs'
+      - '.github/workflows/first-world-option2-g2e2-source-review.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  source-only-g2e2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout and hydrate immutable original 16K sources
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+      - name: Use Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install image-only audit dependencies
+        run: python -m pip install numpy opencv-python-headless
+      - name: Compile source review and run synthetic panel tests
+        run: |
+          python -m py_compile scripts/first-world-option2-g2e2-source-review.py
+          python scripts/first-world-option2-g2e2-source-review.py --self-test
+      - name: Audit all seven ROIs against original native 16K PNGs
+        run: |
+          python scripts/first-world-option2-g2e2-source-review.py \
+            --source-dir packages/content/base/world/map_assets/first_world_simulator_option2_2026_11_15 \
+            --output-dir "$RUNNER_TEMP/g2e2-source-review"
+      - name: Verify every exact native pixel count and preserve geography hold
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          folder=Path(os.environ["RUNNER_TEMP"])/"g2e2-source-review"
+          report=json.loads((folder/"g2e2_review_ledger.json").read_text())
+          assert report["schemaVersion"] == 1
+          assert report["status"] == "G2E2_SOURCE_RENDER_REVIEW_READY_OWNER_DECISIONS_PENDING"
+          assert report["canonicalWritable"] is False
+          assert report["nativeVoronoiRecovered"] is False
+          assert report["islandOwnershipApproved"] is False
+          assert report["source16KToAuthoredReferenceApproved"] is False
+          assert report["classifiers"]["semanticallyIndependent"] is False
+          assert report["differenceHaloIsVisualOnly"] is True
+          keys=[
+            "DAWNREACH_U_ARC",
+            "MYRIDIAN_NORTH",
+            "MYRIDIAN_DETACHED_CENTER",
+            "KAELVAR_NE_ISLAND",
+            "SERPENTS_NORTH",
+            "SERPENTS_SOUTH",
+            "DRAEMOR_TALMYRA_NECK",
+          ]
+          rows=report["reviewItems"]
+          assert [r["id"] for r in rows]==["G2E2_"+key for key in keys]
+          assert [r["ABDisagreementPixels"] for r in rows]==[286,83,47,60,73,53,39]
+          assert [r["ALandCandidatePixels"] for r in rows]==[508993,549280,243713,285718,197554,183088,245503]
+          assert [r["BLandCandidatePixels"] for r in rows]==[508707,549197,243666,285658,197481,183035,245464]
+          assert all(r["BOnlyRenderedLandPixels"]==0 for r in rows)
+          assert all(r["ownerDecision"] is None and r["ownerReviewStatus"]=="PENDING_OWNER" for r in rows)
+          assert all(r["permanentPhysicalIslandID"] is None and
+                     r["politicalSovereigntyInferred"] is False and
+                     r["traversableRouteAuthorized"] is False for r in rows)
+          for key in keys:
+              assert (folder/(key.lower()+"_panel.png")).stat().st_size > 1000
+          assert (folder/"g2e2_seven_site_atlas.png").stat().st_size > 10000
+          print("PASS G2-E2 original-source seven-site exact measurements and owner hold")
+          PY
+      - name: Upload generated review panels and ledger only
+        uses: actions/upload-artifact@v4
+        with:
+          name: first-world-g2e2-seven-site-source-only
+          path: |
+            ${{ runner.temp }}/g2e2-source-review/*.png
+            ${{ runner.temp }}/g2e2-source-review/g2e2_review_ledger.json
+          retention-days: 21
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test source provenance, IDs and no canonical writes
+        run: node --test tests/unit/first-world-option2-g2e2-source-review.test.mjs
