@@ -1,5 +1,7 @@
 # First World: player journey UI base layout and owner-connected component contract
 
+> **2026-11-17 owner-directed contextual-shell and character-entry extension:** [The latest contextual launcher + original creator + branching World Entry contract](first-world-contextual-launcher-shell-and-branching-entry-ui-contract-2026-11-17.md) supersedes this document's *always-visible World sidebar* sketches and prior green standalone preview where they conflict. Splash/login/auth/Welcome/progression selection and story/fail scenes have **no left rail**; Worlds/Overview have the relevant existing launcher sections; **real character creation keeps the already implemented eight-stage step rail**, not a new speculative creator form. Keep account/time controls in a small contextual top bar. The newer integrated charcoal/bronze/parchment HTML preview passed isolated Chromium flow/branch/mobile review, but remains **design-only, not production UI or Save acceptance**.
+
 Date: 2026-11-17 (America/New_York)  
 Status: **OWNER-DIRECTED UI BASE LAYOUT / CONNECTOR-STAGED REVIEWABLE PROTOTYPE / PRODUCTION UI NOT IMPLEMENTED**  
 Inspected source before this layout document: `master` `d0c46b36fea0a5492370358dbae3b7ca8d6a40c7`, draft PR [#102](https://github.com/vagabond1215/Lineage_Reforged/pull/102) `d3cd548f6b21aff11c40637c3e16026502f8e6e2`.  
