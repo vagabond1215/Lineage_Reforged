@@ -2,6 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash, webcrypto } from 'node:crypto';
 import { indexedDB, IDBKeyRange } from 'fake-indexeddb';
+import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.ts';
+import { createCredentialRecord } from '../../apps/rpg-ui/src/game-shell/launcherAuthManager.ts';
 import { openCleanEpochAccountStore, CLEAN_EPOCH_DATABASE_VERSION,
   CLEAN_EPOCH_WORLD_STORE, CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE } from
   '../../apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts';
@@ -123,4 +125,62 @@ test('L3a rejects invalid and orphan World records rather than calling them dura
   const corrupt=await openCleanEpochAccountStore({ name, factory:indexedDB });
   await assert.rejects(corrupt.exportArchive(),err=>err?.code==='invalid_record');
   corrupt.close();
+});
+
+test('L3a nonempty v7 account survives upgrade, v7 archive restore, reset and delete', async () => {
+  const name=unique('retained-account');
+  const accountId='account.synthetic.retained';
+  const password='synthetic-account-test-password';
+  const at='2026-11-17T13:00:00.000Z';
+  const profile=createDefaultAccountProfileState({accountId,displayName:'Retained Tester',createdAt:at});
+  const credential=await createCredentialRecord(accountId,password,at);
+  const v7=await openRaw(name,7,makeV7);
+  const insert=v7.transaction('accounts','readwrite');
+  insert.objectStore('accounts').put({
+    version:1,accountId,revision:1,lifecycleGeneration:1,profile,credential
+  });
+  await new Promise((resolve,reject)=>{insert.oncomplete=resolve;insert.onabort=()=>reject(insert.error);});
+  v7.close();
+
+  const upgraded=await openCleanEpochAccountStore({name,factory:indexedDB});
+  const read=await upgraded.readSelected(accountId);
+  assert.equal(read?.revision,1);
+  assert.deepEqual(read?.profile,profile);
+  const afterUpgrade=JSON.parse(await upgraded.exportArchive());
+  assert.equal(afterUpgrade.families[0].count,1);
+  assert.equal(afterUpgrade.families[14].count,0);
+  assert.equal(afterUpgrade.families[15].count,0);
+  upgraded.close();
+
+  const target=await openCleanEpochAccountStore({name:unique('retained-restore'),factory:indexedDB});
+  const archived=toV7Archive(afterUpgrade);
+  await target.restoreArchive(archived);
+  const restored=await target.readSelected(accountId);
+  assert.deepEqual(restored,read);
+  const restoreArchive=JSON.parse(await target.exportArchive());
+  assert.equal(restoreArchive.families[0].count,1);
+  await assert.rejects(target.restoreArchive(archived),err=>err?.code==='invalid_record' || err?.code==='conflict');
+
+  const reset=await target.transitionAccount('reset',{
+    accountId,expectedRevision:1,expectedGeneration:1,currentPassword:password
+  });
+  assert.equal(reset.status,'committed');
+  assert.equal(reset.account?.revision,2);
+  assert.equal(reset.account?.lifecycleGeneration,2);
+  const resetArchive=JSON.parse(await target.exportArchive());
+  assert.equal(resetArchive.families[14].count,0);
+  assert.equal(resetArchive.families[15].count,0);
+
+  const deleted=await target.transitionAccount('delete',{
+    accountId,expectedRevision:2,expectedGeneration:2,
+    currentPassword:password,requestId:crypto.randomUUID()
+  });
+  assert.equal(deleted.status,'committed');
+  assert.equal(await target.read(accountId),null);
+  const deletedArchive=JSON.parse(await target.exportArchive());
+  assert.equal(deletedArchive.families[0].count,0);
+  assert.equal(deletedArchive.families[1].count,1);
+  assert.equal(deletedArchive.families[14].count,0);
+  assert.equal(deletedArchive.families[15].count,0);
+  target.close();
 });
