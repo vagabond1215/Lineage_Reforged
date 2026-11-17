@@ -118,6 +118,20 @@ def clarity_mask(detail, protected):
     return candidate, "SIMPLIFIED_WITH_DISPLAY_COMPONENT_GUARDS", original_stats
 
 
+def simplified_display_stroke(land, epsilon=1.0):
+    """Draw a less busy coast LINE without changing any mask's land/sea pixels."""
+    contours, _ = cv2.findContours(land, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    ink = np.zeros_like(land)
+    original_vertices = 0
+    simplified_vertices = 0
+    for contour in contours:
+        original_vertices += len(contour)
+        reduced = cv2.approxPolyDP(contour, epsilon, True) if len(contour) >= 3 else contour
+        simplified_vertices += len(reduced)
+        cv2.drawContours(ink, [reduced], -1, 255, 1)
+    return ink, original_vertices, simplified_vertices
+
+
 def style(state_preview, land, clean=False):
     canvas = state_preview.copy()
     ocean = np.array((231, 144, 70) if clean else (250, 141, 66), dtype=np.uint8)
@@ -126,8 +140,13 @@ def style(state_preview, land, clean=False):
         neutral = np.full_like(canvas, 205)
         softened = cv2.addWeighted(canvas, 0.84, neutral, 0.16, 0)
         canvas[land > 0] = softened[land > 0]
-    outline = cv2.morphologyEx(land, cv2.MORPH_GRADIENT, np.ones((3, 3), np.uint8))
-    canvas[outline > 0] = (65, 66, 53) if clean else (76, 78, 55)
+        # The display-only vector stroke is clipped to existing land, so it
+        # cannot turn a passage into a land bridge or erase a small island.
+        stroke, _, _ = simplified_display_stroke(land)
+        canvas[(stroke > 0) & (land > 0)] = (65, 66, 53)
+    else:
+        outline = cv2.morphologyEx(land, cv2.MORPH_GRADIENT, np.ones((3, 3), np.uint8))
+        canvas[outline > 0] = (76, 78, 55)
     return canvas
 
 
@@ -177,6 +196,7 @@ def produce(source, out, decision_path):
                       (min(OUTPUT_SIZE[0] - 1, x1 + 3), min(OUTPUT_SIZE[1] - 1, y1 + 3)), 255, -1)
     clean_mask, simplification_status, stats_detail = clarity_mask(detail, protected)
     stats_clean, _, _ = structure(clean_mask)
+    _, raw_stroke_vertices, simple_stroke_vertices = simplified_display_stroke(clean_mask)
     detail_image = style(state_preview, detail, False)
     clean_image = style(state_preview, clean_mask, True)
     review_image = clean_image.copy()
@@ -212,6 +232,10 @@ def produce(source, out, decision_path):
         "clarityDisplayTopology": stats_clean,
         "clarityPixelDifferenceCount": int(np.count_nonzero(detail != clean_mask)),
         "simplificationStatus": simplification_status,
+        "cleanerDisplayStrokeOnly": True,
+        "cleanerStrokeSimplificationEpsilonPx": 1.0,
+        "rawDisplayStrokeVertices": raw_stroke_vertices,
+        "cleanerDisplayStrokeVertices": simple_stroke_vertices,
         "reviewRectsFull16KAndCandidatePreview": [
             {"id": k, "sourceBBox": list(b), "previewBBox": to_view_bbox(b)} for k, b in REVIEW.items()],
         "majorPhysicalIslandIDsCertified": False,
@@ -238,7 +262,9 @@ def self_test():
     result, status, stats = clarity_mask(sample, protected)
     assert result.shape == sample.shape and status.startswith(("FALLBACK", "SIMPLIFIED"))
     assert stats["componentsAtLeast8Px"] == 2 and stats["enclosedHoleInstances"] == 1
-    print("PASS G2-E4a rendered blue, crop transform, synthetic display topology guards")
+    stroke, before, after = simplified_display_stroke(sample)
+    assert stroke.shape == sample.shape and before >= after > 0
+    print("PASS G2-E4a rendered blue, crop transform, synthetic display topology and stroke guards")
 
 
 def main():
