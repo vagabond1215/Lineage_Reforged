@@ -1,0 +1,265 @@
+{
+  "schemaVersion": 1,
+  "type": "FIRST_WORLD_OPTION2_G2E2_ORIGINAL_RENDER_COAST_REVIEW_NOT_CANONICAL",
+  "date": "2026-11-16",
+  "status": "G2E2_SOURCE_RENDER_REVIEW_READY_OWNER_DECISIONS_PENDING",
+  "sources": {
+    "fullResolutionPx": [
+      16384,
+      9421
+    ],
+    "cropCoordinateSystem": "Full original PNG pixels, [left,top,right,bottom) exclusive",
+    "hashSha256": {
+      "State": "419f48be8991dd682fe5bbce601408ed1832b73e679b104a0c7f082abd6295de",
+      "Height": "776bb1dd3d708265741b6433b3152adb098696f60d8bf4ce85205c649bb6d8ce",
+      "Biome": "c6904f0f23c2a7cf7fd880b38a4a9a8fa51f5bb6260605ff53ccd8a20b324fe2"
+    },
+    "maskA": "State exact rendered ocean red==64 blue==255 (green unrestricted)",
+    "maskB": "Biome and Height shared-render blue HSV H93..125 S>=125 V>=195; BGR blue>=195 red<=135 green>=70",
+    "renderMasksIndependentlyGrounded": false,
+    "sourceToAuthoredReferenceApproved": false,
+    "nativeVoronoiRecovered": false
+  },
+  "reviewItems": [
+    {
+      "reviewId": "G2E2_DAWNREACH_U_ARC",
+      "sourceBBoxFull16kExclusive": [
+        6150,
+        710,
+        8040,
+        2350
+      ],
+      "candidateGeographicParentOnly": "Dawnreach Isles",
+      "ABDisagreementPixels": 286,
+      "ALandCandidatePixels": 508993,
+      "BLandCandidatePixels": 508707,
+      "AOnlyRenderedLandPixels": 286,
+      "BOnlyRenderedLandPixels": 0,
+      "ACoastEdgeProxyPixels": 24618,
+      "BCoastEdgeProxyPixels": 24585,
+      "exactStateFillCorePixels": {
+        "Dawnreach Isles": 226037
+      },
+      "ownerDecision": null,
+      "ownerReviewStatus": "PENDING_OWNER",
+      "permanentPhysicalIslandId": null,
+      "childRegionPolygonsApproved": false,
+      "politicalSovereigntyInferred": false,
+      "traversableRouteAuthorized": false,
+      "ownerReviewChoices": [
+        "ACCEPT_DERIVED_COAST_CANDIDATE",
+        "REQUEST_BOUNDARY_REVISION",
+        "HELD"
+      ]
+    },
+    {
+      "reviewId": "G2E2_MYRIDIAN_NORTH",
+      "sourceBBoxFull16kExclusive": [
+        5180,
+        1340,
+        6980,
+        2910
+      ],
+      "candidateGeographicParentOnly": "Myridian Chain",
+      "ABDisagreementPixels": 83,
+      "ALandCandidatePixels": 549280,
+      "BLandCandidatePixels": 549197,
+      "AOnlyRenderedLandPixels": 83,
+      "BOnlyRenderedLandPixels": 0,
+      "ACoastEdgeProxyPixels": 22550,
+      "BCoastEdgeProxyPixels": 22526,
+      "exactStateFillCorePixels": {
+        "Myridian Chain": 180788
+      },
+      "ownerDecision": null,
+      "ownerReviewStatus": "PENDING_OWNER",
+      "permanentPhysicalIslandId": null,
+      "childRegionPolygonsApproved": false,
+      "politicalSovereigntyInferred": false,
+      "traversableRouteAuthorized": false,
+      "ownerReviewChoices": [
+        "ACCEPT_DERIVED_COAST_CANDIDATE",
+        "REQUEST_BOUNDARY_REVISION",
+        "HELD"
+      ]
+    },
+    {
+      "reviewId": "G2E2_MYRIDIAN_DETACHED_CENTER",
+      "sourceBBoxFull16kExclusive": [
+        7080,
+        3230,
+        7960,
+        4510
+      ],
+      "candidateGeographicParentOnly": "Myridian Chain",
+      "ABDisagreementPixels": 47,
+      "ALandCandidatePixels": 243713,
+      "BLandCandidatePixels": 243666,
+      "AOnlyRenderedLandPixels": 47,
+      "BOnlyRenderedLandPixels": 0,
+      "ACoastEdgeProxyPixels": 8250,
+      "BCoastEdgeProxyPixels": 8240,
+      "exactStateFillCorePixels": {
+        "Myridian Chain": 153834
+      },
+      "ownerDecision": null,
+      "ownerReviewStatus": "PENDING_OWNER",
+      "permanentPhysicalIslandId": null,
+      "childRegionPolygonsApproved": false,
+      "politicalSovereigntyInferred": false,
+      "traversableRouteAuthorized": false,
+      "ownerReviewChoices": [
+        "ACCEPT_DERIVED_COAST_CANDIDATE",
+        "REQUEST_BOUNDARY_REVISION",
+        "HELD"
+      ]
+    },
+    {
+      "reviewId": "G2E2_KAELVAR_NE_ISLAND",
+      "sourceBBoxFull16kExclusive": [
+        3910,
+        1020,
+        5190,
+        1850
+      ],
+      "candidateGeographicParentOnly": "Kaelvar",
+      "ABDisagreementPixels": 60,
+      "ALandCandidatePixels": 285718,
+      "BLandCandidatePixels": 285658,
+      "AOnlyRenderedLandPixels": 60,
+      "BOnlyRenderedLandPixels": 0,
+      "ACoastEdgeProxyPixels": 8921,
+      "BCoastEdgeProxyPixels": 8917,
+      "exactStateFillCorePixels": {
+        "Kaelvar": 180640
+      },
+      "ownerDecision": null,
+      "ownerReviewStatus": "PENDING_OWNER",
+      "permanentPhysicalIslandId": null,
+      "childRegionPolygonsApproved": false,
+      "politicalSovereigntyInferred": false,
+      "traversableRouteAuthorized": false,
+      "ownerReviewChoices": [
+        "ACCEPT_DERIVED_COAST_CANDIDATE",
+        "REQUEST_BOUNDARY_REVISION",
+        "HELD"
+      ]
+    },
+    {
+      "reviewId": "G2E2_SERPENTS_NORTH",
+      "sourceBBoxFull16kExclusive": [
+        13910,
+        3760,
+        14970,
+        5810
+      ],
+      "candidateGeographicParentOnly": "Serpent's Wake",
+      "ABDisagreementPixels": 73,
+      "ALandCandidatePixels": 197554,
+      "BLandCandidatePixels": 197481,
+      "AOnlyRenderedLandPixels": 73,
+      "BOnlyRenderedLandPixels": 0,
+      "ACoastEdgeProxyPixels": 10626,
+      "BCoastEdgeProxyPixels": 10622,
+      "exactStateFillCorePixels": {
+        "Serpent's Wake": 79320
+      },
+      "ownerDecision": null,
+      "ownerReviewStatus": "PENDING_OWNER",
+      "permanentPhysicalIslandId": null,
+      "childRegionPolygonsApproved": false,
+      "politicalSovereigntyInferred": false,
+      "traversableRouteAuthorized": false,
+      "ownerReviewChoices": [
+        "ACCEPT_DERIVED_COAST_CANDIDATE",
+        "REQUEST_BOUNDARY_REVISION",
+        "HELD"
+      ]
+    },
+    {
+      "reviewId": "G2E2_SERPENTS_SOUTH",
+      "sourceBBoxFull16kExclusive": [
+        13260,
+        5830,
+        14590,
+        7480
+      ],
+      "candidateGeographicParentOnly": "Serpent's Wake",
+      "ABDisagreementPixels": 53,
+      "ALandCandidatePixels": 183088,
+      "BLandCandidatePixels": 183035,
+      "AOnlyRenderedLandPixels": 53,
+      "BOnlyRenderedLandPixels": 0,
+      "ACoastEdgeProxyPixels": 11513,
+      "BCoastEdgeProxyPixels": 11513,
+      "exactStateFillCorePixels": {
+        "Serpent's Wake": 64326
+      },
+      "ownerDecision": null,
+      "ownerReviewStatus": "PENDING_OWNER",
+      "permanentPhysicalIslandId": null,
+      "childRegionPolygonsApproved": false,
+      "politicalSovereigntyInferred": false,
+      "traversableRouteAuthorized": false,
+      "ownerReviewChoices": [
+        "ACCEPT_DERIVED_COAST_CANDIDATE",
+        "REQUEST_BOUNDARY_REVISION",
+        "HELD"
+      ]
+    },
+    {
+      "reviewId": "G2E2_DRAEMOR_TALMYRA_NECK",
+      "sourceBBoxFull16kExclusive": [
+        8300,
+        5740,
+        9000,
+        6670
+      ],
+      "candidateGeographicParentOnly": "Draemor + Talmyra",
+      "ABDisagreementPixels": 39,
+      "ALandCandidatePixels": 245503,
+      "BLandCandidatePixels": 245464,
+      "AOnlyRenderedLandPixels": 39,
+      "BOnlyRenderedLandPixels": 0,
+      "ACoastEdgeProxyPixels": 7462,
+      "BCoastEdgeProxyPixels": 7454,
+      "exactStateFillCorePixels": {
+        "Draemor": 58265,
+        "Talmyra": 103692
+      },
+      "ownerDecision": null,
+      "ownerReviewStatus": "PENDING_OWNER",
+      "permanentPhysicalIslandId": null,
+      "childRegionPolygonsApproved": false,
+      "politicalSovereigntyInferred": false,
+      "traversableRouteAuthorized": false,
+      "ownerReviewChoices": [
+        "RETAIN_NATURAL_NECK_LORE_PENDING_EXACT_SHORE",
+        "REQUEST_NECK_SHORE_REVIEW",
+        "HELD"
+      ]
+    }
+  ],
+  "externalReviewPackage": {
+    "filename": "FirstWorld_Option2_G2E2_Seven_Site_Owner_Review.zip",
+    "sha256": "88ae16795d90269cd620b40695bfece051add3b155e9591294321507fe5fa45e",
+    "archiveBytes": 2261945,
+    "memberCount": 13,
+    "zipCRC": "PASS",
+    "original16KPNGsRepublished": false,
+    "privateSavesIncluded": false,
+    "reproductionSourceIncluded": true,
+    "visualDifferenceHaloIsAmplifiedForVisibilityOnly": true
+  },
+  "holds": {
+    "allSevenOwnerDecisionsUnselected": true,
+    "physicalIslandIdentityApproved": false,
+    "regionalChildPolygonsApproved": false,
+    "merfolkPoliticalSovereigntyDerivedFromRaster": false,
+    "simulatorCellGraphRecovered": false,
+    "originalSourceImagesModified": false,
+    "activeC1BranchModified": false,
+    "travelRoutesPublished": false,
+    "canonicalWritable": false
+  }
+}
