@@ -1,5 +1,7 @@
 # First World: contextual launcher shell, original character creator and branching World Entry
 
+> **2026-11-17 focused follow-up:** [Detailed insertion plan: existing eight-step Character Creator → Finalize handoff → post-creator branching World Entry](character-creator-post-finalize-world-entry-integration-plan-2026-11-17.md) is the implementation-level UI/source/acceptance authority for this seam. It confirms from current `CleanEpochFirstCampaignAdapter` that even `first.prepare()` writes a retained attempt and reserves a Save slot, so story preview/failure cannot call it. Retain the current eight-step creator and feature-off `Begin Journey`; introduce rail-free story and 0/100 result only on approved World-bound path, with exact-once first publication after successful authored opening.
+
 Date: 2026-11-17 (America/New_York)  
 Status: **Owner-directed UX decision / integrated standalone browser layout preview / production integration NOT_RUN**  
 Read and compared at `master` `9203501780d1463bc6c2464f6cfad1df61bd55bc`; draft [PR #102](https://github.com/vagabond1215/Lineage_Reforged/pull/102) at `d3cd548f6b21aff11c40637c3e16026502f8e6e2`, open/unmerged.  
