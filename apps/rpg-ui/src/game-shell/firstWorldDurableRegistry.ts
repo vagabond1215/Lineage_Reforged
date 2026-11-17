@@ -3,9 +3,18 @@
  * No UI is bound to this API. Do not advertise travel, shops, or playable areas.
  */
 import { createInitialClock } from "../../../../packages/shared/time/src/index.js";
-import { buildStarfallBaseEconomyPreview,
-  STARFALL_STARTING_SETTLEMENT_IDS, STARFALL_EXTERNAL_TRADE_CONTEXT_IDS
+import type {
+  buildStarfallBaseEconomyPreview
 } from "../../../../packages/engines/civilization-engine/src/starfall-base-economy.js";
+
+// Browser-safe graph identities. The Node-only bootstrap checks these against
+// the civilization engine when preparing the immutable initial projection.
+const STARFALL_STARTING_SETTLEMENT_IDS = [
+  "settlement.starfall_port", "settlement.harbormast_quay", "settlement.foammarket_ferry"
+] as const;
+const STARFALL_EXTERNAL_TRADE_CONTEXT_IDS = [
+  "settlement.pearlwake", "settlement.chainlight_bastion"
+] as const;
 import {
   FIRST_WORLD_TEMPLATE_ID, FIRST_WORLD_MAP_ID, FIRST_WORLD_LOCAL_AREA_TEMPLATE_ID,
   prepareChronicleWorldGenesis,
@@ -121,7 +130,13 @@ export async function prepareDurableChronicleWorld(input: ChronicleWorldCreation
     throw Error("L3b Starfall source bytes changed without an approved template version.");
   const clock = createInitialClock();
   if (clock.tick !== 0) throw Error("L3b initial civilization clock must be at tick zero.");
-  const economy = buildStarfallBaseEconomyPreview(clock);
+  // The current civilization engine reads settlement content with node:fs.
+  // It is deliberately loaded only inside the Node-side genesis producer.
+  // Browser consumers can validate/read existing Worlds but cannot synthesize
+  // a new economy until a separately pinned browser-safe bootstrap is provided.
+  const { buildStarfallBaseEconomyPreview: makePreview } =
+    await import("../../../../packages/engines/civilization-engine/src/starfall-base-economy.js");
+  const economy = makePreview(clock);
   if (economy.economyTick !== clock.tick || economy.committed !== false ||
       economy.sourceWorldTemplateId !== FIRST_WORLD_TEMPLATE_ID ||
       !same(economy.localSettlementIds, [...STARFALL_STARTING_SETTLEMENT_IDS]) ||

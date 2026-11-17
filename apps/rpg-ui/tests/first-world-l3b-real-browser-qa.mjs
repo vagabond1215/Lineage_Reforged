@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { readFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { chromium } from 'playwright';
 import { createDefaultAccountProfileState } from '../../../packages/engines/game-engine/src/legacy-account.ts';
@@ -10,23 +9,14 @@ import { createDefaultAccountProfileState } from '../../../packages/engines/game
  * production/staging origin, a live Save, or the default account database name.
  * CI materializes exact v7 Store.ts at cleanEpochAccountStoreV7Qa.ts from the
  * immutable pre-v8 master commit; the file is NOT added to Git.
+ * L3b browser World CREATE intentionally remains held: the civilization
+ * economy bootstrap currently reads node:fs and is not a browser bundle.
  */
 const ORIGIN = 'http://127.0.0.1:5199';
 const PAGE = ORIGIN + '/chronicle-world-registry-qa.html';
-const SOURCE = readFileSync('packages/content/base/world/templates/starfall_port_chronicle_v1.json', 'utf8');
 const PASSWORD = 'browser-synthetic-account-password-only';
 const timestamp = '2026-11-17T00:00:00.000Z';
 const unique = label => 'l3b.chromium.' + label + '.' + randomUUID();
-const makeInput = (accountId, suffix) => ({
-  account: { accountId, revision: 1, lifecycleGeneration: 1 },
-  expectedAccountRevision: 1,
-  expectedAccountGeneration: 1,
-  creationIntentId: 'world.create.chromium.' + suffix,
-  proposedWorldInstanceId: 'world.instance.chromium.' + suffix,
-  displayName: 'Chromium First World ' + suffix,
-  createdAt: timestamp,
-  sourceTemplateJson: SOURCE
-});
 const makeProfile = accountId =>
   createDefaultAccountProfileState({ accountId, displayName: 'Disposable Chromium World', createdAt: timestamp });
 
@@ -107,56 +97,13 @@ async function inBrowser(page, action, data = {}) {
           families:exported.families.map(f=>({name:f.name,count:f.count,sha256:f.sha256}))};
       });
     }
-    if (action === 'register') {
+    if (action === 'readEmpty') {
       const owner = await open(data.name);
       return closeAnd(owner, async store => {
-        const credential = await accountSource.createCredentialRecord(data.accountId, data.password, data.timestamp);
-        const registered = await store.register(data.profile, credential);
-        return { accountId:registered.readback.accountId,
-          revision:registered.readback.revision };
-      });
-    }
-    if (action === 'create') {
-      const owner = await open(data.name);
-      return closeAnd(owner, async store => {
-        try {
-          const result = await store.createChronicleWorld(data.input);
-          return {status:result.status,worldId:result.world.worldInstanceId,
-            receiptState:result.receipt.state,source:result.world.sourceManifestFingerprint,
-            economyTick:result.world.economyState.economyTick,
-            marketCount:result.world.economyState.projection.marketStates.length,
-            servicesEnabled:result.world.economyState.servicesEnabled,
-            characters:result.world.characterAssociations.length};
-        } catch (error) { return {errorCode:error.code ?? error.name}; }
-      });
-    }
-    if (action === 'read') {
-      const owner = await open(data.name);
-      return closeAnd(owner, async store => {
-        const worlds = await store.listChronicleWorlds(data.accountId);
-        const archive = await store.exportArchive();
-        return {worldIds:worlds.map(w=>w.worldInstanceId), archive,
-          economyTicks:worlds.map(w=>w.economyState.economyTick),
-          counts:JSON.parse(archive).families.map(f=>f.count)};
-      });
-    }
-    if (action === 'abortWrite') {
-      let writes = 0;
-      const owner = await v8.openCleanEpochAccountStore({
-        name:data.name, afterWrite:tx=>{ if (++writes === 1) tx.abort(); }
-      });
-      return closeAnd(owner, async store => {
-        try { await store.createChronicleWorld(data.input); return {unexpectedCommit:true}; }
-        catch (error) { return {code:error.code ?? error.name,writeAttempts:writes}; }
-      });
-    }
-    if (action === 'quota') {
-      const owner = await v8.openCleanEpochAccountStore({
-        name:data.name, beforeWrite:()=>{throw new DOMException('synthetic quota','QuotaExceededError');}
-      });
-      return closeAnd(owner, async store => {
-        try { await store.createChronicleWorld(data.input); return {unexpectedCommit:true}; }
-        catch (error) { return {code:error.code ?? error.name}; }
+        const list = await store.listChronicleWorlds(data.accountId);
+        const archive = JSON.parse(await store.exportArchive());
+        return { worldCount:list.length,
+          familyCounts:archive.families.map(f=>f.count) };
       });
     }
     if (action === 'delete') {
@@ -169,6 +116,36 @@ async function inBrowser(page, action, data = {}) {
         const archive = JSON.parse(await store.exportArchive());
         return {status:result.status,accountPresent:(await store.read(data.accountId))!==null,
           worldCount:archive.families[14].count,receiptCount:archive.families[15].count};
+      });
+    }
+    if (action === 'injectOrphan') {
+      const db = await new Promise((resolve, reject) => {
+        const req = indexedDB.open(data.name,8);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+        req.onupgradeneeded = () => reject(Error('Unexpected v8 fixture upgrade.'));
+      });
+      try {
+        const tx = db.transaction(v8.CLEAN_EPOCH_WORLD_STORE,'readwrite');
+        tx.objectStore(v8.CLEAN_EPOCH_WORLD_STORE).put({
+          version:1,accountId:data.accountId,
+          worldInstanceId:'world.instance.chromium.corrupt.orphan',
+          creationIntentId:'world.create.chromium.corrupt.orphan'
+        });
+        await new Promise((resolve,reject) => {
+          tx.oncomplete=resolve;
+          tx.onabort=()=>reject(tx.error);
+        });
+      } finally { db.close(); }
+      const owner = await open(data.name);
+      return closeAnd(owner, async store => {
+        let listError, archiveError;
+        try { await store.listChronicleWorlds(data.accountId); }
+        catch (error) { listError = error.code ?? error.name; }
+        try { await store.exportArchive(); }
+        catch (error) { archiveError = error.code ?? error.name; }
+        const retained = await store.read(data.accountId);
+        return {listError,archiveError,retainedAccount:!!retained};
       });
     }
     throw Error('Unsupported QA action: ' + action);
@@ -211,61 +188,28 @@ try {
   assert.deepEqual(restoredLegacy.families.slice(14).map(f=>f.count),[0,0]);
   console.log('PASS real Chromium: exact original v7 account, blocked upgrade, v8 preserved 14-family digests and v7 archive restore');
 
-  const liveName = unique('v8-world');
-  const worldAccount = 'account.chromium.world.' + randomUUID();
-  const profile = makeProfile(worldAccount);
-  assert.equal((await inBrowser(first,'register',{name:liveName,accountId:worldAccount,
-    profile,password:PASSWORD,timestamp})).revision,1);
-  const input = makeInput(worldAccount,randomUUID());
-  const [a,b] = await Promise.all([
-    inBrowser(first,'create',{name:liveName,input}),
-    inBrowser(second,'create',{name:liveName,input})
-  ]);
-  assert.deepEqual([a.status,b.status].sort(),['committed','same_source_retry']);
-  assert.equal(a.worldId,input.proposedWorldInstanceId);
-  assert.equal(a.source,b.source);
-  assert.equal(a.economyTick,0);
-  assert.ok(a.marketCount >= 5);
-  assert.equal(a.servicesEnabled,false);
-  assert.equal(a.characters,0);
-  const conflict = await inBrowser(second,'create',{
-    name:liveName,input:makeInput(worldAccount,randomUUID())});
-  assert.equal(conflict.errorCode,'conflict');
-
+  // Real IndexedDB read-only World list and destructive account cleanup work
+  // with the browser-safe registry validator. World creation remains held
+  // because the civilization-engine bootstrap currently imports node:fs.
+  const inventory = await inBrowser(first,'readEmpty',{name:legacyName,accountId:legacyId});
+  assert.equal(inventory.worldCount,0);
+  assert.deepEqual(inventory.familyCounts.slice(14),[0,0]);
   await first.reload({waitUntil:'domcontentloaded'});
-  const retained = await inBrowser(first,'read',{name:liveName,accountId:worldAccount});
-  assert.deepEqual(retained.worldIds,[input.proposedWorldInstanceId]);
-  assert.deepEqual(retained.economyTicks,[0]);
-  assert.deepEqual(retained.counts.slice(14),[1,1]);
+  const reopened = await inBrowser(first,'migrate',{name:legacyName,accountId:legacyId});
+  assert.deepEqual(reopened.account,old.account);
 
-  const restoreName = unique('restore-world');
-  const restored = await inBrowser(second,'restore',{name:restoreName,accountId:worldAccount,
-    archive:retained.archive});
-  assert.deepEqual(restored.worlds,[input.proposedWorldInstanceId]);
-  assert.deepEqual(restored.families.map(f=>f.count),retained.counts);
-  const deleted = await inBrowser(first,'delete',{name:liveName,accountId:worldAccount,password:PASSWORD});
+  const malformedName=unique('malformed-world');
+  await inBrowser(second,'restore',{name:malformedName,accountId:legacyId,archive:old.archive});
+  const invalid = await inBrowser(second,'injectOrphan',{name:malformedName,accountId:legacyId});
+  assert.deepEqual(invalid,{listError:'invalid_record',
+    archiveError:'invalid_record',retainedAccount:true});
+  const deleted=await inBrowser(first,'delete',{name:legacyName,accountId:legacyId,password:PASSWORD});
   assert.deepEqual(deleted,{status:'committed',accountPresent:false,worldCount:0,receiptCount:0});
-  console.log('PASS real Chromium: two-tab exact intent, conflict, reload/readback, complete v8 archive restore and account-owned deletion');
-
-  const failedName=unique('failed-writes');
-  const failedId='account.chromium.fault.'+randomUUID();
-  await inBrowser(first,'register',{name:failedName,accountId:failedId,
-    profile:makeProfile(failedId),password:PASSWORD,timestamp});
-  const failInput=makeInput(failedId,randomUUID());
-  const interrupted=await inBrowser(first,'abortWrite',{name:failedName,input:failInput});
-  assert.equal(interrupted.code,'aborted');
-  assert.equal(interrupted.writeAttempts,1);
-  const afterAbort=await inBrowser(second,'read',{name:failedName,accountId:failedId});
-  assert.deepEqual(afterAbort.counts.slice(14),[0,0]);
-  const quota=await inBrowser(first,'quota',{name:failedName,input:failInput});
-  assert.equal(quota.code,'quota');
-  const afterQuota=await inBrowser(second,'read',{name:failedName,accountId:failedId});
-  assert.deepEqual(afterQuota.counts.slice(14),[0,0]);
-  assert.equal((await inBrowser(first,'create',{name:failedName,input:failInput})).status,'committed');
-  console.log('PASS real Chromium: injected post-write abort and quota-like failure preserve empty World/receipt pair and permit clean retry');
+  console.log('PASS real Chromium: v8 empty World inventory, restart, invalid World graph rejection and clean account deletion');
+  console.log('HOLD L3b browser World creation: Node-only civilization economy bootstrap requires approved browser-safe source');
 
   await context.close();
-  console.log('PASS L3b Chromium source-only QA: no default account DB, Save owners, UI route or production origin touched');
+  console.log('PASS L3a Chromium migration QA and L3b read-only graph validation: no player data or production origin touched');
 } finally {
   await browser?.close();
   try { process.kill(-server.pid,'SIGTERM'); } catch { server.kill('SIGTERM'); }
