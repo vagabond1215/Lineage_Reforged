@@ -2,7 +2,9 @@
 
 Date: 2026-11-16  
 Status: **NINE_OWNER_DIRECTIONS_CAPTURED / SOURCE-DERIVED_VISUAL_ACCEPTANCE / WHOLE-FEATURE_GEOMETRY_HELD / CANONICAL_GEOGRAPHY_UNCHANGED**  
-World-overview level of detail: [G2-E4 representative atlas and later local map squares](first-world-option2-g2e4-representative-atlas-local-map-square-boundary-2026-11-16.md). This is an owner-approved scope clarification: **macro coastline representational; local playable micro-geography authored separately**. The nine G2-E3 decisions remain unchanged.\n\nMachine-readable record: [G2-E3 owner directions](first-world-option2-g2e3-owner-direction-record-2026-11-16.json). Earlier [preflight](first-world-option2-g2e3-nine-question-owner-adjudication-preflight-2026-11-16.md) and original [G2-E1](first-world-option2-g2e1-valtherion-owner-review-2026-11-16.json)/[G2-E2](first-world-option2-g2e2-seven-site-source-review-2026-11-16.json) source ledgers are retained **unchanged** as provenance; their `null` choices are historical pre-owner-review state, not the current owner response.
+World-overview level of detail: [G2-E4 representative atlas and later local map squares](first-world-option2-g2e4-representative-atlas-local-map-square-boundary-2026-11-16.md). This is an owner-approved scope clarification: **macro coastline representational; local playable micro-geography authored separately**. The nine G2-E3 decisions remain unchanged.
+
+Machine-readable record: [G2-E3 owner directions](first-world-option2-g2e3-owner-direction-record-2026-11-16.json). Earlier [preflight](first-world-option2-g2e3-nine-question-owner-adjudication-preflight-2026-11-16.md) and original [G2-E1](first-world-option2-g2e1-valtherion-owner-review-2026-11-16.json)/[G2-E2](first-world-option2-g2e2-seven-site-source-review-2026-11-16.json) source ledgers are retained **unchanged** as provenance; their `null` choices are historical pre-owner-review state, not the current owner response.
 
 ## Owner-reviewed choices, by source ID
 
