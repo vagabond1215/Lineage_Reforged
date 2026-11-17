@@ -15,6 +15,11 @@ import { isNativeTargetCampaignSnapshot } from "../../../../packages/engines/gam
 import { hasPendingNormalDefeat, validatePendingNormalDefeatRecoveryProvenance } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
 import { isStoredCampaignControl, isStoredSaveEnvelope, isStoredNativeGearEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope, type StoredNativeGearEnvelope } from "./saveManager.js";
 import { SAVE_SLOT_ORDER, type SaveSlotId, type SaveSlotMetadata } from "./state.js";
+import type { ChronicleWorldCreationInput } from "./firstWorldCreationContract.js";
+import {
+  assertRetainedWorldGraph, assertSameWorldCreation, prepareDurableChronicleWorld,
+  type RetainedChronicleWorld, type RetainedWorldCreationReceipt
+} from "./firstWorldDurableRegistry.js";
 import {
   CAMPAIGN_DATABASE_NAME,
   CampaignIndexedDbStore,
@@ -866,11 +871,13 @@ function terminalReceiptsMatch(account: CleanEpochAccountRecord, recovery: Clean
 function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<string, unknown[]>): void {
   const accountId = account.accountId;
   const family = (name: string) => rows.get(name) ?? [];
-  // L3a admits only the additive SCHEMA. No mutable World or creation receipt
-  // can be exported/reset/deleted before L3b's complete graph verifier exists.
-  // Reject rather than silently orphan a future account-owned World row.
-  if (family(CLEAN_EPOCH_WORLD_STORE).length || family(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).length)
-    fail("invalid_record", "Unreviewed World rows require the L3b registry graph gate.");
+  // No World is silently stripped by account reset/delete or an archive export.
+  // Pair invariants are validated before ANY destructive account mutation.
+  try {
+    assertRetainedWorldGraph(accountId, accountLifecycleGeneration(account),
+      family(CLEAN_EPOCH_WORLD_STORE), family(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE),
+      account.revision);
+  } catch { fail("invalid_record", "World account graph is incomplete or invalid."); }
   const indexed = (name: string, field: string): Map<string, Record<string, unknown>> => {
     const result = new Map<string, Record<string, unknown>>();
     for (const raw of family(name)) {
@@ -1411,6 +1418,115 @@ export class CleanEpochAccountStore {
   constructor(private readonly db: IDBDatabase,
     private readonly beforeWrite?: CleanEpochAccountStoreOptions["beforeWrite"],
     private readonly afterWrite?: CleanEpochAccountStoreOptions["afterWrite"]) {}
+
+  /** L3b: one account-scoped, error-distinguishing World inventory, never Save-slot aliases. */
+  async listChronicleWorlds(accountId: string): Promise<RetainedChronicleWorld[]> {
+    if (!nonblank(accountId)) fail("invalid_record", "World inventory account is missing.");
+    let tx: IDBTransaction;
+    try {
+      tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE,
+        CLEAN_EPOCH_WORLD_STORE, CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE], "readonly");
+    } catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    try {
+      const [accountRaw, lifecycleRaw, worlds, receipts] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_STORE).index("byAccount")
+          .getAll(accountId) as IDBRequest<unknown[]>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).index("byAccount")
+          .getAll(accountId) as IDBRequest<unknown[]>)
+      ]);
+      if (accountRaw === undefined) fail("invalid_record", "World inventory account does not exist.");
+      const account = checkedAccount(accountRaw, accountId);
+      const gen = accountLifecycleGeneration(account);
+      if (lifecycleRaw !== undefined) {
+        const lifecycle = checkedLifecycle(lifecycleRaw, accountId);
+        if (lifecycle.kind === "delete" || lifecycle.completedGeneration !== gen)
+          fail("invalid_record", "World inventory account lifecycle is stale.");
+      } else if (gen !== 1) fail("invalid_record", "World inventory lacks account lifecycle authority.");
+      try { assertRetainedWorldGraph(accountId, gen, worlds, receipts, account.revision); }
+      catch { fail("invalid_record", "World inventory graph is malformed or incomplete."); }
+      await done;
+      return worlds as RetainedChronicleWorld[];
+    } catch (error) {
+      try { await done; } catch { /* retain original read failure */ }
+      throw classify(error, "invalid_record");
+    }
+  }
+
+  /** L3b: one clean-epoch transaction owns the World, receipt and account fence. */
+  async createChronicleWorld(input: ChronicleWorldCreationInput):
+    Promise<{ status: "committed" | "same_source_retry"; world: RetainedChronicleWorld;
+      receipt: RetainedWorldCreationReceipt }> {
+    let prepared: Awaited<ReturnType<typeof prepareDurableChronicleWorld>>;
+    try { prepared = await prepareDurableChronicleWorld(input); }
+    catch (error) { throw classify(error, "invalid_record"); }
+    const { world, receipt } = prepared;
+    let tx: IDBTransaction;
+    try {
+      tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE,
+        CLEAN_EPOCH_WORLD_STORE, CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE], "readwrite");
+    } catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    let status: "committed" | "same_source_retry" = "committed";
+    let expectedWorld: RetainedChronicleWorld = world;
+    let expectedReceipt: RetainedWorldCreationReceipt = receipt;
+    try {
+      const [accountRaw, lifecycleRaw, worlds, receipts] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(world.accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE).get(world.accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_STORE).index("byAccount")
+          .getAll(world.accountId) as IDBRequest<unknown[]>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).index("byAccount")
+          .getAll(world.accountId) as IDBRequest<unknown[]>)
+      ]);
+      if (accountRaw === undefined) fail("invalid_record", "World creation account is missing.");
+      const account = checkedAccount(accountRaw, world.accountId);
+      const gen = accountLifecycleGeneration(account);
+      if (lifecycleRaw !== undefined) {
+        const lifecycle = checkedLifecycle(lifecycleRaw, world.accountId);
+        if (lifecycle.kind === "delete" || lifecycle.completedGeneration !== gen)
+          fail("invalid_record", "World creation account lifecycle is invalid.");
+      } else if (gen !== 1) fail("invalid_record", "World creation account has no generation receipt.");
+      if (gen !== world.accountLifecycleGeneration) fail("stale_head", "World creation account generation changed.");
+      try { assertRetainedWorldGraph(world.accountId, gen, worlds, receipts, account.revision); }
+      catch { fail("invalid_record", "World creation sees invalid prior World or receipt."); }
+      if (worlds.length !== 0) {
+        try { assertSameWorldCreation(prepared,
+          worlds[0] as RetainedChronicleWorld, receipts[0] as RetainedWorldCreationReceipt); }
+        catch { fail("conflict", "A different World creation intent already owns this account."); }
+        status = "same_source_retry";
+        expectedWorld = worlds[0] as RetainedChronicleWorld;
+        expectedReceipt = receipts[0] as RetainedWorldCreationReceipt;
+      } else {
+        if (account.revision !== receipt.expectedAccountRevision)
+          fail("stale_head", "World creation account revision changed.");
+        if (account.accountId !== input.account.accountId)
+          fail("invalid_record", "World creation account scope is inconsistent.");
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_STORE).add(world));
+        this.afterWrite?.(tx);
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).add(receipt));
+        this.afterWrite?.(tx);
+      }
+      await done;
+    } catch (error) {
+      try { tx.abort(); } catch { /* transaction already finalized */ }
+      try { await done; } catch { /* original error retains precedence */ }
+      throw classify(error, "aborted");
+    }
+    const read = await this.listChronicleWorlds(world.accountId);
+    if (read.length !== 1 || !exactEqual(read[0], expectedWorld))
+      fail("readback_failed", "Chronicle World creation committed without exact durable readback.");
+    const check = this.db.transaction(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE, "readonly");
+    const receiptRead = await requestValue(check.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE)
+      .get([world.accountId, receipt.creationIntentId]) as IDBRequest<unknown>);
+    if (!exactEqual(receiptRead, expectedReceipt))
+      fail("readback_failed", "Chronicle World creation receipt failed exact durable readback.");
+    return { status, world: expectedWorld, receipt: expectedReceipt };
+  }
 
   /** The complete epoch, including deleted-account tombstones, is one read snapshot. */
   async exportArchive(): Promise<string> {
