@@ -175,6 +175,7 @@ async function checkedArchive(text: string): Promise<EpochArchive> {
   if (await archiveDigest(JSON.stringify(payload)) !== sha256) archiveFailure();
   try { validateArchiveGraph(archive.families); } catch { archiveFailure(); }
   if (!legacyV7) return archive;
+  const emptyFamilyDigest = await archiveDigest("[]");
   // A legacy v7 backup can only enter an EMPTY v8 target. All fourteen
   // verified original family digests and rows are retained byte-for-byte.
   // Newly introduced World authorities are empty; old Saves remain unassociated.
@@ -185,7 +186,7 @@ async function checkedArchive(text: string): Promise<EpochArchive> {
     families: [
       ...archive.families,
       ...ARCHIVE_FAMILIES.slice(ARCHIVE_V7_FAMILIES.length).map(([name, keyPath]) => ({
-        name, keyPath: [...keyPath], count: 0, sha256: await archiveDigest("[]"), rows: []
+        name, keyPath: [...keyPath], count: 0, sha256: emptyFamilyDigest, rows: []
       }))
     ],
     sha256: ""
