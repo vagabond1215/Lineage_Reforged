@@ -6,6 +6,8 @@ on:
     paths:
       - 'apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts'
       - 'apps/rpg-ui/src/game-shell/firstWorldDurableRegistry.ts'
+      - 'apps/rpg-ui/chronicle-world-registry-qa.html'
+      - 'apps/rpg-ui/tests/first-world-l3b-real-browser-qa.mjs'
       - 'tests/unit/first-world-l3a-v8-migration.test.mjs'
       - '.github/workflows/first-world-l3a-v8-migration-probe.yml'
 
@@ -15,7 +17,7 @@ permissions:
 jobs:
   synthetic-world-registry:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,7 +26,7 @@ jobs:
         with:
           node-version: '22'
       - name: Install isolated test-only TypeScript loader and IndexedDB emulator
-        run: npm install --no-save --ignore-scripts --package-lock=false tsx@4.20.6 fake-indexeddb@6.2.5
+        run: npm install --no-save --ignore-scripts --package-lock=false tsx@4.20.6 fake-indexeddb@6.2.5 playwright@1.56.1
       - name: Run v8 migration and source World genesis contract tests
         run: |
           node --import tsx --test \
@@ -38,6 +40,15 @@ jobs:
         run: npm --prefix apps/rpg-ui ci --ignore-scripts
       - name: Typecheck node-owned epoch persistence sources
         run: npm --prefix apps/rpg-ui run typecheck:node
+      - name: Provision disposable Chromium runner only
+        run: npx playwright install --with-deps chromium
+      - name: Materialize exact master v7 owner for browser comparison only
+        run: |
+          git show aae4d65cdc65482032d62acef74316ed59c1eacf:apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts > apps/rpg-ui/src/game-shell/cleanEpochAccountStoreV7Qa.ts
+          grep -q 'CLEAN_EPOCH_DATABASE_VERSION = 7;' apps/rpg-ui/src/game-shell/cleanEpochAccountStoreV7Qa.ts
+          git status --short -- apps/rpg-ui/src/game-shell/cleanEpochAccountStoreV7Qa.ts
+      - name: Real Chromium isolated origin v7 to v8 World registry QA
+        run: node --import tsx apps/rpg-ui/tests/first-world-l3b-real-browser-qa.mjs
       - name: Do not activate the v8 migration in the default launcher
         run: |
           node --input-type=module - <<'NODE'
