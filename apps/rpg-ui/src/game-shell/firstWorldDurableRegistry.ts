@@ -115,7 +115,23 @@ export async function prepareDurableChronicleWorld(input: ChronicleWorldCreation
     createdAt: world.createdAt,
     completedWorldRevision: 0
   };
-  if (!jsonSafe(world) || !jsonSafe(receipt)) throw Error("L3b projected World must be JSON-portable.");
+  if (!jsonSafe(world) || !jsonSafe(receipt)) {
+    const firstNonPortable = (value: unknown, location: string): string | null => {
+      if (value === undefined) return location + ":undefined";
+      if (typeof value === "function" || typeof value === "symbol" || typeof value === "bigint")
+        return location + ":" + typeof value;
+      if (typeof value === "number" && !Number.isFinite(value)) return location + ":nonfinite";
+      if (value === null || typeof value === "string" || typeof value === "boolean" || typeof value === "number") return null;
+      if (!value || typeof value !== "object") return location + ":invalid";
+      if (!Array.isArray(value) && Object.getPrototypeOf(value) !== Object.prototype)
+        return location + ":" + (value as object).constructor?.name;
+      for (const [k, entry] of Object.entries(value))
+        { const invalid = firstNonPortable(entry, location + "." + k); if (invalid) return invalid; }
+      return null;
+    };
+    throw Error("L3b projected World must be JSON-portable: " +
+      (firstNonPortable(world, "world") ?? firstNonPortable(receipt, "receipt") ?? "nonportable"));
+  }
   assertRetainedWorldGraph(world.accountId, world.accountLifecycleGeneration,
     [world], [receipt], genesis.receipt.expectedAccountRevision);
   return { world, receipt };
