@@ -15,7 +15,7 @@
 
 ---
 
-# ACTIVE: Starfall World template → L2 owner/registry design gate (main-first)
+# PREVIOUS: Starfall World template → L2 owner/registry design gate (historical prerequisite)
 
 ## First World settlement placement audit, 2026-11-12
 
