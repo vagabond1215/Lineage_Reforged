@@ -8,7 +8,10 @@
     "contentPinMeaning": "Git object ID of the exact file bytes, not SHA-256(raw file)",
     "templateRawUtf8Sha256": "72bffd19f80900849795bbbf143a60d856d03a2622bf8533cf0b31a010510255",
     "sourceManifestFingerprintForExistingL2AndDraftL3b": "sha256:72bffd19f80900849795bbbf143a60d856d03a2622bf8533cf0b31a010510255",
-    "policy": "Reject a source mismatch; build/runtime adapters must check the complete dependency closure, not just five settlement records."
+    "policy": "Reject a source mismatch; build/runtime adapters must check the complete dependency closure, not just five settlement records.",
+    "pinnedFullSourceSetFingerprint": "sha256:9482870a7784f877bb8c789f65f29dea8fd62a18392381dc1ffd7a3f7e2659eb",
+    "pinnedFullSourceSetFingerprintAlgorithm": "SHA-256 of UTF-8 lines sorted lexicographically by relative repository path: each line is <path> + U+0009 (TAB) + lowercase 40-hex Git blob SHA1 + U+000A (LF), including final LF; includes pinnedSourceFiles, pinnedAlgorithmFiles, pinnedJavaScriptEntrypoints; excludes manifest JSON itself to avoid recursive hashing.",
+    "fullSourceSetFingerprintMeaning": "Aggregate identity of the 41 pinned canonical content, TypeScript owner, JavaScript entrypoint and time files. Valid only after all source blob identities are checked against actual bytes; it is not the same as the template-only sourceManifestFingerprint used by the preexisting L2 candidate and draft L3b store."
   },
   "worldBlueprint": {
     "id": "world_map.first_world",
@@ -123,7 +126,8 @@
     "successfulNewWorldInitialEconomyTick": 0,
     "allowedCharacterCountAtCreate": 0,
     "allowedSaveAssociationCountAtCreate": 0,
-    "worldAndReceiptPostCommitReadbackRequired": true
+    "worldAndReceiptPostCommitReadbackRequired": true,
+    "sourceIdentityGapInDraftL3b": "Draft L3b stores the template-only fingerprint, not the complete 41-input source set identity; the approved runtime must bind a versioned complete source-set fingerprint or fail closed before first commit. Do not change existing Save ownership."
   },
   "initialEconomy": {
     "owner": "existing-civilization-engine",
@@ -294,7 +298,8 @@
     "disposableChromiumWorldCreate": "NOT_RUN",
     "historicalNativeV3SaveCompatibility": "NOT_RUN",
     "activationAllowed": false,
-    "javaScriptLoaderAndBridgeSourceReview": "PASS_STATIC_SOURCE_REVIEW_NINE_ENTRYPOINTS_EXECUTABLE_PARITY_NOT_RUN"
+    "javaScriptLoaderAndBridgeSourceReview": "PASS_STATIC_SOURCE_REVIEW_NINE_ENTRYPOINTS_EXECUTABLE_PARITY_NOT_RUN",
+    "fullSourceSetAggregateFingerprint": "PASS_CONNECTOR_SHA256_STANDARD_TEST_VECTORS_AND_41_PIN_AGGREGATION_EXECUTABLE_REPO_CHECK_NOT_RUN"
   },
   "pinnedJavaScriptEntrypoints": [
     {
