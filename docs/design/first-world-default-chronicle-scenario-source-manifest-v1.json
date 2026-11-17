@@ -288,7 +288,7 @@
     }
   ],
   "acceptance": {
-    "jsonAndCurrentSourceReview": "PENDING_CONNECTOR_READBACK",
+    "jsonAndCurrentSourceReview": "PASS_32_OF_32_PINNED_BLOBS_AND_TEMPLATE_SHA256_CONNECTOR_SOURCE_CHECK",
     "executableManifestHashValidation": "NOT_RUN",
     "engineNodeBrowserParity": "NOT_RUN",
     "disposableChromiumWorldCreate": "NOT_RUN",
