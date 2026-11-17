@@ -360,3 +360,37 @@ test('L3b rejects changed Starfall source bytes even when fields still pass L2 s
   assert.deepEqual(await owner.listChronicleWorlds('account.synthetic.world'),[]);
   owner.close();
 });
+
+test('L3b concurrent exact-intent retries return the same retained World, with one commit only',async()=>{
+  const name=unique('world-same-intent');
+  const first=await openCleanEpochAccountStore({name,factory:indexedDB});
+  await syntheticAccount(first);
+  const second=await openCleanEpochAccountStore({name,factory:indexedDB});
+  const input=worldInput();
+  const [a,b]=await Promise.all([
+    first.createChronicleWorld(input), second.createChronicleWorld(structuredClone(input))
+  ]);
+  assert.deepEqual(new Set([a.status,b.status]),new Set(['committed','same_source_retry']));
+  assert.deepEqual(a.world,b.world);
+  assert.deepEqual(a.receipt,b.receipt);
+  const archive=JSON.parse(await first.exportArchive());
+  assert.equal(archive.families[14].count,1);
+  assert.equal(archive.families[15].count,1);
+  first.close();second.close();
+});
+
+test('L3b stale account generation refuses an earlier create even if its source digest is intact',async()=>{
+  const name=unique('world-stale-generation');
+  const owner=await openCleanEpochAccountStore({name,factory:indexedDB});
+  const account=await syntheticAccount(owner);
+  const staleInput=worldInput();
+  const reset=await owner.transitionAccount('reset',{
+    accountId:account.accountId,expectedRevision:1,expectedGeneration:1,currentPassword:account.password
+  });
+  assert.equal(reset.account?.lifecycleGeneration,2);
+  await assert.rejects(owner.createChronicleWorld(staleInput),e=>e?.code==='stale_head');
+  assert.deepEqual(await owner.listChronicleWorlds(account.accountId),[]);
+  const archive=JSON.parse(await owner.exportArchive());
+  assert.deepEqual(archive.families.slice(14).map(f=>f.count),[0,0]);
+  owner.close();
+});

@@ -1,4 +1,4 @@
-name: First World L3a isolated v8 migration preflight
+name: First World L3a-L3b isolated World registry preflight
 
 on:
   pull_request:
@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  synthetic-database-migration:
+  synthetic-world-registry:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
