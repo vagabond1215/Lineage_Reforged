@@ -16,7 +16,7 @@ permissions:
 
 jobs:
   synthetic-world-registry:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # Playwright 1.56.1 Chromium runner support; ubuntu-latest is now 26.04
     timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
