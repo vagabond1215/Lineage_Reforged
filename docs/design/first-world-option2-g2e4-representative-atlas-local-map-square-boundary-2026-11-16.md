@@ -1,5 +1,7 @@
 # First World Option 2 G2-E4: representative world atlas and later local map-square boundary
 
+> **2026-11-17 G2-E4a evidence update:** [Original-LFS full-world overview reproduction](first-world-option2-g2e4a-full-source-global-overview-reproduction-2026-11-17.md) has now produced and byte-verified both full-world display treatments from source on PR head and merged `master`. This is an **accepted representative atlas preview** only; source registration, whole-island geometry, political/route permissions and local map squares remain held. The historical `NOT GENERATED` status below describes this document's initial pre-execution plan.
+
 Date: 2026-11-16  
 Status: **OWNER-APPROVED WORLD-OVERVIEW LEVEL OF DETAIL / G2-E3 NINE SOURCE DIRECTIONS ACCEPTED / G2-E4 OVERVIEW CANDIDATE NOT GENERATED / CANONICAL GEOGRAPHY HELD**  
 Scope: first-world cartographic **level of detail and next source-only execution slice**, not a new approved geometry, map transform, movement system, or local-area implementation.
