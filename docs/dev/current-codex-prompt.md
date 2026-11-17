@@ -1,3 +1,20 @@
+# ACTIVE: Player-first World Creator → World Library → World-bound character/play (acceptance-first)
+
+**2026-11-17 owner priority / Connector preparation (not executable implementation):** [Player-first World Creator and selected-World implementation gate](../design/first-world-player-first-world-creator-and-library-implementation-gate-2026-11-17.md) is the current focused product/UX and acceptance route, superseding the one-World-only *product assumption* and static World-creator placement in the older L2 planning below. **Keep the old L2/Starfall contract/history below as prerequisites, not current implementation instructions.** The first real player route is authenticated account → owner-backed World Library (select / Create New World) → World Creator (fixed authored geography, *actual supported* World-level difficulty/Hardcore only) → verified World-scoped character selection/creation → actual gameplay, Save and restart. Prestige-gated climate intensity/variability and optional disaster controls are deferred and must not be fake sliders.
+
+**Existing evidence, not new acceptance:** current source read at `master` `e800b3cf589e364d3f4b3fe9c868af076f238dff`, draft PR #102 at `d3cd548f6b21aff11c40637c3e16026502f8e6e2`, source/CI details in linked gate; Source-verified 41/41 pins. The pure L2 CI, PR #102 synthetic/migration/read-only Chromium and geography guard passed at their exact historical heads. **Actual Chromium World create, complete Node/browser economy parity, multi-World, World-linked character, native-v3 Save/restart and World-owned difficulty/Hardcore are NOT_RUN.**
+
+**Next authenticated Codex execution slice, before any UI cutover:**
+1. Fetch/prune and independently confirm clean repository head/PR #102 divergence and current owner authorities, no overlapping active worktree; read new gate and existing L2-G manifest. Preserve unrelated PRs, C1 map, original native-v3 Save data and default feature-off behavior.
+2. Baseline-test all affected L2/Starfall/launcher, Node typecheck and PR v8 fixture/real-Chromium migration checks. Record actual PASS/FAIL/NOT_RUN with commands, selected SHA and unchanged old Save digests. Do not claim browser create based on previous read-only tests.
+3. Within the **existing** draft PR #102, reconcile the `content.js` Node-filesystem loader seam, canonical 41-file source fingerprint, source/cache isolation and complete existing-engine tick-zero Node/Chromium parity. Then revise the World/receipt contract to bind default scenario, seed/source/rule identities; reconcile PR #102 one-World transaction guard against the new minimum two-distinct-World product requirement and explicit owner quota *before* enabling a second create.
+4. Only after accepted real Chromium World create/retry/tab-race/rollback/reopen/archive/native-v3 parity, implement the distinct World Library/Create/Overview selection screens behind `?welcomeL1=1`. Keep unsupported Favored/Forsaken/Story, Hardcore/Grim/Ironbound and climate/disaster modifiers honestly disabled or absent until the specific gameplay owner tests pass.
+5. Then add verified World→character/campaign/Save association and the Starfall local playable command/save/restart path. Do not reinterpret 128 Save addresses as characters or migrate historical Saves by their starting region. Run full selected E2E at 375/768/1280 widths and feature-off regression before a separate activation review.
+
+**Stops:** `L2G_SOURCE_CONTRACT_READY` (source only), `L3B_BROWSER_CREATE_HELD`, `HOLD_SELECTED_ATOMIC_ACTIVATION`, `HOLD_STAGING_PUBLICATION`. No merge, new live World migration, account/Save destruction, actual production deployment, or milestone/version promotion is granted by this documentation preparation.
+
+---
+
 # ACTIVE: Starfall World template → L2 owner/registry design gate (main-first)
 
 ## First World settlement placement audit, 2026-11-12
