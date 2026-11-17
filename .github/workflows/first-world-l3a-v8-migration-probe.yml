@@ -32,6 +32,10 @@ jobs:
             tests/unit/starfall-world-template.test.mjs
       - name: Preserve coordinate-first no-legacy-dependency gate
         run: npm run tool:no-new-hex-dependencies
+      - name: Install existing UI TypeScript toolchain without lifecycle scripts
+        run: npm --prefix apps/rpg-ui ci --ignore-scripts
+      - name: Typecheck node-owned epoch persistence sources
+        run: npm --prefix apps/rpg-ui run typecheck:node
       - name: Do not activate the v8 migration in the default launcher
         run: |
           node --input-type=module - <<'NODE'
