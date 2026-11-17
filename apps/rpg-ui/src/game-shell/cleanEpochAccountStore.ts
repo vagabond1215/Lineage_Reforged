@@ -28,7 +28,7 @@ import {
 
 /** Clean-epoch account and campaign authority selected by the awaited App caller. */
 export const CLEAN_EPOCH_DATABASE_NAME = "lineage.campaigns.epoch1";
-export const CLEAN_EPOCH_DATABASE_VERSION = 7;
+export const CLEAN_EPOCH_DATABASE_VERSION = 8;
 export const CLEAN_EPOCH_ACCOUNT_STORE = "accounts";
 export const CLEAN_EPOCH_ATTEMPT_STORE = "newCampaignAttempts";
 export const CLEAN_EPOCH_RECOVERY_STORE = "pendingPublicationRecoveries";
@@ -39,16 +39,21 @@ export const CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE = "firstPublicationRecoveriesV6
 export const CLEAN_EPOCH_SLOT_GENERATION_STORE = "currentSlotGenerations";
 export const CLEAN_EPOCH_ADDRESS_DELETION_STORE = "addressDeletionReceipts";
 export const CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE = "accountLifecycle";
+export const CLEAN_EPOCH_WORLD_STORE = "worldsV8";
+export const CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE = "worldCreationReceiptsV8";
 export const CLEAN_EPOCH_SESSION_STORAGE_KEY = "cataclysm-rpg-ui.epoch1.session";
 const ACCOUNT_DATA_STORES = [CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
   CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
   CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE,
   CLEAN_EPOCH_SLOT_GENERATION_STORE, CLEAN_EPOCH_ADDRESS_DELETION_STORE,
-  "artifacts", "controls", "slots", "witnesses"] as const;
+  "artifacts", "controls", "slots", "witnesses",
+  CLEAN_EPOCH_WORLD_STORE, CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE] as const;
 const ARCHIVE_FORMAT = "lineage.clean-epoch.archive";
-const ARCHIVE_VERSION = 1;
+const ARCHIVE_VERSION = 2;
+const LEGACY_ARCHIVE_VERSION = 1;
+const LEGACY_DATABASE_VERSION = 7;
 export const CLEAN_EPOCH_ARCHIVE_MAX_BYTES = 64 * 1024 * 1024;
-const ARCHIVE_FAMILIES = [
+const ARCHIVE_V7_FAMILIES = [
   [CLEAN_EPOCH_ACCOUNT_STORE, "accountId"],
   [CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, "accountId"],
   [CLEAN_EPOCH_ATTEMPT_STORE, ["accountId", "slotId"]],
@@ -63,6 +68,11 @@ const ARCHIVE_FAMILIES = [
   ["controls", ["accountId", "campaignId"]],
   ["slots", ["accountId", "slotId"]],
   ["witnesses", ["accountId", "campaignId", "requestId"]]
+] as const;
+const ARCHIVE_FAMILIES = [
+  ...ARCHIVE_V7_FAMILIES,
+  [CLEAN_EPOCH_WORLD_STORE, ["accountId", "worldInstanceId"]],
+  [CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE, ["accountId", "creationIntentId"]]
 ] as const;
 type ArchiveFamily = { name: string; keyPath: string | string[]; count: number; sha256: string; rows: unknown[] };
 type EpochArchive = { format: string; archiveVersion: number; databaseName: string;
@@ -123,17 +133,22 @@ async function checkedArchive(text: string): Promise<EpochArchive> {
   if (new TextEncoder().encode(text).byteLength > CLEAN_EPOCH_ARCHIVE_MAX_BYTES) archiveFailure();
   let parsed: unknown;
   try { parsed = JSON.parse(text); } catch { archiveFailure(); }
-  if (!object(parsed) || parsed.format !== ARCHIVE_FORMAT || parsed.archiveVersion !== ARCHIVE_VERSION ||
+  if (!object(parsed) || parsed.format !== ARCHIVE_FORMAT ||
       parsed.databaseName !== CLEAN_EPOCH_DATABASE_NAME ||
-      parsed.databaseVersion !== CLEAN_EPOCH_DATABASE_VERSION ||
       typeof parsed.createdAt !== "string" || !Array.isArray(parsed.families) ||
-      parsed.families.length !== ARCHIVE_FAMILIES.length || typeof parsed.sha256 !== "string" ||
+      typeof parsed.sha256 !== "string" ||
       Object.keys(parsed).sort().join() !==
         ["archiveVersion", "createdAt", "databaseName", "databaseVersion", "families", "format", "sha256"].join())
     archiveFailure();
+  const legacyV7 = parsed.archiveVersion === LEGACY_ARCHIVE_VERSION &&
+    parsed.databaseVersion === LEGACY_DATABASE_VERSION;
+  if (!legacyV7 && (parsed.archiveVersion !== ARCHIVE_VERSION ||
+      parsed.databaseVersion !== CLEAN_EPOCH_DATABASE_VERSION)) archiveFailure();
+  const familiesSpec = legacyV7 ? ARCHIVE_V7_FAMILIES : ARCHIVE_FAMILIES;
+  if (parsed.families.length !== familiesSpec.length) archiveFailure();
   const archive = parsed as EpochArchive;
-  for (let i = 0; i < ARCHIVE_FAMILIES.length; i++) {
-    const [name, keyPath] = ARCHIVE_FAMILIES[i]!;
+  for (let i = 0; i < familiesSpec.length; i++) {
+    const [name, keyPath] = familiesSpec[i]!;
     const family = archive.families[i];
     if (!object(family) || family.name !== name ||
         !exactEqual(family.keyPath, keyPath) || !Array.isArray(family.rows) ||
@@ -159,7 +174,22 @@ async function checkedArchive(text: string): Promise<EpochArchive> {
   const { sha256, ...payload } = archive;
   if (await archiveDigest(JSON.stringify(payload)) !== sha256) archiveFailure();
   try { validateArchiveGraph(archive.families); } catch { archiveFailure(); }
-  return archive;
+  if (!legacyV7) return archive;
+  // A legacy v7 backup can only enter an EMPTY v8 target. All fourteen
+  // verified original family digests and rows are retained byte-for-byte.
+  // Newly introduced World authorities are empty; old Saves remain unassociated.
+  return {
+    ...archive,
+    archiveVersion: ARCHIVE_VERSION,
+    databaseVersion: CLEAN_EPOCH_DATABASE_VERSION,
+    families: [
+      ...archive.families,
+      ...ARCHIVE_FAMILIES.slice(ARCHIVE_V7_FAMILIES.length).map(([name, keyPath]) => ({
+        name, keyPath: [...keyPath], count: 0, sha256: await archiveDigest("[]"), rows: []
+      }))
+    ],
+    sha256: ""
+  };
 }
 
 export type CleanEpochAccountRecord = {
@@ -835,6 +865,11 @@ function terminalReceiptsMatch(account: CleanEpochAccountRecord, recovery: Clean
 function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<string, unknown[]>): void {
   const accountId = account.accountId;
   const family = (name: string) => rows.get(name) ?? [];
+  // L3a admits only the additive SCHEMA. No mutable World or creation receipt
+  // can be exported/reset/deleted before L3b's complete graph verifier exists.
+  // Reject rather than silently orphan a future account-owned World row.
+  if (family(CLEAN_EPOCH_WORLD_STORE).length || family(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).length)
+    fail("invalid_record", "Unreviewed World rows require the L3b registry graph gate.");
   const indexed = (name: string, field: string): Map<string, Record<string, unknown>> => {
     const result = new Map<string, Record<string, unknown>>();
     for (const raw of family(name)) {
@@ -1245,6 +1280,16 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
           { keyPath: ["accountId", "slotId", "slotGenerationId"] });
       if (!database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE))
         database.createObjectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, { keyPath: "accountId" });
+      if (!database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_STORE)) {
+        const worlds = database.createObjectStore(CLEAN_EPOCH_WORLD_STORE,
+          { keyPath: ["accountId", "worldInstanceId"] });
+        worlds.createIndex("byAccount", "accountId", { unique: false });
+      }
+      if (!database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE)) {
+        const receipts = database.createObjectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE,
+          { keyPath: ["accountId", "creationIntentId"] });
+        receipts.createIndex("byAccount", "accountId", { unique: false });
+      }
       // The v5 families remain untouched as retained evidence. The v6 copies are the
       // sole active attempt/recovery authority after this atomic upgrade.
       if (event.oldVersion < 6) {
@@ -1344,6 +1389,12 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
           !database.objectStoreNames.contains(CLEAN_EPOCH_SLOT_GENERATION_STORE) ||
           !database.objectStoreNames.contains(CLEAN_EPOCH_ADDRESS_DELETION_STORE) ||
           !database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE) ||
+          !database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_STORE) ||
+          !database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE) ||
+          !database.transaction(CLEAN_EPOCH_WORLD_STORE).objectStore(CLEAN_EPOCH_WORLD_STORE)
+            .indexNames.contains("byAccount") ||
+          !database.transaction(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE)
+            .objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).indexNames.contains("byAccount") ||
           !database.transaction(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE).objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
             .indexNames.contains("bySourcePublication")) {
         database.close(); reject(new CampaignStoreError("invalid_record", "Clean-epoch schema is incomplete.")); return;

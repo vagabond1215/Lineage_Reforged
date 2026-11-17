@@ -1,0 +1,46 @@
+name: First World L3a isolated v8 migration preflight
+
+on:
+  pull_request:
+    branches: [master]
+    paths:
+      - 'apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts'
+      - 'tests/unit/first-world-l3a-v8-migration.test.mjs'
+      - '.github/workflows/first-world-l3a-v8-migration-probe.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-database-migration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install isolated test-only TypeScript loader and IndexedDB emulator
+        run: npm install --no-save --ignore-scripts --package-lock=false tsx@4.20.6 fake-indexeddb@6.2.5
+      - name: Run v8 migration and source World genesis contract tests
+        run: |
+          node --import tsx --test \
+            tests/unit/first-world-l3a-v8-migration.test.mjs \
+            tests/unit/first-world-creation-contract.test.mjs \
+            tests/unit/starfall-world-template.test.mjs
+      - name: Preserve coordinate-first no-legacy-dependency gate
+        run: npm run tool:no-new-hex-dependencies
+      - name: Do not activate the v8 migration in the default launcher
+        run: |
+          node --input-type=module - <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          const shell=fs.readFileSync('apps/rpg-ui/src/EpochApp.tsx','utf8');
+          const migration=fs.readFileSync('apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts','utf8');
+          assert.match(migration,/CLEAN_EPOCH_DATABASE_VERSION = 8;/);
+          assert.match(migration,/Unreviewed World rows require the L3b registry graph gate/);
+          assert.match(shell,/welcomeL1/);
+          console.log('PASS draft migration source, World writes HELD; no UI activation patch');
+          NODE
