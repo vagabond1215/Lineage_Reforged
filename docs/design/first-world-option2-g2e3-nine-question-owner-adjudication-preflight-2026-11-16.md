@@ -1,5 +1,7 @@
 # First World Option 2 G2-E3: Nine-question owner adjudication preflight
 
+> **Post-preflight owner response (2026-11-16):** The owner has now selected all nine *source-review directions*. See the [current G2-E3 decision record](first-world-option2-g2e3-owner-direction-record-2026-11-16.md) and [machine ledger](first-world-option2-g2e3-owner-direction-record-2026-11-16.json). The preflight's `ALL_NINE_UNSELECTED` and `null` examples below describe the **historical input state**, not today's owner status. Derived physical contours, tides, routes, resources, stable IDs and canonical publication remain held.
+
 Date: 2026-11-16  
 Status: **OWNER_DECISION_PREFLIGHT_READY; ALL_NINE_UNSELECTED; GEOMETRY_NOT_AUTHORED; CANONICAL_PUBLICATION_HELD**  
 Source checkpoint: `master` `4624ac7c5c4c70023f360aea554c825245e728ec` (post-G2-E2 PR #100 and its documentation closeout). This is a **connector-only documentation handoff**, not an E3 source-run or a new authoring/acceptance claim.
