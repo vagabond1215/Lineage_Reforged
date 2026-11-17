@@ -288,11 +288,69 @@
     }
   ],
   "acceptance": {
-    "jsonAndCurrentSourceReview": "PASS_32_OF_32_PINNED_BLOBS_AND_TEMPLATE_SHA256_CONNECTOR_SOURCE_CHECK",
+    "jsonAndCurrentSourceReview": "PASS_41_OF_41_PINNED_BLOBS_AND_TEMPLATE_SHA256_CONNECTOR_SOURCE_CHECK",
     "executableManifestHashValidation": "NOT_RUN",
     "engineNodeBrowserParity": "NOT_RUN",
     "disposableChromiumWorldCreate": "NOT_RUN",
     "historicalNativeV3SaveCompatibility": "NOT_RUN",
-    "activationAllowed": false
+    "activationAllowed": false,
+    "javaScriptLoaderAndBridgeSourceReview": "PASS_STATIC_SOURCE_REVIEW_NINE_ENTRYPOINTS_EXECUTABLE_PARITY_NOT_RUN"
+  },
+  "pinnedJavaScriptEntrypoints": [
+    {
+      "path": "packages/engines/civilization-engine/src/content.js",
+      "gitBlobSha1": "d15f64990774efe6226e66806bf0649ea01123ba",
+      "kind": "standalone_node_filesystem_loader_not_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/starfall-base-economy.js",
+      "gitBlobSha1": "7c8bfe9d92ca8a2978e6605165d9053bb949947e",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/economy.js",
+      "gitBlobSha1": "2192a0458fa5bd5c00efab991a4c19014a758c9a",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/runtime-economy.js",
+      "gitBlobSha1": "09c2a3f7cccb9a206573181c73b9be9e8586e512",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/settlement-simulation.js",
+      "gitBlobSha1": "e237dc6418eb286943a2414975c3e3ea0fe6d7b9",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/spatial-world.js",
+      "gitBlobSha1": "a4693ad846586532f7fc4e3758a1aaa44726489a",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/transport-runtime.js",
+      "gitBlobSha1": "d71ff29ea3366430a1163a28ef8064861c06689c",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/resource-taxonomy.js",
+      "gitBlobSha1": "ebf6deea03e68ac99a4b21642bf430630eb85c19",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/shared/time/src/index.js",
+      "gitBlobSha1": "a88bebe96f470afc5d96b8f77de3243af90ac59e",
+      "kind": "typescript_reexport_bridge"
+    }
+  ],
+  "runtimeModuleResolutionBoundary": {
+    "status": "SOURCE_OBSERVED_BROWSER_EXECUTION_NOT_VERIFIED",
+    "moduleImportSpecifier": "./content.js",
+    "distinction": "The actual content.js file is a standalone filesystem loader, unlike sibling .js files that re-export TypeScript modules.",
+    "inspectedContentExports": "43/43 named exported function names present in content.ts and content.js (connector static comparison, not behavioral parity)",
+    "requiredAdapterInvariant": "The same validated, source-pinned canonical content must be supplied through the module path actually resolved by both Node and Chromium. Modifying only content.ts is insufficient until runtime resolution is demonstrated.",
+    "contentCache": "The loadJsonFile contentCache is module-scoped; runtime-economy, settlement-simulation, spatial-world and transport-runtime also retain module-level derived caches. Do not mix manifest revisions within a loaded realm.",
+    "browserAlternative": "Prefer a narrow, manifest-gated canonical content provider or verified build-time source bundle that retains original engine algorithms and works with the existing .js import graph.",
+    "acceptanceBoundary": "Source pins and static inspection are not executable Node/Chromium parity or browser World-creation acceptance."
   }
 }
