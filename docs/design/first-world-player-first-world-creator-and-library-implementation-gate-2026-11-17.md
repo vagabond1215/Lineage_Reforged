@@ -5,6 +5,8 @@ Status: **OWNER-DIRECTED UX REVISION / CONNECTOR SOURCE-AND-CI PREFLIGHT / IMPLE
 Source head inspected before this document: `master` `e800b3cf589e364d3f4b3fe9c868af076f238dff`; draft [PR #102](https://github.com/vagabond1215/Lineage_Reforged/pull/102) `d3cd548f6b21aff11c40637c3e16026502f8e6e2`.  
 Scope: one authored First World blueprint, many **distinct** account-owned World-instance histories eventually, honest World configuration, actual World/character selection and resume. No source-geography edits, site publication, Save rewrites, production feature activation or draft merge.
 
+> **2026-11-17 UI layout follow-through:** [World journey UI base layout and owner-connected component contract](first-world-player-journey-ui-base-layout-contract-2026-11-17.md) specifies reusable shell/World Creator/World Library/selected-character arrangements, 375/768/1280 layout review and the isolated presentational-QA slice. A downloadable standalone in-memory HTML prototype was Chromium-interaction checked in the conversation; this does **not** authorize a real World creation call or bypass the L3b browser/Save acceptance gates. The component layout can be built and QA-tested separately, then bound to actual World APIs only after real owner acceptance.
+
 ## 1. Updated owner intent and decision boundary
 
 The creator does **not** generate an atlas. The user selects an existing authored World *blueprint* (initially fixed First World) and creates their own persistent *instance* and rules commitment from the supported global Chronicle scenario. Identical atlas does not imply identical World history. A World can exist without a character. Creating or selecting a World cannot implicitly create a character, choose a Save slot or resume gameplay.
