@@ -1,0 +1,1021 @@
+{
+  "schema": "lineage.character_creator_art_retention_manifest.v1",
+  "purpose": "Lossless pathname+git-blob retention witness before any ecology-informed replacement; asset bytes unchanged, no generated art activated",
+  "basis": {
+    "repository": "vagabond1215/Lineage_Reforged",
+    "assetSourceCommit": "712982fbf72b158280df0ac89dc903d3b1832ab4",
+    "inspectedMaster": "96d215e462dbf9a2065c34facd985edde41c99d5",
+    "assetUrlResolver": "apps/rpg-ui/src/game-shell/characterCreatorAssetUrl.ts",
+    "worldArtCatalog": "apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts",
+    "regionalEcologySource": "packages/content/base/world/regional_ecology_profiles.json",
+    "sourceTreeTruncated": false
+  },
+  "status": {
+    "currentArtwork": "retained_active_in_repository",
+    "archiveCopy": "NOT_RUN",
+    "replacementGeneration": "NOT_RUN",
+    "replacementAccepted": false,
+    "productionPathsUnchanged": true
+  },
+  "counts": {
+    "files": 100,
+    "uniqueBlobSha": 91,
+    "totalReferencedBytes": 376654809,
+    "continents": 18,
+    "regions": 13,
+    "settlements": 69,
+    "duplicatedSelectedVariantPairs": 9
+  },
+  "archivePlan": {
+    "archiveRoot": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/",
+    "physicalCopy": "only after synchronized checkout, approved repo storage plan, exact SHA and file byte verification",
+    "promotion": "new candidate files alongside existing paths; never replace active imageUrl before ecological+visual review"
+  },
+  "assets": [
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+      "representativeName": "continent-dawnreach-isles-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-dawnreach-isles-selected.png",
+      "gitBlobSha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "bytes": 3447850,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png",
+      "representativeName": "continent-dawnreach-isles.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-dawnreach-isles.png",
+      "gitBlobSha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "bytes": 3447850,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+      "representativeName": "continent-draemor-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-draemor-selected.png",
+      "gitBlobSha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "bytes": 4020839,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-draemor.png",
+      "representativeName": "continent-draemor.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-draemor.png",
+      "gitBlobSha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "bytes": 4020839,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+      "representativeName": "continent-kaelvar-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-kaelvar-selected.png",
+      "gitBlobSha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "bytes": 3702529,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png",
+      "representativeName": "continent-kaelvar.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-kaelvar.png",
+      "gitBlobSha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "bytes": 3702529,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+      "representativeName": "continent-lantern-isles-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-lantern-isles-selected.png",
+      "gitBlobSha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "bytes": 3134923,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png",
+      "representativeName": "continent-lantern-isles.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-lantern-isles.png",
+      "gitBlobSha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "bytes": 3134923,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+      "representativeName": "continent-myridian-chain-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-myridian-chain-selected.png",
+      "gitBlobSha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "bytes": 4134968,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png",
+      "representativeName": "continent-myridian-chain.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-myridian-chain.png",
+      "gitBlobSha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "bytes": 4134968,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+      "representativeName": "continent-serathyl-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-serathyl-selected.png",
+      "gitBlobSha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "bytes": 3886699,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png",
+      "representativeName": "continent-serathyl.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-serathyl.png",
+      "gitBlobSha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "bytes": 3886699,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+      "representativeName": "continent-serpents-wake-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-serpents-wake-selected.png",
+      "gitBlobSha": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "bytes": 3649255,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png",
+      "representativeName": "continent-serpents-wake.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-serpents-wake.png",
+      "gitBlobSha": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "bytes": 3649255,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+      "representativeName": "continent-talmyra-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-talmyra-selected.png",
+      "gitBlobSha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "bytes": 3764727,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png",
+      "representativeName": "continent-talmyra.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-talmyra.png",
+      "gitBlobSha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "bytes": 3764727,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+      "representativeName": "continent-valtherion-selected.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-valtherion-selected.png",
+      "gitBlobSha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "bytes": 3630571,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png",
+      "representativeName": "continent-valtherion.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/continents/continent-valtherion.png",
+      "gitBlobSha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "bytes": 3630571,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-auric-marches.png",
+      "representativeName": "region-auric-marches.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-auric-marches.png",
+      "gitBlobSha": "e95111c34397e992bbf1a1a6a8d74cc0b75ca4f6",
+      "bytes": 3503495,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-crownlands.png",
+      "representativeName": "region-crownlands.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-crownlands.png",
+      "gitBlobSha": "89680110d73f8d8cff11e50ca1c8469545698c71",
+      "bytes": 3648107,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-embersteppe.png",
+      "representativeName": "region-embersteppe.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-embersteppe.png",
+      "gitBlobSha": "2b38d1e66e51b805a6454899a07ffd79d21cc7c9",
+      "bytes": 3166600,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-emerald-mantle.png",
+      "representativeName": "region-emerald-mantle.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-emerald-mantle.png",
+      "gitBlobSha": "89302e6756d0ef4ccf574651d0ac6041240d5069",
+      "bytes": 3498852,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-green-reach.png",
+      "representativeName": "region-green-reach.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-green-reach.png",
+      "gitBlobSha": "6ebdea7ca2ec4e2c1b3e26a5be3fb3a31a96c16c",
+      "bytes": 3721632,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-heart-basin.png",
+      "representativeName": "region-heart-basin.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-heart-basin.png",
+      "gitBlobSha": "79a3914dbde70f87c9869b2e9a616f3f16e6caf9",
+      "bytes": 3847580,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-jade-expanse.png",
+      "representativeName": "region-jade-expanse.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-jade-expanse.png",
+      "gitBlobSha": "45333b7fc37c30f8a2e01ca56c2da9fe16865541",
+      "bytes": 3529921,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-sailors-verge.png",
+      "representativeName": "region-sailors-verge.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-sailors-verge.png",
+      "gitBlobSha": "d33350f0661a181bcab960a0cbddc97a76d9ff8d",
+      "bytes": 3598109,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-sapphire-rivers.png",
+      "representativeName": "region-sapphire-rivers.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-sapphire-rivers.png",
+      "gitBlobSha": "523223e821ca347f41d93376a0c18ff60c60bd83",
+      "bytes": 3597670,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-shattercap-isles.png",
+      "representativeName": "region-shattercap-isles.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-shattercap-isles.png",
+      "gitBlobSha": "15ec1a4005c16e9132650515d47f2d1f92a81819",
+      "bytes": 3137615,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-stormcap-coast.png",
+      "representativeName": "region-stormcap-coast.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-stormcap-coast.png",
+      "gitBlobSha": "b53054b01faed0508d40cf846c94558ced9f4b8d",
+      "bytes": 3357356,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-verdant-thalos.png",
+      "representativeName": "region-verdant-thalos.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-verdant-thalos.png",
+      "gitBlobSha": "192783202677c0fe124e44f4974b3da52dfb5ae1",
+      "bytes": 3673055,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/regions/region-windward-spine.png",
+      "representativeName": "region-windward-spine.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/regions/region-windward-spine.png",
+      "gitBlobSha": "d893effaef64d56bbd4e13d3192c662adebc752d",
+      "bytes": 3475893,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-applemarsh.png",
+      "representativeName": "settlement-applemarsh.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-applemarsh.png",
+      "gitBlobSha": "8263e76909426d71a3d3fc5d86ec9d8f069592cb",
+      "bytes": 3744805,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-ashsaddle.png",
+      "representativeName": "settlement-ashsaddle.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-ashsaddle.png",
+      "gitBlobSha": "2fb870738d3b41bd0b68f531b7299fd32b766d6d",
+      "bytes": 4039229,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-aurelis.png",
+      "representativeName": "settlement-aurelis.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-aurelis.png",
+      "gitBlobSha": "11d4ea7812e3be3c8b0253b67702bba16bc3d027",
+      "bytes": 3523179,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-barkmill-hamlet.png",
+      "representativeName": "settlement-barkmill-hamlet.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-barkmill-hamlet.png",
+      "gitBlobSha": "866ff3b643a7a4502c5350ed74d3d4c62b37feba",
+      "bytes": 4370645,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-barleyhearth-estate.png",
+      "representativeName": "settlement-barleyhearth-estate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-barleyhearth-estate.png",
+      "gitBlobSha": "ea02e0c069e12ae0c4569688b7fdde6926fe64e5",
+      "bytes": 3907596,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-basinford.png",
+      "representativeName": "settlement-basinford.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-basinford.png",
+      "gitBlobSha": "1fcb4576c3320213f958f5163ad7ad0c99ab174a",
+      "bytes": 4112785,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-blackglass-camp.png",
+      "representativeName": "settlement-blackglass-camp.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-blackglass-camp.png",
+      "gitBlobSha": "77d68fe9d480a5d227c5ad6043bd488af23ea9a9",
+      "bytes": 3700766,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-blueflow.png",
+      "representativeName": "settlement-blueflow.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-blueflow.png",
+      "gitBlobSha": "c16443c57d78ea38a1fd1cfcdad7ba9ed7b64393",
+      "bytes": 3636242,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-breaksail.png",
+      "representativeName": "settlement-breaksail.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-breaksail.png",
+      "gitBlobSha": "3f9d6088fc8d65df01a0d8d806e37450a70a9b2d",
+      "bytes": 3682596,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-bridgewatch-ferry.png",
+      "representativeName": "settlement-bridgewatch-ferry.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-bridgewatch-ferry.png",
+      "gitBlobSha": "e810e6723e06aa9a2ad003d7899a8d50e1360d0b",
+      "bytes": 3679279,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-brineharbor.png",
+      "representativeName": "settlement-brineharbor.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-brineharbor.png",
+      "gitBlobSha": "dfc5c4e8e43a584c0f0382148eb8984667a8e5fc",
+      "bytes": 3428802,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-caskbank-estate.png",
+      "representativeName": "settlement-caskbank-estate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-caskbank-estate.png",
+      "gitBlobSha": "e5dd6132c3ee9e57c1991dbf54678d5ac48afd6c",
+      "bytes": 3748905,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-cliffsalt-priory.png",
+      "representativeName": "settlement-cliffsalt-priory.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-cliffsalt-priory.png",
+      "gitBlobSha": "421361e095f4126f10b63924fc1ab9f17dccff4f",
+      "bytes": 3730132,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-coalspur.png",
+      "representativeName": "settlement-coalspur.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-coalspur.png",
+      "gitBlobSha": "321528b9f48b1f5c8c31b7395dbe64426f8df432",
+      "bytes": 4022215,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-confederate-ford.png",
+      "representativeName": "settlement-confederate-ford.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-confederate-ford.png",
+      "gitBlobSha": "c2fd581d42724202790d9b1703d06a2db67e163b",
+      "bytes": 4429345,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-coppergate.png",
+      "representativeName": "settlement-coppergate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-coppergate.png",
+      "gitBlobSha": "e46755c3a3945e065c5575305eaac796d5ffde7c",
+      "bytes": 3714518,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-deepecho-camp.png",
+      "representativeName": "settlement-deepecho-camp.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-deepecho-camp.png",
+      "gitBlobSha": "766964014e3c107a145d3067d6d4699f7059820a",
+      "bytes": 3777020,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-dockreed-estate.png",
+      "representativeName": "settlement-dockreed-estate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-dockreed-estate.png",
+      "gitBlobSha": "33444f9c0fe4c1701928f3a05ad2305b46089255",
+      "bytes": 4001070,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-golden-barrow.png",
+      "representativeName": "settlement-golden-barrow.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-golden-barrow.png",
+      "gitBlobSha": "19262c2cf1953a953e371b3c8d52ca6cc984b868",
+      "bytes": 3904293,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-granary-crown.png",
+      "representativeName": "settlement-granary-crown.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-granary-crown.png",
+      "gitBlobSha": "4d30cf79a1961ecdf378c30e68c5d3f7371c0263",
+      "bytes": 4025128,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-greenharrow.png",
+      "representativeName": "settlement-greenharrow.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-greenharrow.png",
+      "gitBlobSha": "df9fa6964b4d463358cf03721be74471e2dd741d",
+      "bytes": 3727898,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-gullsreach.png",
+      "representativeName": "settlement-gullsreach.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-gullsreach.png",
+      "gitBlobSha": "41888079ae078e87baed14415c1e9591d827df39",
+      "bytes": 3695501,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-harvestrest.png",
+      "representativeName": "settlement-harvestrest.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-harvestrest.png",
+      "gitBlobSha": "e15574c6c80fd36564568b339b248e5224d2bd1e",
+      "bytes": 3870161,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-haywarden-estate.png",
+      "representativeName": "settlement-haywarden-estate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-haywarden-estate.png",
+      "gitBlobSha": "fbcd11aeecd44dbcb43a78704392c05b9bd65c34",
+      "bytes": 4047364,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-headwater-bastion.png",
+      "representativeName": "settlement-headwater-bastion.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-headwater-bastion.png",
+      "gitBlobSha": "906ea38927a3b474835082e1ef7dd2fc1589be24",
+      "bytes": 3555195,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-highcrown.png",
+      "representativeName": "settlement-highcrown.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-highcrown.png",
+      "gitBlobSha": "7954b442971e43e13fd398f3dc2afad3994d9013",
+      "bytes": 3704046,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-islemarket.png",
+      "representativeName": "settlement-islemarket.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-islemarket.png",
+      "gitBlobSha": "61ba06039027906c9ba89482dfc0e71eed30ef86",
+      "bytes": 3915060,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-kelpnet-hamlet.png",
+      "representativeName": "settlement-kelpnet-hamlet.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-kelpnet-hamlet.png",
+      "gitBlobSha": "b1d270e61f0a54f5782ff8b54c10cd5844519677",
+      "bytes": 3527456,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-kingsbridge.png",
+      "representativeName": "settlement-kingsbridge.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-kingsbridge.png",
+      "gitBlobSha": "14d6ed5f8a6915505aff108e9eb12e1fee3396c4",
+      "bytes": 3459260,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-ledgerford.png",
+      "representativeName": "settlement-ledgerford.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-ledgerford.png",
+      "gitBlobSha": "54f96ec78151718ce0be58aca3e271b40ffad805",
+      "bytes": 3926588,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-longmeadow.png",
+      "representativeName": "settlement-longmeadow.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-longmeadow.png",
+      "gitBlobSha": "84aa6353fbb4d76406e1c89d691ddd975763e201",
+      "bytes": 4159513,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-mastfield.png",
+      "representativeName": "settlement-mastfield.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-mastfield.png",
+      "gitBlobSha": "aefa49dd057f9f031ec2d1fb1690e4b4865e8269",
+      "bytes": 3879620,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-millrun.png",
+      "representativeName": "settlement-millrun.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-millrun.png",
+      "gitBlobSha": "4398d7b97e1d4ba71e29922754c5ce0ede6731fd",
+      "bytes": 3821480,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-mistfen-landing.png",
+      "representativeName": "settlement-mistfen-landing.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-mistfen-landing.png",
+      "gitBlobSha": "aa7efcdaef25ba010e0bf0cc00e7f3cc9f9350b4",
+      "bytes": 3357629,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-moonwell-grove.png",
+      "representativeName": "settlement-moonwell-grove.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-moonwell-grove.png",
+      "gitBlobSha": "aef8b5c41d2b2cb57961f5afdbcc3b143c283e12",
+      "bytes": 3782526,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-northhook-keep.png",
+      "representativeName": "settlement-northhook-keep.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-northhook-keep.png",
+      "gitBlobSha": "836d1a2d51fcab647e7ac22d5a45ff3913e7a31b",
+      "bytes": 3249520,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-northpass-redoubt.png",
+      "representativeName": "settlement-northpass-redoubt.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-northpass-redoubt.png",
+      "gitBlobSha": "717d0941bac3ed281959531bcb9e4bb44754313d",
+      "bytes": 3644332,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-obsidian-stair.png",
+      "representativeName": "settlement-obsidian-stair.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-obsidian-stair.png",
+      "gitBlobSha": "c7d3f62e97023d8ecef621ace4d429fa3b7cc8bc",
+      "bytes": 3838801,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-oliveford.png",
+      "representativeName": "settlement-oliveford.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-oliveford.png",
+      "gitBlobSha": "6da3ad612919e8605fa7c34788405eadd291277a",
+      "bytes": 3574047,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-orchardhome.png",
+      "representativeName": "settlement-orchardhome.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-orchardhome.png",
+      "gitBlobSha": "5760e94c4e26e94fc04ec3ed5326889148654370",
+      "bytes": 4113908,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-passglass-hold.png",
+      "representativeName": "settlement-passglass-hold.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-passglass-hold.png",
+      "gitBlobSha": "44487dc35055e2f1de947f85579db877fb48d0a7",
+      "bytes": 3904275,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-pasturemeet.png",
+      "representativeName": "settlement-pasturemeet.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-pasturemeet.png",
+      "gitBlobSha": "bb9bedf9a397f14c8b25adb3af8c27d75af063fa",
+      "bytes": 4069763,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-quarrymule-camp.png",
+      "representativeName": "settlement-quarrymule-camp.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-quarrymule-camp.png",
+      "gitBlobSha": "f5f70b47a077979ee312a59d8fd42a31db48ee6f",
+      "bytes": 3783245,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-redcliff-quay.png",
+      "representativeName": "settlement-redcliff-quay.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-redcliff-quay.png",
+      "gitBlobSha": "0b9ac14609d00cf23e0fe51d83e832f10740fea0",
+      "bytes": 3675119,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-redreed-ford.png",
+      "representativeName": "settlement-redreed-ford.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-redreed-ford.png",
+      "gitBlobSha": "84a2fa89dcf4097d469a7f03ad3e2bac499ef543",
+      "bytes": 3670733,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-redroot-warrens.png",
+      "representativeName": "settlement-redroot-warrens.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-redroot-warrens.png",
+      "gitBlobSha": "4465374c977d82f689430a48c80659c04b309ae8",
+      "bytes": 4474675,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-riverthrone.png",
+      "representativeName": "settlement-riverthrone.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-riverthrone.png",
+      "gitBlobSha": "133602e09ac4131f13d3e88485de1200bec9514b",
+      "bytes": 3976435,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-saltfang-anchorage.png",
+      "representativeName": "settlement-saltfang-anchorage.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-saltfang-anchorage.png",
+      "gitBlobSha": "32ab85f3d296de2f07412324e19496fdf1b3aff3",
+      "bytes": 3746839,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-seabanner.png",
+      "representativeName": "settlement-seabanner.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-seabanner.png",
+      "gitBlobSha": "aece8351ebbcc439a92cf777e8f4be1d615d89d4",
+      "bytes": 3905743,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-silvergrove.png",
+      "representativeName": "settlement-silvergrove.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-silvergrove.png",
+      "gitBlobSha": "59885543fdaec6852d798466bc595e2fcaae8de9",
+      "bytes": 3483335,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-silvermere.png",
+      "representativeName": "settlement-silvermere.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-silvermere.png",
+      "gitBlobSha": "609cf12c6dbb7c3329949adf7e54f4cecb7899f3",
+      "bytes": 3852119,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-slatewake.png",
+      "representativeName": "settlement-slatewake.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-slatewake.png",
+      "gitBlobSha": "0e04a906b5ee6c3a6236a77f92790ae7ff16c8be",
+      "bytes": 4165671,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-southlight.png",
+      "representativeName": "settlement-southlight.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-southlight.png",
+      "gitBlobSha": "1565ea9446425adf7fa6875700d4d12059671f84",
+      "bytes": 3583662,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-southlock-ferry.png",
+      "representativeName": "settlement-southlock-ferry.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-southlock-ferry.png",
+      "gitBlobSha": "3622168e1cf7cca88cb8e5610199e5bedda9e3e1",
+      "bytes": 3893963,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-spicehook.png",
+      "representativeName": "settlement-spicehook.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-spicehook.png",
+      "gitBlobSha": "a608a18750369487c9eef3f62a4f95cbaab30130",
+      "bytes": 3945470,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-stepwell-redoubt.png",
+      "representativeName": "settlement-stepwell-redoubt.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-stepwell-redoubt.png",
+      "gitBlobSha": "3ecfbc9bdf384f5f169d773cd8f8336d91021c05",
+      "bytes": 3978515,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-stonevein.png",
+      "representativeName": "settlement-stonevein.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-stonevein.png",
+      "gitBlobSha": "2500535b2cb5396937c719a96b43bbfc6db9d8ef",
+      "bytes": 3714999,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-stormwatch-citadel.png",
+      "representativeName": "settlement-stormwatch-citadel.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-stormwatch-citadel.png",
+      "gitBlobSha": "48f2750ee4c451ff851d2d0dcabb76a0342cd3e0",
+      "bytes": 3493232,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-sunmeadow.png",
+      "representativeName": "settlement-sunmeadow.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-sunmeadow.png",
+      "gitBlobSha": "3a4d2996495d3136d9cd5bb71edf8427cb5d7f22",
+      "bytes": 3655789,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-sunpasture-estate.png",
+      "representativeName": "settlement-sunpasture-estate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-sunpasture-estate.png",
+      "gitBlobSha": "7afe1b90e988f804ccf72c547d0b30604ca35b4d",
+      "bytes": 4122262,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-sunscar-watch.png",
+      "representativeName": "settlement-sunscar-watch.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-sunscar-watch.png",
+      "gitBlobSha": "d88d4ea40f3406654c2dd92cd26032d018f0a34c",
+      "bytes": 3318067,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-sunspire-reach.png",
+      "representativeName": "settlement-sunspire-reach.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-sunspire-reach.png",
+      "gitBlobSha": "bd6b32c3454e864a394a8da88c03bf4939e220b9",
+      "bytes": 4086109,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-thornwatch.png",
+      "representativeName": "settlement-thornwatch.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-thornwatch.png",
+      "gitBlobSha": "7716ab18c66fd8841868fe9f110875f4197627c7",
+      "bytes": 4101797,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-tidecrown.png",
+      "representativeName": "settlement-tidecrown.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-tidecrown.png",
+      "gitBlobSha": "f6957dc5c166b2e37aa29cce26f44b52f4df7e12",
+      "bytes": 3923356,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-timbercross.png",
+      "representativeName": "settlement-timbercross.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-timbercross.png",
+      "gitBlobSha": "2f15eb8b57f9509d8b9c5b10e94b58ed4c025e5c",
+      "bytes": 4324670,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-verdeward.png",
+      "representativeName": "settlement-verdeward.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-verdeward.png",
+      "gitBlobSha": "7985d6ef1d7dc6298fd861192ce387ccdaa4c21c",
+      "bytes": 4068002,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-vinecross.png",
+      "representativeName": "settlement-vinecross.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-vinecross.png",
+      "gitBlobSha": "c4c97ce3ed39a7c0b1a5f1a0d8a0985862970e0f",
+      "bytes": 3596185,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-watchers-gate.png",
+      "representativeName": "settlement-watchers-gate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-watchers-gate.png",
+      "gitBlobSha": "7c7e78a7283ec3a7aeeed01c8d2d8aba948c0cc1",
+      "bytes": 3833860,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    },
+    {
+      "originalPath": "apps/rpg-ui/public/character-creator/settlements/settlement-whitebark-gate.png",
+      "representativeName": "settlement-whitebark-gate.png",
+      "proposedArchivePath": "apps/rpg-ui/public/character-creator/archive/pre-ecology-refresh-2026-11-17/settlements/settlement-whitebark-gate.png",
+      "gitBlobSha": "f5d938ce3928ed56709c75e7019e480363d2dcea",
+      "bytes": 3777857,
+      "retainedInSourceCommit": true,
+      "physicalArchiveCopy": false
+    }
+  ],
+  "selectedVariantDuplicates": [
+    {
+      "gitBlobSha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png"
+      ]
+    },
+    {
+      "gitBlobSha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor.png"
+      ]
+    },
+    {
+      "gitBlobSha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png"
+      ]
+    },
+    {
+      "gitBlobSha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png"
+      ]
+    },
+    {
+      "gitBlobSha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png"
+      ]
+    },
+    {
+      "gitBlobSha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png"
+      ]
+    },
+    {
+      "gitBlobSha": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png"
+      ]
+    },
+    {
+      "gitBlobSha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png"
+      ]
+    },
+    {
+      "gitBlobSha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "paths": [
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png"
+      ]
+    }
+  ],
+  "ecologyPilot": [
+    {
+      "scope": "continent",
+      "contentId": "region.myridian_chain",
+      "currentArt": "character-creator/continents/continent-myridian-chain.png",
+      "brief": "wet mixed-forest archipelago, rugged island ridges, marine shelf; trade and fishery, not tropical desert"
+    },
+    {
+      "scope": "region",
+      "contentId": "region.starfall_isle",
+      "currentArt": null,
+      "brief": "sheltered fog-prone harbor island, mixed forest/rainforest cover, bonded quays and ferry slips; no replacement current region image"
+    },
+    {
+      "scope": "settlement",
+      "contentId": "settlement.starfall_port",
+      "currentArt": null,
+      "brief": "deepwater customs port and ship-repair maritime hub; grounded architecture/shoreline approval required"
+    }
+  ]
+}
