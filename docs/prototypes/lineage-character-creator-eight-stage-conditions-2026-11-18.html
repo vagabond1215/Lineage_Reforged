@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Lineage Reforged | Character Creator Design Review</title>
+<style>
+:root{--bg:#101419;--bg2:#171d22;--panel:#1a2228;--panel2:#20282e;--inset:#11181e;--line:#364047;--line2:#4b4d45;--accent:#c7a572;--accent2:#d8ba89;--text:#f1eadc;--muted:#a9adad;--soft:#d0c5b3;--good:#9cac89;--danger:#dd9b90;--glow:0 8px 32px rgba(0,0,0,.20)}
+*{box-sizing:border-box}html,body{min-height:100%;margin:0}body{background:radial-gradient(ellipse 80% 55% at 55% -20%,#313630 0,transparent 74%),var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Arial,sans-serif;font-size:14px;line-height:1.45}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #e8c28a;outline-offset:2px}a{color:var(--accent2)}
+.shell{min-height:100vh;display:grid;grid-template-rows:auto 1fr}.top{min-height:72px;display:flex;align-items:center;gap:16px;padding:12px 26px;border-bottom:1px solid #3d403b;background:#11181bcf;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}.brand{display:flex;align-items:center;gap:12px;white-space:nowrap}.brandmark{width:36px;height:36px;border:1px solid var(--accent);border-radius:9px;display:grid;place-items:center;background:linear-gradient(145deg,#2d332d,#151c21);color:var(--accent2);font:22px Georgia,serif}.brandname{letter-spacing:.21em;font-size:12px;font-weight:800}.brandsub{letter-spacing:.28em;color:#b89d79;font-size:9px}.crumbs{display:flex;align-items:center;gap:10px;min-width:0;margin-left:28px;font-size:11px;color:var(--muted);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.crumbs b{color:#e6d7bb;font-weight:600}.righttop{margin-left:auto;display:flex;gap:10px;align-items:center}.clock{font-variant-numeric:tabular-nums;color:#c9c2b5;white-space:nowrap;font-size:12px}.topbtn{border:1px solid #4d4b40;background:#22292a;color:#e7d9bb;border-radius:999px;padding:8px 11px;white-space:nowrap;font-size:11px}.badge{display:inline-flex;gap:5px;align-items:center;border:1px solid #5f523d;border-radius:999px;color:#dec49b;background:#29261f;padding:5px 9px;font-size:9px;letter-spacing:.09em;text-transform:uppercase}.account{position:relative}.menu{position:absolute;top:43px;right:0;width:175px;background:#222b30;border:1px solid var(--line);padding:7px;border-radius:12px;box-shadow:var(--glow);display:none;z-index:20}.menu button{display:block;text-align:left;width:100%;padding:10px;border:0;border-radius:6px;color:var(--text);background:transparent}.menu button:hover{background:#313c40}.account.open .menu{display:block}
+.body{display:grid;grid-template-columns:266px minmax(0,1fr);min-height:calc(100vh - 72px)}.rail{background:linear-gradient(180deg,#182026,#131a20);border-right:1px solid #3e4446;min-width:0}.railinner{position:sticky;top:72px;max-height:calc(100vh - 72px);overflow:auto;padding:22px 16px 22px 18px;scrollbar-width:thin}.eyebrow{color:#a9916f;font-size:10px;letter-spacing:.19em;font-weight:800;text-transform:uppercase}.railnav{display:grid;gap:7px;margin:13px 0 22px}.navbtn{display:flex;align-items:center;gap:12px;min-height:41px;border:1px solid transparent;color:#c4bfaf;border-radius:10px;background:transparent;text-align:left;padding:6px 10px;width:100%;font-size:12px}.navbtn:hover:not(:disabled){background:#293238}.navbtn.active{border-color:#a78a61;background:linear-gradient(90deg,#3c352b,#252a2a);color:#f9e6c7}.navbtn:disabled{opacity:.34}.num{width:22px;height:22px;border:1px solid #63635b;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;flex-shrink:0}.active .num{background:#b49365;border-color:#b49365;color:#12171a}.done{font-size:11px;color:#adbb9c;margin-left:auto}.railhr{height:1px;background:var(--line);margin:14px 0 18px}.who{font:25px Georgia,"Times New Roman",serif;margin:6px 0 15px;overflow-wrap:anywhere}.resources{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:18px}.res{padding:9px 5px;border:1px solid #394248;border-radius:8px;background:#101820;text-align:center}.res small{font-size:9px;color:#9da5a6;letter-spacing:.07em}.res strong{display:block;margin-top:5px;font-size:17px;font-weight:700;color:#e8d9bd}.statgroups{display:grid;gap:12px}.grouplabel{font-size:10px;letter-spacing:.16em;color:#a4a19a;text-transform:uppercase;border-top:1px solid #424746;padding-top:10px;margin-bottom:7px}.statline{display:flex;justify-content:space-between;align-items:center;margin:2px 3px;color:#c4c7c6}.statline span{font-weight:600;color:#a9b4b9;font-size:11px}.statline strong{font-size:13px;font-variant-numeric:tabular-nums;color:#eee1ca}.sample{margin-top:18px;color:#848f90;font-size:10px;line-height:1.45}
+.content{padding:28px clamp(18px,3.6vw,52px) 44px;min-width:0;max-width:1580px;width:100%;margin:auto}.heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:0 0 18px}.heading h1{font:normal clamp(29px,3vw,40px) Georgia,"Times New Roman",serif;letter-spacing:-.015em;margin:2px 0 3px}.heading p{color:var(--muted);font-size:12px;margin:0}.hline{height:1px;background:linear-gradient(90deg,#7a6a52,transparent);margin-bottom:20px}.section{background:linear-gradient(145deg,#222b2f,#1b2328);border:1px solid #444849;border-radius:16px;padding:21px;box-shadow:var(--glow);min-width:0}.secthead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.secthead h2{font:normal 21px Georgia,serif;margin:0}.subtle{font-size:11px;color:#aeb1ae}.panels{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(245px,.77fr);gap:16px;align-items:start}.fieldgroup{display:grid;gap:7px;min-width:0}.fieldgroup label,.fieldlabel{font-size:10px;font-weight:750;letter-spacing:.12em;color:#b8b3aa;text-transform:uppercase}.inputrow{display:flex;gap:8px}.textinput,.select{min-width:0;width:100%;border:1px solid #58605f;background:#131b20;color:#f4ecdd;border-radius:9px;min-height:43px;padding:10px 12px}.textinput::placeholder{color:#818a8b}.dice{min-width:43px;border:1px solid #76674e;border-radius:9px;color:#dec79f;background:#343129;font-size:21px}.fieldgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;margin:18px 0}.tworow{display:grid;grid-template-columns:1fr 1fr;gap:15px}.choice2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.choice2 button{border:1px solid #5a6263;color:#ddd1bf;background:#151d22;padding:11px;border-radius:9px}.choice2 button.selected{color:#f8e6c9;border-color:#c5a271;background:#3b352c}.palettewrap{margin-top:17px;padding-top:17px;border-top:1px solid #41484b}.palette{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 16px}.swatch{width:27px;height:27px;border-radius:999px;border:2px solid #606c6f;box-shadow:inset 0 0 0 1px #202629;position:relative}.swatch.selected{outline:2px solid #e7c48e;outline-offset:3px}.swatchlabel{color:#a2a9a8;font-size:10px;margin-left:7px}.portrait{background:#131a1e;border:1px solid #4c5556;border-radius:13px;overflow:hidden}.portraitart{aspect-ratio:3/4;background:radial-gradient(ellipse 68% 42% at 50% 29%,#596056 0,#394745 50%,#202b2f 100%);display:grid;place-items:center;position:relative;overflow:hidden}.portraitart:before{content:"";height:57%;width:78%;position:absolute;bottom:-16%;border-radius:47% 47% 0 0;background:linear-gradient(90deg,#242b2e,#525448 50%,#252d30);box-shadow:0 -22px 95px #87917d50}.portraitart:after{content:"";width:32%;aspect-ratio:3/3.5;position:absolute;top:22%;border-radius:46% 46% 44% 44%;background:linear-gradient(95deg,#816958,#a58d6d,#675d56);box-shadow:0 0 0 10px #333b3c99,0 30px 24px #171d1c70}.portraitart .rune{z-index:1;position:absolute;top:12px;left:12px;border:1px solid #a5a18977;border-radius:99px;padding:5px 8px;color:#d5c5a7;font-size:9px;letter-spacing:.1em}.portraitfoot{padding:13px}.portraitfoot h3{font:normal 20px Georgia,serif;margin:0}.portraitfoot p{font-size:11px;color:var(--muted);margin:4px 0 12px}.outlinebtn{border:1px solid #a58c66;background:#2d2c26;color:#e6cea1;border-radius:9px;padding:10px 12px;font-size:12px}.outlinebtn:hover{background:#3f382b}.outlinebtn.wide{width:100%}.attributeinfo{margin-top:16px}.attribtable{display:block;border:1px solid #414a4b;border-radius:12px;overflow:hidden}.attribrow{display:grid;grid-template-columns:1fr 1.25fr 1.5fr}.attribrow+.attribrow{border-top:1px solid #414a4b}.attribrow>.cell{padding:15px 17px;min-width:0;border-right:1px solid #374043;background:#192126}.attribrow>.cell:last-child{border-right:0}.band{font-size:10px;letter-spacing:.16em;color:#c4ac8a;font-weight:800;text-transform:uppercase;margin:1px 0 12px}.attrrow{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #323c40;font-size:12px}.attrrow:last-child{border:0}.attdesc{min-height:32px;margin-bottom:12px;color:#bbbdb7;font-size:11px}.eff{font-size:11px;color:#c2b8a7;margin:5px 0 12px}.eff strong{color:#e7dabf}.foot{margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:12px}.primary{border:1px solid #d0ad77;color:#192021;border-radius:999px;background:linear-gradient(180deg,#e1c490,#b98f58);font-size:12px;font-weight:800;letter-spacing:.04em;padding:12px 24px;min-height:44px}.primary:disabled{opacity:.38}.quiet{border:0;background:transparent;color:#bdb8aa;font-size:11px;letter-spacing:.03em}.randomcenter{margin-left:auto;margin-right:auto}.hint{color:#acaaa5;font-size:10px}.validation{margin-top:12px;border:1px solid #9d615a;color:#eeb2aa;background:#3d2726;padding:11px;border-radius:8px;display:none}.validation.show{display:block}
+.optiongrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.optiongrid.two{grid-template-columns:repeat(3,minmax(0,1fr))}.optioncard{border:1px solid #505a59;border-radius:13px;background:#172126;min-width:0;overflow:hidden;text-align:left;color:var(--text);padding:0;display:flex;flex-direction:column}.optioncard:hover:not(:disabled){border-color:#aa9677;transform:translateY(-1px)}.optioncard.selected{border-color:#d0ae7a;box-shadow:0 0 0 1px #af8955,0 0 21px #bca06e20}.cardart{height:125px;display:grid;place-items:center;position:relative;background:radial-gradient(circle at 32% 20%,#69746d,#343e40 54%,#202b2e);border-bottom:1px solid #424e4f;overflow:hidden}.cardart .initial{font:63px Georgia,serif;color:#e2d1ae88;text-shadow:0 2px 8px #0005}.cardart .artcaption{position:absolute;bottom:7px;left:9px;font-size:8px;letter-spacing:.16em;color:#d8cbb1a0}.optiontitle{font:normal 16px Georgia,serif;padding:12px 12px 4px}.optionmeta{font-size:10px;color:#a7b0ae;padding:0 12px 14px}.optioncard.cardgeo .cardart{height:118px;background:linear-gradient(145deg,#394b49,#4f5145 55%,#272f35)}.regiontag{font-size:9px;color:#aeb2ab;text-transform:uppercase;letter-spacing:.1em}.pill{border:1px solid #58564e;border-radius:999px;color:#c8bdaa;padding:6px 9px;font-size:10px;display:inline-flex;align-items:center;gap:5px}.pill.warn{border-color:#775953;color:#e5ac98}.controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:16px}.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}.tab{border:1px solid #56605f;background:#192229;border-radius:999px;color:#cac9bd;padding:9px 14px;font-size:11px}.tab.active{background:#4a3e2c;border-color:#c3a06e;color:#f4e0c0}.storygrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.storycard{border:1px solid #4e5759;border-radius:12px;background:#161f25;padding:17px;text-align:left;color:var(--text)}.storycard:hover{border-color:#bca17a}.storycard.selected{background:#2b2b29;border-color:#c7a16d}.storycard h3{font:normal 19px Georgia,serif;margin:4px 0 9px}.storycard p{font-size:11px;color:#b7b5ac;min-height:33px;margin:0 0 15px}.storycard span{font-size:10px;color:#d5b78a;text-transform:uppercase;letter-spacing:.08em}.storycard.review{opacity:.77}.inlinealert{padding:10px 14px;border-radius:9px;border:1px solid #715b44;background:#2b2924;font-size:11px;color:#d4c3a9;margin-bottom:15px}.finalgrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(250px,.78fr);gap:15px}.detailbox{border:1px solid #4a5354;background:#161e23;padding:15px;border-radius:11px;margin-bottom:11px}.detailbox h3{font:normal 20px Georgia,serif;margin:0 0 11px}.detailbox .line{padding:7px 0;border-bottom:1px solid #313b3d;display:flex;justify-content:space-between;gap:12px;font-size:12px}.detailbox .line:last-child{border-bottom:0}.detailbox .line span{color:#aab0ac}.rightnote{font-size:11px;color:#d0bc9c}.ghost{color:#969e9e;font-size:12px}.dialogbg{position:fixed;z-index:50;inset:0;background:#070b0edc;display:none;align-items:center;justify-content:center;padding:16px}.dialogbg.open{display:flex}.dialog{width:min(560px,100%);max-height:90vh;overflow:auto;background:#1c252a;color:var(--text);border:1px solid #a78d67;border-radius:18px;padding:23px;box-shadow:0 24px 110px #0009}.dialog h2{font:normal 29px Georgia,serif;margin:4px 0 14px}.dialog p{color:#d0c6b8;font-size:13px;line-height:1.75}.dialogactions{display:grid;gap:9px;margin:16px 0}.dialogactions button{border:1px solid #655a48;background:#2d2d2a;color:#eee2ca;text-align:left;padding:14px;border-radius:10px;font-size:12px}.dialogactions button:hover{border-color:#d3b37e}.dialogfooter{display:flex;justify-content:space-between;gap:10px;align-items:center;padding-top:12px;border-top:1px solid #414a4a}.codeprompt{white-space:pre-wrap;overflow-wrap:anywhere;color:#d8d2c3;background:#0f161a;padding:13px;border-radius:8px;border:1px solid #3c484a;font-size:11px}.banner{background:#2c2923;border-bottom:1px solid #5b4a37;color:#dfc398;padding:7px 24px;text-align:center;font-size:10px;letter-spacing:.04em}.mobiletoggle{display:none}.belowstat{color:#a6ada8;margin:10px 0 0;font-size:10px}
+@media (max-width:1090px){.crumbs{margin-left:8px}.optiongrid{grid-template-columns:repeat(3,minmax(0,1fr))}.panels{grid-template-columns:minmax(0,1.3fr) minmax(190px,.7fr)}.content{padding:25px 22px}.railinner{padding:18px 12px}.body{grid-template-columns:232px minmax(0,1fr)}}
+@media (max-width:800px){.top{padding:12px 15px}.crumbs{display:none}.body{grid-template-columns:190px minmax(0,1fr)}.railinner{padding:15px 10px}.content{padding:18px 15px}.panels,.finalgrid{grid-template-columns:1fr}.portrait{display:grid;grid-template-columns:minmax(0,160px) 1fr}.portraitart{aspect-ratio:4/5}.portraitfoot{align-self:center}.optiongrid,.optiongrid.two{grid-template-columns:repeat(2,minmax(0,1fr))}.attribrow{grid-template-columns:1fr 1fr}.attribrow>.cell:last-child{grid-column:1/-1;border-top:1px solid #374043}.attribrow>.cell:nth-child(2){border-right:0}}
+@media (max-width:550px){.righttop>.topbtn{display:none}.top{min-height:61px}.body{display:block}.rail{border-right:0;border-bottom:1px solid var(--line)}.railinner{position:static;max-height:none;padding:8px 12px}.mobiletoggle{display:block;width:100%;background:#1a2228;border:1px solid #566064;color:#e5d2b2;padding:9px;border-radius:7px;text-align:left}.railcollapse{display:none}.railcollapse.open{display:block}.railnav{grid-template-columns:1fr 1fr;gap:4px;margin:9px 0 11px}.navbtn{min-height:35px;padding:5px;gap:7px;font-size:10px}.num{width:19px;height:19px;font-size:9px}.railhr{margin:10px 0}.railstat{display:none}.content{padding:18px 12px 35px}.heading h1{font-size:29px}.heading p{font-size:11px}.heading .badge{display:none}.section{padding:15px 12px}.portrait{grid-template-columns:135px minmax(0,1fr)}.portraitart{aspect-ratio:3/4}.fieldgrid{gap:10px}.optiongrid{gap:9px}.cardart{height:103px}.optiontitle{font-size:14px}.optionmeta{font-size:9px}.storygrid{grid-template-columns:1fr}.top .brandmark{width:31px;height:31px}.brandname{font-size:10px}.brandsub{font-size:8px}.clock{display:none}.topbtn{padding:7px 9px}.foot{flex-wrap:wrap}.randomcenter{order:0;margin:0}.foot .primary{margin-left:auto}.dialog{padding:18px}}
+@media (max-width:355px){.top{gap:7px;padding:9px}.righttop{gap:5px}.brand{gap:8px}.brandname{font-size:9px;letter-spacing:.14em}.brandsub{font-size:7px}.topbtn{font-size:10px}.resources{gap:3px}.fieldgrid,.tworow{grid-template-columns:1fr}.optiongrid{grid-template-columns:repeat(2,minmax(0,1fr))}.attribrow{grid-template-columns:1fr}.attribrow>.cell{border-right:0;border-bottom:1px solid #374043}.attribrow>.cell:last-child{border-bottom:0}.portrait{grid-template-columns:112px 1fr}}
+
+/* Review refinement: compact left rail, actual visible resource bars and marginal taxonomy. */
+.railnav{margin:0 0 14px}
+.railhr{margin:11px 0 13px}
+.who{margin:0 0 13px}
+.resources{display:grid;grid-template-columns:1fr;gap:9px;margin:0 0 16px}
+.resbar{min-width:0}
+.resbar-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:4px;color:#c8c4b8;font-size:10px;font-weight:700;letter-spacing:.11em}
+.resbar-head strong{color:#e9ddc7;font-size:12px;letter-spacing:0;font-variant-numeric:tabular-nums}
+.resbar-track{height:7px;border:1px solid #485158;background:#0d141a;border-radius:999px;overflow:hidden}
+.resbar-fill{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,#9f534d,#d57d6f)}
+.resbar.mp .resbar-fill{background:linear-gradient(90deg,#476c94,#80acda)}
+.resbar.stamina .resbar-fill{background:linear-gradient(90deg,#7c8860,#aebe88)}
+.statgroups{display:grid;gap:0}
+.statgroup{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:stretch;border-top:1px solid #424746;padding:9px 0 10px;min-height:75px}
+.statgroup:last-child{border-bottom:1px solid #424746}
+.grouplabel{display:flex;align-items:center;justify-content:center;writing-mode:vertical-rl;transform:rotate(180deg);letter-spacing:.16em;font-size:10px;color:#c4aa80;text-transform:uppercase;font-weight:750;border:0;margin:0;padding:1px 0}
+.groupvalues{border-left:1px solid #394247;padding-left:12px;display:grid;align-content:center;gap:2px}
+.statline{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:1px 3px;margin:0;color:#c4c7c6}
+.statline span{font-weight:600;color:#a9b4b9;font-size:11px}
+.statline strong{font-size:13px;font-variant-numeric:tabular-nums;color:#eee1ca}
+/* Identity's selected rail step already identifies the active view. */
+.content.identity-stage{padding-top:22px}
+.content.identity-stage>.heading,.content.identity-stage>.hline{display:none}
+.portraitfoot h3{margin-bottom:10px}
+.portraitfoot .outlinebtn{margin-top:8px}
+@media(max-width:550px){
+  .railstat{display:block}
+  .railnav{margin:9px 0 11px}
+  .statgroup{grid-template-columns:40px minmax(0,1fr)}
+  .resources{gap:8px}
+}
+
+/* Keep all nine sidebar attributes visible on a typical laptop height. */
+@media (min-width:551px){
+ .railinner{padding-top:14px;padding-bottom:12px}
+ .navbtn{min-height:36px}
+ .railnav{gap:4px;margin-bottom:11px}
+ .railhr{margin:9px 0 11px}
+ .who{font-size:23px;margin-bottom:9px}
+ .resources{gap:7px;margin-bottom:12px}
+ .resbar-head{margin-bottom:3px}
+ .statgroup{min-height:67px;padding:7px 0}
+}
+
+/* Restore the two-tier AppShell chrome: brand corner, top controls, separate contextual sub-bar. */
+:root{--creator-rail-width:266px}
+.chrome{display:grid;grid-template-columns:var(--creator-rail-width) minmax(0,1fr);grid-template-rows:auto auto;position:sticky;top:0;z-index:30;box-shadow:0 5px 16px #090d1233}
+.brandwell{grid-column:1;grid-row:1/3;min-width:0;background:#141b20;border-right:1px solid #3e4446;border-bottom:1px solid #475052}
+.brandwell .brand{min-height:100%;padding:18px;display:flex;align-items:center}
+.chrome .top{grid-column:2;grid-row:1;min-height:72px;justify-content:flex-end;position:relative;top:auto;z-index:auto;border-bottom:1px solid #363f42}
+.chrome .mobilebrand{display:none}
+.chrome .subbar{grid-column:2;grid-row:2;display:flex;align-items:center;gap:18px;min-height:44px;padding:8px 26px;background:#1b252a;border-bottom:1px solid #475052;min-width:0}
+.chrome .crumbs{margin:0;display:flex;flex:1;align-items:center;gap:10px;min-width:0;white-space:nowrap;overflow:auto;scrollbar-width:none;letter-spacing:.035em}
+.chrome .crumbs::-webkit-scrollbar{display:none}
+.chrome .crumbs strong{color:#f1dfc3;font-weight:650}
+.chrome .substatus{flex-shrink:0;margin-left:auto;color:#aeb8b7;font-size:10px;letter-spacing:.02em}
+.body{grid-template-columns:var(--creator-rail-width) minmax(0,1fr);min-height:0}
+.railinner{top:116px;max-height:calc(100vh - 116px)}
+@media (max-width:1090px){:root{--creator-rail-width:232px}.chrome .subbar{padding-left:22px;padding-right:22px}}
+@media (max-width:900px){
+ .chrome{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto}
+ .brandwell{display:none}
+ .chrome .top{grid-column:1;grid-row:1;justify-content:space-between}
+ .chrome .mobilebrand{display:flex;min-width:0}
+ .chrome .subbar{grid-column:1;grid-row:2}
+ .railinner{top:110px;max-height:calc(100vh - 110px)}
+}
+@media (max-width:800px){:root{--creator-rail-width:190px}.chrome .crumbs{display:flex;gap:8px}.chrome .subbar{padding:8px 15px}}
+@media (max-width:550px){
+ .chrome .top{min-height:61px}
+ .chrome .subbar{min-height:39px;padding:8px 12px}
+ .chrome .crumbs{font-size:10px;gap:7px}
+ .chrome .substatus{display:none}
+ .railinner{top:auto;max-height:none}
+}
+@media (max-width:355px){.chrome .top{padding:9px}.chrome .subbar{padding:8px 10px}.chrome .crumbs{font-size:10px;gap:6px}}
+
+/* Identity detail restoration: quiet horizontal group rules, no vertical separators. */
+.groupvalues{border-left:0;padding-left:10px}
+.profile-rows{display:grid;gap:8px;margin:17px 0 0}
+.profile-row{display:grid;grid-template-columns:86px minmax(0,1fr);gap:13px;align-items:center;min-width:0}
+.profile-label{font-size:10px;font-weight:750;letter-spacing:.12em;text-transform:uppercase;color:#b8b3aa;align-self:center}
+.profile-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(82px,1fr));gap:6px;min-width:0}
+.profile-choice{min-width:0;min-height:38px;padding:7px 7px;background:#141c21;color:#ded3c1;border:1px solid #525d60;border-radius:8px;text-align:center;font-size:11px;line-height:1.25;white-space:normal;transition:background .14s,border-color .14s}
+.profile-choice:hover{background:#293239;border-color:#8a806d}
+.profile-choice.selected{background:#3b352c;border-color:#c5a271;color:#f8e6c9;box-shadow:inset 0 0 0 1px #8c73504d}
+.attribtable{border:0;border-radius:0;overflow:visible}
+.attribrow{display:grid;grid-template-columns:29px minmax(0,.8fr) minmax(0,1fr) minmax(0,1.2fr);gap:18px;align-items:stretch;padding:15px 0;border-top:1px solid #434b4b}
+.attribrow+.attribrow{border-top:1px solid #434b4b}
+.attribrow:last-child{border-bottom:1px solid #434b4b}
+.attrib-gutter{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;color:#c4aa80;font-weight:750;font-size:10px;text-transform:uppercase;letter-spacing:.15em}
+.attrib-stats{display:grid;align-content:center;min-width:0}
+.attrrow{min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:7px;padding:5px 4px;border-bottom:1px solid #313c3e}
+.attrrow:last-child{border-bottom:0}
+.attrkey{font-size:12px;font-weight:650;color:#e5d8c0;white-space:nowrap}
+.attrkey small{display:inline;margin-left:9px;color:#a7afb0;font-size:10px;font-weight:450}
+.attrrow strong{font-variant-numeric:tabular-nums;color:#f0dfc4;font-size:13px}
+.attdesc{margin:0;min-height:0;align-self:center;color:#d9cbbc;font:normal 14px/1.55 Georgia,'Times New Roman',serif}
+.attrib-effects{display:grid;align-content:center;min-width:0}
+.eff{display:grid;grid-template-columns:29px minmax(0,1fr);gap:9px;align-items:center;min-height:40px;margin:0;padding:5px 0;color:#c8c2b6;font-size:11px;line-height:1.4}
+.eff strong{color:#dfc498;font-size:11px}
+.eff span{min-width:0}
+@media(max-width:1100px){
+ .attribrow{gap:13px;grid-template-columns:26px minmax(0,.78fr) minmax(0,1fr) minmax(0,1.2fr)}
+ .attrkey small{margin-left:6px}
+}
+@media(max-width:930px){
+ .attribrow{grid-template-columns:28px minmax(0,.85fr) minmax(0,1.15fr);column-gap:15px;row-gap:9px}
+ .attrib-gutter{grid-column:1;grid-row:1/3}
+ .attrib-stats{grid-column:2;grid-row:1}
+ .attdesc{grid-column:3;grid-row:1}
+ .attrib-effects{grid-column:2/4;grid-row:2}
+ .eff{grid-template-columns:38px minmax(0,1fr);min-height:29px;padding:4px 0}
+}
+@media(max-width:550px){
+ .profile-row{grid-template-columns:67px minmax(0,1fr);gap:9px}
+ .profile-choices{grid-template-columns:repeat(auto-fit,minmax(75px,1fr));gap:5px}
+ .profile-choice{min-height:36px;padding:6px 4px;font-size:10.5px}
+ .attribrow{grid-template-columns:25px minmax(0,1fr);gap:9px 12px;padding:14px 0}
+ .attrib-gutter{grid-column:1;grid-row:1/4}
+ .attrib-stats{grid-column:2;grid-row:1}
+ .attdesc{grid-column:2;grid-row:2;font-size:13px}
+ .attrib-effects{grid-column:2;grid-row:3}
+ .eff{grid-template-columns:31px minmax(0,1fr);gap:7px;font-size:10.8px}
+}
+@media(max-width:355px){
+ .profile-row{grid-template-columns:62px minmax(0,1fr);gap:7px}
+ .profile-choices{grid-template-columns:repeat(auto-fit,minmax(72px,1fr));gap:4px}
+ .profile-choice{min-height:35px;font-size:10px;padding:5px 3px}
+ .attrkey small{font-size:10px}
+}
+
+/* Build + Aptitude: sourced baseline with distinct, intentionally simulated 10-point preview math. */
+.profile-rows{gap:10px}
+.profile-choice{min-height:40px}
+.profile-note{margin:5px 0 0 99px;color:#c4bbae;font-size:11px;line-height:1.58;max-width:720px}
+.profile-note strong{color:#e5d2b0;font-weight:700}
+.profile-note .tendency{color:#d5ad78;font-size:10px;letter-spacing:.05em;display:block;margin-bottom:3px}
+.buildunit{padding-top:15px;margin-top:17px;border-top:1px solid #424b4b}
+.buildunit .profile-row{margin-bottom:0}
+.build-legend{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:10px 0 2px;font-size:10px;color:#b5b9b6}
+.build-legend b{color:#e4ca9f}
+.distmeter{display:flex;height:7px;border-radius:10px;overflow:hidden;background:#111a1e;border:1px solid #455052;margin:7px 0 3px}
+.distmeter span{display:block;height:100%}
+.dist-power{background:#b9805f}.dist-prowess{background:#b7a17a}.dist-mind{background:#6988b0}
+.condition-section{border-top:1px solid #424b4b;margin-top:18px;padding-top:15px}
+.condition-section h3{font:normal 19px Georgia,serif;margin:0 0 4px}
+.condition-title{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
+.condition-title small{font-size:10px;color:#acaeab}
+.condition-group{margin:12px 0 0}
+.condition-group+.condition-group{border-top:1px solid #3e4748;padding-top:12px;margin-top:14px}
+.condition-group h4{text-transform:uppercase;letter-spacing:.15em;font-size:10px;color:#bfa787;margin:0 0 9px}
+.condition-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.condition-option{padding:10px 9px;min-width:0;text-align:left;background:#151d21;border:1px solid #454e50;border-radius:9px;color:#e6d9c4;min-height:77px}
+.condition-option:hover{border-color:#a18c69;background:#242b2c}
+.condition-option strong{display:block;font-size:11px;font-weight:700}
+.condition-option span{display:block;margin-top:5px;font-size:10px;line-height:1.4;color:#aeb7b3}
+.condition-caption{color:#a2a9a7;font-size:10px;margin:10px 0 0;line-height:1.55}
+.disposition-block{margin-top:15px;border-top:1px solid #414a4b;padding-top:10px}
+.disposition-block summary{font-size:11px;color:#cbbb9c;cursor:pointer}
+.disposition-block[open] summary{margin-bottom:10px}
+.disposition-block .profile-note{margin-top:6px}
+.attrib-stats .attrrow small.delta{font-size:10px;color:#9bb69e;font-weight:700;margin-left:5px}
+.attrib-stats .attrrow small.delta.neg{color:#d2a291}
+.attrrow strong{white-space:nowrap}
+@media(max-width:1150px){.condition-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:550px){.profile-note{margin-left:0}.condition-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:355px){.profile-choice{font-size:10px}.condition-options{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* Identity layout revision: contextual prose at right; portrait flows at page bottom. */
+.content{max-width:none;padding:24px clamp(17px,2.2vw,36px) 48px}
+.identity-layout{display:block;width:100%}
+.identity-controls{width:100%;padding:23px clamp(15px,2vw,27px)}
+.identity-controls>.fieldgroup{max-width:700px}
+.identity-controls .profile-rows{display:grid;gap:0;margin-top:19px}
+.identity-controls .profile-row{display:grid;grid-template-columns:85px minmax(0,1.45fr) minmax(275px,1fr);gap:18px;align-items:center;padding:13px 0;border-top:1px solid #3d4747}
+.identity-controls .profile-label{align-self:center}
+.identity-controls .profile-choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(92px,1fr));gap:6px}
+.identity-controls .profile-choice{min-height:39px;padding:7px 7px}
+.identity-controls .buildunit{padding:0;margin:0;border-top:0}
+.identity-controls .buildunit .profile-row{margin:0}
+.narrative-cell{min-width:0;border-left:0;padding-left:0;align-self:center}
+.choice-narrative{font:normal 14px/1.48 Georgia,'Times New Roman',serif;color:#e0d2c0;margin:0 0 7px}
+.choice-effect{font-size:10px;line-height:1.35;letter-spacing:.045em;color:#cba978}
+.allocation-note{border-top:1px solid #465050;border-bottom:1px solid #384343;margin-top:3px;padding:13px 0 15px;font-size:11px;line-height:1.65;color:#c3c4bd}
+.allocation-note b{color:#e6d4b6;font-weight:650}
+.allocation-note span{display:block;margin-top:4px;color:#c9ad84;font-weight:650}
+.identity-portrait-section{margin-top:16px}
+.portrait-inline{display:grid;grid-template-columns:minmax(175px,240px) minmax(0,1fr);align-items:stretch;margin-top:16px;min-height:210px;background:linear-gradient(130deg,#222b2f,#1b2328);border:1px solid #444849;border-radius:16px}
+.portrait-inline .portraitart{aspect-ratio:5/4;min-height:210px;border-radius:14px 0 0 14px}
+.portrait-inline .portraitfoot{padding:20px clamp(17px,3vw,35px);display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.portrait-inline .portraitfoot h3{font-size:24px}
+.portrait-inline .portraitfoot p{font-size:13px;line-height:1.55;color:#d2c5b2;max-width:650px;margin:6px 0 14px}
+.portrait-inline .portraitfoot .outlinebtn{width:auto;min-height:42px;margin:0}
+.portrait-inline .portraitfoot p.portrait-caveat{font:normal 10px/1.5 Inter,'Segoe UI',sans-serif;color:#99a6a4;margin:7px 0 0}
+.final-narrative{font:normal 18px/1.65 Georgia,'Times New Roman',serif;color:#e2d5c0;margin:0 0 18px;padding:0 0 16px;border-bottom:1px solid #455052}
+@media (max-width:1190px){
+ .identity-controls .profile-row{grid-template-columns:78px minmax(0,1.3fr) minmax(215px,1fr);gap:12px}
+ .identity-controls .profile-choices{grid-template-columns:repeat(auto-fit,minmax(80px,1fr))}
+ .choice-narrative{font-size:13px}
+}
+@media (max-width:930px){
+ .identity-controls .profile-row{grid-template-columns:82px minmax(0,1fr);gap:9px 13px}
+ .identity-controls .narrative-cell{grid-column:2;grid-row:2;padding-bottom:3px}
+ .identity-controls .profile-choices{grid-column:2;grid-row:1}
+ .identity-controls .profile-label{grid-column:1;grid-row:1}
+ .portrait-inline{grid-template-columns:175px minmax(0,1fr)}
+ .portrait-inline .portraitart{min-height:180px}
+}
+@media (max-width:550px){
+ .content{padding:18px 12px 35px}
+ .identity-controls{padding:17px 14px}
+ .identity-controls .profile-row{grid-template-columns:63px minmax(0,1fr);gap:8px 10px;padding:12px 0}
+ .identity-controls .profile-choices{grid-template-columns:repeat(auto-fit,minmax(74px,1fr));gap:5px}
+ .identity-controls .profile-choice{padding:6px 4px;min-height:36px;font-size:10.5px}
+ .identity-controls .narrative-cell{grid-column:1/-1;grid-row:2}
+ .choice-narrative{font-size:13px}
+ .portrait-inline{grid-template-columns:minmax(0,1fr)}
+ .portrait-inline .portraitart{width:100%;max-height:215px;min-height:170px;aspect-ratio:16/8}
+ .portrait-inline .portraitfoot{padding:16px 17px}
+ .portrait-inline .portraitfoot h3{font-size:22px}
+ .portrait-inline .portraitfoot p{font-size:12px}
+}
+
+/* The active step already has a number and label in the rail; remove repeated page heroes. */
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.content{padding-top:18px}
+.content>.heading{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important}
+.content>.hline{display:none!important}
+.selection-context{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.entry-guide{color:#b6b7b0;font-size:12px;line-height:1.6;margin:0 0 17px}
+.opening-sheet{width:min(900px,100%);margin:0 auto;background:linear-gradient(155deg,#222b2c,#151e23);border:1px solid #56544d;border-radius:18px;padding:clamp(22px,4vw,49px);box-shadow:var(--glow)}
+.opening-kicker{font-size:10px;font-weight:750;letter-spacing:.18em;text-transform:uppercase;color:#c4a477}
+.opening-sheet h2{font:normal clamp(31px,4vw,46px) Georgia,serif;margin:10px 0 9px;line-height:1.14;color:#f5e8cf}
+.opening-place{font-size:11px;letter-spacing:.05em;color:#adb4af;margin:0 0 28px}
+.opening-prose{padding:24px 0;border-top:1px solid #414b49;border-bottom:1px solid #414b49}
+.opening-prose p{max-width:65ch;font:normal clamp(17px,1.65vw,20px)/1.78 Georgia,'Times New Roman',serif;color:#ddd5c5;margin:0}
+.opening-decision{padding-top:23px}
+.opening-decision h3{font:normal 23px Georgia,serif;margin:0 0 9px}
+.opening-decision p{font-size:12px;line-height:1.65;color:#c5c0b6;margin:0 0 17px}
+.opening-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:17px 0 13px}
+.opening-choice{border:1px solid #807257;border-radius:12px;background:#292c2b;padding:16px;text-align:left;color:#f0e4cf;min-height:100px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;transition:border-color .15s,background .15s}
+.opening-choice:hover{border-color:#d7b57e;background:#37342d}
+.opening-choice .choice-name{font:normal 20px Georgia,serif}
+.opening-choice .choice-meta{font-size:10px;letter-spacing:.06em;color:#c4aa85}
+.opening-caveat{font-size:11px!important;color:#aeb6b1!important}
+.opening-receipt{border:1px solid #787052;background:#292e2a;border-radius:11px;padding:15px;margin:15px 0 19px}
+.opening-receipt strong{display:block;color:#efdbad;margin-bottom:5px}
+.opening-receipt span{color:#d8d1bf;font-size:13px}
+.opening-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin:18px auto 0;width:min(900px,100%)}
+@media(max-width:660px){.opening-choices{grid-template-columns:1fr}.opening-sheet{padding:20px 16px}.opening-choice{min-height:80px}.opening-place{margin-bottom:17px}.opening-prose{padding:19px 0}}
+
+/* Review refinement: vertical inline field labels, physical build 3x3, nine aptitudes, compact condition inspector. */
+.identity-controls{padding:19px clamp(13px,1.7vw,25px)}
+.identity-controls .profile-row{grid-template-columns:40px minmax(0,1.45fr) minmax(275px,1fr);gap:13px;align-items:center;padding:12px 0}
+.identity-controls .profile-label,.condition-side-label{writing-mode:vertical-rl;transform:rotate(180deg);text-transform:uppercase;letter-spacing:.15em;font-weight:750;font-size:10px;color:#c9b28d;justify-self:center;align-self:center;text-align:center}
+.identity-controls .profile-label{max-height:none;line-height:1.1}
+.identity-controls .profile-choices{grid-template-columns:repeat(auto-fit,minmax(82px,1fr));gap:6px}
+.identity-controls .build-row .profile-choices,.identity-controls .aptitude-row .profile-choices{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
+.identity-controls .build-row .profile-choice,.identity-controls .aptitude-row .profile-choice{padding:9px 7px;min-width:0;min-height:69px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;line-height:1.3;text-align:center;white-space:normal}
+.identity-controls .build-row .profile-choice strong,.identity-controls .aptitude-row .profile-choice strong{font-size:11px;font-weight:750;color:inherit}
+.identity-controls .build-row .profile-choice small,.identity-controls .aptitude-row .profile-choice small{display:block;width:100%;font-size:9px;line-height:1.3;color:#bcbbaf;font-weight:450;overflow-wrap:anywhere}
+.identity-controls .profile-choice.selected small{color:#e4c596}
+.identity-controls .build-row .narrative-cell,.identity-controls .aptitude-row .narrative-cell{align-self:center}
+.identity-controls .name-row{border:0;padding:0 0 13px;margin:0;border-bottom:1px solid #3d4747}
+.name-inputs{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) 43px;gap:7px;align-items:center;min-width:0}
+.name-inputs .textinput{height:43px;min-height:43px;min-width:0}
+.name-note{font:normal 12px/1.5 Georgia,'Times New Roman',serif;color:#bdb6a8}
+.condition-section{padding-top:16px}
+.condition-group{display:grid;grid-template-columns:36px minmax(0,1.45fr) minmax(265px,1fr);gap:13px;align-items:center;margin:12px 0 0;padding:12px 0;border-top:1px solid #3e4748}
+.condition-group+.condition-group{padding-top:14px;margin-top:4px}
+.condition-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;min-width:0}
+.condition-option{min-height:42px;padding:9px 6px;display:grid;place-items:center;text-align:center;font-size:10.5px;font-weight:650;line-height:1.3;min-width:0;overflow-wrap:anywhere}
+.condition-option.inspected{background:#39352d;border-color:#bc9b70;color:#f3ddb9}
+.condition-side-label{color:#c3a38c}
+.condition-detail{padding:1px 0 2px;min-width:0;align-self:center}
+.condition-inspect-kicker{color:#a9acac;text-transform:uppercase;font:700 9px/1.3 Inter,'Segoe UI',sans-serif;letter-spacing:.1em;margin:0 0 7px}
+.condition-detail h4{font:normal 18px Georgia,serif;color:#efdfc5;margin:0 0 5px}
+.condition-detail p:not(.condition-inspect-kicker){font:normal 12px/1.5 Georgia,serif;color:#ddd0bf;margin:0 0 6px}
+.condition-effect{color:#d7b782;font-size:10px;font-weight:650;margin-bottom:5px}
+.condition-detail small{display:block;color:#9da9a6;font-size:9.5px;line-height:1.45}
+.condition-detail p.condition-tradeoff,.condition-detail p.condition-conflict{font:normal 10.5px/1.45 Inter,'Segoe UI',sans-serif;color:#bec6c2;margin:4px 0}
+.condition-detail p.condition-tradeoff b,.condition-detail p.condition-conflict b{font-weight:650;color:#d9cbac}
+@media(max-width:1130px){
+ .identity-controls .profile-row{grid-template-columns:32px minmax(0,1.25fr) minmax(220px,1fr);gap:10px}
+ .condition-group{grid-template-columns:28px minmax(0,1.25fr) minmax(220px,1fr);gap:10px}
+}
+@media(max-width:930px){
+ .identity-controls .profile-row{grid-template-columns:30px minmax(0,1fr);gap:8px 11px}
+ .identity-controls .profile-label{grid-column:1;grid-row:1/3;align-self:center}
+ .identity-controls .profile-choices,.identity-controls .name-inputs{grid-column:2;grid-row:1}
+ .identity-controls .narrative-cell{grid-column:2;grid-row:2}
+ .condition-group{grid-template-columns:29px minmax(0,1fr);gap:9px 11px}
+ .condition-side-label{grid-column:1;grid-row:1/3}
+ .condition-options{grid-column:2;grid-row:1}
+ .condition-detail{grid-column:2;grid-row:2}
+}
+@media(max-width:550px){
+ .identity-controls{padding:14px 12px}
+ .identity-controls .profile-row{grid-template-columns:24px minmax(0,1fr);gap:8px;padding:10px 0}
+ .identity-controls .build-row .profile-choice,.identity-controls .aptitude-row .profile-choice{padding:7px 4px;min-height:68px}
+ .identity-controls .build-row .profile-choice strong,.identity-controls .aptitude-row .profile-choice strong{font-size:10px}
+ .identity-controls .build-row .profile-choice small,.identity-controls .aptitude-row .profile-choice small{font-size:8.5px}
+ .name-inputs{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 35px;gap:5px}
+ .name-inputs .textinput{padding:8px 6px;font-size:12px}
+ .name-inputs .dice{min-width:35px;font-size:20px}
+ .condition-group{grid-template-columns:24px minmax(0,1fr);gap:8px 9px}
+ .condition-options{grid-template-columns:repeat(2,minmax(0,1fr));gap:5px}
+ .condition-option{min-height:39px;font-size:10px;padding:6px 4px}
+ .condition-detail h4{font-size:17px}
+}
+@media(max-width:355px){
+ .identity-controls{padding:12px 10px}
+ .identity-controls .profile-row{grid-template-columns:20px minmax(0,1fr);gap:6px}
+ .identity-controls .build-row .profile-choice small,.identity-controls .aptitude-row .profile-choice small{font-size:8px}
+ .name-inputs{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 32px;gap:4px}
+ .name-inputs .dice{min-width:32px}
+}
+</style>
+</head>
+<body>
+<div class="shell"><div class="chrome">
+  <div class="brandwell"><div class="brand"><div class="brandmark">✧</div><div><div class="brandname">LINEAGE REFORGED</div><div class="brandsub">CHRONICLE</div></div></div></div>
+  <header class="top" aria-label="Application bar">
+    <div class="brand mobilebrand"><div class="brandmark">✧</div><div><div class="brandname">LINEAGE REFORGED</div><div class="brandsub">CHRONICLE</div></div></div>
+    <div class="righttop"><div class="clock" id="clock">LOCAL 11:25</div><div class="account" id="account"><button class="topbtn" id="accountBtn" type="button">⚙ Account ▾</button><div class="menu"><button type="button">Settings (preview)</button><button id="themeBtn" type="button">Toggle theme (preview)</button><button type="button">Logout (preview only)</button></div></div></div>
+  </header>
+  <nav class="subbar" aria-label="Contextual navigation"><div class="crumbs"><span>Your Worlds</span><span aria-hidden="true">›</span><b>Starfall World</b><span aria-hidden="true">›</span><span>Characters</span><span aria-hidden="true">›</span><strong aria-current="page">New Character</strong></div><span class="substatus" title="World clock remains unavailable pending owner verification">World time pending</span></nav>
+</div><div class="body"><aside class="rail"><div class="railinner"><button type="button" id="mobileToggle" class="mobiletoggle" aria-controls="railCollapse" aria-expanded="true">☰ Creation steps & character summary</button><div class="railcollapse open" id="railCollapse"><nav class="railnav" id="railNav"></nav><div class="railhr"></div><div class="railstat"><div class="who" id="railName">Aerin</div><div class="resources" id="resources"></div><div class="statgroups" id="statgroups"></div></div></div></div></aside><main class="content" aria-labelledby="stepTitle"><h1 id="stepTitle" class="visually-hidden">Identity</h1><span id="sectionLabel" hidden></span><span id="stepSubtitle" hidden></span><div id="stage"></div></main></div></div>
+<div class="dialogbg" id="dialogbg" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="eyebrow" id="dialogEyebrow">Editorial preview</div><h2 id="dialogTitle"></h2><div id="dialogBody"></div><div id="dialogActions" class="dialogactions"></div><div class="dialogfooter"><button class="quiet" type="button" id="dialogClose">Close ✕</button></div></section></div>
+<script>
+const steps=['Lineage','Identity','Continent','Region','Settlement','World Entry','Summary','Opening'];
+const lineages=[['lineage.human','Human'],['lineage.dwarf','Dwarf'],['lineage.gnome','Gnome'],['lineage.halfling','Halfling'],['lineage.elf','Elf'],['lineage.dark_elf','Dark Elf'],['lineage.half_troll','Half Troll'],['lineage.half_orc','Half Orc'],['lineage.half_goblin','Half Goblin'],['lineage.half_merfolk','Half Merfolk']];
+const geo=[['region.kaelvar','Kaelvar',['The Auric Marches','Verdant Thalos','The Shattercap Isles']],['region.valtherion','Valtherion',['The Crownlands','The Embersteppe','The Sapphire Rivers','The Jade Expanse']],['region.serathyl','Serathyl',['The Windward Spine','The Green Reach',"The Sailor's Verge"]],['region.draemor','Draemor',['The Heart Basin','The Emerald Mantle','The Stormcap Coast']],['region.talmyra','Talmyra',['The Thorn Peninsula','The Silver Valleys','The Watcher Coast']],['region.myridian_chain','The Myridian Chain',['Starfall Isle','The Pearlwake Keys','Zenith Isle']],['region.lantern_isles','The Lantern Isles',['The Lantern Crown','Glasswake Quay','Deepglow Reef']],['region.serpents_wake',"The Serpent's Wake",['Stormfang Isle','The Blackreef Keys','Stormhook Reach']],['region.dawnreach_isles','The Dawnreach Isles',['Aurora Reach','The Nacre Shelf','Whalebone Edge']]];
+const geoKnown={'Starfall Isle':['Starfall Port','Harbormast Quay','Foammarket Ferry'],'The Sapphire Rivers':['Highcrown']};
+const scenarios=[{id:'core.room_paid',name:'The Room Paid For',pool:'ordinary',blurb:'A quiet room, a settled bill, and an unexpected parcel.',a:'Examine the parcel',b:'Ask the keeper',intro:'Morning filters through the shutters of a room you did not reserve. The keeper says someone paid for one night and left a parcel in your name. You have no reason yet to trust the kindness, but no urgent reason to flee either.'},{id:'core.last_bed',name:"Shelter's Last Bed",pool:'ordinary',blurb:'One final night of shelter before the road resumes.',a:'Inspect the donated bundle',b:'Ask where to go',intro:'The shelter is waking before first light. Your blanket is folded, and the caretaker has a few words before the next traveler needs this bed. A bundle rests on the bench, set aside but not yet yours.'},{id:'core.journeys_end',name:"Journey's End",pool:'ordinary',blurb:'You arrive among strangers with the road behind you.',a:'Survey the town approach',b:'Ask about the cart route',intro:'The road breaks toward a settlement whose roofs catch the pale morning. Your last ride has gone on without you. There is a gate, a public way and enough time to choose your next question.'},{id:'core.roadside_kindness',name:'Roadside Kindness',pool:'ordinary',blurb:'A small act of help at the edge of a long road.',a:'Request directions',b:'Observe the road',intro:'At the roadside a traveler pauses to check whether you need directions. The offer is modest, and so is your certainty about what lies beyond the next bend.'},{id:'core.broken_wagon',name:'The Broken Wagon',pool:'wilderness',blurb:'The road has vanished beneath a broken journey.',a:'Inspect the wreck',b:'Study wagon ruts',intro:'A wagon frame leans at an impossible angle. The track thins toward broken ground. No settlement is near enough to see, and the wilderness is not yet verified for playable admission.'},{id:'core.washed_ashore',name:'Washed Ashore',pool:'wilderness',blurb:'Tide, wreckage and an unfamiliar shore.',a:'Examine the shoreline',b:'Study the inland rise',intro:'Water recedes from unfamiliar sand and a damaged hull. The world beyond the strand is unknown. This remains a narrative draft, not an authorized survival start.'},{id:'core.abandoned_camp',name:'The Abandoned Camp',pool:'wilderness',blurb:'Signs of people, but no one to answer.',a:'Inspect the camp',b:'Survey nearby trails',intro:'An empty fire ring lies beneath weathered canvas. Without owner evidence, the camp and its supplies cannot be treated as available game objects.'},{id:'core.lost_trail',name:'The Lost Trail',pool:'wilderness',blurb:'A path unravels beneath distant weather.',a:'Look for a trail sign',b:'Orient by land',intro:'You stand where a narrow trail disappears into scrub and stone. The map, the exit and the supported survival systems are all unresolved.'}];
+const swatches={skin:['#f0d6b0','#e5c49d','#d7b48c','#bc9470','#b18261','#986d54','#845c48','#6c4d40','#5d514a','#a79983','#c3ab93','#d6bdae','#937c69','#555257','#9f9990','#d7c8b6','#b49c86','#61544d'],hair:['#191b1e','#333136','#504034','#6d5040','#8e6650','#ad815c','#c39a69','#d7b77c','#e2ceac','#a4a6a5','#666a6d','#81807f','#e3e1d8','#a95642','#84403b','#704853','#b48c79','#e5d7cb','#687b6c','#4f6a76','#7d8497','#8b7d93','#c5b8ac','#b89c67','#38443a','#c1a5a5','#dbc18e'],eyes:['#554136','#654934','#81593b','#a77747','#b99554','#57633f','#3d644f','#5f856c','#47737e','#547a99','#8198b4','#6c637f','#9d8a83','#bbb8aa','#a3a466','#a16e62','#d6b16e','#3d444e']};
+const state={stage:1,lineage:'lineage.human',firstName:'Aerin',lastName:'Vale',name:'Aerin Vale',inspectedNegative:'sickly',inspectedPositive:'quick_healer',sex:'female',age:'prime',height:'normal',build:'stocky',aptitude:'versatile',disposition:'none',skin:3,hair:4,eyes:9,continent:'region.myridian_chain',region:'Starfall Isle',settlement:'Starfall Port',pool:'ordinary',scenario:'core.room_paid',validation:false,portrait:false,summaryReviewed:false,entryChoice:null};
+const groups=[
+  {name:'Power',keys:['STR','CON','VIT'],desc:'Power is your ability to exert and withstand physical force. It governs physical impact, resilience and recovery.'},
+  {name:'Prowess',keys:['DEX','AGI','CHA'],desc:'Prowess is control in action: precise technique, agile movement and the presence to influence others.'},
+  {name:'Mind',keys:['INT','WIS','SPT'],desc:'Mind is understanding and inner resolve: thought, perception and the strength to sustain magic.'}
+];
+const effects={
+  STR:'Physical impact, lifting and carrying heavy loads, and the strength to draw a bow.',
+  CON:'Guard stability, resistance to injury and hardiness through physical strain.',
+  VIT:'Stamina, natural recovery and endurance through injury or exhaustion.',
+  DEX:'Accurate handling, fine technique and precision with weapons or tools.',
+  AGI:'Balance, evasion and the timing to move or respond swiftly.',
+  CHA:'Commanding presence, negotiation and the ability to influence others.',
+  INT:'Reasoning through unfamiliar problems, complex crafting logic and spell precision.',
+  WIS:'Perception, measured judgment and insight in healing and medicine.',
+  SPT:'Mana, magical resonance and the will to sustain difficult workings.'
+};
+const attributeNames={STR:'Strength',CON:'Constitution',VIT:'Vitality',DEX:'Dexterity',AGI:'Agility',CHA:'Charisma',INT:'Intelligence',WIS:'Wisdom',SPT:'Spirit'};
+// Selected source inputs: actual 90-point lineage bases, current source sex/age/height
+// zero-sum adjustments, and +4/+4/+3 attribute resource-max scaling. The proposed
+// Build/Aptitude allocation below is an intentionally isolated balance *candidate*,
+// NOT current game math. Does not include equipment, body state, world entry or Legacy.
+const ATTRIBUTE_KEYS=['STR','CON','VIT','DEX','AGI','CHA','INT','WIS','SPT'];
+const BASES={
+ 'lineage.human':[10,10,10,10,10,10,10,10,10],
+ 'lineage.dwarf':[11,12,11,10,8,9,10,10,9],
+ 'lineage.gnome':[7,9,9,12,10,10,12,10,11],
+ 'lineage.halfling':[7,10,10,11,11,11,10,10,10],
+ 'lineage.elf':[8,8,9,12,11,10,10,10,12],
+ 'lineage.dark_elf':[8,9,9,12,11,11,11,9,10],
+ 'lineage.half_troll':[14,14,12,8,7,8,9,9,9],
+ 'lineage.half_orc':[13,11,10,9,9,9,10,9,10],
+ 'lineage.half_goblin':[8,9,9,12,12,10,11,10,9],
+ 'lineage.half_merfolk':[8,10,10,10,10,11,10,10,11]
+};
+const RESOURCE_LINEAGE={
+ 'lineage.human':[0,0,0], 'lineage.dwarf':[10,-6,8], 'lineage.gnome':[-10,12,-2],
+ 'lineage.halfling':[-4,0,8], 'lineage.elf':[-8,10,-4], 'lineage.dark_elf':[-4,8,2],
+ 'lineage.half_troll':[7,-3,3], 'lineage.half_orc':[4,-1,4],
+ 'lineage.half_goblin':[-4,2,5], 'lineage.half_merfolk':[-1,3,3]
+};
+const identityChoices={
+ sex:[['female','Female'],['male','Male']],
+ age:[['young_adult','Young Adult'],['prime','Prime'],['mature','Mature'],['senior','Senior']],
+ height:[['short','Short'],['normal','Normal'],['tall','Tall']]
+};
+const builds=[
+ {id:'broad',label:'Broad',power:.85,desc:'Wide shoulders and a substantial frame suggest leverage, load-bearing strength and a body made to meet resistance.',wPower:{STR:4,CON:3,VIT:2},wProwess:{DEX:1,AGI:1}},
+ {id:'muscular',label:'Muscular',power:.75,desc:'Distinct muscle definition gives physical effort a direct, forceful quality without deciding where your mind is strongest.',wPower:{STR:5,CON:3,VIT:2},wProwess:{DEX:2,AGI:1}},
+ {id:'stocky',label:'Stocky',power:.7,desc:'Dense and grounded in proportion, with strength close to the core and a frame that favors stability under strain.',wPower:{STR:2,CON:4,VIT:3},wProwess:{DEX:1,AGI:1}},
+ {id:'compact',label:'Compact',power:.55,desc:'Close-built and proportionate, carrying strength economically without losing readiness or agility.',wPower:{STR:1,CON:3,VIT:2},wProwess:{DEX:2,AGI:3}},
+ {id:'proportioned',label:'Proportioned',power:.5,desc:'Even physical proportions, with no pronounced advantage in either blunt strength or quick, controlled movement.',wPower:{STR:2,CON:2,VIT:2},wProwess:{DEX:2,AGI:2}},
+ {id:'lean',label:'Lean',power:.45,desc:'A lighter frame with modest muscle and a natural ease of motion, suited to measured force and nimble movement.',wPower:{STR:1,CON:2,VIT:2},wProwess:{DEX:3,AGI:2}},
+ {id:'slender',label:'Slender',power:.35,desc:'Narrow and lightly built, more at ease with deliberate precision than sustained heavy exertion.',wPower:{STR:1,CON:1,VIT:1},wProwess:{DEX:4,AGI:3}},
+ {id:'wiry',label:'Wiry',power:.3,desc:'Spare weight and taut muscle promise controlled movement, tenacity and quick physical adjustment.',wPower:{STR:1,CON:1,VIT:1},wProwess:{DEX:3,AGI:4}},
+ {id:'lithe',label:'Lithe',power:.2,desc:'Light and supple in shape, favoring balance, fine coordination and rapid changes of position over sheer bulk.',wPower:{STR:1,CON:1,VIT:1},wProwess:{DEX:4,AGI:5}}
+];
+const aptitudes=[
+ {id:'fully_physical',label:'Fully Physical',physical:10,mind:0,desc:'Your natural gifts are expressed almost entirely through bodily power, movement and physical control. This does not prevent later learning or intellectual growth.',mindWeights:{INT:1,WIS:1,SPT:1}},
+ {id:'hands_on',label:'Hands-On',physical:7,mind:3,desc:'You understand the world instinctively through action and physical engagement, while retaining room for thought and judgment.',mindWeights:{INT:1,WIS:1,SPT:1}},
+ {id:'instinctive',label:'Instinctive',physical:6,mind:4,desc:'You read the moment through practiced attention and immediate bodily response, responding to shifting circumstances before analysis catches up.',mindWeights:{INT:1,WIS:4,SPT:2}},
+ {id:'versatile',label:'Versatile',physical:5,mind:5,desc:'Body and mind begin in balance; neither physical capability nor inward understanding takes the lead.',mindWeights:{INT:1,WIS:1,SPT:1}},
+ {id:'inventive',label:'Inventive',physical:4,mind:6,desc:'Unfamiliar problems invite imaginative connections and new approaches. That talent is distinct from learned crafts or formal schooling.',mindWeights:{INT:4,WIS:1,SPT:2}},
+ {id:'analytical',label:'Analytical',physical:3,mind:7,desc:'Reasoning, patterns and unfamiliar problems make intuitive sense to you, independently of any formal education.',mindWeights:{INT:5,WIS:2,SPT:1}},
+ {id:'perceptive',label:'Perceptive',physical:3,mind:7,desc:'Subtle details, changing circumstances and practical judgment come naturally before practiced expertise.',mindWeights:{INT:2,WIS:5,SPT:1}},
+ {id:'strong_willed',label:'Strong-Willed',physical:3,mind:7,desc:'Inner resolve and concentration carry particular strength, though they do not amount to learned magic or spells.',mindWeights:{INT:1,WIS:2,SPT:5}},
+ {id:'fully_mind',label:'Fully Mind',physical:0,mind:10,desc:'Your natural advantage lies entirely in understanding, perception and inward resolve. Your physique remains visible, but does not grant generated physical points.',mindWeights:{INT:1,WIS:1,SPT:1}}
+];
+const dispositions=[['none','Not set'],['curious','Curious'],['gentle','Gentle'],['resolute','Resolute'],['reserved','Reserved']];
+const dispositionText={none:'Optional and narrative-only. No attribute or gameplay modifiers.',curious:'An inquisitive bearing, ready to look closer. Portrayal only.',gentle:'An approachable, patient bearing. Portrayal only.',resolute:'A firm and composed expression. Portrayal only.',reserved:'An inward, measured manner. Portrayal only.'};
+const conditions={
+ // Review-only shortlist, curated from issue #74's 48 research candidates.
+ // These are NOT selectedCreatorTraitIds or granted gameplay modifiers.
+ negative:[
+ {id:'sickly',name:'Sickly',line:'Greater vulnerability to genuine illness and slower recovery.',text:'Illness may take a heavier toll, and recovery may demand more time or care. Being sickly does not mean beginning with a disease.',stats:'Potentially no primary-attribute change. Disease and recovery vulnerability only if owned.',dependency:'TM-11 · Health, disease and recovery',conflicts:'Review overlap with Quick Healer; never invent a persistent illness.'},
+ {id:'frail',name:'Frail',line:'Harder physical injury and impact recovery.',text:'A genuine blow or injury may have more lasting consequences. Frame size alone does not make a character frail.',stats:'Possible VIT disadvantage; amount not approved.',dependency:'TM-11 · Injury and recovery',conflicts:'Distinct from Sickly: injury burden, not illness susceptibility.'},
+ {id:'easily_winded',name:'Easily Winded',line:'Higher cost for prolonged physical exertion.',text:'A long climb, sustained labor or drawn-out escape drains stamina more quickly when the action truly consumes it.',stats:'Possible CON disadvantage; amount not approved.',dependency:'TM-08 · Exertion and energy use',conflicts:'Do not duplicate regular CON/Stamina penalties.'},
+ {id:'clumsy',name:'Clumsy',line:'Less reliable precision in delicate tasks.',text:'Fine toolwork, delicate repairs or sensitive handling demand extra care when the game actually tests them.',stats:'Possible DEX disadvantage; amount not approved.',dependency:'TM-15 · Craft and tool precision',conflicts:'Review conflict with Deft; distinct from ordinary Clumsy skill rank.'},
+ {id:'unobservant',name:'Unobservant',line:'Reduced chance to notice supported subtle cues.',text:'Quiet warnings and small changes slip past more easily, but the game never erases information already learned.',stats:'Possible WIS disadvantage; amount not approved.',dependency:'TM-16 · Field perception and awareness',conflicts:'Review conflict with Keen-Eyed; no invented secret information.'},
+ {id:'slow_study',name:'Slow Study',line:'Complex study requires more genuine learning effort.',text:'Abstract lessons and difficult techniques take longer to master through eligible study, independent of innate Intelligence.',stats:'Possible INT effect or no starting-stat change.',dependency:'TM-17 · Study and knowledge progression',conflicts:'Review conflict with Quick Study; no deleting earned knowledge.'},
+ {id:'underpowered',name:'Underpowered',line:'Harder heavy-force efforts and load handling.',text:'Lifting heavy burdens, forcing an obstacle or applying raw leverage requires more effort than usual.',stats:'Possible STR disadvantage; amount not approved.',dependency:'TM-03 · Physical force and equipment',conflicts:'Review conflict with Mighty; distinguish from Weak Grip.'},
+ {id:'weak_grip',name:'Weak Grip',line:'Unreliable holds and equipment retention.',text:'Maintaining a grasp while climbing, grappling or holding equipment becomes less certain under true pressure.',stats:'Possible STR and DEX disadvantages; magnitudes not approved.',dependency:'TM-03 · Holds, grip and disarming',conflicts:'Not a generic STR loss; distinct from Underpowered.'},
+ {id:'stumbling',name:'Stumbling',line:'Slower recovery from footing errors.',text:'A sudden shove, loose stone or unstable surface leaves you less certain of your footing.',stats:'Possible AGI disadvantage; amount not approved.',dependency:'TM-02 · Footing, balance and recovery',conflicts:'Review conflict with Surefooted; avoid inventing terrain hazards.'},
+ {id:'faltering',name:'Faltering',line:'Concentration is easier to interrupt.',text:'Maintaining difficult channeling under genuine pressure becomes less reliable, without forbidding magic outright.',stats:'Possible SPT disadvantage; amount not approved.',dependency:'TM-06 · Channel stability and interruption',conflicts:'Review conflict with Attuned; no unsupported universal spell penalty.'},
+ {id:'mana_hungry',name:'Mana-Hungry',line:'Higher cost for eligible magical workings.',text:'Sustained or complex magical practice consumes more of your reserve when the spell system charges a real cost.',stats:'Possible SPT relation or persistent-only cost.',dependency:'TM-06 · Spell MP cost',conflicts:'Review overlap with Wellspring and cost-reduction boons.'},
+ {id:'awkward',name:'Awkward',line:'Harder first impressions and rapport.',text:'New acquaintances are slower to settle into conversation, without limiting what you may say or whom you may befriend.',stats:'Possible CHA disadvantage or no starting-stat change.',dependency:'TM-05 · Social rapport checks',conflicts:'Not physical appearance; review overlap with Silver-Tongued.'},
+ {id:'hard_gainer',name:'Hard Gainer',line:'Reduced return from meaningful strength training.',text:'Physical strength takes more sustained, properly recovered effort to develop; trivial repeated actions still give no gain.',stats:'Could have no starting-stat change.',dependency:'TM-09 / TM-10 · Stat growth and recovery',conflicts:'Review conflict with Hard Worker; do not suppress all progression.'},
+ {id:'gullible',name:'Gullible',line:'More vulnerable to real deception contests.',text:'Misleading offers can be harder to judge when a legitimate social contest occurs. The player still chooses their response.',stats:'May have no primary-attribute change.',dependency:'TM-05 · Social judgment contests',conflicts:'No forced dialogue, scripted purchase or player-agency loss.'}
+ ],
+ positive:[
+ {id:'quick_healer',name:'Quick Healer',line:'Improved recovery after verified injury.',text:'Given actual rest and care, injuries settle more readily. This is not immunity to harm or free instant healing.',stats:'Possible VIT relation or recovery-only benefit.',dependency:'TM-07 / TM-11 · Recovery',conflicts:'Review stacking with lineage regeneration and Sickly.'},
+ {id:'surefooted',name:'Surefooted',line:'More reliable footing and recovery.',text:'You hold your position on uncertain ground and recover cleanly from supported slips or shoves.',stats:'Possible AGI relation or persistent-only footing.',dependency:'TM-02 · Movement and balance',conflicts:'Review conflict with Stumbling; no passive guaranteed dodge.'},
+ {id:'keen_eyed',name:'Keen-Eyed',line:'Better recognition of genuine field clues.',text:'The faint track or small warning catches your attention sooner, if the surrounding world actually contains it.',stats:'Possible WIS relation; magnitude not approved.',dependency:'TM-16 · Awareness and field cues',conflicts:'Review overlap with lineage Keen Senses and Unobservant.'},
+ {id:'vigorous',name:'Vigorous',line:'Improved stamina economy and recovery.',text:'After real exertion, you regain your readiness more steadily within the limits of rest, energy and recovery.',stats:'Possible CON relation or resource-only benefit.',dependency:'TM-07 · Stamina recovery',conflicts:'Review lineage stamina traits and Easily Winded.'},
+ {id:'composed',name:'Composed',line:'Steadier response to real pressure.',text:'Unexpected strain is less likely to upset your focus when an actual morale or pressure test is made.',stats:'No starting-stat change required.',dependency:'TM-05 · Morale and pressure',conflicts:'Cannot force calm dialogue or override player choice.'},
+ {id:'mighty',name:'Mighty',line:'Outstanding physical force when validated.',text:'You have exceptional force for lifting, pushing and power-based maneuvers, if the approved starting build can afford it.',stats:'Possible STR benefit with an individually approved cost.',dependency:'TM-03 · Force and attribute purchase',conflicts:'Review conflict with Underpowered; no free attributes.'},
+ {id:'deft',name:'Deft',line:'Finer control with legitimate tools and handling.',text:'Delicate work and fine manipulation come more naturally when accuracy and quality genuinely matter.',stats:'Possible DEX benefit; amount and price not approved.',dependency:'TM-15 · Crafting and precision',conflicts:'Review conflict with Clumsy; avoid double-counting DEX.'},
+ {id:'fleetfooted',name:'Fleetfooted',line:'Better movement and repositioning efficiency.',text:'You cross changing ground or reposition more easily during movements the game truly resolves.',stats:'Possible AGI benefit or movement-only effect.',dependency:'TM-02 · Movement economy',conflicts:'Distinct from Surefooted footing stability.'},
+ {id:'softstep',name:'Softstep',line:'Reduced legitimate movement noise.',text:'Your footsteps carry less sound during supported stealth movement, without granting invisibility.',stats:'May have no starting-stat change.',dependency:'TM-04 · Movement noise and stealth',conflicts:'Audit duplicate effects against Halfling Quiet Step.'},
+ {id:'silver_tongued',name:'Silver-Tongued',line:'Stronger eligible negotiation and persuasion.',text:'You express arguments with unusual clarity when a real social contest exists, but no one must agree with you.',stats:'Possible CHA benefit or contest-only advantage.',dependency:'TM-05 · Social negotiation',conflicts:'Review conflict with Awkward/Unconvincing; no guaranteed loyalty.'},
+ {id:'attuned',name:'Attuned',line:'More stable supernatural channeling.',text:'Resonance and concentration hold more firmly under genuine magical pressure, without adding learned spells.',stats:'Possible SPT benefit; amount and price not approved.',dependency:'TM-06 · Spell channel stability',conflicts:'Review conflict with Faltering; no free spell unlocks.'},
+ {id:'wellspring',name:'Wellspring',line:'Modest bounded mana regeneration.',text:'Your magical reserve returns more steadily through genuine magical recovery, not from nowhere.',stats:'May have no starting-stat change.',dependency:'TM-07 · MP regeneration',conflicts:'Audit stacking with Elf Arcane Attunement and Mana-Hungry.'},
+ {id:'quick_study',name:'Quick Study',line:'Faster genuine complex-study progression.',text:'Unfamiliar technical lessons are absorbed more efficiently when an actual study process awards progress.',stats:'Possible INT relation or progression-only effect.',dependency:'TM-17 · Study and knowledge',conflicts:'Review conflict with Slow Study; no instant knowledge.'},
+ {id:'hard_worker',name:'Hard Worker',line:'Better conversion of meaningful training effort.',text:'Consistent work yields a little more from legitimate strength-training load, subject to fatigue, food and recovery.',stats:'May have no starting-stat change.',dependency:'TM-09 / TM-10 · Stat training',conflicts:'Review conflict with Hard Gainer; no trivial-action grind.'}
+ ]
+};
+const sumValues=obj=>Object.values(obj).reduce((a,b)=>a+b,0);
+const emptyPoints=()=>Object.fromEntries(ATTRIBUTE_KEYS.map(k=>[k,0]));
+function weightedAllocate(amount,weights){
+ const out=emptyPoints();if(!amount)return out;
+ const all=Object.entries(weights),total=all.reduce((s,[,w])=>s+w,0);
+ const entries=all.map(([key,weight],order)=>({key,order,raw:amount*weight/total}));
+ for(const entry of entries)out[entry.key]=Math.floor(entry.raw);
+ let rest=amount-entries.reduce((s,e)=>s+out[e.key],0);
+ for(const entry of [...entries].sort((a,b)=>(b.raw%1)-(a.raw%1)||a.order-b.order)){if(rest<=0)break;out[entry.key]++;rest--}
+ return out;
+}
+function getGeneratedProfile(build,aptitude){
+ const physical=aptitude.physical,mindCount=aptitude.mind;
+ const powerCount=Math.round(physical*build.power),prowessCount=physical-powerCount;
+ const power=weightedAllocate(powerCount,build.wPower),prowess=weightedAllocate(prowessCount,build.wProwess);
+ const mind=weightedAllocate(mindCount,aptitude.mindWeights);
+ const physicalBonus=emptyPoints(),bonus=emptyPoints();
+ for(const k of ATTRIBUTE_KEYS){physicalBonus[k]=power[k]+prowess[k];bonus[k]=physicalBonus[k]+mind[k];}
+ return {power,prowess,mind,physicalBonus,bonus,physical,mindCount,powerCount,prowessCount};
+}
+function getDerivedStats(){
+ const source=BASES[state.lineage]||BASES['lineage.human'];
+ const baseline=Object.fromEntries(ATTRIBUTE_KEYS.map((key,i)=>[key,source[i]]));
+ const direct=emptyPoints();
+ function shift(plus,minus){direct[plus]++;direct[minus]--}
+ // Current repository zero-sum sex, age and height biases. Future lineage-specific sex policies held.
+ if(state.sex==='female')shift('AGI','STR');
+ if(state.age==='young_adult')shift('AGI','WIS');
+ if(state.age==='prime')shift('STR','AGI');
+ if(state.age==='mature')shift('WIS','STR');
+ if(state.age==='senior')shift('WIS','VIT');
+ if(state.height==='short')shift('AGI','STR');
+ if(state.height==='tall')shift('STR','AGI');
+ const b=builds.find(x=>x.id===state.build)||builds[4];
+ const a=aptitudes.find(x=>x.id===state.aptitude)||aptitudes[3];
+ const generated=getGeneratedProfile(b,a),attrs=emptyPoints();
+ for(const k of ATTRIBUTE_KEYS){attrs[k]=baseline[k]+direct[k]+generated.bonus[k]}
+ const [hpLine,mpLine,stLine]=RESOURCE_LINEAGE[state.lineage]||[0,0,0];
+ const resources={hp:120+hpLine+4*(attrs.CON-10+attrs.VIT-10),mp:60+mpLine+4*(attrs.INT-10+attrs.SPT-10),stamina:100+stLine+3*(attrs.AGI-10+attrs.CON-10+attrs.VIT-10)};
+ return {attrs,baseline,direct,bonus:generated.bonus,power:generated.power,prowess:generated.prowess,mind:generated.mind,
+  physicalBonus:generated.physicalBonus,resources,physical:generated.physical,mindTotal:generated.mindCount,
+  build:b,aptitude:a,total:sumValues(attrs),physicalPower:generated.powerCount,physicalProwess:generated.prowessCount};
+}
+function formatBonus(vector){
+ const text=ATTRIBUTE_KEYS.filter(k=>vector[k]>0).map(k=>`+${vector[k]} ${k}`);
+ return text.length?text.join(' · '):'No generated points';
+}
+function firstOrFallback(){return state.firstName.trim()||'This character'}
+function fullName(){return [state.firstName.trim(),state.lastName.trim()].filter(Boolean).join(' ')}
+function syncName(){state.name=fullName()}
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const el=id=>document.getElementById(id), findScenario=id=>scenarios.find(x=>x.id===id);
+function stageValid(i){
+ if(i===0)return !!state.lineage;
+ if(i===1)return Boolean(state.firstName.trim()&&state.sex&&state.age&&state.height&&state.build&&state.aptitude);
+ if(i===2)return !!state.continent;
+ if(i===3)return !!state.region;
+ if(i===4)return !!state.settlement;
+ if(i===5)return !!(state.scenario&&state.pool==='ordinary'&&findScenario(state.scenario)?.pool==='ordinary');
+ if(i===6)return state.summaryReviewed&&stageValid(5);
+ if(i===7)return !!(state.entryChoice&&state.entryChoice.scenario===state.scenario&&stageValid(6));
+ return false;
+}
+function canVisit(i){for(let n=0;n<i;n++)if(!stageValid(n))return false;return true}
+function nav(i){
+ if(!canVisit(i)){state.validation=true;render();return}
+ if(i===6)state.summaryReviewed=true;
+ state.stage=i;state.validation=false;render();scrollTo({top:0,behavior:'smooth'});
+}
+function invalidateOpening(){state.summaryReviewed=false;state.entryChoice=null;}
+function options(ids,v){return ids.map(([id,label])=>`<option value="${esc(id)}" ${id===v?'selected':''}>${esc(label)}</option>`).join('')}
+function getLineageName(){return lineages.find(x=>x[0]===state.lineage)?.[1]||'Human'}
+function getName(){return firstOrFallback()}
+function possessive(){const n=getName();return n==='This character'?"This character's":`${n}'s`}
+function pronouns(){return state.sex==='female'?{subject:'she',object:'her',possessive:'her',person:'woman'}:{subject:'he',object:'him',possessive:'his',person:'man'}}
+function namedLineage(){const l=getLineageName().toLowerCase();return `${/^[aeiou]/.test(l)?'an':'a'} ${l} ${pronouns().person}`}
+function generatedPhrase(a,b){return `${a} Power and ${b} Prowess`}
+function narrativeFor(key,d=getDerivedStats()){
+ const n=getName(),p=pronouns(),pos=possessive(),lineage=getLineageName();
+ if(key==='sex'){
+  return state.sex==='female'
+   ? `As ${namedLineage()}, ${n} begins a little more agile, trading one point of Strength for Agility against the ${lineage} lineage baseline.`
+   : `${n} starts with the unadjusted ${lineage} lineage attributes. This sex selection makes no separate change to physical or mental stats.`;
+ }
+ if(key==='age'){
+  return ({
+   young_adult:`In young adulthood, ${n} is quicker to act but has less seasoned judgment. ${p.subject==='she'?'She':'He'} gains Agility at the expense of Wisdom.`,
+   prime:`In ${p.possessive} prime, ${n} has a little more raw strength, balanced by slightly less agility.`,
+   mature:`Reaching maturity, ${n} draws on steadier judgment as raw physical strength eases from ${p.possessive} prime.`,
+   senior:`With later years, ${n} has grown wiser, although the body's natural reserve and recovery are not quite what they were.`
+  })[state.age]||'';
+ }
+ if(key==='height'){
+  return ({
+   short:`A shorter-than-average ${lineage.toLowerCase()} frame gives ${n} a little more agility at the expense of strength.`,
+   normal:`At a height typical of ${p.possessive} lineage, ${n} receives no additional Strength or Agility shift.`,
+   tall:`A taller-than-average ${lineage.toLowerCase()} frame lends ${n} greater strength and reach, trading away a little agility.`
+  })[state.height]||'';
+ }
+ if(key==='build'){
+  const b=d.build;
+  if(!d.physical)return `${pos} ${b.label.toLowerCase()} frame shapes ${p.possessive} appearance. With Fully Mind aptitude, it assigns no physical bonus points.`;
+  return `${pos} ${b.label.toLowerCase()} frame ${b.power>.58?'leans toward force and endurance':b.power<.42?'favors controlled, nimble movement':'balances strength with movement'}. For this ${lineage.toLowerCase()} ${p.person}, ${d.physicalPower} physical points favor Power and ${d.physicalProwess} favor Prowess.`;
+ }
+ if(key==='aptitude'){
+  const a=d.aptitude;
+  if(a.id==='fully_physical')return `${n} finds ${p.possessive} natural advantage in bodily strength, endurance and movement, without beginning with extra mental points. Training and learning remain open to ${p.object}.`;
+  if(a.id==='fully_mind')return `${n} begins with a strong natural gift for thought, perception and inward resolve rather than extra bodily capability. ${p.subject==='she'?'Her':'His'} physical appearance is unchanged.`;
+  const plain={
+   hands_on:`${n} learns most readily through doing and direct physical engagement, while retaining natural understanding and judgment.`,
+   instinctive:`${n} responds through immediate physical engagement and a keen sense for changing situations. This natural judgment is not the same as learned experience.`,
+   versatile:`${n} begins with a balanced measure of physical capability and inward understanding.`,
+   inventive:`${n} sees fresh possibilities in familiar problems and quickly devises alternative approaches, independently of any formal training.`,
+   analytical:`${n} has a natural gift for recognizing patterns and reasoning through unfamiliar problems, independent of formal schooling.`,
+   perceptive:`${n} quickly notices subtle changes and weighs circumstances with natural insight.`,
+   strong_willed:`${n} possesses strong inward resolve and concentration, without automatically knowing any magic.`
+  }[a.id]||a.desc;
+  return `${plain} As ${namedLineage()}, ${n} receives ${a.physical} generated physical points and ${a.mind} Mind points.`;
+ }
+ return '';
+}
+function effectFor(key,d=getDerivedStats()){
+ if(key==='sex')return state.sex==='female'?'+1 AGI · −1 STR':'No additional attribute shift';
+ if(key==='age')return ({young_adult:'+1 AGI · −1 WIS',prime:'+1 STR · −1 AGI',mature:'+1 WIS · −1 STR',senior:'+1 WIS · −1 VIT'})[state.age]||'';
+ if(key==='height')return ({short:'+1 AGI · −1 STR',normal:'No additional attribute shift',tall:'+1 STR · −1 AGI'})[state.height]||'';
+ if(key==='build')return `Physical generated: ${formatBonus(d.physicalBonus)}  ·  ${d.physicalPower} Power / ${d.physicalProwess} Prowess`;
+ if(key==='aptitude')return `Mind generated: ${formatBonus(d.mind)}  ·  ${d.physical} Physical / ${d.mindTotal} Mind (10 total)`;
+ return '';
+}
+function narrativeCell(key){return `<div class="narrative-cell" aria-live="polite"><p class="choice-narrative" data-narrative="${key}">${esc(narrativeFor(key))}</p><span class="choice-effect">${esc(effectFor(key))}</span></div>`}
+function summarySentence(){
+ const n=fullName()||getName(),a=aptitudes.find(x=>x.id===state.aptitude),b=builds.find(x=>x.id===state.build),pr=pronouns();
+ const height={short:'short',normal:'average-height',tall:'tall'}[state.height]||'average-height';
+ const age={young_adult:'a young adult',prime:`in ${pr.possessive} prime`,mature:'mature',senior:'senior'}[state.age]||'adult';
+ const aptitude={fully_physical:'a strongly physical aptitude',hands_on:'an aptitude for hands-on learning',instinctive:'an instinctive aptitude',versatile:'a balanced aptitude for body and mind',inventive:'an inventive aptitude',analytical:'an analytical aptitude',perceptive:'a perceptive aptitude',strong_willed:'a strong-willed aptitude',fully_mind:'a deeply mind-oriented aptitude'}[state.aptitude]||`${a?.label.toLowerCase()} aptitude`;
+ const agePart=state.age==='prime'?age:state.age==='young_adult'?'in early adulthood':state.age==='mature'?'in mature adulthood':'in later life';
+ const article=/^[aeiou]/.test(height)?'an':'a';
+ return `${n} is ${article} ${height}, ${b?.label.toLowerCase()||'proportioned'} ${pr.person} of ${getLineageName()} lineage ${agePart}, with ${aptitude}.`;
+}
+function renderRail(){
+ const d=getDerivedStats();
+ el('railName').textContent=fullName()||'Unnamed Wanderer';
+ el('railNav').innerHTML=steps.map((s,i)=>`<button type="button" class="navbtn ${state.stage===i?'active':''}" data-nav="${i}" ${canVisit(i)?'':'disabled'} aria-current="${state.stage===i?'step':'false'}"><span class="num">${i+1}</span><span>${s}</span>${stageValid(i)?'<span class="done">✓</span>':''}</button>`).join('');
+ el('resources').innerHTML=[['hp','HP',d.resources.hp,120],['mp','MP',d.resources.mp,60],['stamina','STAMINA',d.resources.stamina,100]].map(([id,label,value,baseline])=>`<div class="resbar ${id}" role="img" aria-label="${label} ${value}, comparative capacity bar, not current over maximum" title="Source-based attribute maxima projection excluding body, equipment, Legacy, active conditions and World Entry. Comparative scale, not current HP/MP/Stamina."><div class="resbar-head"><span>${label}</span><strong>${value}</strong></div><div class="resbar-track"><span class="resbar-fill" style="width:${Math.max(3,Math.min(100,100*value/(baseline*1.8)))}%"></span></div></div>`).join('');
+ el('statgroups').innerHTML=groups.map(g=>`<section class="statgroup" aria-label="${g.name} attributes"><div class="grouplabel">${g.name}</div><div class="groupvalues">${g.keys.map(k=>`<div class="statline"><span title="${esc(effects[k])}">${k}</span><strong>${d.attrs[k]}</strong></div>`).join('')}</div></section>`).join('');
+}
+function renderStage(){
+ const main=document.querySelector('main.content');main?.classList.toggle('identity-stage',state.stage===1);
+ el('stepTitle').textContent=steps[state.stage];
+ el('sectionLabel').textContent=['ANCESTRY','','STARTING GEOGRAPHY','STARTING GEOGRAPHY','STARTING GEOGRAPHY','ORIGIN & OPENING','CHARACTER SUMMARY','WORLD ENTRY'][state.stage];
+ el('stepSubtitle').textContent=['Choose a lineage.','Define appearance and aptitude.','Choose a continent.','Choose a region.','Choose a settlement.','Preview an eligible opening.','Review the character before the story.','Make the first decision of the opening.'][state.stage];
+ if(state.stage===0)return renderLineage();
+ if(state.stage===1)return renderIdentity();
+ if(state.stage>=2&&state.stage<=4)return renderGeography();
+ if(state.stage===5)return renderWorldEntry();
+ if(state.stage===6)return renderSummary();
+ if(state.stage===7)return renderOpening();
+ return '';
+}
+function card(id,name,meta,category,selected,geoCard=false){return `<button type="button" class="optioncard ${geoCard?'cardgeo':''} ${selected?'selected':''}" data-pick="${esc(category)}" data-value="${esc(id)}" aria-pressed="${selected}"><div class="cardart"><span class="initial">${esc(name.slice(0,1))}</span></div><div class="optiontitle">${esc(name)}</div><div class="optionmeta">${esc(meta)}</div></button>`}
+function renderLineage(){return `<section class="section" aria-label="Choose your lineage"><div class="optiongrid">${lineages.map(([id,name])=>card(id,name,'Playable ancestry','lineage',state.lineage===id)).join('')}</div></section>${footer()}`}
+function identityRow(label,key){return `<div class="profile-row" role="group" aria-label="${esc(label)}"><div class="profile-label">${esc(label)}</div><div class="profile-choices">${identityChoices[key].map(([id,name])=>`<button type="button" class="profile-choice ${state[key]===id?'selected':''}" data-profile="${key}" data-choice-value="${id}" aria-pressed="${state[key]===id}">${esc(name)}</button>`).join('')}</div>${narrativeCell(key)}</div>`}
+function palette(label,key,colors){return `<div class="fieldgroup"><span class="fieldlabel">${label}</span><div class="palette" role="group" aria-label="${label}">${colors.map((color,i)=>`<button type="button" class="swatch ${state[key]===i?'selected':''}" data-color="${key}" data-index="${i}" style="background:${color}" title="${label} color ${i+1}" aria-label="${label} color ${i+1}" aria-pressed="${state[key]===i}"></button>`).join('')}</div></div>`}
+function renderPortrait(inline=false){return `<section class="portrait ${inline?'portrait-inline':''}" aria-label="Character portrait preview"><div class="portraitart" role="img" aria-label="Illustrative silhouette, not a generated or saved portrait"></div><div class="portraitfoot"><h3>${esc(fullName()||'Unnamed Wanderer')}</h3><p id="portraitCaption">${esc(summarySentence())}</p><button type="button" class="outlinebtn" id="generate">✦ Generate portrait prompt</button><p class="portrait-caveat">Prompt handoff only · no saved portrait or image generation</p></div></section>`}
+function selectorRow(label,key,catalog,selectedId){
+ const d=getDerivedStats();
+ return `<div class="profile-row ${key}-row" role="group" aria-label="${esc(label)}"><div class="profile-label">${esc(label)}</div><div class="profile-choices">${catalog.map(x=>{
+ const dist=key==='build'?getGeneratedProfile(x,d.aptitude):getGeneratedProfile(d.build,x);
+ const points=key==='build'?dist.physicalBonus:dist.mind;
+ const effectLabel=key==='build'?'Physical':'Mind';
+ return `<button type="button" class="profile-choice ${selectedId===x.id?'selected':''}" data-profile="${key}" data-choice-value="${x.id}" aria-pressed="${selectedId===x.id}" title="${esc(x.desc)}"><strong>${esc(x.label)}</strong><small>${effectLabel}: ${esc(formatBonus(points))}</small></button>`;
+ }).join('')}</div>${narrativeCell(key)}</div>`;
+}
+function conditionGroupItem(group,label){
+ const selectedId=group==='negative'?state.inspectedNegative:state.inspectedPositive;
+ const selected=conditions[group].find(c=>c.id===selectedId)||conditions[group][0];
+ return `<div class="condition-group" role="group" aria-label="${esc(label)} conditions">
+ <div class="condition-side-label" aria-hidden="true">${esc(label)}</div>
+ <div class="condition-options">${conditions[group].map(c=>`<button type="button" class="condition-option ${selected.id===c.id?'inspected':''}" data-inspect-condition="${esc(c.id)}" data-group="${group}" aria-pressed="${selected.id===c.id}" aria-label="Inspect planned ${esc(label.toLowerCase())} condition: ${esc(c.name)}">${esc(c.name)}</button>`).join('')}</div>
+ <div class="condition-detail" aria-live="polite"><p class="condition-inspect-kicker">Concept preview · not selected for character</p><h4>${esc(selected.name)}</h4><p>${esc(selected.text)}</p><div class="condition-effect">${esc(selected.line)}</div><p class="condition-tradeoff"><b>Attribute relation:</b> ${esc(selected.stats)}</p><p class="condition-conflict"><b>Interaction:</b> ${esc(selected.conflicts)}</p><small>${esc(selected.dependency)} · No approved stat change, cost or credit</small></div>
+ </div>`;
+}
+function renderIdentity(){
+ const d=getDerivedStats();
+ const delta=(key)=>d.attrs[key]-d.baseline[key];
+ return `<div class="identity-layout"><section class="section identity-controls">
+ <div class="profile-row name-row" role="group" aria-label="Name"><div class="profile-label">Name</div><div class="name-inputs"><input class="textinput" id="firstName" aria-label="First name" maxlength="40" value="${esc(state.firstName)}" placeholder="First name" autocomplete="off"/><input class="textinput" id="lastName" aria-label="Last name (optional)" maxlength="40" value="${esc(state.lastName)}" placeholder="Last name" autocomplete="off"/><button class="dice" type="button" id="nameDice" aria-label="Randomize first and last name only" title="Randomize first and last name only">⚄</button></div><div class="narrative-cell name-note">The first name identifies your character in the story. A family name is optional.</div></div>
+ <div class="profile-rows">${identityRow('Sex','sex')}${identityRow('Age','age')}${identityRow('Height','height')}
+ ${selectorRow('Build','build',builds,state.build)}
+ ${selectorRow('Aptitude','aptitude',aptitudes,state.aptitude)}</div>
+ <div class="allocation-note" role="status">Every character begins with a <b>variable 90-point lineage and identity base</b> plus <b>10 automatically distributed points</b>. Build governs the physical share; Aptitude balances Physical and Mind. There are no freely assigned points. <span>Power ${d.physicalPower} · Prowess ${d.physicalProwess} · Mind ${d.mindTotal} · Total ${d.total}</span></div>
+ <details class="disposition-block"><summary>Disposition (optional, portrayal only)</summary><div class="profile-choices">${dispositions.map(([id,label])=>`<button type="button" class="profile-choice ${state.disposition===id?'selected':''}" data-profile="disposition" data-choice-value="${id}" aria-pressed="${state.disposition===id}">${esc(label)}</button>`).join('')}</div><p class="profile-note">${esc(dispositionText[state.disposition]||dispositionText.none)}</p></details>
+ <div class="condition-section"><div class="condition-title"><h3>Conditions</h3><small>14 negative + 14 positive research profiles · inspect only</small></div>
+ ${conditionGroupItem('negative','Negative')}${conditionGroupItem('positive','Positive')}
+ <p class="condition-caption">Select a tile to inspect its possible effect on the right. Conditions are not part of the 90 + 10 total; prices, credits, stacking and gameplay execution remain unapproved.</p></div>
+ <div class="palettewrap">${palette('Skin','skin',swatches.skin)}${palette('Hair','hair',swatches.hair)}${palette('Eyes','eyes',swatches.eyes)}</div>
+ <div class="validation ${state.validation&&!state.firstName.trim()?'show':''}" role="alert">Enter at least a first name before continuing.</div>
+ </section></div>
+ <section class="section attributeinfo" aria-label="Attributes"><div class="attribtable">${groups.map(g=>`<section class="attribrow" aria-label="${g.name} attributes"><div class="attrib-gutter" aria-hidden="true">${g.name}</div><div class="attrib-stats">${g.keys.map(k=>{const diff=delta(k);return `<div class="attrrow" title="${esc(`${k}: lineage ${d.baseline[k]}, sex/age/height ${d.direct[k]}, build/aptitude ${d.bonus[k]}`)}"><span class="attrkey">${k}<small>${attributeNames[k]}</small></span><strong>${d.attrs[k]}${diff?`<small class="delta ${diff<0?'neg':''}">${diff>0?'+':''}${diff}</small>`:''}</strong></div>`}).join('')}</div><p class="attdesc">${esc(g.desc)}</p><div class="attrib-effects">${g.keys.map(k=>`<div class="eff"><strong>${k}</strong><span>${esc(effects[k])}</span></div>`).join('')}</div></section>`).join('')}</div></section>
+ ${renderPortrait(true)}
+ ${footer('Randomize identity')}`;
+}
+function renderGeography(){
+ const g=geo.find(x=>x[0]===state.continent)||geo[5];
+ const regionChoices=g[2];const locs=geoKnown[state.region]||[];
+ const content=state.stage===2?`<div class="optiongrid two">${geo.map(([id,name])=>card(id,name,'Authored macro geography','continent',state.continent===id,true)).join('')}</div>`:
+ state.stage===3?`<div class="optiongrid two">${regionChoices.map(name=>card(name,name,g[1],'region',state.region===name,true)).join('')}</div>`:
+ locs.length?`<div class="optiongrid two">${locs.map(name=>card(name,name,state.region,'settlement',state.settlement===name,true)).join('')}</div>`:
+ `<div class="inlinealert">This preview does not include this region's settlement fixture. No starting site is invented.</div>`;
+ const context=state.stage===2?'':`<div class="selection-context"><span class="pill">${esc(g[1])}</span>${state.stage===4?`<span class="pill">${esc(state.region)}</span>`:''}</div>`;
+ return `<section class="section" aria-label="${esc(steps[state.stage])} selections">${context}${content}</section>${footer()}`;
+}
+function renderWorldEntry(){
+ const items=scenarios.filter(x=>x.pool===state.pool);
+ return `<section class="section" aria-label="World Entry selection"><div class="tabs"><button type="button" class="tab ${state.pool==='ordinary'?'active':''}" data-pool="ordinary">Ordinary Core · 4</button><button type="button" class="tab ${state.pool==='wilderness'?'active':''}" data-pool="wilderness">Hardcore Wilderness · Read only</button><button type="button" class="tab" disabled title="Prestige eligibility is not available">World-Stray · Locked</button></div>
+ <p class="entry-guide">Select the opening narrative here. The character is not submitted until the first decision in step 8, after Summary. Actual Save publication remains unavailable in this design preview.</p>
+ ${state.pool==='wilderness'?'<div class="inlinealert">Hardcore openings are editorial only. Read the draft, but you cannot select it as a playable start.</div>':''}
+ <div class="storygrid">${items.map(s=>`<button type="button" class="storycard ${state.scenario===s.id?'selected':''} ${state.pool==='wilderness'?'review':''}" data-story="${esc(s.id)}" aria-pressed="${state.pool==='ordinary'&&state.scenario===s.id}"><span>${state.pool==='wilderness'?'Read editorial draft':(state.scenario===s.id?'✓ Opening selected':'Select opening')}</span><h3>${esc(s.name)}</h3><p>${esc(s.blurb)}</p><span>${state.pool==='wilderness'?'Preview only':'First story choice occurs in step 8'}</span></button>`).join('')}</div></section>${footer()}`;
+}
+function renderSummary(){
+ const s=findScenario(state.scenario);
+ return `<div class="finalgrid"><div><section class="section"><div class="secthead"><h2>${esc(fullName()||getName())} · ${esc(getLineageName())}</h2></div><div class="detailbox"><h3>Character</h3><p class="final-narrative">${esc(summarySentence())}</p><div class="line"><span>Identity</span><strong>${esc(state.sex)}, ${esc(state.age)}, ${esc(builds.find(x=>x.id===state.build)?.label||state.build)} · ${esc(aptitudes.find(x=>x.id===state.aptitude)?.label||state.aptitude)}</strong></div><div class="line"><span>Attributes</span><strong>${getDerivedStats().total} total · 90 base + 10 automatically generated</strong></div><div class="line"><span>Conditions</span><strong>Not yet selectable</strong></div><div class="line"><span>Starting geography</span><strong>${esc(state.settlement||'Not selected')}</strong></div><div class="line"><span>Continent / Region</span><strong>${esc((geo.find(x=>x[0]===state.continent)||[])[1]||'')}, ${esc(state.region)}</strong></div><div class="line"><span>World Entry</span><strong>${esc(s?.name||'Not selected')}</strong></div></div><div class="detailbox"><h3>Legacy & succession</h3><div class="line"><span>Fresh Start / Heir Start</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Legacy preparations</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Selected benefits</span><strong class="ghost">Unavailable</strong></div></div><div class="detailbox"><h3>Starting state</h3><div class="line"><span>Skills & traits</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Equipment & currency</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Save slot / collision</span><strong class="ghost">Unavailable</strong></div></div></section></div><div>${renderPortrait()}<section class="section" style="margin-top:12px"><h2 style="font:normal 20px Georgia,serif;margin:0 0 12px">Your opening</h2><p class="subtle">${esc(s?.blurb||'Choose an ordinary Core opening.')}</p><p class="subtle" style="margin-top:12px">Continue to Opening to read the scene. Its first choice is the intended combined entry decision and character-submit transaction, held in this preview.</p></section></div></div>${footer()}`;
+}
+function renderOpening(){
+ const s=findScenario(state.scenario);
+ if(!s||s.pool!=='ordinary')return `<section class="section"><p class="inlinealert">Select an ordinary World Entry before reading the opening.</p><button type="button" class="outlinebtn" data-nav="5">Return to World Entry</button></section>`;
+ const chosen=state.entryChoice&&state.entryChoice.scenario===s.id?state.entryChoice:null;
+ const label=chosen?(chosen.choice==='a'?s.a:s.b):null;
+ const decision=chosen?
+ `<div class="opening-receipt" role="status"><strong>First decision recorded in this preview</strong><span>${esc(label)}</span></div><p>This first action is the proposed character-creation completion and World Entry circumstance selection in one transaction. In this offline review, it is recorded only in memory. No character, campaign, inventory or Save has been published.</p><p>The next story scene requires an accepted World site and authored action owner. The preview does not invent that continuation.</p><button type="button" class="outlinebtn" id="resetEntryChoice">Revisit the first decision (preview)</button>`:
+ `<h3>Your first decision</h3><p>The choice you make here is also the intended <strong>Finalize / Submit</strong> action for your character. In the live game, it must validate and commit this exact opening, its circumstance, and the character together, once. This preview records your choice only locally.</p><div class="opening-choices" role="group" aria-label="First World Entry decision"><button type="button" class="opening-choice" data-entry-choice="a"><span class="choice-name">${esc(s.a)}</span><span class="choice-meta">A · Choose opening &amp; submit (preview)</span></button><button type="button" class="opening-choice" data-entry-choice="b"><span class="choice-name">${esc(s.b)}</span><span class="choice-meta">B · Choose opening &amp; submit (preview)</span></button></div><p class="opening-caveat">Gameplay submission is held: the required World, scene, item and Save owners are not connected in this standalone preview.</p>`;
+ return `<section class="opening-sheet" aria-labelledby="openingSceneTitle"><div class="opening-kicker">The beginning · ${esc(s.name)}</div><h2 id="openingSceneTitle">${esc(s.name)}</h2><p class="opening-place">${esc(getName())} · ${esc(state.settlement)} · Ordinary Core · Editorial narrative</p><div class="opening-prose"><p>${esc(s.intro)}</p></div><div class="opening-decision" aria-live="polite">${decision}</div></section><div class="opening-actions"><button type="button" class="outlinebtn" id="backSummary">← Back to Summary</button><span class="hint">Design preview only · No Save written</span></div>`;
+}
+function footer(center){
+ const label=state.stage===5?'Continue to Summary':state.stage===6?'Continue to Opening':'Next';
+ return `<div class="foot">${center?`<button type="button" class="outlinebtn randomcenter" id="identityDice">⚄ ${center}</button>`:''}<button type="button" class="primary" id="next">${label} →</button></div>`;
+}
+function next(){
+ if(!stageValid(state.stage)){state.validation=true;render();if(state.stage===1)el('firstName')?.focus();return}
+ if(state.stage<7)nav(state.stage+1);
+}
+function selectGeo(which,value){if(which==='continent'){state.continent=value;state.region=(geo.find(x=>x[0]===value)?.[2]||[])[0]||'';state.settlement=(geoKnown[state.region]||[])[0]||'';}else if(which==='region'){state.region=value;state.settlement=(geoKnown[value]||[])[0]||'';}else state.settlement=value;state.scenario=null;state.pool='ordinary';invalidateOpening();render()}
+function selectLineage(value){state.lineage=value;state.skin=3;state.hair=4;state.eyes=9;state.scenario=null;invalidateOpening();render()}
+function randomIdentity(){const pick=a=>a[Math.floor(Math.random()*a.length)];for(const key of Object.keys(identityChoices)){state[key]=pick(identityChoices[key])[0]}state.build=pick(builds).id;state.aptitude=pick(aptitudes).id;state.disposition=pick(dispositions)[0];state.skin=Math.floor(Math.random()*swatches.skin.length);state.hair=Math.floor(Math.random()*swatches.hair.length);state.eyes=Math.floor(Math.random()*swatches.eyes.length);state.validation=false;invalidateOpening();render()}
+function randomName(){const firsts=['Aerin','Liora','Kael','Seren','Mara','Torren','Sable','Nerin','Tavia','Bren'],lasts=['Vale','Morrow','Reed','Ashfall','Hearth','Stone','Thorne','Mere','Dawn','Rowan'];state.firstName=firsts[Math.floor(Math.random()*firsts.length)];state.lastName=lasts[Math.floor(Math.random()*lasts.length)];syncName();state.validation=false;invalidateOpening();render()}
+function openDialog(title,body,actions,eyebrow='Editorial preview'){el('dialogEyebrow').textContent=eyebrow;el('dialogTitle').textContent=title;el('dialogBody').innerHTML=body;el('dialogActions').innerHTML=actions;el('dialogbg').classList.add('open');}
+function story(sid){
+ const s=findScenario(sid);if(!s)return;
+ if(s.pool==='wilderness')return openDialog(s.name,`<p>${esc(s.intro)}</p><p class="hint">Hardcore wilderness remains editorial, with no verified playable scene or Save submission.</p>`,`<button id="closeContinuation">Return to World Entry</button>`);
+ state.pool='ordinary';state.scenario=sid;invalidateOpening();render();
+}
+function chooseOpening(choice){
+ if(state.stage!==7||!['a','b'].includes(choice)||!canVisit(7))return;
+ const s=findScenario(state.scenario);if(!s||s.pool!=='ordinary')return;
+ state.entryChoice={scenario:s.id,choice};
+ render();
+}
+
+function portraitPrompt(){const l=lineages.find(x=>x[0]===state.lineage)?.[1]||'fantasy lineage';const disposition=state.disposition==='none'?'neutral':state.disposition;const b=builds.find(x=>x.id===state.build)?.label||'proportioned';const prompt=`masterpiece, high-resolution, full color, expert shading, photorealistic, single adult ${l.toLowerCase()} ${state.sex}, ${state.age} age, ${state.height} height, ${b.toLowerCase()} body shape, ${disposition} facial expression, modest medieval fantasy attire, head-and-shoulders framing, no hands in frame`;openDialog('Portrait prompt',`<div class="codeprompt" id="promptText">${esc(prompt)}</div><p>Copy this prompt into an external generator. This preview does not call an image model.</p>`,`<button id="copyPrompt">Copy prompt</button>`,'Identity portrait handoff')}
+function render(){renderRail();el('stage').innerHTML=renderStage();}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);invalidateOpening();return render()}if(b.dataset.inspectCondition){const key=b.dataset.group==='negative'?'inspectedNegative':'inspectedPositive';state[key]=b.dataset.inspectCondition;render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='accountBtn')return el('account').classList.toggle('open');if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){document.documentElement.style.filter=document.documentElement.style.filter?'':'brightness(1.17)';el('account').classList.remove('open');}});
+document.addEventListener('change',e=>{const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
+document.addEventListener('input',e=>{
+ if(e.target.id==='firstName'||e.target.id==='lastName'){
+  state[e.target.id]=e.target.value;syncName();invalidateOpening();state.validation=false;
+  renderRail();
+  document.querySelectorAll('[data-narrative]').forEach(node=>{node.textContent=narrativeFor(node.dataset.narrative)});
+  const caption=el('portraitCaption');if(caption)caption.textContent=summarySentence();
+  const heading=document.querySelector('.portraitfoot h3');if(heading)heading.textContent=fullName()||'Unnamed Wanderer';
+  const notice=document.querySelector('.validation');if(notice)notice.classList.remove('show');
+ }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')el('dialogbg').classList.remove('open')});
+el('dialogbg').addEventListener('click',e=>{if(e.target===el('dialogbg'))el('dialogbg').classList.remove('open')});
+if(window.matchMedia('(max-width:550px)').matches){el('railCollapse').classList.remove('open');el('mobileToggle').setAttribute('aria-expanded','false')}
+function updateClock(){try{el('clock').textContent='LOCAL '+new Date().toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'})}catch{}}updateClock();setInterval(updateClock,30000);render();
+</script>
+</body></html>
