@@ -1,5 +1,7 @@
 # Character creator revision: World Entry foundation, live rail, identity randomization, portrait generation handoff
 
+> **2026-11-18 latest standalone creator review (superseding this file's seven-stage preview where conflicting):** [Eight-stage Identity/Build/Aptitude/Conditions review](character-creator-eight-stage-identity-build-aptitude-conditions-review-2026-11-18.md) now specifies **Lineage → Identity → Continent → Region → Settlement → World Entry → Summary → Opening**, 9 physical Builds, 9 natural Aptitudes, automatic 90-base + 10 generated points, 14 negative / 14 positive inspect-only Conditions, portrait at the bottom of Identity, and a future owner-validated first Opening choice as the combined entry circumstance and submit seam. The separate Backstory and Starting Bundle screens remain **suppressed in the proposed UI only**; existing source fields/Saves and accepted World/Save holds remain unchanged. This older seven-stage record is historical context, not the latest visual authority.
+
 Date: 2026-11-17 (America/New_York)  
 Status: **OWNER-DIRECTED UI INTENT + LOCALLY TESTED STANDALONE PROTOTYPE + PURE PORTRAIT PROMPT CANDIDATE / PRODUCTION CODE AND SAVE SCHEMA NOT_CHANGED**  
 Inspected source: `master` `79166ccca151679f0a3a68bff8c2e00bb9ae53e7`; draft [PR #102](https://github.com/vagabond1215/Lineage_Reforged/pull/102) remains unmerged at `d3cd548f6b21aff11c40637c3e16026502f8e6e2` as of this pass.  
