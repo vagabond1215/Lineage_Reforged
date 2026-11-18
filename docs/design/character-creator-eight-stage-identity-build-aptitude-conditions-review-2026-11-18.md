@@ -3,7 +3,7 @@
 Date: **2026-11-18 (America/New_York)**  
 Authority: **Owner-selected latest standalone-preview UI direction.** This document preserves the design for later review, **not** authorization to implement gameplay, change Save schemas, activate new traits, or replace the current React creator.  
 Inspected production baseline: `master` **bd61f780d7f33ab4b74ade7ea18bd4f9d6355d79**.  
-Standalone preview reviewed: `lineage_creator_build_aptitude_preview.html`, SHA-256 **9995132b71fab9b2e3c1c7047cd92181b26ac05fbcefee3ea587c48e7b8487ab** (conversation artifact, **not a repository runtime file**).  
+Standalone preview reviewed: `lineage_creator_build_aptitude_preview.html`, SHA-256 **9995132b71fab9b2e3c1c7047cd92181b26ac05fbcefee3ea587c48e7b8487ab**. Its **exact interactive HTML source is preserved in the repo** as [docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html) at archival commit **0b7c67ade6478f01d850ab1b9698f55a6dd39c32**. This is **documentation/prototype only**, not part of the production React build or a Save owner.  
 Cross-thread decision inbox: [Issue #74](https://github.com/vagabond1215/Lineage_Reforged/issues/74), especially 2026-11-10 curated/expanded traits and 2026-11-11 world-entry blueprint. Previous [November 17 World Entry-first preview direction](character-creator-world-entry-prestige-supplies-portrait-integration-intent-2026-11-17.md), [grouped stats layout](character-creator-attribute-rail-three-group-visual-taxonomy-2026-11-17.md), [compact navigation](creator-compact-navigation-three-column-attributes-ten-lineages-2026-11-18.md), [source math](../../apps/rpg-ui/src/game-shell/characterCreationMath.ts), [current identity catalog](../../apps/rpg-ui/src/game-shell/characterCreationIdentityOptions.ts), and [30 shipped lineage traits](../../packages/content/base/player/traits.json) remain mandatory reconciliation sources.
 
 ## 1. Precedence and exact present status
@@ -154,7 +154,7 @@ Recommended **separate future source gates**, only on fresh synchronized exact m
 
 ## 9. Cross-thread reading order
 
-1. **This file** for the latest eight-stage Identity layout, nine/nine auto-allocation, 28-condition preview shortlist, copy posture and integration holds.
+1. **This file** for the latest eight-stage Identity layout, nine/nine auto-allocation, 28-condition preview shortlist, copy posture and integration holds; and the [exact archived HTML prototype](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html) for the fully reconstructible styling, behavior, option text and selectors.
 2. [Issue #74](https://github.com/vagabond1215/Lineage_Reforged/issues/74) for full 48-candidate research, previous alternatives and dated acceptance/supersession chain.
 3. [November 17 World Entry-first intent](character-creator-world-entry-prestige-supplies-portrait-integration-intent-2026-11-17.md), [Core World Entry source contract](core-world-entry-scenario-contract-and-editorial-seed-2026-11-09.md), [eight Core UI candidate](core-world-entry-eight-branching-profiles-ui-candidate-2026-11-18.md).
 4. Actual `characterCreationForm.ts`, `characterCreationIdentityOptions.ts`, `characterCreationMath.ts`, `newGameSnapshot.ts`, `player-resources.ts`, account/World/Save owners and current active Codex prompt to determine what is implemented **today**.
