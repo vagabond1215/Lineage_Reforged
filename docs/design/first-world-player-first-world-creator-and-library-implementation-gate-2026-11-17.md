@@ -1,6 +1,8 @@
 # First World: player-first World Creator, World Library and Character entry gate
 
 > **2026-11-19 latest standalone World Creator presentation:** [interactive prototype](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html) now **visually selects** proposed Difficulty, overall Temperature, Rainfall and Starting Season, retaining them in **in-memory demo World records**. This replaces the old fixed-Mortal/“customization Coming Soon” **preview layout only**. It does **not** approve or activate these settings in production World creation, weather, economy, calendar, campaign rules, prestige unlocks, Save or author-owned atlas. See the dated section at the end of this document.
+>
+> **2026-11-19 owner UI correction (draft PR #103):** The Starting Season picker must use the actual six seasons declared in [`packages/content/base/world/calendar.json`](../../packages/content/base/world/calendar.json): **Deepfrost, Thaw, Waking, Swelter, Harvest, Withering** plus **Scenario Default**. The earlier Spring/Summer/Autumn/Winter choices in this document are **historical preview evidence, not the current UI direction**. The shared top bar now holds the emblem/title at left and spans full width; its separate sub-bar also spans full width on account, Welcome, World Library/Create, Overview/Characters and Character Creator routes, without the old left-side brand block. These are isolated demo/presentation changes, not simulation calendar, account, World or Save activation.
 
 
 Date: 2026-11-17 (America/New_York)  
