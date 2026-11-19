@@ -467,6 +467,40 @@
 @media(max-width:750px){.launcher-cards,.launcher-cards.triple,.launcher-split{grid-template-columns:1fr}.launcher-card{min-height:175px;padding:22px}.launcher-card strong{font-size:27px}.launcher-top{padding:12px 20px}.launcher-frame{padding:23px}.launcher-main{padding:34px 18px 55px}}
 @media(max-width:500px){.launcher-top-right span:nth-child(2){display:none}.launcher-top-right span:first-child{white-space:nowrap;font-size:10px}.launcher-top-right .launcher-secondary{width:auto;min-height:36px;padding:7px 9px}}
 @media(max-width:420px){.launcher-brand-name{font-size:17px}.launcher-brand-sub{font-size:8px}.launcher-brand-mark{width:35px;height:35px;font-size:22px}.launcher-top-right{gap:6px;font-size:10px}.launcher-main{padding:27px 14px 45px}.launcher-frame{padding:19px}.launcher-title{font-size:33px}.launcher-primary,.launcher-secondary{width:100%;text-align:center}}
+
+/* Creator shell: contextual actions live in ShellSubBar, not in repeated stage footers. */
+.chrome .subbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;position:relative}
+.chrome .crumbs{grid-column:1;display:flex;flex:initial;overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+.chrome .crumbs::-webkit-scrollbar{display:none}
+.subbar-center{grid-column:2;justify-self:center;display:flex;align-items:center;min-width:0}
+.subbar-actions{grid-column:3;display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0}
+.subbar-random{padding:6px 11px;min-height:32px;font-size:11px;white-space:nowrap}
+.subbar-next{padding:7px 14px;min-height:33px;white-space:nowrap;font-size:11px}
+.subbar-actions .substatus{font-size:9px;white-space:nowrap}
+.chrome .subbar:not(.identity-active) .subbar-center{display:none}
+.chrome .subbar:not(.identity-active){grid-template-columns:minmax(0,1fr) auto}
+.chrome .subbar:not(.identity-active) .subbar-actions{grid-column:2}
+/* Exactly one boundary before Conditions, no doubled parallel hairlines. */
+.identity-controls .allocation-note{border-bottom:0}
+.identity-controls .condition-section{border-top:0;margin-top:0;padding-top:8px}
+/* Selected-option prose stays visible; numerical changes respect Show/Hide details. */
+@media (max-width:1150px){.chrome .subbar .substatus{display:none}}
+@media (max-width:650px){
+ .chrome .subbar{grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;gap:6px 9px}
+ .chrome .crumbs{grid-column:1/-1;grid-row:1;width:100%;font-size:10px}
+ .chrome .subbar-center{grid-column:1;grid-row:2;justify-self:center}
+ .chrome .subbar-actions{grid-column:2;grid-row:2;gap:5px}
+ .chrome .subbar:not(.identity-active) .subbar-actions{grid-column:1/-1;justify-content:flex-end}
+ .subbar-random{min-height:31px;padding:6px 8px;font-size:10px}
+ .subbar-next{min-height:31px;padding:6px 8px;font-size:10px}
+ .chrome .subbar .details-toggle{min-height:31px;padding:5px 7px}
+}
+@media (max-width:365px){
+ .chrome .subbar{padding:7px 8px;gap:5px}
+ .subbar-random{padding:5px 6px;font-size:9px}
+ .chrome .subbar .details-toggle{padding:5px 5px;font-size:9px}
+ .subbar-next{padding:5px 6px;font-size:9px}
+}
 </style>
 </head>
 <body>
@@ -477,7 +511,7 @@
     <div class="brand mobilebrand"><div class="brandmark">✧</div><div><div class="brandname">LINEAGE REFORGED</div><div class="brandsub">CHRONICLE</div></div></div>
     <div class="righttop"><div class="clock" id="clock">LOCAL 11:25</div><div class="account" id="account"><button class="topbtn" id="accountBtn" type="button">⚙ Account ▾</button><div class="menu"><button type="button">Settings (preview)</button><button id="themeBtn" type="button">Toggle theme (preview)</button><button id="logoutPreview" type="button" data-launch="logout">Log out (demo)</button></div></div></div>
   </header>
-  <nav class="subbar" aria-label="Contextual navigation"><div class="crumbs"><button class="crumb-link" data-launch="worlds" type="button">Your Worlds</button><span aria-hidden="true">›</span><b id="crumbWorld">Starfall World</b><span aria-hidden="true">›</span><button class="crumb-link" data-launch="characters" type="button">Characters</button><span aria-hidden="true">›</span><strong aria-current="page">New Character</strong></div><button type="button" id="detailsToggle" class="details-toggle" aria-pressed="false" aria-label="Show attribute adjustments on Sex, Age, Height, Build and Aptitude choices" title="Show attribute adjustments on Sex, Age, Height, Build and Aptitude choices"><svg class="details-eye" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/></svg><span class="details-toggle-label">Show details</span></button><span class="substatus" title="World clock remains unavailable pending owner verification">World time pending</span></nav>
+  <nav class="subbar" id="creatorSubbar" aria-label="Contextual navigation"><div class="crumbs"><button class="crumb-link" data-launch="worlds" type="button">Your Worlds</button><span aria-hidden="true">›</span><b id="crumbWorld">Starfall World</b><span aria-hidden="true">›</span><button class="crumb-link" data-launch="characters" type="button">Characters</button><span aria-hidden="true">›</span><strong aria-current="page">New Character</strong></div><div class="subbar-center"><button type="button" class="outlinebtn subbar-random" id="identityDice" aria-label="Randomize Identity selections without changing name" title="Randomize Identity selections without changing name" hidden>⚄ Randomize Identity</button></div><div class="subbar-actions"><button type="button" id="detailsToggle" class="details-toggle" aria-pressed="false" aria-label="Show attribute adjustments on Sex, Age, Height, Build and Aptitude choices" title="Show attribute adjustments on Sex, Age, Height, Build and Aptitude choices"><svg class="details-eye" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/></svg><span class="details-toggle-label">Show details</span></button><span class="substatus" title="World clock remains unavailable pending owner verification">World time pending</span><button type="button" class="primary subbar-next" id="nextTop">Next →</button></div></nav>
 </div><div class="body"><aside class="rail"><div class="railinner"><button type="button" id="mobileToggle" class="mobiletoggle" aria-controls="railCollapse" aria-expanded="true">☰ Creation steps & character summary</button><div class="railcollapse open" id="railCollapse"><nav class="railnav" id="railNav"></nav><div class="railhr"></div><div class="railstat"><div class="who" id="railName">Aerin</div><div class="resources" id="resources"></div><div class="statgroups" id="statgroups"></div></div></div></div></aside><main class="content" aria-labelledby="stepTitle"><h1 id="stepTitle" class="visually-hidden">Identity</h1><span id="sectionLabel" hidden></span><span id="stepSubtitle" hidden></span><div id="stage"></div></main></div></div>
 <div class="dialogbg" id="dialogbg" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="eyebrow" id="dialogEyebrow">Editorial preview</div><h2 id="dialogTitle"></h2><div id="dialogBody"></div><div id="dialogActions" class="dialogactions"></div><div class="dialogfooter"><button class="quiet" type="button" id="dialogClose">Close ✕</button></div></section></div>
 <script>
@@ -700,12 +734,12 @@ function narrativeFor(key,d=getDerivedStats()){
  if(key==='build'){
   const b=d.build;
   if(!d.physical)return `${pos} ${b.label.toLowerCase()} frame shapes ${p.possessive} appearance. With Savant aptitude, it assigns no generated physical points.`;
-  return `${pos} ${b.label.toLowerCase()} frame ${b.power>.58?'leans toward force and endurance':b.power<.42?'favors controlled, nimble movement':'balances strength with movement'}. For this ${lineage.toLowerCase()} ${p.person}, ${d.physicalPower} physical points favor Power and ${d.physicalProwess} favor Prowess.`;
+  return `${pos} ${b.label.toLowerCase()} frame ${b.power>.58?'leans toward force and endurance':b.power<.42?'favors controlled, nimble movement':'balances strength with movement'}. This changes ${p.possessive} physical emphasis without deciding ${p.possessive} natural intelligence.`;
  }
  if(key==='aptitude'){
   const a=d.aptitude;
-  if(a.id==='fully_physical')return `${n} gravitates toward bodily exertion and decisive movement rather than intellectual pursuits. All ten generated points favor physical strengths; nothing prevents ${p.object} from learning later.`;
-  if(a.id==='fully_mind')return `${n} has a rare natural gift for understanding, perception and inward resolve, with all ten generated points favoring Mind. This is aptitude, not knowledge acquired through study.`;
+  if(a.id==='fully_physical')return `${n} gravitates toward bodily exertion and decisive movement rather than intellectual pursuits. Natural physical aptitude does not prevent ${p.object} from learning later.`;
+  if(a.id==='fully_mind')return `${n} has a rare natural gift for understanding, perception and inward resolve. This reflects mental aptitude, not knowledge acquired through study.`;
   const plain={
    hands_on:`${n} favors decisive bodily action over prolonged contemplation, with most of ${p.possessive} natural strengths expressed physically.`,
    instinctive:`${n} responds through immediate physical engagement and a keen sense for changing situations. This natural judgment is not the same as learned experience.`,
@@ -715,7 +749,7 @@ function narrativeFor(key,d=getDerivedStats()){
    perceptive:`${n} quickly notices subtle changes and weighs circumstances with natural insight.`,
    strong_willed:`${n} possesses strong inward resolve and concentration, without automatically knowing any magic.`
   }[a.id]||a.desc;
-  return `${plain} As ${namedLineage()}, ${n} receives ${a.physical} generated physical points and ${a.mind} Mind points.`;
+  return `${plain} This inclination is distinct from ${p.possessive} education or past training.`;
  }
  return '';
 }
@@ -727,7 +761,7 @@ function effectFor(key,d=getDerivedStats()){
  if(key==='aptitude')return `Mind generated: ${formatBonus(d.mind)}  ·  ${d.physical} Physical / ${d.mindTotal} Mind (10 total)`;
  return '';
 }
-function narrativeCell(key){return `<div class="narrative-cell" aria-live="polite"><p class="choice-narrative" data-narrative="${key}">${esc(narrativeFor(key))}</p><span class="choice-effect">${esc(effectFor(key))}</span></div>`}
+function narrativeCell(key){return `<div class="narrative-cell" aria-live="polite"><p class="choice-narrative" data-narrative="${key}">${esc(narrativeFor(key))}</p>${state.showAttributeDetails?`<span class="choice-effect">${esc(effectFor(key))}</span>`:''}</div>`}
 function summarySentence(){
  const n=fullName()||getName(),a=aptitudes.find(x=>x.id===state.aptitude),b=builds.find(x=>x.id===state.build),pr=pronouns();
  const height={short:'short',normal:'average-height',tall:'tall'}[state.height]||'average-height';
@@ -773,11 +807,9 @@ function identityRow(label,key){return `<div class="profile-row ${key}-row" role
 function palette(label,key){
  const options=paletteOptions(key);
  const selected=options[state[key]]||options[0];
- const ns=options.filter(c=>!c.concept).length;
- const nc=options.length-ns;
- return `<div class="palette-row" role="group" aria-label="${label} color options">
+  return `<div class="palette-row" role="group" aria-label="${label} color options">
    <div class="palette-side-label" aria-hidden="true">${label}</div>
-   <div class="palette-body"><div class="palette-overline"><strong>${esc(selected?.name||'Choose color')}</strong><small>${ns} source colors${nc?` · ${nc} concept${nc!==1?'s':''}`:''}</small></div>
+   <div class="palette-body"><div class="palette-overline"><strong>${esc(selected?.name||'Choose color')}</strong></div>
    <div class="palette-grid palette-${key}" role="group" aria-label="${label}: ${options.length} colors grouped by hue, from top-left down each column toward bottom-right">
    ${options.map((c,i)=>`<button type="button" class="swatch ${state[key]===i?'selected':''} ${c.concept?'concept-color':''}" data-color="${key}" data-index="${i}" style="background:${c.hex}" title="${esc(c.name)}${c.concept?' · Design concept (not approved for gameplay)':''}" aria-label="${label} ${esc(c.name)}${c.concept?', preview concept':''}" aria-pressed="${state[key]===i}">${c.concept?'<span class="concept-indicator" aria-hidden="true">✧</span>':''}</button>`).join('')}
    </div>${selected?.concept?'<p class="palette-concept-notice">Selected color is an unapproved design concept, not yet a game-catalog option.</p>':''}</div>
@@ -798,7 +830,7 @@ function conditionGroupItem(group,label){
  return `<div class="condition-group" role="group" aria-label="${esc(label)} conditions">
  <div class="condition-side-label" aria-hidden="true">${esc(label)}</div>
  <div class="condition-options">${conditions[group].map(c=>`<button type="button" class="condition-option ${selected.id===c.id?'inspected':''}" data-inspect-condition="${esc(c.id)}" data-group="${group}" aria-pressed="${selected.id===c.id}" aria-label="Inspect planned ${esc(label.toLowerCase())} condition: ${esc(c.name)}">${esc(c.name)}</button>`).join('')}</div>
- <div class="condition-detail" aria-live="polite"><p class="condition-inspect-kicker">Concept preview · not selected for character</p><h4>${esc(selected.name)}</h4><p>${esc(selected.text)}</p><div class="condition-effect">${esc(selected.line)}</div><p class="condition-tradeoff"><b>Attribute relation:</b> ${esc(selected.stats)}</p><p class="condition-conflict"><b>Interaction:</b> ${esc(selected.conflicts)}</p><small>${esc(selected.dependency)} · No approved stat change, cost or credit</small></div>
+ <div class="condition-detail" aria-live="polite"><h4>${esc(selected.name)}</h4><p>${esc(selected.text)}</p><div class="condition-effect">${esc(selected.line)}</div><p class="condition-tradeoff"><b>Attribute relation:</b> ${esc(selected.stats)}</p><p class="condition-conflict"><b>Interaction:</b> ${esc(selected.conflicts)}</p><small>Design concept only · Not an active character effect</small></div>
  </div>`;
 }
 function renderIdentity(){
@@ -809,10 +841,10 @@ function renderIdentity(){
  <div class="profile-rows">${identityRow('Sex','sex')}${identityRow('Age','age')}${identityRow('Height','height')}
  ${selectorRow('Build','build',builds,state.build)}
  ${selectorRow('Aptitude','aptitude',aptitudes,state.aptitude)}</div>
- <div class="allocation-note" role="status">Every character begins with a <b>variable 90-point lineage and identity base</b> plus <b>10 automatically distributed points</b>. Build governs the physical share; Aptitude balances Physical and Mind. There are no freely assigned points. <span>Power ${d.physicalPower} · Prowess ${d.physicalProwess} · Mind ${d.mindTotal} · Total ${d.total}</span></div>
- <div class="condition-section"><div class="condition-title"><h3>Conditions</h3><small>14 negative + 14 positive research profiles · inspect only</small></div>
+ <div class="allocation-note" role="status">Every character begins with a <b>variable 90-point lineage and identity base</b> plus <b>10 automatically distributed points</b>. Build governs the physical share; Aptitude balances Physical and Mind. There are no freely assigned points. ${state.showAttributeDetails?`<span>Power ${d.physicalPower} · Prowess ${d.physicalProwess} · Mind ${d.mindTotal} · Total ${d.total}</span>`:''}</div>
+ <div class="condition-section"><div class="condition-title"><h3>Conditions</h3></div>
  ${conditionGroupItem('negative','Negative')}${conditionGroupItem('positive','Positive')}
- <p class="condition-caption">Select a tile to inspect its possible effect on the right. Conditions are not part of the 90 + 10 total; prices, credits, stacking and gameplay execution remain unapproved.</p></div>
+ </div>
  <div class="palettewrap">${palette('Skin','skin')}${palette('Hair','hair')}${palette('Eyes','eyes')}</div>
  <div class="validation ${state.validation&&!state.firstName.trim()?'show':''}" role="alert">Enter at least a first name before continuing.</div>
  </section></div>
@@ -852,10 +884,7 @@ function renderOpening(){
  `<h3>Your first decision</h3><p>The choice you make here is also the intended <strong>Finalize / Submit</strong> action for your character. In the live game, it must validate and commit this exact opening, its circumstance, and the character together, once. This preview records your choice only locally.</p><div class="opening-choices" role="group" aria-label="First World Entry decision"><button type="button" class="opening-choice" data-entry-choice="a"><span class="choice-name">${esc(s.a)}</span><span class="choice-meta">A · Choose opening &amp; submit (preview)</span></button><button type="button" class="opening-choice" data-entry-choice="b"><span class="choice-name">${esc(s.b)}</span><span class="choice-meta">B · Choose opening &amp; submit (preview)</span></button></div><p class="opening-caveat">Gameplay submission is held: the required World, scene, item and Save owners are not connected in this standalone preview.</p>`;
  return `<section class="opening-sheet" aria-labelledby="openingSceneTitle"><div class="opening-kicker">The beginning · ${esc(s.name)}</div><h2 id="openingSceneTitle">${esc(s.name)}</h2><p class="opening-place">${esc(getName())} · ${esc(state.settlement)} · Ordinary Core · Editorial narrative</p><div class="opening-prose"><p>${esc(s.intro)}</p></div><div class="opening-decision" aria-live="polite">${decision}</div></section><div class="opening-actions"><button type="button" class="outlinebtn" id="backSummary">← Back to Summary</button><span class="hint">Design preview only · No Save written</span></div>`;
 }
-function footer(center){
- const label=state.stage===5?'Continue to Summary':state.stage===6?'Continue to Opening':'Next';
- return `<div class="foot">${center?`<button type="button" class="outlinebtn randomcenter" id="identityDice">⚄ ${center}</button>`:''}<button type="button" class="primary" id="next">${label} →</button></div>`;
-}
+function footer(){return "";}
 function next(){
  if(!stageValid(state.stage)){state.validation=true;render();if(state.stage===1)el('firstName')?.focus();return}
  if(state.stage<7)nav(state.stage+1);
@@ -940,8 +969,14 @@ function render(){
  if(!inCreator){renderLauncher();return;}
  const w=selectedDemoWorld();if(el('crumbWorld'))el('crumbWorld').textContent=w?.name||'Demo World';
  if(el('accountBtn'))el('accountBtn').textContent='⚙ '+(route.accountName||'Demo Account')+' ▾';
- renderRail();el('stage').innerHTML=renderStage();const toggle=el('detailsToggle');if(toggle){toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));const label=state.showAttributeDetails?'Hide details':'Show details';toggle.querySelector('.details-toggle-label').textContent=label;toggle.setAttribute('aria-label',`${label} on Sex, Age, Height, Build and Aptitude choices`);toggle.title=`${label} on Sex, Age, Height, Build and Aptitude choices`;}}
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;invalidateOpening();return render()}if(b.dataset.inspectCondition){const key=b.dataset.group==='negative'?'inspectedNegative':'inspectedPositive';state[key]=b.dataset.inspectCondition;render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='accountBtn')return el('account').classList.toggle('open');if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){document.documentElement.style.filter=document.documentElement.style.filter?'':'brightness(1.17)';el('account').classList.remove('open');}});
+ renderRail();el('stage').innerHTML=renderStage();
+ const isIdentity=state.stage===1,subbar=el('creatorSubbar'),random=el('identityDice'),topNext=el('nextTop');
+ subbar?.classList.toggle('identity-active',isIdentity);
+ if(random)random.hidden=!isIdentity;
+ if(topNext){topNext.hidden=state.stage>=7;topNext.textContent=(state.stage===5?'Continue to Summary':state.stage===6?'Continue to Opening':'Next')+' →';}
+ const toggle=el('detailsToggle');if(toggle){toggle.hidden=!isIdentity;toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));const label=state.showAttributeDetails?'Hide details':'Show details';toggle.querySelector('.details-toggle-label').textContent=label;toggle.setAttribute('aria-label',`${label} on Sex, Age, Height, Build and Aptitude choices`);toggle.title=`${label} on Sex, Age, Height, Build and Aptitude choices`;}}
+
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;invalidateOpening();return render()}if(b.dataset.inspectCondition){const key=b.dataset.group==='negative'?'inspectedNegative':'inspectedPositive';state[key]=b.dataset.inspectCondition;render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='accountBtn')return el('account').classList.toggle('open');if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){document.documentElement.style.filter=document.documentElement.style.filter?'':'brightness(1.17)';el('account').classList.remove('open');}});
 document.addEventListener('change',e=>{const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
 document.addEventListener('input',e=>{
  if(e.target.id==='firstName'||e.target.id==='lastName'){
