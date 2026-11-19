@@ -184,3 +184,15 @@ Recommended **separate future source gates**, only on fresh synchronized exact m
 - **Browser validation:** the inline script passes syntax check; Chromium at **1280/1024/768/375/320** px confirms 27 tile adjustments when on, zero when off, correct Female/Senior/Normal details, unchanged attributes on toggling, a single Name→Sex border, no Disposition, nine Aptitude labels, eight stages, 10 Lineage choices, no JS errors or horizontal overflow. All **810/810** lineage × Build × Aptitude combinations still yield 90 base + exactly 10 generated points.
 
 **Runtime and compatibility holds persist:** These are standalone-copy and visual changes only; no production React/trait schema/Save or current source point resolver changes. Preserve the above named-ID compatibility through any later authorized implementation.
+
+## 12. November 18 follow-up: compact uniform Identity selection tiles
+
+**Latest owner-selected preview refinement.** No production mechanics, option IDs or Save changes. The [archived interactive prototype](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html) was updated at [commit `f089d004`](https://github.com/vagabond1215/Lineage_Reforged/commit/f089d004d01f08cc7ac4073a931576339e373c59).
+
+- **Build and Aptitude:** both 3×3 selector grids use **52px** tile height on desktop and tablet, down from **69px** (~25%).
+- **Sex, Age and Height:** their 2/4/3 buttons now match the Build and Aptitude tile height at **52px** (previously 44px). All five groups share one CSS size token to prevent later drift.
+- **Small screens ≤550px:** all five groups use matching **51px** button height, down from the previous **68px** Build/Aptitude mobile minimum (25% reduction). Typography, padding and gap tightened while retaining option names and Show details numbers.
+- The Show details eye remains purely presentational, and all numeric attribute effects, 90 + 10 derivation, Conditions inspector, 8-stage navigation and character state are unchanged.
+- **Browser proof:** isolated Chromium at 1280, 768, 375 and 320px in both Show details states measured identical actual tile heights across all 27 Sex/Age/Height/Build/Aptitude controls; none had measured internal text clipping; no horizontal overflow or JavaScript page errors. This does not claim production acceptance.
+
+**Boundary:** This adjustment applies to the isolated HTML prototype and the documented visual contract, not the running RPG UI, World Entry, first Save or published gameplay.
