@@ -1,5 +1,8 @@
 # First World: player-first World Creator, World Library and Character entry gate
 
+> **2026-11-19 latest standalone World Creator presentation:** [interactive prototype](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html) now **visually selects** proposed Difficulty, overall Temperature, Rainfall and Starting Season, retaining them in **in-memory demo World records**. This replaces the old fixed-Mortal/“customization Coming Soon” **preview layout only**. It does **not** approve or activate these settings in production World creation, weather, economy, calendar, campaign rules, prestige unlocks, Save or author-owned atlas. See the dated section at the end of this document.
+
+
 Date: 2026-11-17 (America/New_York)  
 Status: **OWNER-DIRECTED UX REVISION / CONNECTOR SOURCE-AND-CI PREFLIGHT / IMPLEMENTATION NOT YET ACCEPTED**  
 Source head inspected before this document: `master` `e800b3cf589e364d3f4b3fe9c868af076f238dff`; draft [PR #102](https://github.com/vagabond1215/Lineage_Reforged/pull/102) `d3cd548f6b21aff11c40637c3e16026502f8e6e2`.  
@@ -193,3 +196,30 @@ Draft PR-specific migration/browser workflow additionally runs `node --import ts
 - **`L3B_BROWSER_CREATE_HELD`** persists until real Chromium source parity and atomic World create/reopen/rollback pass.
 - **`HOLD_SELECTED_ATOMIC_ACTIVATION`**, **`HOLD_STAGING_PUBLICATION`**, default feature-OFF behavior, existing native-v3 Save rules and geographic source constraints remain unchanged.
 - This document revises product placement and implementation order. Existing source code, CI and completed historical acceptance remain historical evidence; they are not falsely recast as updated functional proof.
+
+## November 19, 2026: selectable World configuration in the standalone design preview
+
+**Authority and status:** Owner-directed **presentation and design-review** change to the standalone HTML, archived at [the eight-stage Creator prototype](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html), commit [`c00080c8`](https://github.com/vagabond1215/Lineage_Reforged/commit/c00080c8e19d8f659712a9aea65e9804d37a89a6). The corresponding downloadable conversation snapshot is `lineage_creator_world_settings_2026-11-19.html` (SHA-256 `385546943923c37253dd477415af4d7c74bd06a5224835e8a47d43c1864aa5da`). **No gameplay, content schema, persistent owner, actual World creation or Save path changed.**
+
+### Player-facing creator layout
+
+- **World name**, followed by **Gameplay Mode**: Individual remains the selected demo, Living World remains disabled/Coming Soon. The preceding **Chronicle/Persistent** progression axis remains independent; Persistent still disabled.
+- **Difficulty** (World-owned candidate): `Favored`, `Mortal` **default**, `Forsaken`. Source `campaign-rules.ts` currently recognizes those categories, but committed World contracts still use `difficultyPreset:null` at first launch and **do not authorize** all three choices. In the HTML, all three are active **demo-only** selections; their short descriptive text asserts no specific numeric combat/survival modifiers. `Story` remains outside this prototype until a distinct supported contract exists.
+- **Climate adjustment**, separated into **Temperature** (`Cold`, `Normal` default, `Hot`) and **Rainfall** (`Dry`, `Normal` default, `Wet`). These represent broad bounded *tendencies relative to each region's authored baseline*. They do not relocate biomes, rivers, coasts, regions, aquifers, sites, or make every location identical in temperature and precipitation. No actual climate or weather calculation exists in the HTML.
+- **Starting Season** choices: `Scenario Default` **default**, `Spring`, `Summer`, `Autumn`, `Winter`. The future implementation must resolve any override against the versioned default scenario's **authored calendar** and deterministic creation contract. Season selection must not make an unapproved World time skip, rewrite established World history or reroll a Save. The demo merely retains a label.
+- **Further World adjustments** remains an expandable *design slot*, currently four **Coming Soon** descriptors: Regional climate variability, Extreme weather intensity, Natural disaster families, and World-level Hardcore commitment. No random percentages, real toggles or fake entitlement gates are exposed. Hardcore stays Off for actual supported first World implementation. If Prestige unlocks settings later, the true account entitlement, purchase receipt, conflict rules, cost and durable World owner must be verified before enabling a selection.
+- The form is **configuration-driven** through `WORLD_OPTION_GROUPS`, `defaultWorldSettings`, and `normalizedWorldSettings` in the isolated HTML. New approved options can be added to this stable concept structure. Draft controls have accessible selected-state (`aria-pressed`) semantics; changing an option does not lose the World name. An in-memory **World settings preview** lists the four selections. Clicking **Create Demo World** stores a *copy of those labels in an in-memory fixture only*, which then appears in World Library and selected World Overview. This is not serializing an accepted game schema or World receipt.
+
+### Default preview settings and state
+
+| Draft field | Available values | Default | Actual first-World contract implication |
+| --- | --- | --- | --- |
+| Difficulty | Favored / Mortal / Forsaken | Mortal | Only source-accepted mapping after validation; current staged durable World rule remains null |
+| Temperature tendency | Cold / Normal / Hot | Normal | Approved bounded climate engine needed |
+| Rainfall tendency | Dry / Normal / Wet | Normal | Approved bounded climate engine needed |
+| Starting Season | Scenario Default / Spring / Summer / Autumn / Winter | Scenario Default | Scenario-owned calendar remains authoritative |
+| Hardcore | Off; future Coming Soon disclosure | Off | Not enabled by difficulty or a prototype label |
+
+**Safety and UI acceptance:** The original authored First World map and one default Chronicle scenario remain read-only. The demo cannot alter source ecology, simulate earthquakes/weather, change World clock, spend currency, or generate authoritative Worlds. Future implementation requires typed versioned World settings and eligible world/source manifest, deterministic genesis, bounded climate/season effects, campaign-rule mapping, World-owned immutable creation intent, authoritative readback/retry and Save/restart validation. These are separate gates, not effects of clicking options in the HTML.
+
+**Browser verification, standalone only:** Node inline JS syntax check and Chromium route tests at **1440, 1280, 1024, 768, 375 and 320 CSS pixels** passed: Splash → demo account → Chronicle → World Creator; 3 Difficulty + 3 Temperature + 3 Rainfall + 5 Season options; defaults visible; selected states; World name preserved while selecting; Forsaken/Hot/Wet/Autumn in-memory draft readback; World Library/World Overview presentation; eight-stage Character Creator still reachable. No JavaScript errors or horizontal document overflow. This does not satisfy any native-v3, real account, climatic simulation, season engine, World registry or Save acceptance test.
