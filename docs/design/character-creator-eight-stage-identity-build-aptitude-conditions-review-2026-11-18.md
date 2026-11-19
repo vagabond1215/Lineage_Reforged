@@ -210,3 +210,34 @@ Recommended **separate future source gates**, only on fresh synchronized exact m
 - Isolated Chromium passed at **1440, 1280, 1024, 768, 375 and 320** CSS pixels: all **10 × (18 skin + 28 hair + 28 eyes)** swatches rendered; wide 1/2/2 rows; 10 source-only eye + 1 hair proposal per lineage flagged; swatch click, concept notice, source-only randomizer, ancestry switching, unchanged 100-point stats, correct vertical labels, no JavaScript errors or horizontal overflow. Inline JS syntax check passed. These are **prototype checks**, not actual engine, React, browser-asset, portrait generation or Save acceptance.
 
 **Authorization boundary:** This documentation does not approve the 110 additional concept color options, change canonical color IDs, change production palettes, or authorize world/game publication. A separately reviewed catalog/content/Save migration must precede any real implementation.
+
+## 13. November 18 follow-up: three-row Hair/Eyes and full source geography audit
+
+**Owner-selected standalone preview refinement, design/catalog audit only.** The reviewed interactive HTML is preserved in [docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html), updated at [commit `a09fc8c5`](https://github.com/vagabond1215/Lineage_Reforged/commit/a09fc8c56989cf0f57ca68036cd567352a0e8ab3). This is **not a canonical color-content revision, source region ID migration, authorized spawn, or production React/Save change**.
+
+### Color rows
+
+- Keep the narrow vertical Skin / Hair / Eyes labels and one 18-swatch desktop Skin row. **Hair and Eyes each expand from 28 to 42 swatches**, filling **three desktop rows of 14** instead of two. Colors remain sorted by family/hue, with selected names, accessible per-swatch names and marked selection states. The actual source palette remains **18 skin / 27 hair / 18 eyes per lineage** in `getLineageIdentityCatalog(lineageId)`.
+- The standalone prototype retains all legal source label/hex pairs. Each lineage now has **15 preview-only Hair concepts** (one older plus fourteen new) and **24 preview-only Eye concepts** (ten older plus fourteen new). This amounts to **14 additional Hair + 14 additional Eye concepts in each of the ten lineage panels**, not globally approved options. New concepts include lineage-appropriate treatments of minerals, metals, gemstones and muted colors, such as Ruby, Emerald, Topaz, Sapphire, Jade, Copper, Gold, Silver, Cobalt, Sage, Slate and Periwinkle. Every proposed swatch remains marked visually and announced as unapproved; the Identity randomizer continues to select only original source colors.
+- Responsive behavior deliberately wraps on smaller viewports rather than preserving three rows at unusable sizes. Chromium measured **Skin/Hair/Eyes rows**: 1440/1280/1024 = **1/3/3**, 768 = **2/5/5**, 375 = **2/6/6**, 320 = **3/7/7**, with no horizontal document overflow or JS errors. Selecting a concept does not change primary stats, skill ownership or the ability to Save.
+
+### Geography completeness and correction
+
+Source-backed inputs inspected: `packages/content/base/world/regions.json` (blob `04516952ad97d830d2f49d915137197947e22b3a`), `packages/content/base/world/settlements.json` (blob `7e00f4243e96909e161ec09a2e8a4c3395f89216`), and `apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts` for source ownership/entry limitations.
+
+| Inventory | Actual catalog | Previous standalone preview | Updated standalone preview |
+| --- | ---: | ---: | ---: |
+| Top-level continents and island systems | 9 | 9 | 9 |
+| Nested subregions | 28 | 28 | 28 |
+| Catalog settlements | 88 | **4** (only 2 populated subregions) | **88** (all 28 subregions) |
+| Ocean entries | 4 | 0 | 0 (intentionally excluded from starting landmass choices) |
+
+- The former preview `geoKnown` contained only **Starfall Isle** (Starfall Port, Harbormast Quay, Foammarket Ferry) and **The Sapphire Rivers** (Highcrown). The remaining **84** authored settlements were absent from the preview. All 84 have now been added beneath their proper, source-verified subregions.
+- Exact generated preview region-to-settlement map was compared against all **28** source subregions and their **88** `settlements.json` records. The comparison returned **0 missing, 0 extra, 0 name/order or parent mismatches**. Example: **The Sapphire Rivers** now lists Highcrown, Blueflow, Ledgerford, Kingsbridge and Bridgewatch Ferry (5); **Verdant Thalos** now lists Aurelis, Vinecross, Oliveford, Sunmeadow, Redcliff Quay and Caskbank Estate (6). Original nine macro and twenty-eight subregion names were already complete, so no additional macro/region definitions were invented.
+- The standalone preview continues to store name-based geography state for illustration; it must **not** be treated as a source-valid `regionId`/`settlementId` payload. Production must obtain stable IDs, authored access, parent filtering and start eligibility from `worldSelectionCatalog.ts`, actual World selection and Save owners.
+- UI settlement cards now state **Catalog settlement · start unverified**, with a visible caution that inventory is not proof of an accepted player spawn, scenario, actor, site, items or playable scene. Core World Entry selections in the standalone HTML remain editorial mock narratives and must not grant authenticated Save publication or gameplay.
+
+### Focused QA and remaining gates
+
+- Standalone inline JS syntax: **PASS**. Chromium `set_content` at **1440/1280/1024/768/375/320**: full 18/42/42 per-lineage swatches, proper column wrapping and vertical labels, source-only randomization, concept notice and unchanged attribute values; all **9/28/88** geography counts and per-region selector mapping; no detected JS page errors or horizontal overflow. These results validate prototype behavior only and do not constitute real React, engine, accessibility or Save acceptance.
+- Before any implementation: review and approve individual proposed color IDs and lineage legality, validate full `getLineageIdentityCatalog` and source rendering, reconcile source geography IDs, confirm each World Entry start/site/scene and exact-once Save owner, and run real 320/375/768/1280 keyboard/a11y/World/Save regression. Keep all existing activation and publication holds.
