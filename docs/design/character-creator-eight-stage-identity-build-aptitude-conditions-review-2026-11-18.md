@@ -241,3 +241,32 @@ Source-backed inputs inspected: `packages/content/base/world/regions.json` (blob
 
 - Standalone inline JS syntax: **PASS**. Chromium `set_content` at **1440/1280/1024/768/375/320**: full 18/42/42 per-lineage swatches, proper column wrapping and vertical labels, source-only randomization, concept notice and unchanged attribute values; all **9/28/88** geography counts and per-region selector mapping; no detected JS page errors or horizontal overflow. These results validate prototype behavior only and do not constitute real React, engine, accessibility or Save acceptance.
 - Before any implementation: review and approve individual proposed color IDs and lineage legality, validate full `getLineageIdentityCatalog` and source rendering, reconcile source geography IDs, confirm each World Entry start/site/scene and exact-once Save owner, and run real 320/375/768/1280 keyboard/a11y/World/Save regression. Keep all existing activation and publication holds.
+
+## 14. November 19 continuation: complete expanded color palettes for all ten playable lineages
+
+**Owner-requested standalone visual extension. Not canonical color content, an approved cosmetic migration, or runtime Save/publication authorization.** The exact interactive HTML now lives in [the archived creator prototype](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html), updated at [commit 416de634](https://github.com/vagabond1215/Lineage_Reforged/commit/416de634b5a9dbe4d173f97ecd1d370f0ec91316). All ten current playable lineage IDs in the runtime are represented explicitly, not replaced by a universal/shared palette.
+
+**Per-lineage visible counts:** Skin **18**, Hair **56** (four desktop rows of 14), Eyes **56** (four desktop rows of 14). The current **source-approved** catalog remains **18 skin / 27 hair / 18 eyes per lineage**. The prior preview had 42 Hair / 42 Eyes: this revision adds **14 new Hair and 14 new Eye review-only variants per lineage**, i.e., **140 additional Hair and 140 additional Eye concepts** across the ten lineages. Every source record (label, hex and source/concept marking) from the previous preview is retained without modification; each newly proposed swatch is marked as an **unapproved design concept**, not a legitimate Save color ID.
+
+### Racial variety examples
+
+| Lineage | Examples among the 14 newly added Hair shades | Examples among the 14 newly added Eye shades |
+| --- | --- | --- |
+| Human | Sable Brown, Sunlit Copper, Ashwood, Antique Gold | Fire Opal, Honey Topaz, Saffron Gold, Rhodolite |
+| Dwarf | Ruddy Copper, Furnace Ember, Oak Bronze, Burnished Brass | Furnace Ember, Amberglass, Runic Gold, Bloodstone |
+| Gnome | Pearl Coral, Amberglass, Saffron Gold, Rhodolite | Burnished Brass, Rhodolite, Rose Garnet, Mint Jade |
+| Halfling | Sable Brown, Sunlit Copper, Ashwood, Oak Bronze | Sunlit Copper, Honey Topaz, Saffron Gold, Pearl Rose |
+| Elf | Saffron Gold, Pearl Rose, Mint Jade, Emerald Mist | Fire Opal, Amberglass, Honey Topaz, Deep Ruby |
+| Dark Elf | Copper Ember, Garnet Wine, Deep Ruby, Deep Jade | Copper Ember, Garnet Wine, Bloodstone, Deep Ruby |
+| Half Troll | River Clay, Barkstone, Bog Amber, Iron Moss | River Clay, Copper Ember, Barkstone, Lichen Green |
+| Half Orc | Ember Garnet, Furnace Ember, Sundown Bronze, Oak Bronze | Ember Garnet, Furnace Ember, Sundown Bronze, Bloodstone |
+| Half Goblin | Ember Garnet, Ruddy Copper, Gold Fleck, Rhodolite | Gold Fleck, Rhodolite, Bloodstone, Scrap Brass |
+| Half Merfolk | Pearl Coral, Coral Garnet, Kelp Green, Mint Jade | Sun Coral, Pearl Rose, Coral Garnet, Kelp Green |
+
+**Color-family behavior:** Preserve lineage character (Human neutral/warm and occasional rare gems; Dwarf iron, ore, forge bronze and mineral colors; Gnome bright prismatic colors; Halfling natural and subdued tones; Elf jewel, leaf and moon shades; Dark Elf obsidian and twilight jewel colors; Half Troll marsh, stone, moss and river shades; Half Orc iron, bronze and ember shades; Half Goblin scrap metals and vivid greens; Half Merfolk pearl, reef, lagoon and ocean shades). The actual named colors in each source-backed set and new concepts are sorted by visual family/hue, with existing accessible names, selected state and a visible concept warning. Color examples are **editorial visual direction**, not lore claims that a race cannot have a particular eye or hair color.
+
+**Selection and validation:** Switching ancestry resets to lineage-valid **source** colors; the Identity randomizer chooses only those original source colors. Explicit inspection of a concept is allowed in standalone preview but neither grants a legal color ID nor changes stats. Name, Build, Aptitude, Conditions, World Entry and the eight-stage creator route are unchanged. The source-valid production owner continues to be `getLineageIdentityCatalog(lineageId)`, not the indexed in-memory HTML fixture.
+
+**QA:** Source preservation audit for all ten lineages confirmed all existing 18/27/18 source colors and all prior preview concepts remain present, no duplicated labels within a lineage and exact new 14/14 concept increments. Headless Chromium at **1440, 1280, 1024, 768, 375, 320** px, with **all ten lineages checked at 1280 and 375**: counts 18/56/56, desktop 1/4/4 rows, vertical labels, concept warning, source-only randomizer, unchanged 100-point attributes, still 9/28/88 geography, eight nav steps, no detected JS errors or horizontal overflow. Narrow viewports wrap into more rows rather than shrinking swatches into inaccessible targets. This is isolated prototype QA and **not a production React/assets/browser/Save acceptance test**.
+
+**Hold:** Do not copy the concept colors into canonical identity form IDs or publish World Entry. Their actual content IDs, individual lineage legality, accessibility at 200% zoom, persistence and appearance asset generation require a separately authorized source migration.
