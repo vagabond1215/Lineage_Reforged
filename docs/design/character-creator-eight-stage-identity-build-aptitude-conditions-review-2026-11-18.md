@@ -160,3 +160,14 @@ Recommended **separate future source gates**, only on fresh synchronized exact m
 4. Actual `characterCreationForm.ts`, `characterCreationIdentityOptions.ts`, `characterCreationMath.ts`, `newGameSnapshot.ts`, `player-resources.ts`, account/World/Save owners and current active Codex prompt to determine what is implemented **today**.
 
 **No gameplay, schema, legacy Save, lineage trait catalog, active prompt, World source or production React change is authorized by this documentation.**
+
+## 10. November 18 follow-up: resource bars and attribute detail toggle
+
+**Status:** Owner-directed standalone creator UI refinement, not production mechanics or Save activation. Exact HTML source remains archived in [the creator prototype](../prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html), updated at [commit a7001bba](https://github.com/vagabond1215/Lineage_Reforged/commit/a7001bba6222e55057a5ae4d0c8777dfb6074a40), with strict repo readback matching the exported preview.
+
+- Sidebar comparative resource bars are **50% taller**, from 7px to **10.5px**, and presented on one row as **left label / center bar / right numeric value**. Labels become **HP, MP, ST**. ST abbreviates Stamina only for the rail label; the underlying resource key remains stamina. The preview's comparative, non-current/max values are unchanged.
+- A **Show details** eye button appears in the contextual ShellSubBar next to the crumbs. It starts off (`aria-pressed=false`) and reveals only the automatic attribute allocations **inside all nine Build and nine Aptitude tiles**. When activated it reads **Hide details** (`aria-pressed=true`); clicking again hides the annotations. The selected option, right-hand narrative and current-choice effect text remain visible either way.
+- Tile text drops the **Physical:** and **Mind:** prefixes and inter-attribute bullet separators. Expanded annotations are compact space-separated +N ATTR tokens (or **No generated points** where applicable). Display toggling does not modify attributes, generated point totals, Conditions, character state, narrative, World Entry or Save. The flag is transient UI state, not a saved character fact.
+- Isolated Chromium checks passed at **1280, 1024, 768, 375 and 320** pixels for exactly 10.5px bars, proper label/bar/value alignment, 18 tile annotations on and zero off, unchanged nine attribute values, navigable Lineage and Identity stages, no JavaScript errors and no horizontal overflow.
+
+**Integration gate:** Keep the independent TopBar and ShellSubBar, actual source-derived resources, and the current World/Save publication holds. This recorded preview behavior does not authorize runtime integration.
