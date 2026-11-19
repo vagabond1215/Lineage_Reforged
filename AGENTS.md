@@ -22,6 +22,12 @@
 - Never carry requirements, screenshots, code assumptions, branch state, commit identities, prompts, issues, product decisions, test results, or implementation conclusions from another repository into Lineage: Reforged unless the material is explicitly reintroduced in the correct project and is relevant to an accepted Lineage integration boundary.
 - If cross-repository contamination is detected, stop using the foreign repository context, restate that the active repository is `vagabond1215/Lineage_Reforged`, and continue only from Lineage repository authority and user instructions given in this project.
 
+## Interactive UI Prototype Continuity
+
+- For any request to resume, revise, show, or review the standalone Character Creator / World Creator UI preview, **first read [docs/prototypes/README.md](docs/prototypes/README.md)** and retrieve the live canonical HTML plus relevant draft PRs. Keep the repo source/branch/blob identity explicit; do not replace the current source with a prior chat upload without comparison and user direction.
+- When the user wants the preview **inside ChatGPT**, provide the **actual self-contained .html file** as a verified local attachment. Never substitute an iframe or wrapper pointing to GitHub or an HTML viewer, and do not route through Google Drive. Only link a `sandbox:` path after the exact file exists in the current session. If file materialization or the client preview pane is unsupported, say so rather than claiming an in-app preview works.
+- Preserve the eight-stage flow, account/Welcome/World screens, ten lineage-specific color palettes and their cosmetic behavior, UI navigation, and in-memory World settings while applying only the user's requested changes. Demo validation cannot certify production account, World, engine or Save behavior. Record the exact branch, SHA, changed paths and checks at each handoff.
+
 ## Repository-First Agent Workflow
 
 - `docs/dev/repository-first-agent-work-protocol.md` is the durable detailed authority for repository orientation, agent delegation, execution, validation, and handoff.
