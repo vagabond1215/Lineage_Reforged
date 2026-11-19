@@ -604,6 +604,13 @@
 @media(max-width:750px){.world-climate-columns{grid-template-columns:1fr}.world-setting-option{min-height:76px}.world-mode-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}.world-mode-cards .launcher-card{min-height:166px;padding:15px}}
 @media(max-width:560px){.world-setting-options{grid-template-columns:repeat(2,minmax(0,1fr))}.world-setting-options[data-setting-group="season"]{grid-template-columns:repeat(2,minmax(0,1fr))}.world-review-values{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.world-adjustment-future{grid-template-columns:1fr}.world-configuration-summary{grid-template-columns:1fr}}
 @media(max-width:390px){.world-mode-cards{grid-template-columns:1fr!important}.world-mode-cards .launcher-card{min-height:120px}.world-setting-option{min-height:77px;padding:10px}.world-setting-option strong{font-size:16px}}
+/* 2026-11-19: Back, Home and the active creation step share the Next action treatment. */
+.subbar-back-btn,.subbar-home{border:1px solid #d0ad77;border-radius:999px;background:linear-gradient(180deg,#e1c490,#b98f58);color:#192021;font-weight:800;letter-spacing:.04em;min-height:33px;padding:7px 14px}
+.navbtn.active{border:1px solid #d0ad77;border-radius:999px;background:linear-gradient(180deg,#e1c490,#b98f58);color:#192021;font-weight:800;letter-spacing:.04em;box-shadow:none}
+.navbtn.active:hover:not(:disabled){background:linear-gradient(180deg,#e1c490,#b98f58);border-color:#d0ad77}
+.navbtn.active .num{border-color:#6e552e;background:#c6a36d;color:#192021}
+.navbtn.active .done{color:#192021}
+
 </style>
 </head>
 <body>
@@ -615,8 +622,8 @@
     <div class="righttop"><div class="clock-stack" aria-label="Local and World clocks"><div class="clock" id="clock">LOCAL --:--</div><div class="world-clock" id="worldClock" title="Awaiting an owner-backed World clock">WORLD --:--</div></div><div class="account" id="account"><button class="topbtn" id="accountBtn" type="button">⚙ Account ▾</button><div class="menu"><button type="button">Settings (preview)</button><button id="themeBtn" type="button">Toggle theme (preview)</button><button id="logoutPreview" type="button" data-launch="logout">Log out (demo)</button></div></div></div>
   </header>
   <nav class="subbar" id="creatorSubbar" aria-label="Creator navigation">
-    <div class="subbar-back"><button type="button" id="creatorBack" class="outlinebtn subbar-back-btn" aria-label="Back to previous creator step or Characters">← Back</button></div>
-    <div class="subbar-center"><button type="button" class="outlinebtn subbar-home" id="creatorHome" title="Return to Welcome / Main">⌂ Home</button></div>
+    <div class="subbar-back"><button type="button" id="creatorBack" class="primary subbar-back-btn" aria-label="Back to previous creator step or Characters">← Back</button></div>
+    <div class="subbar-center"><button type="button" class="primary subbar-home" id="creatorHome" title="Return to Welcome / Main">⌂ Home</button></div>
     <div class="subbar-actions">
       <button type="button" class="outlinebtn subbar-random" id="identityDice" aria-label="Randomize Identity selections without changing name" title="Randomize Identity selections without changing name" hidden>⚄ Randomize Identity</button>
       <button type="button" id="detailsToggle" class="details-toggle" aria-pressed="false" aria-label="Detail hidden; show numeric attribute adjustments" title="Toggle numeric attribute details"><svg class="details-eye" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="m3 21 18-18"/></svg><span class="details-toggle-label">Detail</span></button>
