@@ -466,6 +466,18 @@ $worldMapData = Get-Content -LiteralPath $worldMapsPath -Raw | ConvertFrom-Json
 $featureData = Get-Content -LiteralPath $featurePath -Raw | ConvertFrom-Json
 $regionData = Get-Content -LiteralPath $regionPath -Raw | ConvertFrom-Json
 $settlementData = Get-Content -LiteralPath $settlementPath -Raw | ConvertFrom-Json
+# These 42 IDs are owner-verified false offshore land squares; they must never
+# seed land partitions even when an older 201-part source is passed in.
+$artifactManifestPath = Join-Path $workspaceRoot 'docs/design/first-world-offshore-square-artifact-removal-2026-11-12.json'
+$artifactManifest = Get-Content -LiteralPath $artifactManifestPath -Raw | ConvertFrom-Json
+$verifiedExcludedIds = New-Object 'System.Collections.Generic.HashSet[string]'
+foreach ($id in @($artifactManifest.removedSourceFeatureIds)) {
+    [void]$verifiedExcludedIds.Add([string]$id)
+}
+if ($verifiedExcludedIds.Count -ne 42) {
+    throw 'Verified offshore footprint exclusion manifest is not the accepted 42-ID set.'
+}
+
 
 $worldMapRecord = @($worldMapData.records)[0]
 $featureRecord = @($featureData.records)[0]
@@ -695,29 +707,6 @@ function Add-PolygonToMaskBitmap {
     }
 }
 
-function Add-PointBufferToMaskBitmap {
-    param(
-        [System.Drawing.Bitmap]$MaskBitmap,
-        [int]$PixelX,
-        [int]$PixelY,
-        [int]$Radius = 2
-    )
-
-    $graphics = [System.Drawing.Graphics]::FromImage($MaskBitmap)
-    try {
-        $graphics.FillEllipse(
-            [System.Drawing.Brushes]::White,
-            [single]($PixelX - $Radius),
-            [single]($PixelY - $Radius),
-            [single](($Radius * 2) + 1),
-            [single](($Radius * 2) + 1)
-        )
-    }
-    finally {
-        $graphics.Dispose()
-    }
-}
-
 $referenceBitmap = New-ScaledBitmap -Path $sourcePath -SourceRect $sourceRect -Width $sampleWidth -Height $sampleHeight
 $landMask = [RasterGeometry]::CreateLandMask($referenceBitmap)
 $waterMask = [RasterGeometry]::CreateWaterMask($referenceBitmap)
@@ -741,6 +730,7 @@ try {
     $regionAnchorLookup = @{}
 
     foreach ($footprint in @($featureRecord.regionFootprints)) {
+        if ($verifiedExcludedIds.Contains([string]$footprint.id)) { continue }
         foreach ($regionId in @($footprint.regionIds)) {
             $regionId = [string]$regionId
             if (-not $regionBaseFeatures.ContainsKey($regionId)) {
@@ -759,12 +749,7 @@ try {
     }
 
     foreach ($settlement in @($settlementRecords)) {
-        $siteClass = if ($null -ne $settlement.mapLocation -and $settlement.mapLocation.PSObject.Properties.Name -contains 'siteClass') {
-            [string]$settlement.mapLocation.siteClass
-        }
-        else {
-            'surface'
-        }
+        $siteClass = [string]$settlement.siteClass
         if ($siteClass -eq 'underwater' -or $siteClass -eq 'subterranean') {
             continue
         }
@@ -774,7 +759,16 @@ try {
             continue
         }
 
-        $regionAnchorLookup[$regionId].Add((New-Object System.Drawing.Point -ArgumentList ([int][Math]::Round($settlement.mapLocation.pixelX / $sampleScale)), ([int][Math]::Round($settlement.mapLocation.pixelY / $sampleScale))))
+        # Current settlement authority is visualMapRef, not the obsolete mapLocation.
+        # An offshore settlement may be retained as an authored place, but must never
+        # attract land partition ownership or create a landmask island.
+        $anchor = $settlement.visualMapRef
+        if ($null -eq $anchor -or [string]$anchor.mapId -ne [string]$worldMapRecord.id) { continue }
+        $sx = [int][Math]::Round(([double]$anchor.pixelX / $sampleScale))
+        $sy = [int][Math]::Round(([double]$anchor.pixelY / $sampleScale))
+        if ($sx -lt 0 -or $sy -lt 0 -or $sx -ge $sampleWidth -or $sy -ge $sampleHeight) { continue }
+        if ($landMask.GetPixel($sx, $sy).R -le 127) { continue }
+        $regionAnchorLookup[$regionId].Add((New-Object System.Drawing.Point -ArgumentList $sx, $sy))
     }
 
     $orderedRegionIds = @($regionBaseFeatures.Keys | Sort-Object)
@@ -796,13 +790,8 @@ try {
             $baseFeature = $regionBaseFeatures[$regionId]
             $regionMasksById[$regionId] = $partitionedMasks[$regionIndex]
 
-            foreach ($settlement in @($settlementRecords | Where-Object { [string]$_.regionId -eq $regionId -and [string]$_.mapLocation.siteClass -ne 'underwater' })) {
-                Add-PointBufferToMaskBitmap `
-                    -MaskBitmap $regionMasksById[$regionId] `
-                    -PixelX ([int][Math]::Round($settlement.mapLocation.pixelX / $sampleScale)) `
-                    -PixelY ([int][Math]::Round($settlement.mapLocation.pixelY / $sampleScale)) `
-                    -Radius 2
-            }
+            # The derived landmask is independent of settlement anchors. Do not stamp
+            # settlement-centered land patches; offshore coordinates must stay detectable.
 
             $partitionFeatures = @(Convert-MaskToFeatures -BaseFeature $baseFeature -MaskBitmap $partitionedMasks[$regionIndex] -MinArea 12)
             if ($partitionFeatures.Count -eq 0) {
@@ -864,10 +853,9 @@ try {
         $disposeWorkingMask = $false
 
         try {
-            $zoneSettlements = @($settlementRecords | Where-Object {
-                    (([string]$_.mapLocation.biomeZoneId) -eq ([string]$zone.id) -or ([string]$_.mapLocation.biomeZoneId).StartsWith(([string]$zone.id) + '.part_')) -and
-                    ([string]$_.mapLocation.siteClass -ne 'underwater')
-                })
+            # Never repair a biome mask by stamping settlement-centered pixels.
+            # Independent biome/land raster geometry must be able to reveal a
+            # misplaced authored settlement without laundering its coordinates.
             if ($biomeId -match '^biome\.marine\.') {
                 $currentMask = New-PolygonMaskBitmap -Points (Convert-ToSamplePoints -Points $zone.points) -Width $sampleWidth -Height $sampleHeight
                 $workingMask = [RasterGeometry]::IntersectMasks($currentMask, $waterMask)
@@ -893,15 +881,8 @@ try {
                 }
             }
 
-            if ($null -ne $workingMask) {
-                foreach ($settlement in @($zoneSettlements)) {
-                    Add-PointBufferToMaskBitmap `
-                        -MaskBitmap $workingMask `
-                        -PixelX ([int][Math]::Round($settlement.mapLocation.pixelX / $sampleScale)) `
-                        -PixelY ([int][Math]::Round($settlement.mapLocation.pixelY / $sampleScale)) `
-                        -Radius 2
-                }
-            }
+            # Preserve the true raster/zone mask here. Settlement anchors must not
+            # create biomes or land where the raster evidence says there is water.
 
             if ($null -eq $workingMask -or -not [RasterGeometry]::MaskHasPixels($workingMask)) {
                 $newBiomeZones.Add($zone)

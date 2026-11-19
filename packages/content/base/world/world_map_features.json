@@ -6646,32 +6646,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_dawnreach_isles.part_8",
-                                                     "name":  "Dawnreach Isles Footprint Part 8",
-                                                     "regionIds":  [
-                                                                       "region.dawnreach_isles"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the sparse far-eastern polar islands.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1822,
-                                                                        "y":  808
-                                                                    },
-                                                                    {
-                                                                        "x":  1830,
-                                                                        "y":  808
-                                                                    },
-                                                                    {
-                                                                        "x":  1830,
-                                                                        "y":  816
-                                                                    },
-                                                                    {
-                                                                        "x":  1822,
-                                                                        "y":  816
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_dawnreach_isles.part_9",
                                                      "name":  "Dawnreach Isles Footprint Part 9",
                                                      "regionIds":  [
@@ -6752,58 +6726,6 @@
                                                                     {
                                                                         "x":  1708,
                                                                         "y":  856
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_dawnreach_isles.part_11",
-                                                     "name":  "Dawnreach Isles Footprint Part 11",
-                                                     "regionIds":  [
-                                                                       "region.dawnreach_isles"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the sparse far-eastern polar islands.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1854,
-                                                                        "y":  928
-                                                                    },
-                                                                    {
-                                                                        "x":  1862,
-                                                                        "y":  928
-                                                                    },
-                                                                    {
-                                                                        "x":  1862,
-                                                                        "y":  936
-                                                                    },
-                                                                    {
-                                                                        "x":  1854,
-                                                                        "y":  936
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_dawnreach_isles.part_12",
-                                                     "name":  "Dawnreach Isles Footprint Part 12",
-                                                     "regionIds":  [
-                                                                       "region.dawnreach_isles"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the sparse far-eastern polar islands.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1798,
-                                                                        "y":  1034
-                                                                    },
-                                                                    {
-                                                                        "x":  1806,
-                                                                        "y":  1034
-                                                                    },
-                                                                    {
-                                                                        "x":  1806,
-                                                                        "y":  1042
-                                                                    },
-                                                                    {
-                                                                        "x":  1798,
-                                                                        "y":  1042
                                                                     }
                                                                 ]
                                                  },
@@ -11736,110 +11658,6 @@
                                                                     {
                                                                         "x":  460,
                                                                         "y":  674
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_green_reach.part_6",
-                                                     "name":  "Green Reach Footprint Part 6",
-                                                     "regionIds":  [
-                                                                       "region.green_reach"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s forest interior.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  382,
-                                                                        "y":  688
-                                                                    },
-                                                                    {
-                                                                        "x":  390,
-                                                                        "y":  688
-                                                                    },
-                                                                    {
-                                                                        "x":  390,
-                                                                        "y":  696
-                                                                    },
-                                                                    {
-                                                                        "x":  382,
-                                                                        "y":  696
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_green_reach.part_7",
-                                                     "name":  "Green Reach Footprint Part 7",
-                                                     "regionIds":  [
-                                                                       "region.green_reach"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s forest interior.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  338,
-                                                                        "y":  728
-                                                                    },
-                                                                    {
-                                                                        "x":  346,
-                                                                        "y":  728
-                                                                    },
-                                                                    {
-                                                                        "x":  346,
-                                                                        "y":  736
-                                                                    },
-                                                                    {
-                                                                        "x":  338,
-                                                                        "y":  736
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_green_reach.part_8",
-                                                     "name":  "Green Reach Footprint Part 8",
-                                                     "regionIds":  [
-                                                                       "region.green_reach"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s forest interior.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  298,
-                                                                        "y":  758
-                                                                    },
-                                                                    {
-                                                                        "x":  306,
-                                                                        "y":  758
-                                                                    },
-                                                                    {
-                                                                        "x":  306,
-                                                                        "y":  766
-                                                                    },
-                                                                    {
-                                                                        "x":  298,
-                                                                        "y":  766
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_green_reach.part_9",
-                                                     "name":  "Green Reach Footprint Part 9",
-                                                     "regionIds":  [
-                                                                       "region.green_reach"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s forest interior.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  414,
-                                                                        "y":  768
-                                                                    },
-                                                                    {
-                                                                        "x":  422,
-                                                                        "y":  768
-                                                                    },
-                                                                    {
-                                                                        "x":  422,
-                                                                        "y":  776
-                                                                    },
-                                                                    {
-                                                                        "x":  414,
-                                                                        "y":  776
                                                                     }
                                                                 ]
                                                  },
@@ -18962,32 +18780,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_jade_expanse.part_7",
-                                                     "name":  "Jade Expanse Footprint Part 7",
-                                                     "regionIds":  [
-                                                                       "region.jade_expanse"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the southern prairie and orchard belt.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1254,
-                                                                        "y":  454
-                                                                    },
-                                                                    {
-                                                                        "x":  1262,
-                                                                        "y":  454
-                                                                    },
-                                                                    {
-                                                                        "x":  1262,
-                                                                        "y":  462
-                                                                    },
-                                                                    {
-                                                                        "x":  1254,
-                                                                        "y":  462
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_jade_expanse.part_8",
                                                      "name":  "Jade Expanse Footprint Part 8",
                                                      "regionIds":  [
@@ -22134,58 +21926,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_lantern_isles.part_3",
-                                                     "name":  "Lantern Isles Footprint Part 3",
-                                                     "regionIds":  [
-                                                                       "region.lantern_isles"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the central-ocean drifting island cluster.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1008,
-                                                                        "y":  502
-                                                                    },
-                                                                    {
-                                                                        "x":  1016,
-                                                                        "y":  502
-                                                                    },
-                                                                    {
-                                                                        "x":  1016,
-                                                                        "y":  510
-                                                                    },
-                                                                    {
-                                                                        "x":  1008,
-                                                                        "y":  510
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_lantern_isles.part_4",
-                                                     "name":  "Lantern Isles Footprint Part 4",
-                                                     "regionIds":  [
-                                                                       "region.lantern_isles"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the central-ocean drifting island cluster.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  868,
-                                                                        "y":  562
-                                                                    },
-                                                                    {
-                                                                        "x":  876,
-                                                                        "y":  562
-                                                                    },
-                                                                    {
-                                                                        "x":  876,
-                                                                        "y":  570
-                                                                    },
-                                                                    {
-                                                                        "x":  868,
-                                                                        "y":  570
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_lantern_isles.part_5",
                                                      "name":  "Lantern Isles Footprint Part 5",
                                                      "regionIds":  [
@@ -22832,32 +22572,6 @@
                                                                     {
                                                                         "x":  560,
                                                                         "y":  572
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_lantern_isles.part_6",
-                                                     "name":  "Lantern Isles Footprint Part 6",
-                                                     "regionIds":  [
-                                                                       "region.lantern_isles"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the central-ocean drifting island cluster.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  914,
-                                                                        "y":  608
-                                                                    },
-                                                                    {
-                                                                        "x":  922,
-                                                                        "y":  608
-                                                                    },
-                                                                    {
-                                                                        "x":  922,
-                                                                        "y":  616
-                                                                    },
-                                                                    {
-                                                                        "x":  914,
-                                                                        "y":  616
                                                                     }
                                                                 ]
                                                  },
@@ -28136,32 +27850,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_myridian_chain.part_11",
-                                                     "name":  "Myridian Chain Footprint Part 11",
-                                                     "regionIds":  [
-                                                                       "region.myridian_chain"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the northern mid-ocean trade archipelago.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  962,
-                                                                        "y":  168
-                                                                    },
-                                                                    {
-                                                                        "x":  970,
-                                                                        "y":  168
-                                                                    },
-                                                                    {
-                                                                        "x":  970,
-                                                                        "y":  176
-                                                                    },
-                                                                    {
-                                                                        "x":  962,
-                                                                        "y":  176
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_myridian_chain.part_12",
                                                      "name":  "Myridian Chain Footprint Part 12",
                                                      "regionIds":  [
@@ -30106,32 +29794,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_myridian_chain.part_24",
-                                                     "name":  "Myridian Chain Footprint Part 24",
-                                                     "regionIds":  [
-                                                                       "region.myridian_chain"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the northern mid-ocean trade archipelago.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  902,
-                                                                        "y":  268
-                                                                    },
-                                                                    {
-                                                                        "x":  910,
-                                                                        "y":  268
-                                                                    },
-                                                                    {
-                                                                        "x":  910,
-                                                                        "y":  276
-                                                                    },
-                                                                    {
-                                                                        "x":  902,
-                                                                        "y":  276
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_myridian_chain.part_25",
                                                      "name":  "Myridian Chain Footprint Part 25",
                                                      "regionIds":  [
@@ -30542,32 +30204,6 @@
                                                                     {
                                                                         "x":  666,
                                                                         "y":  312
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_myridian_chain.part_28",
-                                                     "name":  "Myridian Chain Footprint Part 28",
-                                                     "regionIds":  [
-                                                                       "region.myridian_chain"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the northern mid-ocean trade archipelago.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  734,
-                                                                        "y":  314
-                                                                    },
-                                                                    {
-                                                                        "x":  742,
-                                                                        "y":  314
-                                                                    },
-                                                                    {
-                                                                        "x":  742,
-                                                                        "y":  322
-                                                                    },
-                                                                    {
-                                                                        "x":  734,
-                                                                        "y":  322
                                                                     }
                                                                 ]
                                                  },
@@ -31382,32 +31018,6 @@
                                                                     {
                                                                         "x":  776,
                                                                         "y":  350
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_myridian_chain.part_36",
-                                                     "name":  "Myridian Chain Footprint Part 36",
-                                                     "regionIds":  [
-                                                                       "region.myridian_chain"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the northern mid-ocean trade archipelago.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  758,
-                                                                        "y":  354
-                                                                    },
-                                                                    {
-                                                                        "x":  766,
-                                                                        "y":  354
-                                                                    },
-                                                                    {
-                                                                        "x":  766,
-                                                                        "y":  362
-                                                                    },
-                                                                    {
-                                                                        "x":  758,
-                                                                        "y":  362
                                                                     }
                                                                 ]
                                                  },
@@ -33164,32 +32774,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_sailors_verge.part_5",
-                                                     "name":  "Sailor\u0027s Verge Footprint Part 5",
-                                                     "regionIds":  [
-                                                                       "region.sailors_verge"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s southern maritime coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  458,
-                                                                        "y":  808
-                                                                    },
-                                                                    {
-                                                                        "x":  466,
-                                                                        "y":  808
-                                                                    },
-                                                                    {
-                                                                        "x":  466,
-                                                                        "y":  816
-                                                                    },
-                                                                    {
-                                                                        "x":  458,
-                                                                        "y":  816
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_sailors_verge.part_6",
                                                      "name":  "Sailor\u0027s Verge Footprint Part 6",
                                                      "regionIds":  [
@@ -33240,84 +32824,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_sailors_verge.part_7",
-                                                     "name":  "Sailor\u0027s Verge Footprint Part 7",
-                                                     "regionIds":  [
-                                                                       "region.sailors_verge"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s southern maritime coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  342,
-                                                                        "y":  822
-                                                                    },
-                                                                    {
-                                                                        "x":  350,
-                                                                        "y":  822
-                                                                    },
-                                                                    {
-                                                                        "x":  350,
-                                                                        "y":  830
-                                                                    },
-                                                                    {
-                                                                        "x":  342,
-                                                                        "y":  830
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_sailors_verge.part_8",
-                                                     "name":  "Sailor\u0027s Verge Footprint Part 8",
-                                                     "regionIds":  [
-                                                                       "region.sailors_verge"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s southern maritime coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  394,
-                                                                        "y":  842
-                                                                    },
-                                                                    {
-                                                                        "x":  402,
-                                                                        "y":  842
-                                                                    },
-                                                                    {
-                                                                        "x":  402,
-                                                                        "y":  850
-                                                                    },
-                                                                    {
-                                                                        "x":  394,
-                                                                        "y":  850
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_sailors_verge.part_9",
-                                                     "name":  "Sailor\u0027s Verge Footprint Part 9",
-                                                     "regionIds":  [
-                                                                       "region.sailors_verge"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s southern maritime coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  278,
-                                                                        "y":  858
-                                                                    },
-                                                                    {
-                                                                        "x":  286,
-                                                                        "y":  858
-                                                                    },
-                                                                    {
-                                                                        "x":  286,
-                                                                        "y":  866
-                                                                    },
-                                                                    {
-                                                                        "x":  278,
-                                                                        "y":  866
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_sailors_verge.part_10",
                                                      "name":  "Sailor\u0027s Verge Footprint Part 10",
                                                      "regionIds":  [
@@ -33340,32 +32846,6 @@
                                                                     {
                                                                         "x":  0,
                                                                         "y":  1150
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_sailors_verge.part_11",
-                                                     "name":  "Sailor\u0027s Verge Footprint Part 11",
-                                                     "regionIds":  [
-                                                                       "region.sailors_verge"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s southern maritime coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  422,
-                                                                        "y":  874
-                                                                    },
-                                                                    {
-                                                                        "x":  430,
-                                                                        "y":  874
-                                                                    },
-                                                                    {
-                                                                        "x":  430,
-                                                                        "y":  882
-                                                                    },
-                                                                    {
-                                                                        "x":  422,
-                                                                        "y":  882
                                                                     }
                                                                 ]
                                                  },
@@ -35128,32 +34608,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_serpents_wake.part_1",
-                                                     "name":  "Serpent\u0027s Wake Footprint Part 1",
-                                                     "regionIds":  [
-                                                                       "region.serpents_wake"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the storm-lashed southern island arc.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1402,
-                                                                        "y":  878
-                                                                    },
-                                                                    {
-                                                                        "x":  1410,
-                                                                        "y":  878
-                                                                    },
-                                                                    {
-                                                                        "x":  1410,
-                                                                        "y":  886
-                                                                    },
-                                                                    {
-                                                                        "x":  1402,
-                                                                        "y":  886
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_serpents_wake.part_2",
                                                      "name":  "Serpent\u0027s Wake Footprint Part 2",
                                                      "regionIds":  [
@@ -35922,58 +35376,6 @@
                                                                     {
                                                                         "x":  1202,
                                                                         "y":  920
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_serpents_wake.part_4",
-                                                     "name":  "Serpent\u0027s Wake Footprint Part 4",
-                                                     "regionIds":  [
-                                                                       "region.serpents_wake"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the storm-lashed southern island arc.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1462,
-                                                                        "y":  958
-                                                                    },
-                                                                    {
-                                                                        "x":  1470,
-                                                                        "y":  958
-                                                                    },
-                                                                    {
-                                                                        "x":  1470,
-                                                                        "y":  966
-                                                                    },
-                                                                    {
-                                                                        "x":  1462,
-                                                                        "y":  966
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_serpents_wake.part_5",
-                                                     "name":  "Serpent\u0027s Wake Footprint Part 5",
-                                                     "regionIds":  [
-                                                                       "region.serpents_wake"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the storm-lashed southern island arc.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1278,
-                                                                        "y":  1002
-                                                                    },
-                                                                    {
-                                                                        "x":  1286,
-                                                                        "y":  1002
-                                                                    },
-                                                                    {
-                                                                        "x":  1286,
-                                                                        "y":  1010
-                                                                    },
-                                                                    {
-                                                                        "x":  1278,
-                                                                        "y":  1010
                                                                     }
                                                                 ]
                                                  },
@@ -38264,32 +37666,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_shattercap_isles.part_10",
-                                                     "name":  "Shattercap Isles Footprint Part 10",
-                                                     "regionIds":  [
-                                                                       "region.shattercap_isles"
-                                                                   ],
-                                                     "notes":  "Approximate island footprint for the Shattercap northern archipelago.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  358,
-                                                                        "y":  178
-                                                                    },
-                                                                    {
-                                                                        "x":  366,
-                                                                        "y":  178
-                                                                    },
-                                                                    {
-                                                                        "x":  366,
-                                                                        "y":  186
-                                                                    },
-                                                                    {
-                                                                        "x":  358,
-                                                                        "y":  186
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_shattercap_isles.part_11",
                                                      "name":  "Shattercap Isles Footprint Part 11",
                                                      "regionIds":  [
@@ -38352,32 +37728,6 @@
                                                                     {
                                                                         "x":  554,
                                                                         "y":  192
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_shattercap_isles.part_12",
-                                                     "name":  "Shattercap Isles Footprint Part 12",
-                                                     "regionIds":  [
-                                                                       "region.shattercap_isles"
-                                                                   ],
-                                                     "notes":  "Approximate island footprint for the Shattercap northern archipelago.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  414,
-                                                                        "y":  218
-                                                                    },
-                                                                    {
-                                                                        "x":  422,
-                                                                        "y":  218
-                                                                    },
-                                                                    {
-                                                                        "x":  422,
-                                                                        "y":  226
-                                                                    },
-                                                                    {
-                                                                        "x":  414,
-                                                                        "y":  226
                                                                     }
                                                                 ]
                                                  },
@@ -42966,32 +42316,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_silver_valleys.part_8",
-                                                     "name":  "Silver Valleys Footprint Part 8",
-                                                     "regionIds":  [
-                                                                       "region.silver_valleys"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Talmyra\u0027s most habitable northern valleys.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1388,
-                                                                        "y":  788
-                                                                    },
-                                                                    {
-                                                                        "x":  1396,
-                                                                        "y":  788
-                                                                    },
-                                                                    {
-                                                                        "x":  1396,
-                                                                        "y":  796
-                                                                    },
-                                                                    {
-                                                                        "x":  1388,
-                                                                        "y":  796
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_silver_valleys.part_9",
                                                      "name":  "Silver Valleys Footprint Part 9",
                                                      "regionIds":  [
@@ -43054,32 +42378,6 @@
                                                                     {
                                                                         "x":  1294,
                                                                         "y":  840
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_silver_valleys.part_10",
-                                                     "name":  "Silver Valleys Footprint Part 10",
-                                                     "regionIds":  [
-                                                                       "region.silver_valleys"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Talmyra\u0027s most habitable northern valleys.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1358,
-                                                                        "y":  848
-                                                                    },
-                                                                    {
-                                                                        "x":  1366,
-                                                                        "y":  848
-                                                                    },
-                                                                    {
-                                                                        "x":  1366,
-                                                                        "y":  856
-                                                                    },
-                                                                    {
-                                                                        "x":  1358,
-                                                                        "y":  856
                                                                     }
                                                                 ]
                                                  },
@@ -44274,32 +43572,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_stormcap_coast.part_3",
-                                                     "name":  "Stormcap Coast Footprint Part 3",
-                                                     "regionIds":  [
-                                                                       "region.stormcap_coast"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the rugged southern coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  858,
-                                                                        "y":  1014
-                                                                    },
-                                                                    {
-                                                                        "x":  866,
-                                                                        "y":  1014
-                                                                    },
-                                                                    {
-                                                                        "x":  866,
-                                                                        "y":  1022
-                                                                    },
-                                                                    {
-                                                                        "x":  858,
-                                                                        "y":  1022
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_stormcap_coast.part_4",
                                                      "name":  "Stormcap Coast Footprint Part 4",
                                                      "regionIds":  [
@@ -44572,58 +43844,6 @@
                                                                     {
                                                                         "x":  1014,
                                                                         "y":  1042
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_stormcap_coast.part_6",
-                                                     "name":  "Stormcap Coast Footprint Part 6",
-                                                     "regionIds":  [
-                                                                       "region.stormcap_coast"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the rugged southern coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  798,
-                                                                        "y":  1058
-                                                                    },
-                                                                    {
-                                                                        "x":  806,
-                                                                        "y":  1058
-                                                                    },
-                                                                    {
-                                                                        "x":  806,
-                                                                        "y":  1066
-                                                                    },
-                                                                    {
-                                                                        "x":  798,
-                                                                        "y":  1066
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_stormcap_coast.part_7",
-                                                     "name":  "Stormcap Coast Footprint Part 7",
-                                                     "regionIds":  [
-                                                                       "region.stormcap_coast"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the rugged southern coast.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  934,
-                                                                        "y":  1074
-                                                                    },
-                                                                    {
-                                                                        "x":  942,
-                                                                        "y":  1074
-                                                                    },
-                                                                    {
-                                                                        "x":  942,
-                                                                        "y":  1082
-                                                                    },
-                                                                    {
-                                                                        "x":  934,
-                                                                        "y":  1082
                                                                     }
                                                                 ]
                                                  },
@@ -45206,58 +44426,6 @@
                                                                     {
                                                                         "x":  1298,
                                                                         "y":  934
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_thorn_peninsula.part_2",
-                                                     "name":  "Thorn Peninsula Footprint Part 2",
-                                                     "regionIds":  [
-                                                                       "region.thorn_peninsula"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Talmyra\u0027s southern dry-forest peninsula.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1408,
-                                                                        "y":  954
-                                                                    },
-                                                                    {
-                                                                        "x":  1416,
-                                                                        "y":  954
-                                                                    },
-                                                                    {
-                                                                        "x":  1416,
-                                                                        "y":  962
-                                                                    },
-                                                                    {
-                                                                        "x":  1408,
-                                                                        "y":  962
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_thorn_peninsula.part_3",
-                                                     "name":  "Thorn Peninsula Footprint Part 3",
-                                                     "regionIds":  [
-                                                                       "region.thorn_peninsula"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Talmyra\u0027s southern dry-forest peninsula.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1288,
-                                                                        "y":  962
-                                                                    },
-                                                                    {
-                                                                        "x":  1296,
-                                                                        "y":  962
-                                                                    },
-                                                                    {
-                                                                        "x":  1296,
-                                                                        "y":  970
-                                                                    },
-                                                                    {
-                                                                        "x":  1288,
-                                                                        "y":  970
                                                                     }
                                                                 ]
                                                  },
@@ -45992,32 +45160,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_thorn_peninsula.part_5",
-                                                     "name":  "Thorn Peninsula Footprint Part 5",
-                                                     "regionIds":  [
-                                                                       "region.thorn_peninsula"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Talmyra\u0027s southern dry-forest peninsula.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1358,
-                                                                        "y":  1014
-                                                                    },
-                                                                    {
-                                                                        "x":  1366,
-                                                                        "y":  1014
-                                                                    },
-                                                                    {
-                                                                        "x":  1366,
-                                                                        "y":  1022
-                                                                    },
-                                                                    {
-                                                                        "x":  1358,
-                                                                        "y":  1022
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_thorn_peninsula.part_6",
                                                      "name":  "Thorn Peninsula Footprint Part 6",
                                                      "regionIds":  [
@@ -46088,32 +45230,6 @@
                                                                     {
                                                                         "x":  1218,
                                                                         "y":  1024
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_thorn_peninsula.part_7",
-                                                     "name":  "Thorn Peninsula Footprint Part 7",
-                                                     "regionIds":  [
-                                                                       "region.thorn_peninsula"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Talmyra\u0027s southern dry-forest peninsula.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1342,
-                                                                        "y":  1088
-                                                                    },
-                                                                    {
-                                                                        "x":  1350,
-                                                                        "y":  1088
-                                                                    },
-                                                                    {
-                                                                        "x":  1350,
-                                                                        "y":  1096
-                                                                    },
-                                                                    {
-                                                                        "x":  1342,
-                                                                        "y":  1096
                                                                     }
                                                                 ]
                                                  },
@@ -48194,110 +47310,6 @@
                                                                     {
                                                                         "x":  1398,
                                                                         "y":  708
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_watcher_coast.part_3",
-                                                     "name":  "Watcher Coast Footprint Part 3",
-                                                     "regionIds":  [
-                                                                       "region.watcher_coast"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the eastern cliff coast and mangrove inlets.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1498,
-                                                                        "y":  818
-                                                                    },
-                                                                    {
-                                                                        "x":  1506,
-                                                                        "y":  818
-                                                                    },
-                                                                    {
-                                                                        "x":  1506,
-                                                                        "y":  826
-                                                                    },
-                                                                    {
-                                                                        "x":  1498,
-                                                                        "y":  826
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_watcher_coast.part_4",
-                                                     "name":  "Watcher Coast Footprint Part 4",
-                                                     "regionIds":  [
-                                                                       "region.watcher_coast"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the eastern cliff coast and mangrove inlets.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1458,
-                                                                        "y":  918
-                                                                    },
-                                                                    {
-                                                                        "x":  1466,
-                                                                        "y":  918
-                                                                    },
-                                                                    {
-                                                                        "x":  1466,
-                                                                        "y":  926
-                                                                    },
-                                                                    {
-                                                                        "x":  1458,
-                                                                        "y":  926
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_watcher_coast.part_5",
-                                                     "name":  "Watcher Coast Footprint Part 5",
-                                                     "regionIds":  [
-                                                                       "region.watcher_coast"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the eastern cliff coast and mangrove inlets.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1488,
-                                                                        "y":  988
-                                                                    },
-                                                                    {
-                                                                        "x":  1496,
-                                                                        "y":  988
-                                                                    },
-                                                                    {
-                                                                        "x":  1496,
-                                                                        "y":  996
-                                                                    },
-                                                                    {
-                                                                        "x":  1488,
-                                                                        "y":  996
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_watcher_coast.part_6",
-                                                     "name":  "Watcher Coast Footprint Part 6",
-                                                     "regionIds":  [
-                                                                       "region.watcher_coast"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for the eastern cliff coast and mangrove inlets.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  1422,
-                                                                        "y":  1008
-                                                                    },
-                                                                    {
-                                                                        "x":  1430,
-                                                                        "y":  1008
-                                                                    },
-                                                                    {
-                                                                        "x":  1430,
-                                                                        "y":  1016
-                                                                    },
-                                                                    {
-                                                                        "x":  1422,
-                                                                        "y":  1016
                                                                     }
                                                                 ]
                                                  },
@@ -50898,32 +49910,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_windward_spine.part_7",
-                                                     "name":  "Windward Spine Footprint Part 7",
-                                                     "regionIds":  [
-                                                                       "region.windward_spine"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s northern mountain spine and dwarf holdfasts.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  302,
-                                                                        "y":  514
-                                                                    },
-                                                                    {
-                                                                        "x":  310,
-                                                                        "y":  514
-                                                                    },
-                                                                    {
-                                                                        "x":  310,
-                                                                        "y":  522
-                                                                    },
-                                                                    {
-                                                                        "x":  302,
-                                                                        "y":  522
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_windward_spine.part_8",
                                                      "name":  "Windward Spine Footprint Part 8",
                                                      "regionIds":  [
@@ -51088,58 +50074,6 @@
                                                                 ]
                                                  },
                                                  {
-                                                     "id":  "feature.region_windward_spine.part_10",
-                                                     "name":  "Windward Spine Footprint Part 10",
-                                                     "regionIds":  [
-                                                                       "region.windward_spine"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s northern mountain spine and dwarf holdfasts.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  328,
-                                                                        "y":  582
-                                                                    },
-                                                                    {
-                                                                        "x":  336,
-                                                                        "y":  582
-                                                                    },
-                                                                    {
-                                                                        "x":  336,
-                                                                        "y":  590
-                                                                    },
-                                                                    {
-                                                                        "x":  328,
-                                                                        "y":  590
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_windward_spine.part_11",
-                                                     "name":  "Windward Spine Footprint Part 11",
-                                                     "regionIds":  [
-                                                                       "region.windward_spine"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s northern mountain spine and dwarf holdfasts.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  378,
-                                                                        "y":  618
-                                                                    },
-                                                                    {
-                                                                        "x":  386,
-                                                                        "y":  618
-                                                                    },
-                                                                    {
-                                                                        "x":  386,
-                                                                        "y":  626
-                                                                    },
-                                                                    {
-                                                                        "x":  378,
-                                                                        "y":  626
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
                                                      "id":  "feature.region_windward_spine.part_12",
                                                      "name":  "Windward Spine Footprint Part 12",
                                                      "regionIds":  [
@@ -51212,32 +50146,6 @@
                                                                     {
                                                                         "x":  452,
                                                                         "y":  648
-                                                                    }
-                                                                ]
-                                                 },
-                                                 {
-                                                     "id":  "feature.region_windward_spine.part_14",
-                                                     "name":  "Windward Spine Footprint Part 14",
-                                                     "regionIds":  [
-                                                                       "region.windward_spine"
-                                                                   ],
-                                                     "notes":  "Approximate authored footprint for Serathyl\u0027s northern mountain spine and dwarf holdfasts.",
-                                                     "points":  [
-                                                                    {
-                                                                        "x":  342,
-                                                                        "y":  662
-                                                                    },
-                                                                    {
-                                                                        "x":  350,
-                                                                        "y":  662
-                                                                    },
-                                                                    {
-                                                                        "x":  350,
-                                                                        "y":  670
-                                                                    },
-                                                                    {
-                                                                        "x":  342,
-                                                                        "y":  670
                                                                     }
                                                                 ]
                                                  }
