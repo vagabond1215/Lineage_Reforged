@@ -358,6 +358,41 @@
 .identity-controls .sex-row .profile-choice small,.identity-controls .age-row .profile-choice small,.identity-controls .height-row .profile-choice small{display:block;width:100%;font-size:9px;line-height:1.25;color:#bcbbaf;overflow-wrap:anywhere}
 .identity-controls .sex-row .profile-choice.selected small,.identity-controls .age-row .profile-choice.selected small,.identity-controls .height-row .profile-choice.selected small{color:#e4c596}
 @media(max-width:550px){.identity-controls .sex-row .profile-choice small,.identity-controls .age-row .profile-choice small,.identity-controls .height-row .profile-choice small{font-size:8.5px}}
+
+/* 2026-11-18: 25% shorter Build/Aptitude tiles and matched Sex/Age/Height tile height. */
+.identity-controls{--identity-choice-height:52px}
+.identity-controls .sex-row .profile-choice,
+.identity-controls .age-row .profile-choice,
+.identity-controls .height-row .profile-choice,
+.identity-controls .build-row .profile-choice,
+.identity-controls .aptitude-row .profile-choice{
+  box-sizing:border-box;
+  height:var(--identity-choice-height);
+  min-height:var(--identity-choice-height);
+  padding:3px 5px;
+  gap:2px;
+  align-items:center;
+  justify-content:center;
+  line-height:1.12;
+}
+.identity-controls .sex-row .profile-choice strong,
+.identity-controls .age-row .profile-choice strong,
+.identity-controls .height-row .profile-choice strong,
+.identity-controls .build-row .profile-choice strong,
+.identity-controls .aptitude-row .profile-choice strong{line-height:1.13}
+.identity-controls .sex-row .profile-choice small,
+.identity-controls .age-row .profile-choice small,
+.identity-controls .height-row .profile-choice small,
+.identity-controls .build-row .profile-choice small,
+.identity-controls .aptitude-row .profile-choice small{line-height:1.13}
+@media(max-width:550px){
+  .identity-controls{--identity-choice-height:51px}
+  .identity-controls .sex-row .profile-choice,
+  .identity-controls .age-row .profile-choice,
+  .identity-controls .height-row .profile-choice,
+  .identity-controls .build-row .profile-choice,
+  .identity-controls .aptitude-row .profile-choice{padding:3px 3px;gap:1px}
+}
 </style>
 </head>
 <body>
