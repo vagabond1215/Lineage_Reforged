@@ -501,6 +501,69 @@
  .chrome .subbar .details-toggle{padding:5px 5px;font-size:9px}
  .subbar-next{padding:5px 6px;font-size:9px}
 }
+
+/* 2026-11-19 creator review: contextual Back/Home, detail eye, clocks and clean containers. */
+.chrome .righttop{align-items:center}
+.clock-stack{display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:2px;line-height:1.18}
+.clock-stack .clock{font-size:11px}
+.world-clock{font-size:10px;color:#a3b1af;font-variant-numeric:tabular-nums;letter-spacing:.025em}
+.chrome .subbar,.chrome .subbar:not(.identity-active){display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-rows:auto;gap:10px}
+.chrome .subbar .subbar-back{grid-column:1;grid-row:1;justify-self:start;min-width:0}
+.chrome .subbar .subbar-center,.chrome .subbar:not(.identity-active) .subbar-center{grid-column:2;grid-row:1;display:flex;justify-self:center}
+.chrome .subbar .subbar-actions,.chrome .subbar:not(.identity-active) .subbar-actions{grid-column:3;grid-row:1;display:flex;gap:7px;justify-content:flex-end;align-items:center}
+.subbar-back-btn,.subbar-home{padding:6px 10px;min-height:33px;white-space:nowrap;border-color:#4a585b}
+.details-toggle{padding:6px 10px;min-height:33px;gap:6px}
+.palette-panel{margin-top:14px}
+.palette-panel .palettewrap{margin:0;padding:0;border:0}
+.palette-panel .palette-row{border-top:0;border-bottom:0}
+.palette-panel .palette-row+.palette-row{border-top:1px solid #384246}
+.palette-panel .palette-row:first-child{padding-top:0}
+.palette-panel .palette-row:last-child{padding-bottom:0}
+.identity-controls .name-row{border:0}
+.identity-controls .allocation-note{border-top:0;border-bottom:0}
+.identity-controls .condition-section{border-top:0;border-bottom:0}
+.identity-controls .condition-group{border-top:0}
+.identity-controls .condition-group+.condition-group{border-top:1px solid #384246}
+.condition-option.selected{background:#39352d;color:#f3ddb9;border-color:#bc9b70;box-shadow:inset 0 0 0 1px #bc9b7040}
+.condition-option.selected:before{content:'✓ ';color:#d9bc8b}
+.condition-option.inspected:not(.selected){background:#151d21;border-color:#454e50;color:#e6d9c4}
+.attribrow:first-child{border-top:0}.attribrow:last-child{border-bottom:0}
+.attrib-stats .delta{display:none!important}
+@media(max-width:650px){
+ .chrome .subbar,.chrome .subbar:not(.identity-active){grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto;gap:6px 8px}
+ .chrome .subbar .subbar-back{grid-column:1;grid-row:1;justify-self:start}
+ .chrome .subbar .subbar-center,.chrome .subbar:not(.identity-active) .subbar-center{grid-column:2;grid-row:1;justify-self:center}
+ .chrome .subbar .subbar-actions,.chrome .subbar:not(.identity-active) .subbar-actions{display:contents}
+ .chrome .subbar .subbar-next{grid-column:3;grid-row:1;justify-self:end}
+ .chrome .subbar .subbar-random{grid-column:1/3;grid-row:2;justify-self:start}
+ .chrome .subbar .details-toggle{grid-column:3;grid-row:2;justify-self:end}
+ .chrome .subbar:not(.identity-active){grid-template-rows:auto}
+ .subbar-back-btn,.subbar-home{font-size:10px;padding:6px 7px}
+ .subbar-next{font-size:10px;padding:6px 9px}
+}
+@media(max-width:355px){
+ .chrome .subbar,.chrome .subbar:not(.identity-active){column-gap:4px}
+ .subbar-back-btn,.subbar-home,.subbar-next{font-size:9px;padding:5px 6px}
+ .subbar-random{font-size:9px}
+}
+
+/* Small-screen TopBar uses a second, dedicated clock line, never overlapping brand/account. */
+@media(max-width:650px){
+ .chrome .top{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto;min-height:90px;gap:4px 8px;align-items:center;padding-top:9px;padding-bottom:7px}
+ .chrome .top .mobilebrand{grid-column:1;grid-row:1;min-width:0}
+ .chrome .top .righttop{display:contents}
+ .chrome .top .account{grid-column:2;grid-row:1;justify-self:end}
+ .chrome .top .clock-stack{grid-column:1/-1;grid-row:2;justify-self:end;align-items:flex-end;gap:1px}
+ .chrome .top .clock{display:block;font-size:10px}
+ .chrome .top .world-clock{font-size:10px}
+ .railinner{top:177px;max-height:calc(100vh - 177px)}
+}
+@media(max-width:550px){.railinner{top:auto;max-height:none}}
+@media(max-width:355px){
+ .chrome .top{padding-left:9px;padding-right:9px;column-gap:4px}
+ .chrome .top .brandname{font-size:10px;letter-spacing:.14em}
+ .chrome .top .topbtn{font-size:10px;padding:7px 8px}
+}
 </style>
 </head>
 <body>
@@ -509,9 +572,17 @@
   <div class="brandwell"><div class="brand"><div class="brandmark">✧</div><div><div class="brandname">LINEAGE REFORGED</div><div class="brandsub">CHRONICLE</div></div></div></div>
   <header class="top" aria-label="Application bar">
     <div class="brand mobilebrand"><div class="brandmark">✧</div><div><div class="brandname">LINEAGE REFORGED</div><div class="brandsub">CHRONICLE</div></div></div>
-    <div class="righttop"><div class="clock" id="clock">LOCAL 11:25</div><div class="account" id="account"><button class="topbtn" id="accountBtn" type="button">⚙ Account ▾</button><div class="menu"><button type="button">Settings (preview)</button><button id="themeBtn" type="button">Toggle theme (preview)</button><button id="logoutPreview" type="button" data-launch="logout">Log out (demo)</button></div></div></div>
+    <div class="righttop"><div class="clock-stack" aria-label="Local and World clocks"><div class="clock" id="clock">LOCAL --:--</div><div class="world-clock" id="worldClock" title="Awaiting an owner-backed World clock">WORLD --:--</div></div><div class="account" id="account"><button class="topbtn" id="accountBtn" type="button">⚙ Account ▾</button><div class="menu"><button type="button">Settings (preview)</button><button id="themeBtn" type="button">Toggle theme (preview)</button><button id="logoutPreview" type="button" data-launch="logout">Log out (demo)</button></div></div></div>
   </header>
-  <nav class="subbar" id="creatorSubbar" aria-label="Contextual navigation"><div class="crumbs"><button class="crumb-link" data-launch="worlds" type="button">Your Worlds</button><span aria-hidden="true">›</span><b id="crumbWorld">Starfall World</b><span aria-hidden="true">›</span><button class="crumb-link" data-launch="characters" type="button">Characters</button><span aria-hidden="true">›</span><strong aria-current="page">New Character</strong></div><div class="subbar-center"><button type="button" class="outlinebtn subbar-random" id="identityDice" aria-label="Randomize Identity selections without changing name" title="Randomize Identity selections without changing name" hidden>⚄ Randomize Identity</button></div><div class="subbar-actions"><button type="button" id="detailsToggle" class="details-toggle" aria-pressed="false" aria-label="Show attribute adjustments on Sex, Age, Height, Build and Aptitude choices" title="Show attribute adjustments on Sex, Age, Height, Build and Aptitude choices"><svg class="details-eye" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/></svg><span class="details-toggle-label">Show details</span></button><span class="substatus" title="World clock remains unavailable pending owner verification">World time pending</span><button type="button" class="primary subbar-next" id="nextTop">Next →</button></div></nav>
+  <nav class="subbar" id="creatorSubbar" aria-label="Creator navigation">
+    <div class="subbar-back"><button type="button" id="creatorBack" class="outlinebtn subbar-back-btn" aria-label="Back to previous creator step or Characters">← Back</button></div>
+    <div class="subbar-center"><button type="button" class="outlinebtn subbar-home" id="creatorHome" title="Return to Welcome / Main">⌂ Home</button></div>
+    <div class="subbar-actions">
+      <button type="button" class="outlinebtn subbar-random" id="identityDice" aria-label="Randomize Identity selections without changing name" title="Randomize Identity selections without changing name" hidden>⚄ Randomize Identity</button>
+      <button type="button" id="detailsToggle" class="details-toggle" aria-pressed="false" aria-label="Detail hidden; show numeric attribute adjustments" title="Toggle numeric attribute details"><svg class="details-eye" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="m3 21 18-18"/></svg><span class="details-toggle-label">Detail</span></button>
+      <button type="button" class="primary subbar-next" id="nextTop">Next →</button>
+    </div>
+  </nav>
 </div><div class="body"><aside class="rail"><div class="railinner"><button type="button" id="mobileToggle" class="mobiletoggle" aria-controls="railCollapse" aria-expanded="true">☰ Creation steps & character summary</button><div class="railcollapse open" id="railCollapse"><nav class="railnav" id="railNav"></nav><div class="railhr"></div><div class="railstat"><div class="who" id="railName">Aerin</div><div class="resources" id="resources"></div><div class="statgroups" id="statgroups"></div></div></div></div></aside><main class="content" aria-labelledby="stepTitle"><h1 id="stepTitle" class="visually-hidden">Identity</h1><span id="sectionLabel" hidden></span><span id="stepSubtitle" hidden></span><div id="stage"></div></main></div></div>
 <div class="dialogbg" id="dialogbg" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="eyebrow" id="dialogEyebrow">Editorial preview</div><h2 id="dialogTitle"></h2><div id="dialogBody"></div><div id="dialogActions" class="dialogactions"></div><div class="dialogfooter"><button class="quiet" type="button" id="dialogClose">Close ✕</button></div></section></div>
 <script>
@@ -526,9 +597,9 @@ const paletteCatalog={"lineage.human":{"skin":[{"name":"Porcelain Rose Veil","he
 function paletteOptions(key){return (paletteCatalog[state.lineage]||paletteCatalog['lineage.human'])[key]||[];}
 function selectedPaletteName(key){const x=paletteOptions(key)[state[key]];return x?x.name:'Unselected';}
 function firstSourceColorIndex(key){return Math.max(0,paletteOptions(key).findIndex(x=>!x.concept));}
-function randomSourceColorIndex(key){const valid=paletteOptions(key).map((x,i)=>!x.concept?i:-1).filter(i=>i>=0);return valid[Math.floor(Math.random()*valid.length)]??0;}
+function randomSourceColorIndex(key){const options=paletteOptions(key);return options.length?Math.floor(Math.random()*options.length):0;}
 const route={screen:'splash',accountName:'',progression:'chronicle',worlds:[],worldIndex:0,worldDraft:'',accountDraft:''};
-const state={stage:1,lineage:'lineage.human',firstName:'Aerin',lastName:'Vale',name:'Aerin Vale',inspectedNegative:'sickly',inspectedPositive:'quick_healer',sex:'female',age:'prime',height:'normal',build:'stocky',aptitude:'versatile',skin:3,hair:4,eyes:1,continent:'region.myridian_chain',region:'Starfall Isle',settlement:'Starfall Port',pool:'ordinary',scenario:'core.room_paid',validation:false,portrait:false,summaryReviewed:false,entryChoice:null,showAttributeDetails:false};
+const state={stage:1,lineage:'lineage.human',firstName:'Aerin',lastName:'',name:'Aerin',inspectedNegative:null,inspectedPositive:null,selectedConditions:{negative:[],positive:[]},sex:'female',age:'prime',height:'normal',build:'stocky',aptitude:'versatile',skin:3,hair:4,eyes:1,continent:'region.myridian_chain',region:'Starfall Isle',settlement:'Starfall Port',pool:'ordinary',scenario:'core.room_paid',validation:false,portrait:false,summaryReviewed:false,entryChoice:null,showAttributeDetails:false};
 const groups=[
   {name:'Power',keys:['STR','CON','VIT'],desc:'Power is your ability to exert and withstand physical force. It governs physical impact, resilience and recovery.'},
   {name:'Prowess',keys:['DEX','AGI','CHA'],desc:'Prowess is control in action: precise technique, agile movement and the presence to influence others.'},
@@ -807,13 +878,12 @@ function identityRow(label,key){return `<div class="profile-row ${key}-row" role
 function palette(label,key){
  const options=paletteOptions(key);
  const selected=options[state[key]]||options[0];
-  return `<div class="palette-row" role="group" aria-label="${label} color options">
-   <div class="palette-side-label" aria-hidden="true">${label}</div>
-   <div class="palette-body"><div class="palette-overline"><strong>${esc(selected?.name||'Choose color')}</strong></div>
-   <div class="palette-grid palette-${key}" role="group" aria-label="${label}: ${options.length} colors grouped by hue, from top-left down each column toward bottom-right">
-   ${options.map((c,i)=>`<button type="button" class="swatch ${state[key]===i?'selected':''} ${c.concept?'concept-color':''}" data-color="${key}" data-index="${i}" style="background:${c.hex}" title="${esc(c.name)}${c.concept?' · Design concept (not approved for gameplay)':''}" aria-label="${label} ${esc(c.name)}${c.concept?', preview concept':''}" aria-pressed="${state[key]===i}">${c.concept?'<span class="concept-indicator" aria-hidden="true">✧</span>':''}</button>`).join('')}
-   </div>${selected?.concept?'<p class="palette-concept-notice">Selected color is an unapproved design concept, not yet a game-catalog option.</p>':''}</div>
- </div>`;
+ return `<div class="palette-row" role="group" aria-label="${label} color options">
+ <div class="palette-side-label" aria-hidden="true">${label}</div>
+ <div class="palette-body"><div class="palette-overline"><strong>${esc(selected?.name||'Choose color')}</strong></div>
+ <div class="palette-grid palette-${key}" role="group" aria-label="${label} colors arranged by color family, from top-left down columns toward bottom-right">
+ ${options.map((c,i)=>`<button type="button" class="swatch ${state[key]===i?'selected':''}" data-color="${key}" data-index="${i}" style="background:${c.hex}" title="${esc(c.name)}" aria-label="${label} ${esc(c.name)}" aria-pressed="${state[key]===i}"></button>`).join('')}
+ </div></div></div>`;
 }
 function renderPortrait(inline=false){return `<section class="portrait ${inline?'portrait-inline':''}" aria-label="Character portrait preview"><div class="portraitart" role="img" aria-label="Illustrative silhouette, not a generated or saved portrait"></div><div class="portraitfoot"><h3>${esc(fullName()||'Unnamed Wanderer')}</h3><p id="portraitCaption">${esc(summarySentence())}</p><button type="button" class="outlinebtn" id="generate">✦ Generate portrait prompt</button><p class="portrait-caveat">Prompt handoff only · no saved portrait or image generation</p></div></section>`}
 function selectorRow(label,key,catalog,selectedId){
@@ -825,19 +895,20 @@ function selectorRow(label,key,catalog,selectedId){
  }).join('')}</div>${narrativeCell(key)}</div>`;
 }
 function conditionGroupItem(group,label){
- const selectedId=group==='negative'?state.inspectedNegative:state.inspectedPositive;
- const selected=conditions[group].find(c=>c.id===selectedId)||conditions[group][0];
+ const selectedIds=state.selectedConditions[group];
+ const inspectedId=group==='negative'?state.inspectedNegative:state.inspectedPositive;
+ const inspected=conditions[group].find(c=>c.id===inspectedId)||null;
+ const text=inspected?`<h4>${esc(inspected.name)}</h4><p>${esc(inspected.text)}</p><div class="condition-effect">${esc(inspected.line)}</div><p class="condition-tradeoff"><b>Attribute relation:</b> ${esc(inspected.stats)}</p><p class="condition-conflict"><b>Interaction:</b> ${esc(inspected.conflicts)}</p><small>Selected for preview only. Difficulty and Echo/Prestige rules are pending.</small>`:`<h4>None selected</h4><p>Optional ${label.toLowerCase()} conditions. Choose any to shape your character's proposed challenge and rewards.</p><small>Game effects and Echo/Prestige values are not yet active.</small>`;
  return `<div class="condition-group" role="group" aria-label="${esc(label)} conditions">
  <div class="condition-side-label" aria-hidden="true">${esc(label)}</div>
- <div class="condition-options">${conditions[group].map(c=>`<button type="button" class="condition-option ${selected.id===c.id?'inspected':''}" data-inspect-condition="${esc(c.id)}" data-group="${group}" aria-pressed="${selected.id===c.id}" aria-label="Inspect planned ${esc(label.toLowerCase())} condition: ${esc(c.name)}">${esc(c.name)}</button>`).join('')}</div>
- <div class="condition-detail" aria-live="polite"><h4>${esc(selected.name)}</h4><p>${esc(selected.text)}</p><div class="condition-effect">${esc(selected.line)}</div><p class="condition-tradeoff"><b>Attribute relation:</b> ${esc(selected.stats)}</p><p class="condition-conflict"><b>Interaction:</b> ${esc(selected.conflicts)}</p><small>Design concept only · Not an active character effect</small></div>
- </div>`;
+ <div class="condition-options">${conditions[group].map(c=>`<button type="button" class="condition-option ${selectedIds.includes(c.id)?'selected':''} ${inspectedId===c.id?'inspected':''}" data-condition-toggle="${esc(c.id)}" data-group="${group}" aria-pressed="${selectedIds.includes(c.id)}" title="${esc(c.name)}: ${esc(c.text)}">${esc(c.name)}</button>`).join('')}</div>
+ <div class="condition-detail" aria-live="polite">${text}</div></div>`;
 }
 function renderIdentity(){
  const d=getDerivedStats();
  const delta=(key)=>d.attrs[key]-d.baseline[key];
  return `<div class="identity-layout"><section class="section identity-controls">
- <div class="profile-row name-row" role="group" aria-label="Name"><div class="profile-label">Name</div><div class="name-inputs"><input class="textinput" id="firstName" aria-label="First name" maxlength="40" value="${esc(state.firstName)}" placeholder="First name" autocomplete="off"/><input class="textinput" id="lastName" aria-label="Last name (optional)" maxlength="40" value="${esc(state.lastName)}" placeholder="Last name" autocomplete="off"/><button class="dice" type="button" id="nameDice" aria-label="Randomize first and last name only" title="Randomize first and last name only">⚄</button></div><div class="narrative-cell name-note">The first name identifies your character in the story. A family name is optional.</div></div>
+ <div class="profile-row name-row" role="group" aria-label="Name"><div class="profile-label">Name</div><div class="name-inputs"><input class="textinput" id="firstName" aria-label="First name" maxlength="40" value="${esc(state.firstName)}" placeholder="First name" autocomplete="off"/><input class="textinput" id="lastName" aria-label="Last name (optional)" maxlength="40" value="${esc(state.lastName)}" placeholder="Optional" autocomplete="off"/><button class="dice" type="button" id="nameDice" aria-label="Randomize first and last name only" title="Randomize first and last name only">⚄</button></div></div>
  <div class="profile-rows">${identityRow('Sex','sex')}${identityRow('Age','age')}${identityRow('Height','height')}
  ${selectorRow('Build','build',builds,state.build)}
  ${selectorRow('Aptitude','aptitude',aptitudes,state.aptitude)}</div>
@@ -845,10 +916,9 @@ function renderIdentity(){
  <div class="condition-section"><div class="condition-title"><h3>Conditions</h3></div>
  ${conditionGroupItem('negative','Negative')}${conditionGroupItem('positive','Positive')}
  </div>
- <div class="palettewrap">${palette('Skin','skin')}${palette('Hair','hair')}${palette('Eyes','eyes')}</div>
  <div class="validation ${state.validation&&!state.firstName.trim()?'show':''}" role="alert">Enter at least a first name before continuing.</div>
- </section></div>
- <section class="section attributeinfo" aria-label="Attributes"><div class="attribtable">${groups.map(g=>`<section class="attribrow" aria-label="${g.name} attributes"><div class="attrib-gutter" aria-hidden="true">${g.name}</div><div class="attrib-stats">${g.keys.map(k=>{const diff=delta(k);return `<div class="attrrow" title="${esc(`${k}: lineage ${d.baseline[k]}, sex/age/height ${d.direct[k]}, build/aptitude ${d.bonus[k]}`)}"><span class="attrkey">${k}<small>${attributeNames[k]}</small></span><strong>${d.attrs[k]}${diff?`<small class="delta ${diff<0?'neg':''}">${diff>0?'+':''}${diff}</small>`:''}</strong></div>`}).join('')}</div><p class="attdesc">${esc(g.desc)}</p><div class="attrib-effects">${g.keys.map(k=>`<div class="eff"><strong>${k}</strong><span>${esc(effects[k])}</span></div>`).join('')}</div></section>`).join('')}</div></section>
+ </section><section class="section palette-panel" aria-label="Appearance colors"><div class="palettewrap">${palette('Skin','skin')}${palette('Hair','hair')}${palette('Eyes','eyes')}</div></section></div>
+ <section class="section attributeinfo" aria-label="Attributes"><div class="attribtable">${groups.map(g=>`<section class="attribrow" aria-label="${g.name} attributes"><div class="attrib-gutter" aria-hidden="true">${g.name}</div><div class="attrib-stats">${g.keys.map(k=>{const diff=delta(k);return `<div class="attrrow" title="${esc(`${k}: lineage ${d.baseline[k]}, sex/age/height ${d.direct[k]}, build/aptitude ${d.bonus[k]}`)}"><span class="attrkey">${k}<small>${attributeNames[k]}</small></span><strong>${d.attrs[k]}</strong></div>`}).join('')}</div><p class="attdesc">${esc(g.desc)}</p><div class="attrib-effects">${g.keys.map(k=>`<div class="eff"><strong>${k}</strong><span>${esc(effects[k])}</span></div>`).join('')}</div></section>`).join('')}</div></section>
  ${renderPortrait(true)}
  ${footer('Randomize identity')}`;
 }
@@ -872,7 +942,7 @@ function renderWorldEntry(){
 }
 function renderSummary(){
  const s=findScenario(state.scenario);
- return `<div class="finalgrid"><div><section class="section"><div class="secthead"><h2>${esc(fullName()||getName())} · ${esc(getLineageName())}</h2></div><div class="detailbox"><h3>Character</h3><p class="final-narrative">${esc(summarySentence())}</p><div class="line"><span>Identity</span><strong>${esc(state.sex)}, ${esc(state.age)}, ${esc(builds.find(x=>x.id===state.build)?.label||state.build)} · ${esc(aptitudes.find(x=>x.id===state.aptitude)?.label||state.aptitude)}</strong></div><div class="line"><span>Attributes</span><strong>${getDerivedStats().total} total · 90 base + 10 automatically generated</strong></div><div class="line"><span>Conditions</span><strong>Not yet selectable</strong></div><div class="line"><span>Starting geography</span><strong>${esc(state.settlement||'Not selected')}</strong></div><div class="line"><span>Continent / Region</span><strong>${esc((geo.find(x=>x[0]===state.continent)||[])[1]||'')}, ${esc(state.region)}</strong></div><div class="line"><span>World Entry</span><strong>${esc(s?.name||'Not selected')}</strong></div></div><div class="detailbox"><h3>Legacy & succession</h3><div class="line"><span>Fresh Start / Heir Start</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Legacy preparations</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Selected benefits</span><strong class="ghost">Unavailable</strong></div></div><div class="detailbox"><h3>Starting state</h3><div class="line"><span>Skills & traits</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Equipment & currency</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Save slot / collision</span><strong class="ghost">Unavailable</strong></div></div></section></div><div>${renderPortrait()}<section class="section" style="margin-top:12px"><h2 style="font:normal 20px Georgia,serif;margin:0 0 12px">Your opening</h2><p class="subtle">${esc(s?.blurb||'Choose an ordinary Core opening.')}</p><p class="subtle" style="margin-top:12px">Continue to Opening to read the scene. Its first choice is the intended combined entry decision and character-submit transaction, held in this preview.</p></section></div></div>${footer()}`;
+ return `<div class="finalgrid"><div><section class="section"><div class="secthead"><h2>${esc(fullName()||getName())} · ${esc(getLineageName())}</h2></div><div class="detailbox"><h3>Character</h3><p class="final-narrative">${esc(summarySentence())}</p><div class="line"><span>Identity</span><strong>${esc(state.sex)}, ${esc(state.age)}, ${esc(builds.find(x=>x.id===state.build)?.label||state.build)} · ${esc(aptitudes.find(x=>x.id===state.aptitude)?.label||state.aptitude)}</strong></div><div class="line"><span>Attributes</span><strong>${getDerivedStats().total} total · 90 base + 10 automatically generated</strong></div><div class="line"><span>Conditions</span><strong>${['negative','positive'].flatMap(group=>state.selectedConditions[group].map(id=>conditions[group].find(c=>c.id===id)?.name||id)).map(esc).join(', ')||'None selected'}</strong></div><p class="subtle">Optional condition selections are design-only; stat, difficulty, Echo and Prestige effects are not yet implemented.</p><div class="line"><span>Starting geography</span><strong>${esc(state.settlement||'Not selected')}</strong></div><div class="line"><span>Continent / Region</span><strong>${esc((geo.find(x=>x[0]===state.continent)||[])[1]||'')}, ${esc(state.region)}</strong></div><div class="line"><span>World Entry</span><strong>${esc(s?.name||'Not selected')}</strong></div></div><div class="detailbox"><h3>Legacy & succession</h3><div class="line"><span>Fresh Start / Heir Start</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Legacy preparations</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Selected benefits</span><strong class="ghost">Unavailable</strong></div></div><div class="detailbox"><h3>Starting state</h3><div class="line"><span>Skills & traits</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Equipment & currency</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Save slot / collision</span><strong class="ghost">Unavailable</strong></div></div></section></div><div>${renderPortrait()}<section class="section" style="margin-top:12px"><h2 style="font:normal 20px Georgia,serif;margin:0 0 12px">Your opening</h2><p class="subtle">${esc(s?.blurb||'Choose an ordinary Core opening.')}</p><p class="subtle" style="margin-top:12px">Continue to Opening to read the scene. Its first choice is the intended combined entry decision and character-submit transaction, held in this preview.</p></section></div></div>${footer()}`;
 }
 function renderOpening(){
  const s=findScenario(state.scenario);
@@ -967,16 +1037,16 @@ function navigateLauncher(action,button){
 function render(){
  const inCreator=route.screen==='creator';el('creatorShell').hidden=!inCreator;el('launcher').hidden=inCreator;
  if(!inCreator){renderLauncher();return;}
- const w=selectedDemoWorld();if(el('crumbWorld'))el('crumbWorld').textContent=w?.name||'Demo World';
+ const w=selectedDemoWorld();updateWorldClock();
  if(el('accountBtn'))el('accountBtn').textContent='⚙ '+(route.accountName||'Demo Account')+' ▾';
  renderRail();el('stage').innerHTML=renderStage();
  const isIdentity=state.stage===1,subbar=el('creatorSubbar'),random=el('identityDice'),topNext=el('nextTop');
  subbar?.classList.toggle('identity-active',isIdentity);
  if(random)random.hidden=!isIdentity;
  if(topNext){topNext.hidden=state.stage>=7;topNext.textContent=(state.stage===5?'Continue to Summary':state.stage===6?'Continue to Opening':'Next')+' →';}
- const toggle=el('detailsToggle');if(toggle){toggle.hidden=!isIdentity;toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));const label=state.showAttributeDetails?'Hide details':'Show details';toggle.querySelector('.details-toggle-label').textContent=label;toggle.setAttribute('aria-label',`${label} on Sex, Age, Height, Build and Aptitude choices`);toggle.title=`${label} on Sex, Age, Height, Build and Aptitude choices`;}}
+ const toggle=el('detailsToggle');if(toggle){toggle.hidden=!isIdentity;toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));toggle.querySelector('.details-toggle-label').textContent='Detail';toggle.setAttribute('aria-label',state.showAttributeDetails?'Detail shown; hide numeric attribute adjustments':'Detail hidden; show numeric attribute adjustments');toggle.title=state.showAttributeDetails?'Hide numeric detail':'Show numeric detail';toggle.querySelector('.details-eye').innerHTML=state.showAttributeDetails?'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/>':'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="M3 21 21 3"/>';}}
 
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;invalidateOpening();return render()}if(b.dataset.inspectCondition){const key=b.dataset.group==='negative'?'inspectedNegative':'inspectedPositive';state[key]=b.dataset.inspectCondition;render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='accountBtn')return el('account').classList.toggle('open');if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){document.documentElement.style.filter=document.documentElement.style.filter?'':'brightness(1.17)';el('account').classList.remove('open');}});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;invalidateOpening();return render()}if(b.dataset.conditionToggle){const group=b.dataset.group,id=b.dataset.conditionToggle,selected=state.selectedConditions[group];if(!conditions[group]?.some(c=>c.id===id))return;state.selectedConditions[group]=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id];const inspector=group==='negative'?'inspectedNegative':'inspectedPositive';state[inspector]=state.selectedConditions[group].includes(id)?id:(state.selectedConditions[group].at(-1)||null);invalidateOpening();render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='creatorBack'){if(state.stage>0)return nav(state.stage-1);return navigateLauncher('characters',b)}if(b.id==='creatorHome'){return navigateLauncher('welcome',b)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='accountBtn')return el('account').classList.toggle('open');if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){document.documentElement.style.filter=document.documentElement.style.filter?'':'brightness(1.17)';el('account').classList.remove('open');}});
 document.addEventListener('change',e=>{const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
 document.addEventListener('input',e=>{
  if(e.target.id==='firstName'||e.target.id==='lastName'){
@@ -991,6 +1061,12 @@ document.addEventListener('input',e=>{
 document.addEventListener('keydown',e=>{if(e.key==='Escape')el('dialogbg').classList.remove('open')});
 el('dialogbg').addEventListener('click',e=>{if(e.target===el('dialogbg'))el('dialogbg').classList.remove('open')});
 if(window.matchMedia('(max-width:550px)').matches){el('railCollapse').classList.remove('open');el('mobileToggle').setAttribute('aria-expanded','false')}
-function updateClock(){try{const time='LOCAL '+new Date().toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});if(el('clock'))el('clock').textContent=time;if(el('launcherClock'))el('launcherClock').textContent=time;}catch{}}updateClock();setInterval(updateClock,30000);render();
+function updateWorldClock(){
+ const w=selectedDemoWorld();const isRealTime=Boolean(w&&(w.realTime===true||w.progression==='persistent'||w.clockMode==='real_time'));
+ const raw=isRealTime?w?.serverTime:(w?.started===true?w?.worldTime:null);
+ const display=typeof raw==='string'&&/^\d{1,2}:\d{2}$/.test(raw)?raw:'--:--';
+ const elClock=el('worldClock');if(elClock){elClock.textContent=`${isRealTime?'SERVER':'WORLD'} ${display}`;elClock.title=isRealTime?'Server-provided real-time World clock; no server clock available in the preview':'World simulation time; not started or unavailable';}
+}
+function updateClock(){try{const time='LOCAL '+new Date().toLocaleTimeString(undefined,{hour:'2-digit',minute:'2-digit'});if(el('clock'))el('clock').textContent=time;if(el('launcherClock'))el('launcherClock').textContent=time;updateWorldClock();}catch{}}updateClock();setInterval(updateClock,30000);render();
 </script>
 </body></html>
