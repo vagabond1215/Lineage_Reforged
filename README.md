@@ -20,6 +20,10 @@ Strategic continuity lives in:
 - `docs/design/future-system-design-ledger.md` for durable system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic source map.
 
+## Interactive UI Preview (new ChatGPT threads)
+
+The canonical standalone eight-stage Character Creator / World Creator source is [the self-contained HTML prototype](docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html). For the current review branch, how to provide an **actual interactive HTML attachment inside ChatGPT** (rather than a blocked external iframe), version selection, all ten lineage palettes, World settings, testing and cross-thread handoff, **start with [docs/prototypes/README.md](docs/prototypes/README.md)**. Read live open PRs before treating a candidate as integrated. This preview is not production gameplay or a Save owner.
+
 ## Codex Workspace
 
 - The active local Codex workspace root is `C:\Codex\EoL`.
