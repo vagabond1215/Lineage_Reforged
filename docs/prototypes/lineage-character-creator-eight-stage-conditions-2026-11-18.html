@@ -564,6 +564,46 @@
  .chrome .top .brandname{font-size:10px;letter-spacing:.14em}
  .chrome .top .topbtn{font-size:10px;padding:7px 8px}
 }
+
+/* World configuration review: option presets are in-memory demo inputs only. */
+.world-create-frame{max-width:1120px;margin:0 auto}
+.world-config-section{margin-top:26px;padding-top:24px;border-top:1px solid #48524f}
+.world-config-header{display:flex;align-items:baseline;flex-wrap:wrap;gap:9px 16px;margin:0 0 13px}
+.world-config-title{font:23px Georgia,'Times New Roman',serif;color:#f1e4ce;margin:0}
+.world-config-help{font:12px/1.55 Inter,'Segoe UI',sans-serif;color:#aebbb6;margin:0}
+.world-mode-cards{margin-top:12px;gap:12px}
+.world-mode-cards .launcher-card{min-height:150px;padding:18px 20px}
+.world-mode-cards .launcher-card strong{font-size:23px;margin:8px 0}
+.world-mode-cards .launcher-card p{margin:0 0 12px}
+.world-setting-options{display:grid;grid-template-columns:repeat(var(--world-option-columns,3),minmax(0,1fr));gap:9px}
+.world-setting-option{position:relative;text-align:left;display:flex;flex-direction:column;gap:7px;min-height:86px;padding:13px 15px;border:1px solid #59635e;border-radius:11px;background:#1b2426;color:#e9dcc7;cursor:pointer;transition:background .15s,border-color .15s}
+.world-setting-option:hover:not(:disabled){background:#2c3632;border-color:#b6a076}
+.world-setting-option.selected{border-color:#d3ad6d;background:#323930;box-shadow:inset 0 0 0 1px #cba97745}
+.world-setting-option.selected:after{content:'✓';position:absolute;top:10px;right:12px;font-size:14px;color:#e4be82}
+.world-setting-option:focus-visible{outline:2px solid #d5b881;outline-offset:3px}
+.world-setting-option strong{font:17px Georgia,'Times New Roman',serif;margin:0;padding-right:14px;color:#efe3cf}
+.world-setting-option small{font-size:11px;line-height:1.4;color:#aab8b1}
+.world-setting-option:disabled{opacity:.48;cursor:not-allowed}
+.world-climate-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.world-config-subtitle{font:600 12px Inter,'Segoe UI',sans-serif;letter-spacing:.03em;color:#ddc5a0;margin:0 0 9px}
+.world-adjustment-future{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 15px}
+.world-future-line{padding:12px 14px;border:1px solid #414b4a;border-radius:9px;background:#1a2326;display:flex;gap:8px;justify-content:space-between;align-items:center}
+.world-future-line span:first-child{font-size:12px;color:#c8d0c7}.world-future-line span:last-child{font-size:10px;color:#ab9677;white-space:nowrap}
+.world-setup-review{margin:26px 0 0;padding:20px;background:linear-gradient(130deg,#2b3029,#232b2e);border:1px solid #716b54;border-radius:14px}
+.world-setup-review h3{margin:0 0 14px;color:#ead9bb;font:21px Georgia,serif}
+.world-review-values{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.world-review-values>div{min-width:0;display:flex;flex-direction:column;gap:5px}
+.world-review-values dt{font-size:10px;color:#adbaaF;text-transform:uppercase;letter-spacing:.08em}
+.world-review-values dd{font-size:13px;font-weight:650;color:#f4e6ca;margin:0;overflow-wrap:anywhere}
+.world-review-note{color:#abbbaf;font-size:11px;line-height:1.6;margin:14px 0 0}
+.world-configuration-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.world-configuration-summary>div{border:1px solid #46514d;padding:12px 13px;border-radius:9px;background:#1c2426}
+.world-configuration-summary small{display:block;font-size:10px;color:#aebbaf;margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em}
+.world-configuration-summary strong{font-size:13px;color:#e6d3b0}
+@media(max-width:950px){.world-review-values{grid-template-columns:repeat(2,minmax(0,1fr))}.world-setting-option{padding:12px}.world-mode-cards .launcher-card{min-height:155px}}
+@media(max-width:750px){.world-climate-columns{grid-template-columns:1fr}.world-setting-option{min-height:76px}.world-mode-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}.world-mode-cards .launcher-card{min-height:166px;padding:15px}}
+@media(max-width:560px){.world-setting-options{grid-template-columns:repeat(2,minmax(0,1fr))}.world-setting-options[data-setting-group="season"]{grid-template-columns:repeat(2,minmax(0,1fr))}.world-review-values{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.world-adjustment-future{grid-template-columns:1fr}.world-configuration-summary{grid-template-columns:1fr}}
+@media(max-width:390px){.world-mode-cards{grid-template-columns:1fr!important}.world-mode-cards .launcher-card{min-height:120px}.world-setting-option{min-height:77px;padding:10px}.world-setting-option strong{font-size:16px}}
 </style>
 </head>
 <body>
@@ -598,7 +638,36 @@ function paletteOptions(key){return (paletteCatalog[state.lineage]||paletteCatal
 function selectedPaletteName(key){const x=paletteOptions(key)[state[key]];return x?x.name:'Unselected';}
 function firstSourceColorIndex(key){return Math.max(0,paletteOptions(key).findIndex(x=>!x.concept));}
 function randomSourceColorIndex(key){const options=paletteOptions(key);return options.length?Math.floor(Math.random()*options.length):0;}
-const route={screen:'splash',accountName:'',progression:'chronicle',worlds:[],worldIndex:0,worldDraft:'',accountDraft:''};
+// World Creator is intentionally configuration-driven so later owner-approved settings
+// can be added without scattering conditionals across launcher screens.
+const WORLD_OPTION_GROUPS={
+ difficulty:{label:'Difficulty',options:[
+  {id:'favored',label:'Favored',description:'A gentler journey with more room for mistakes.'},
+  {id:'mortal',label:'Mortal',description:'The intended baseline of risk and reward.'},
+  {id:'forsaken',label:'Forsaken',description:'An unforgiving journey for those seeking a sterner test.'}]},
+ temperature:{label:'Temperature tendency',options:[
+  {id:'cold',label:'Cold',description:'Cooler than each region’s usual climate.'},
+  {id:'normal',label:'Normal',description:'Keep the authored regional temperatures.'},
+  {id:'hot',label:'Hot',description:'Warmer than each region’s usual climate.'}]},
+ moisture:{label:'Rainfall tendency',options:[
+  {id:'dry',label:'Dry',description:'Drier weather relative to local norms.'},
+  {id:'normal',label:'Normal',description:'Keep the authored regional rainfall.'},
+  {id:'wet',label:'Wet',description:'Wetter weather relative to local norms.'}]},
+ season:{label:'Starting Season',options:[
+  {id:'authored',label:'Scenario Default',description:'Follow the authored starting calendar.'},
+  {id:'spring',label:'Spring',description:'A World opening in spring.'},
+  {id:'summer',label:'Summer',description:'A World opening in summer.'},
+  {id:'autumn',label:'Autumn',description:'A World opening in autumn.'},
+  {id:'winter',label:'Winter',description:'A World opening in winter.'}]}
+};
+function defaultWorldSettings(){return {difficulty:'mortal',temperature:'normal',moisture:'normal',season:'authored'};}
+function normalizedWorldSettings(input){const result=defaultWorldSettings();for(const [id,group] of Object.entries(WORLD_OPTION_GROUPS)){if(group.options.some(o=>o.id===input?.[id]))result[id]=input[id];}return result;}
+function labelWorldOption(id,value){return WORLD_OPTION_GROUPS[id]?.options.find(o=>o.id===value)?.label||'Scenario Default';}
+function worldSettingGroup(id,value,columns=3){const group=WORLD_OPTION_GROUPS[id];return `<div role="group" aria-label="${group.label}" class="world-setting-options" data-setting-group="${id}" style="--world-option-columns:${columns}">${group.options.map(o=>`<button type="button" class="world-setting-option ${value===o.id?'selected':''}" data-launch="worldSetting" data-setting="${id}" data-value="${o.id}" aria-pressed="${value===o.id}"><strong>${o.label}</strong><small>${o.description}</small></button>`).join('')}</div>`;}
+function worldSettingsReview(settings){const s=normalizedWorldSettings(settings);return `<div class="world-setup-review" aria-live="polite"><h3>World settings preview</h3><dl class="world-review-values"><div><dt>Difficulty</dt><dd>${labelWorldOption('difficulty',s.difficulty)}</dd></div><div><dt>Temperature</dt><dd>${labelWorldOption('temperature',s.temperature)}</dd></div><div><dt>Rainfall</dt><dd>${labelWorldOption('moisture',s.moisture)}</dd></div><div><dt>Starting Season</dt><dd>${labelWorldOption('season',s.season)}</dd></div></dl><p class="world-review-note">These are in-memory design choices only. They do not alter weather, calendar, difficulty, Echo/Prestige, or the authored map. Actual World rules require validated simulation owners and immutable creation receipts.</p></div>`;}
+function worldSettingsSummary(settings){const s=normalizedWorldSettings(settings);return `Difficulty: ${labelWorldOption('difficulty',s.difficulty)} · Climate: ${labelWorldOption('temperature',s.temperature)} / ${labelWorldOption('moisture',s.moisture)} · Season: ${labelWorldOption('season',s.season)}`;}
+function worldSettingsOverview(settings){const s=normalizedWorldSettings(settings);return `<div class="world-configuration-summary"><div><small>Difficulty</small><strong>${labelWorldOption('difficulty',s.difficulty)}</strong></div><div><small>Temperature</small><strong>${labelWorldOption('temperature',s.temperature)}</strong></div><div><small>Rainfall</small><strong>${labelWorldOption('moisture',s.moisture)}</strong></div><div><small>Starting Season</small><strong>${labelWorldOption('season',s.season)}</strong></div></div>`;}
+const route={screen:'splash',accountName:'',progression:'chronicle',worlds:[],worldIndex:0,worldDraft:'',accountDraft:'',worldSettings:defaultWorldSettings()};
 const state={stage:1,lineage:'lineage.human',firstName:'Aerin',lastName:'',name:'Aerin',inspectedNegative:null,inspectedPositive:null,selectedConditions:{negative:[],positive:[]},sex:'female',age:'prime',height:'normal',build:'stocky',aptitude:'versatile',skin:3,hair:4,eyes:1,continent:'region.myridian_chain',region:'Starfall Isle',settlement:'Starfall Port',pool:'ordinary',scenario:'core.room_paid',validation:false,portrait:false,summaryReviewed:false,entryChoice:null,showAttributeDetails:false};
 const groups=[
   {name:'Power',keys:['STR','CON','VIT'],desc:'Power is your ability to exert and withstand physical force. It governs physical impact, resilience and recovery.'},
@@ -999,14 +1068,22 @@ function renderLauncher(){
   content=launcherFrame(`<div class="launcher-center"><p class="launcher-eyebrow">Welcome to Lineage Reforged</p><h1 class="launcher-title">Welcome back, ${esc(route.accountName)}</h1><p class="launcher-lead">Choose your journey. Progression mode applies to the World, not to a character's Build or Aptitude.</p></div><div class="launcher-cards"><button type="button" data-launch="chronicle" class="launcher-card"><small>Repeat-run adventure</small><strong>Chronicle</strong><p>Live many lives, build a legacy, and earn rewards that shape future journeys.</p><span>Explore Chronicle Worlds (demo)</span></button><button type="button" class="launcher-card" disabled aria-disabled="true"><small>Long-term progression</small><strong>Persistent</strong><p>Build one enduring life through skills, work, relationships and lasting achievements.</p><span>Coming Soon</span></button></div><div class="launcher-actions">${launcherButton('Log out','logout','secondary')}</div>${launcherNotice()}`);
  }
  if(screen==='worlds'){
-  content=launcherFrame(`<div class="launcher-breadcrumb">${launcherButton('← Welcome / Game Mode','welcome','secondary')}</div><div class="launcher-center"><p class="launcher-eyebrow">Chronicle · Worlds / The Atlas</p><h1 class="launcher-title">Your Worlds</h1><p class="launcher-lead">Select a World before creating a character. Only a preview fixture or in-memory demo World is available here.</p></div><div class="launcher-frame"><div class="launcher-worldline"><div><strong>World Library</strong><small>${route.worlds.length} preview World${route.worlds.length===1?'':'s'} · Not an account-owned registry</small></div>${launcherButton('Create Preview World','newWorld')}</div>${route.worlds.length?`<div class="launcher-cards">${route.worlds.map((w,i)=>`<button type="button" class="launcher-card" data-launch="selectWorld" data-world-index="${i}"><small>${esc(w.source)} · Chronicle</small><strong>${esc(w.name)}</strong><p>First World · Individual World · No game Save or verified characters.</p><span>Open World Overview (preview)</span></button>`).join('')}</div>`:'<p class="launcher-muted" style="padding-top:25px">No demo Worlds for this preview account. Create one to continue to the Character Creator.</p>'}${launcherNotice()}</div>`);
+  content=launcherFrame(`<div class="launcher-breadcrumb">${launcherButton('← Welcome / Game Mode','welcome','secondary')}</div><div class="launcher-center"><p class="launcher-eyebrow">Chronicle · Worlds / The Atlas</p><h1 class="launcher-title">Your Worlds</h1><p class="launcher-lead">Select a World before creating a character. Only a preview fixture or in-memory demo World is available here.</p></div><div class="launcher-frame"><div class="launcher-worldline"><div><strong>World Library</strong><small>${route.worlds.length} preview World${route.worlds.length===1?'':'s'} · Not an account-owned registry</small></div>${launcherButton('Create Preview World','newWorld')}</div>${route.worlds.length?`<div class="launcher-cards">${route.worlds.map((w,i)=>`<button type="button" class="launcher-card" data-launch="selectWorld" data-world-index="${i}"><small>${esc(w.source)} · Chronicle</small><strong>${esc(w.name)}</strong><p>First World · Individual World<br/>${esc(worldSettingsSummary(w.settings))}</p><span>Open World Overview (preview)</span></button>`).join('')}</div>`:'<p class="launcher-muted" style="padding-top:25px">No demo Worlds for this preview account. Create one to continue to the Character Creator.</p>'}${launcherNotice()}</div>`);
  }
  if(screen==='newWorld'){
-  content=launcherFrame(`<div class="launcher-breadcrumb">${launcherButton('← Your Worlds','worlds','secondary')}</div><div class="launcher-center"><p class="launcher-eyebrow">World creation · Chronicle</p><h1 class="launcher-title">Create a World</h1><p class="launcher-lead">The authored First World is fixed. Choose a World name and inspect its supported gameplay mode.</p></div><div class="launcher-frame"><label class="launcher-label" for="previewWorldName">World name</label><input class="launcher-input" id="previewWorldName" maxlength="60" placeholder="Name your World" value="${esc(route.worldDraft)}"/><label class="launcher-label">Gameplay Mode</label><div class="launcher-cards"><button type="button" class="launcher-card selected" aria-pressed="true" data-launch="noop"><small>RPG-first · one active POV</small><strong>Individual World</strong><p>Follow one playable character at a time within the World, with potential later succession.</p><span>Selected</span></button><button type="button" class="launcher-card" disabled aria-disabled="true"><small>Shared simulation</small><strong>Living World</strong><p>Multiple simultaneously retained characters and settlement management within one World.</p><span>Coming Soon</span></button></div><p class="launcher-muted">Progression: <b>Chronicle</b> · Difficulty: <b>Mortal</b> · Hardcore: <b>Off</b> · No custom world geography or unverified controls.</p><div id="worldCreateError" role="alert" class="launcher-alert"></div><div class="launcher-actions">${launcherButton('Create Demo World','createWorld')}${launcherButton('Cancel','worlds','secondary')}</div>${launcherNotice()}</div>`);
+  const settings=normalizedWorldSettings(route.worldSettings);
+  content=launcherFrame(`<div class="launcher-breadcrumb">${launcherButton('← Your Worlds','worlds','secondary')}</div><div class="launcher-center"><p class="launcher-eyebrow">World creation · Chronicle</p><h1 class="launcher-title">Create a World</h1><p class="launcher-lead">Name a World and choose the conditions of its beginning. The First World atlas stays authored and unchanged.</p></div><div class="launcher-frame world-create-frame"><label class="launcher-label" for="previewWorldName">World name</label><input class="launcher-input" id="previewWorldName" maxlength="60" placeholder="Name your World" value="${esc(route.worldDraft)}"/>
+   <section class="world-config-section"><div class="world-config-header"><h2 class="world-config-title">Gameplay Mode</h2><p class="world-config-help">How characters participate in this World</p></div><div class="launcher-cards world-mode-cards"><button type="button" class="launcher-card selected" aria-pressed="true" data-launch="noop"><small>RPG-first · one active character</small><strong>Individual World</strong><p>One playable perspective at a time, with succession subject to World rules.</p><span>Selected</span></button><button type="button" class="launcher-card" disabled aria-disabled="true"><small>Shared simulation</small><strong>Living World</strong><p>Several characters in the same World history, including settlement activities.</p><span>Coming Soon</span></button></div></section>
+   <section class="world-config-section"><div class="world-config-header"><h2 class="world-config-title">Difficulty</h2><p class="world-config-help">World-owned challenge setting, inherited by its characters</p></div>${worldSettingGroup('difficulty',settings.difficulty)}</section>
+   <section class="world-config-section"><div class="world-config-header"><h2 class="world-config-title">Climate adjustment</h2><p class="world-config-help">Shift the overall tendency without changing each region’s geography or natural climate pattern</p></div><div class="world-climate-columns"><div><h3 class="world-config-subtitle">Temperature</h3>${worldSettingGroup('temperature',settings.temperature)}</div><div><h3 class="world-config-subtitle">Rainfall</h3>${worldSettingGroup('moisture',settings.moisture)}</div></div></section>
+   <section class="world-config-section"><div class="world-config-header"><h2 class="world-config-title">Starting Season</h2><p class="world-config-help">An opening-season preference, separate from later seasonal progression</p></div>${worldSettingGroup('season',settings.season,5)}</section>
+   <section class="world-config-section"><div class="world-config-header"><h2 class="world-config-title">Further World adjustments</h2><p class="world-config-help">Reserved for compatible, owner-backed rules and possible Prestige unlocks</p></div><div class="world-adjustment-future"><div class="world-future-line"><span>Regional climate variability</span><span>Coming Soon</span></div><div class="world-future-line"><span>Extreme weather intensity</span><span>Coming Soon</span></div><div class="world-future-line"><span>Natural disaster families</span><span>Coming Soon</span></div><div class="world-future-line"><span>Hardcore commitment</span><span>Coming Soon</span></div></div></section>
+   <div id="worldDraftSummary">${worldSettingsReview(settings)}</div><div id="worldCreateError" role="alert" class="launcher-alert"></div><div class="launcher-actions">${launcherButton('Create Demo World','createWorld')}${launcherButton('Cancel','worlds','secondary')}</div>${launcherNotice()}</div>`);
+
  }
  if(screen==='overview'){
   const w=selectedDemoWorld();if(!w){route.screen='worlds';return renderLauncher();}
-  content=launcherFrame(`<div class="launcher-breadcrumb">${launcherButton('← Your Worlds','worlds','secondary')}</div><div class="launcher-center"><p class="launcher-eyebrow">Chronicle · Individual World</p><h1 class="launcher-title">${esc(w.name)}</h1><p class="launcher-lead">A locally selected preview World. No clock, scene or character roster has been verified by a live World owner.</p></div><div class="launcher-frame launcher-split"><div><h2>World Overview</h2><p class="launcher-muted">Authored geography: First World. Gameplay Mode: Individual World. Your character journey begins from this World context.</p><span class="launcher-pill">Demo World · not saved</span></div><div><h2>Characters</h2><p class="launcher-muted">No persistent character records are available in this preview.</p><div class="launcher-actions">${launcherButton('View Characters','characters')}</div></div></div>${launcherNotice()}`);
+  content=launcherFrame(`<div class="launcher-breadcrumb">${launcherButton('← Your Worlds','worlds','secondary')}</div><div class="launcher-center"><p class="launcher-eyebrow">Chronicle · Individual World</p><h1 class="launcher-title">${esc(w.name)}</h1><p class="launcher-lead">A locally selected preview World. No clock, scene or character roster has been verified by a live World owner.</p></div><div class="launcher-frame launcher-split"><div><h2>World Overview</h2><p class="launcher-muted">Authored geography: First World. Gameplay Mode: Individual World. Rules shown here reflect the in-memory design draft, not active gameplay.</p>${worldSettingsOverview(w.settings)}<p class="launcher-muted" style="font-size:11px">No real simulation, map, season, or difficulty has been changed.</p><span class="launcher-pill">Demo World · not saved</span></div><div><h2>Characters</h2><p class="launcher-muted">No persistent character records are available in this preview.</p><div class="launcher-actions">${launcherButton('View Characters','characters')}</div></div></div>${launcherNotice()}`);
  }
  if(screen==='characters'){
   const w=selectedDemoWorld();if(!w){route.screen='worlds';return renderLauncher();}
@@ -1018,20 +1095,30 @@ function renderLauncher(){
 }
 function navigateLauncher(action,button){
  const navigate=screen=>{route.screen=screen;render();window.scrollTo(0,0)};
- if(action==='splash'||action==='login'||action==='register'||action==='welcome'||action==='worlds'||action==='newWorld'||action==='overview'||action==='characters'){return navigate(action)}
- if(action==='loginDemo'){route.accountName='Preview Adventurer';route.worlds=[{name:'Starfall World',source:'Fixture'}];route.worldIndex=0;return navigate('welcome')}
+ if(action==='newWorld'){route.worldDraft='';route.worldSettings=defaultWorldSettings();return navigate('newWorld')}
+ if(action==='worldSetting'){
+  const group=button.dataset.setting,value=button.dataset.value;
+  if(!WORLD_OPTION_GROUPS[group]?.options.some(o=>o.id===value))return;
+  route.worldSettings[group]=value;
+  const current=el('previewWorldName');if(current)route.worldDraft=current.value;
+  document.querySelectorAll(`[data-setting="${group}"]`).forEach(node=>{const active=node.dataset.value===value;node.classList.toggle('selected',active);node.setAttribute('aria-pressed',String(active))});
+  const summary=el('worldDraftSummary');if(summary)summary.innerHTML=worldSettingsReview(route.worldSettings);
+  return;
+ }
+ if(action==='splash'||action==='login'||action==='register'||action==='welcome'||action==='worlds'||action==='overview'||action==='characters'){return navigate(action)}
+ if(action==='loginDemo'){route.accountName='Preview Adventurer';route.worlds=[{name:'Starfall World',source:'Fixture',settings:defaultWorldSettings()}];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome')}
  if(action==='createDemo'){
   const name=(el('previewNewName')?.value||'').trim();if(!name){const e=el('accountCreateError');if(e)e.textContent='Enter a display name for the demo account.';el('previewNewName')?.focus();return}
-  route.accountName=name;route.accountDraft=name;route.worlds=[];route.worldIndex=0;return navigate('welcome');
+  route.accountName=name;route.accountDraft=name;route.worlds=[];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome');
  }
  if(action==='chronicle'){route.progression='chronicle';return navigate('worlds')}
  if(action==='selectWorld'){route.worldIndex=Number(button.dataset.worldIndex)||0;return navigate('overview')}
  if(action==='createWorld'){
   const name=(el('previewWorldName')?.value||'').trim();if(!name){const e=el('worldCreateError');if(e)e.textContent='Enter a World name to create the in-memory demo.';el('previewWorldName')?.focus();return}
-  route.worldDraft=name;route.worlds.push({name,source:'Created in preview'});route.worldIndex=route.worlds.length-1;return navigate('overview');
+  route.worldDraft=name;route.worlds.push({name,source:'Created in preview',settings:normalizedWorldSettings(route.worldSettings)});route.worldIndex=route.worlds.length-1;return navigate('overview');
  }
  if(action==='startCreator'){state.stage=0;state.validation=false;return navigate('creator')}
- if(action==='logout'){route.accountName='';route.accountDraft='';route.worlds=[];route.worldIndex=0;route.worldDraft='';state.entryChoice=null;state.summaryReviewed=false;return navigate('splash')}
+ if(action==='logout'){route.accountName='';route.accountDraft='';route.worlds=[];route.worldIndex=0;route.worldDraft='';route.worldSettings=defaultWorldSettings();state.entryChoice=null;state.summaryReviewed=false;return navigate('splash')}
  if(action==='noop')return;
 }
 function render(){
@@ -1049,6 +1136,7 @@ function render(){
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;invalidateOpening();return render()}if(b.dataset.conditionToggle){const group=b.dataset.group,id=b.dataset.conditionToggle,selected=state.selectedConditions[group];if(!conditions[group]?.some(c=>c.id===id))return;state.selectedConditions[group]=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id];const inspector=group==='negative'?'inspectedNegative':'inspectedPositive';state[inspector]=state.selectedConditions[group].includes(id)?id:(state.selectedConditions[group].at(-1)||null);invalidateOpening();render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='creatorBack'){if(state.stage>0)return nav(state.stage-1);return navigateLauncher('characters',b)}if(b.id==='creatorHome'){return navigateLauncher('welcome',b)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='accountBtn')return el('account').classList.toggle('open');if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){document.documentElement.style.filter=document.documentElement.style.filter?'':'brightness(1.17)';el('account').classList.remove('open');}});
 document.addEventListener('change',e=>{const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
 document.addEventListener('input',e=>{
+ if(e.target.id==='previewWorldName'){route.worldDraft=e.target.value;return;}
  if(e.target.id==='firstName'||e.target.id==='lastName'){
   state[e.target.id]=e.target.value;syncName();invalidateOpening();state.validation=false;
   renderRail();
