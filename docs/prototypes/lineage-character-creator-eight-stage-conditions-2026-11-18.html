@@ -699,6 +699,50 @@
 @media(max-width:680px){.geo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.geo-card-footer{padding:9px;min-height:65px}.geo-card-name{font-size:15px}.geo-card-sub{font-size:10px}.geo-resource{width:28px;height:28px;border-radius:8px}.geo-resource-svg{width:17px;height:17px}.geo-resource-row{bottom:6px;right:6px;left:6px;gap:3px}}
 @media(max-width:480px){.geo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.geo-picture{aspect-ratio:4/3}.geo-card-footer{min-height:62px;padding:9px}.geo-card-name{font-size:14px}.geo-card-sub{font-size:9px}.geo-resource{width:25px;height:25px;border-radius:7px}.geo-resource-svg{width:16px;height:16px}.geo-resource-row{bottom:5px;gap:3px;right:5px;left:5px}}
 
+
+/* 2026-11-20: Account/Welcome/World Library refinement and a genuinely shared 2:1 chrome. */
+:root{--app-topbar-height:80px;--app-subbar-height:40px}
+.launcher-top,.chrome .top{height:var(--app-topbar-height);min-height:var(--app-topbar-height);max-height:var(--app-topbar-height);padding-top:5px;padding-bottom:5px;box-sizing:border-box}
+.launcher-subbar,.chrome .subbar,.chrome .subbar:not(.identity-active){height:var(--app-subbar-height);min-height:var(--app-subbar-height);max-height:var(--app-subbar-height);padding-top:2px;padding-bottom:2px;box-sizing:border-box}
+.launcher-subbar .launcher-subbar-action,.subbar-back-btn,.subbar-home,.subbar-next{min-height:32px;height:32px;padding-top:4px;padding-bottom:4px}
+.launcher-account-picker-row{display:flex;align-items:stretch;gap:10px;min-width:0}
+.launcher-account-picker-row .launcher-input{min-width:0;flex:1 1 auto;margin:0}
+.launcher-account-picker-row .launcher-primary{flex:none;align-self:stretch;width:auto}
+.launcher-account-create{justify-content:center;margin-top:24px}
+.launcher-account-create .launcher-secondary{min-width:160px}
+.launcher-login-frame{padding-block:36px}
+.chrome .top{z-index:70;isolation:isolate}
+.system-menu{position:relative;flex:none;z-index:60}
+.system-menu summary{height:37px;width:37px;display:grid;place-items:center;list-style:none;border:1px solid #5d6661;border-radius:10px;background:#242d2d;color:#e5cfaa;cursor:pointer}
+.system-menu summary::-webkit-details-marker{display:none}
+.system-menu summary::marker{content:''}
+.system-menu summary:hover,.system-menu[open] summary{background:#35403b;border-color:#d4b27e}
+.system-menu summary:focus-visible{outline:2px solid #e8c28a;outline-offset:3px}
+.system-dots-icon{width:20px;height:20px;display:block}
+.system-menu-panel{position:absolute;z-index:85;right:0;top:calc(100% + 7px);width:185px;padding:6px;background:#202a2e;border:1px solid #667066;border-radius:11px;box-shadow:0 15px 45px #0008}
+.system-menu-panel button{display:block;text-align:left;width:100%;padding:11px 13px;margin:0;border:0;border-radius:7px;background:transparent;color:#eee0c9;font-size:12px;font-weight:600}
+.system-menu-panel button:hover,.system-menu-panel button:focus-visible{background:#34403d}
+.preview-brighter #launcher,.preview-brighter #creatorShell{filter:brightness(1.17)}
+.creator-mobile-tools{display:none}
+@media(max-width:650px){
+ :root{--app-topbar-height:92px;--app-subbar-height:46px}
+ .launcher-top,.chrome .top{height:var(--app-topbar-height);min-height:var(--app-topbar-height);max-height:var(--app-topbar-height);padding:8px 12px}
+ .launcher-subbar,.chrome .subbar,.chrome .subbar:not(.identity-active){height:var(--app-subbar-height);min-height:var(--app-subbar-height);max-height:var(--app-subbar-height);padding:3px 12px}
+ .launcher-subbar .launcher-subbar-action,.subbar-back-btn,.subbar-home,.subbar-next{height:34px;min-height:34px;padding:4px 8px}
+ .launcher-top-right{gap:7px}
+}
+@media(max-width:550px){
+ .chrome .subbar,.chrome .subbar:not(.identity-active){grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);grid-template-rows:1fr;align-items:center}
+ .chrome .subbar .subbar-actions,.chrome .subbar:not(.identity-active) .subbar-actions{display:flex;grid-column:3;grid-row:1;justify-content:flex-end}
+ .creator-mobile-tools{display:flex;justify-content:flex-end;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+ .creator-mobile-tools:empty{display:none}
+ .creator-mobile-tools button[hidden]{display:none}
+ .creator-mobile-tools .subbar-random,.creator-mobile-tools .details-toggle{min-height:33px;padding:6px 9px;font-size:10px}
+ .launcher-account-picker-row{gap:7px}
+ .launcher-account-picker-row .launcher-primary{padding-inline:12px;min-height:47px}
+ .launcher-login-frame{padding:23px 17px}
+}
+@media(max-width:350px){.launcher-account-picker-row .launcher-primary{padding-inline:9px;font-size:12px}}
 </style>
 </head>
 <body>
@@ -706,7 +750,7 @@
 <div class="shell" id="creatorShell" hidden><div class="chrome">
   <header class="top" aria-label="Application bar">
     <div class="brand topbrand"><div class="brandmark">✧</div><div><div class="brandname">LINEAGE REFORGED</div><div class="brandsub">CHRONICLE</div></div></div>
-    <div class="righttop"><div class="clock-stack" aria-label="Local and World clocks"><div class="clock" id="clock">LOCAL --:--</div><div class="world-clock" id="worldClock" title="Awaiting an owner-backed World clock">WORLD --:--</div></div><div class="account" id="account"><button class="topbtn" id="accountBtn" type="button">⚙ Account ▾</button><div class="menu"><button type="button">Settings (preview)</button><button id="themeBtn" type="button">Toggle theme (preview)</button><button id="logoutPreview" type="button" data-launch="logout">Log out (demo)</button></div></div></div>
+    <div class="righttop"><div class="clock-stack" aria-label="Local and World clocks"><div class="clock" id="clock">LOCAL --:--</div><div class="world-clock" id="worldClock" title="Awaiting an owner-backed World clock">WORLD --:--</div></div><details class="system-menu"><summary aria-label="System menu" title="System menu"><svg class="system-dots-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></summary><div class="system-menu-panel"><button type="button" data-launch="settings">Settings</button><button type="button" data-launch="logout">Log out</button></div></details></div>
   </header>
   <nav class="subbar" id="creatorSubbar" aria-label="Creator navigation">
     <div class="subbar-back"><button type="button" id="creatorBack" class="primary subbar-back-btn" aria-label="Back to previous creator step or Characters" title="Back">◀</button></div>
@@ -717,7 +761,7 @@
       <button type="button" class="primary subbar-next" id="nextTop" aria-label="Next step" title="Next step">▶</button>
     </div>
   </nav>
-</div><div class="body"><aside class="rail"><div class="railinner"><button type="button" id="mobileToggle" class="mobiletoggle" aria-controls="railCollapse" aria-expanded="true">☰ Creation steps & character summary</button><div class="railcollapse open" id="railCollapse"><nav class="railnav" id="railNav"></nav><div class="railhr"></div><div class="railstat"><div class="who" id="railName">Aerin</div><div class="resources" id="resources"></div><div class="statgroups" id="statgroups"></div></div></div></div></aside><main class="content" aria-labelledby="stepTitle"><h1 id="stepTitle" class="visually-hidden">Identity</h1><span id="sectionLabel" hidden></span><span id="stepSubtitle" hidden></span><div id="stage"></div></main></div></div>
+</div><div class="body"><aside class="rail"><div class="railinner"><button type="button" id="mobileToggle" class="mobiletoggle" aria-controls="railCollapse" aria-expanded="true">☰ Creation steps & character summary</button><div class="railcollapse open" id="railCollapse"><nav class="railnav" id="railNav"></nav><div class="railhr"></div><div class="railstat"><div class="who" id="railName">Aerin</div><div class="resources" id="resources"></div><div class="statgroups" id="statgroups"></div></div></div></div></aside><main class="content" aria-labelledby="stepTitle"><div class="creator-mobile-tools" id="creatorMobileTools"></div><h1 id="stepTitle" class="visually-hidden">Identity</h1><span id="sectionLabel" hidden></span><span id="stepSubtitle" hidden></span><div id="stage"></div></main></div></div>
 <div class="dialogbg" id="dialogbg" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="eyebrow" id="dialogEyebrow">World Entry</div><h2 id="dialogTitle"></h2><div id="dialogBody"></div><div id="dialogActions" class="dialogactions"></div><div class="dialogfooter"><button class="quiet" type="button" id="dialogClose">Close ✕</button></div></section></div>
 <script>
 const steps=['Lineage','Identity','Continent','Region','Settlement','World Entry','Summary','Opening'];
@@ -1202,6 +1246,8 @@ function portraitPrompt(){const l=lineages.find(x=>x[0]===state.lineage)?.[1]||'
 
 function launcherButton(label,action,kind='primary',attrs='') {return `<button type="button" class="launcher-${kind}" data-launch="${action}" ${attrs}>${label}</button>`;}
 function launcherFrame(content,narrow=false) {return `<div class="launcher-main ${narrow?'narrow':''}">${content}</div>`;}
+const systemDots='<svg class="system-dots-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>';
+function systemMenu(signed){return `<details class="system-menu"><summary aria-label="System menu" title="System menu">${systemDots}</summary><div class="system-menu-panel"><button type="button" data-launch="settings">Settings</button>${signed?'<button type="button" data-launch="logout">Log out</button>':''}</div></details>`;}
 function selectedDemoWorld(){return route.worlds[route.worldIndex]||null;}
 function renderLauncher(){
  const signed=Boolean(route.accountName);
@@ -1211,16 +1257,16 @@ function renderLauncher(){
   content=launcherFrame(`<div class="launcher-frame launcher-center" style="max-width:720px;margin:34px auto 0"><p class="launcher-invitation">A chronicle of lives, choices and legacies.<br/><br/>Found your line and forge your Legacy.</p><div class="launcher-actions" style="justify-content:center">${launcherButton('Log In','login')}${launcherButton('Create Account','register','secondary')}</div></div>`);
  }
  if(screen==='login'){
-  content=launcherFrame(`<section class="launcher-frame"><p class="launcher-eyebrow">Local account access</p><h1 class="launcher-title" style="font-size:38px">Log In</h1><label class="launcher-label" for="previewAccountPicker">Existing account</label><select id="previewAccountPicker" class="launcher-input"><option>Preview Adventurer (demo account)</option></select><div class="launcher-actions">${launcherButton('Continue as Preview Adventurer','loginDemo')}${launcherButton('Create Account','register','secondary')}</div></section>`,true);
+  content=launcherFrame(`<section class="launcher-frame launcher-login-frame"><div class="launcher-account-picker-row"><select id="previewAccountPicker" class="launcher-input" aria-label="Select account"><option>Preview Adventurer (demo account)</option></select>${launcherButton('Continue','loginDemo')}</div><div class="launcher-actions launcher-account-create">${launcherButton('Create Account','register','secondary')}</div></section>`,true);
  }
  if(screen==='register'){
   content=launcherFrame(`<section class="launcher-frame"><p class="launcher-eyebrow">New local account</p><h1 class="launcher-title" style="font-size:38px">Create Account</h1><p class="launcher-muted">Choose the name your account will carry.</p><label class="launcher-label" for="previewNewName">Display name</label><input id="previewNewName" maxlength="48" class="launcher-input" autocomplete="off" placeholder="Your character-world account" value="${esc(route.accountDraft)}"/><div id="accountCreateError" role="alert" class="launcher-alert"></div><div class="launcher-actions">${launcherButton('Create Account','createDemo')}${launcherButton('Back to Log In','login','secondary')}</div></section>`,true);
  }
  if(screen==='welcome'){
-  content=launcherFrame(`<div class="launcher-center"><h1 class="launcher-title">Welcome back, ${esc(route.accountName)}</h1><p class="launcher-lead">Choose your journey. Progression mode applies to the World, not to a character's Build or Aptitude.</p></div><div class="launcher-cards"><button type="button" data-launch="chronicle" class="launcher-card"><small>Repeat-run adventure</small><strong>Chronicle</strong><p>Live many lives, build a legacy, and earn rewards that shape future journeys.</p><span>Explore Chronicle Worlds (demo)</span></button><button type="button" class="launcher-card" disabled aria-disabled="true"><small>Long-term progression</small><strong>Persistent</strong><p>Build one enduring life through skills, work, relationships and lasting achievements.</p><span>Coming Soon</span></button></div><div class="launcher-actions">${launcherButton('Log out','logout','secondary')}</div>`);
+  content=launcherFrame(`<div class="launcher-center"><h1 class="launcher-title">Welcome back, ${esc(route.accountName)}</h1></div><div class="launcher-cards"><button type="button" data-launch="chronicle" class="launcher-card"><small>Repeat-run adventure</small><strong>Chronicle</strong><p>Live many lives, build a legacy, and earn rewards that shape future journeys.</p><span>Explore Chronicle Worlds</span></button><button type="button" class="launcher-card" disabled aria-disabled="true"><small>Long-term progression</small><strong>Persistent</strong><p>Build one enduring life through skills, work, relationships and lasting achievements.</p><span>Coming Soon</span></button></div>`);
  }
  if(screen==='worlds'){
-  content=launcherFrame(`<div class="launcher-center"><p class="launcher-eyebrow">Chronicle · Worlds / The Atlas</p><h1 class="launcher-title">Your Worlds</h1><p class="launcher-lead">Choose a World to continue your chronicle, or create a new one.</p></div><div class="launcher-frame"><div class="launcher-worldline"><div><strong>World Library</strong><small>${route.worlds.length} World${route.worlds.length===1?'':'s'}</small></div>${launcherButton('Create World','newWorld')}</div>${route.worlds.length?`<div class="launcher-cards">${route.worlds.map((w,i)=>`<button type="button" class="launcher-card" data-launch="selectWorld" data-world-index="${i}"><small>${esc(w.source)} · Chronicle</small><strong>${esc(w.name)}</strong><p>First World · Individual World<br/>${esc(worldSettingsSummary(w.settings))}</p><span>Open World Overview</span></button>`).join('')}</div>`:'<p class="launcher-muted" style="padding-top:25px">No Worlds yet. Create one to begin.</p>'}</div>`);
+  content=launcherFrame(`<div class="launcher-frame"><div class="launcher-worldline"><div><strong>World Library</strong><small>${route.worlds.length} World${route.worlds.length===1?'':'s'}</small></div>${launcherButton('Create World','newWorld')}</div>${route.worlds.length?`<div class="launcher-cards">${route.worlds.map((w,i)=>`<button type="button" class="launcher-card" data-launch="selectWorld" data-world-index="${i}"><small>${esc(w.source)} · Chronicle</small><strong>${esc(w.name)}</strong><p>First World · Individual World<br/>${esc(worldSettingsSummary(w.settings))}</p><span>Open World Overview</span></button>`).join('')}</div>`:'<p class="launcher-muted" style="padding-top:25px">No Worlds yet. Create one to begin.</p>'}</div>`);
  }
  if(screen==='newWorld'){
   const settings=normalizedWorldSettings(route.worldSettings);
@@ -1241,18 +1287,22 @@ function renderLauncher(){
   const w=selectedDemoWorld();if(!w){route.screen='worlds';return renderLauncher();}
   content=launcherFrame(`<div class="launcher-center"><p class="launcher-eyebrow">${esc(w.name)} · Chronicle</p><h1 class="launcher-title">Characters</h1><p class="launcher-lead">Every life in this World begins here.</p></div><div class="launcher-frame"><h2>No characters yet</h2><p class="launcher-muted">Create your first character to begin the next chapter.</p><div class="launcher-actions">${launcherButton('New Character','startCreator')}</div></div>`);
  }
- const top=`<header class="launcher-top"><div class="launcher-brand"><span class="launcher-brand-mark">✧</span><div><div class="launcher-brand-name">LINEAGE REFORGED</div><div class="launcher-brand-sub">THE FIRST WORLD</div></div></div><div class="launcher-top-right"><span id="launcherClock" aria-label="Local time">LOCAL</span><span>${signed?esc(route.accountName):'Guest'}</span>${signed?launcherButton('Log out','logout','secondary'):''}</div></header>`;
+ const top=`<header class="launcher-top"><div class="launcher-brand"><span class="launcher-brand-mark">✧</span><div><div class="launcher-brand-name">LINEAGE REFORGED</div><div class="launcher-brand-sub">THE FIRST WORLD</div></div></div><div class="launcher-top-right"><span id="launcherClock" aria-label="Local time">LOCAL</span><span class="launcher-account-label">${signed?esc(route.accountName):'Guest'}</span>${systemMenu(signed)}</div></header>`;
  // Reuse the creator subbar layout: Back left, Home centered and contextual state right.
  const backTarget={login:'splash',register:'splash',welcome:'splash',worlds:'welcome',newWorld:'worlds',overview:'worlds',characters:'overview'}[screen];
  const homeTarget=signed?'welcome':'splash';
- const context={splash:'',login:'Account access',register:'Account creation',welcome:'Game mode',worlds:'World Library',newWorld:'World creation',overview:'World Overview',characters:'Characters'}[screen]||'Preview';
- const homeButton=screen==='splash'?'<span class="launcher-nav-spacer"></span>':launcherButton('<svg class="nav-house-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>',homeTarget,'subbar-action','aria-label="Home" title="Home"');
+ const context={splash:'',login:'',register:'Account creation',welcome:'',worlds:'',newWorld:'World creation',overview:'World Overview',characters:'Characters'}[screen]||'';
+ const homeButton=['splash','login','welcome'].includes(screen)?'<span class="launcher-nav-spacer"></span>':launcherButton('<svg class="nav-house-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>',homeTarget,'subbar-action','aria-label="Home" title="Home"');
  const subbar=`<nav class="launcher-subbar" aria-label="Launcher navigation"><div class="launcher-subbar-back">${backTarget?launcherButton('◀',backTarget,'subbar-action','aria-label="Back" title="Back"'):'<span class="launcher-nav-spacer"></span>'}</div><div class="launcher-subbar-home">${homeButton}</div><div class="launcher-subbar-status" aria-label="Current section">${esc(context)}</div></nav>`;
  el('launcher').innerHTML=`<div class="launcher-chrome">${top}${subbar}</div><main id="launcherMain">${content}</main>`;
  updateClock();
 }
 function navigateLauncher(action,button){
  const navigate=screen=>{route.screen=screen;render();window.scrollTo(0,0)};
+ if(action==='settings'){
+  document.querySelectorAll('details.system-menu[open]').forEach(menu=>{menu.open=false});
+  return openDialog('Settings','<p>Display appearance</p>','<button type="button" id="themeBtn">Toggle display brightness</button>','System');
+ }
  if(action==='newWorld'){route.worldDraft='';route.worldSettings=defaultWorldSettings();return navigate('newWorld')}
  if(action==='worldSetting'){
   const group=button.dataset.setting,value=button.dataset.value;
@@ -1279,19 +1329,26 @@ function navigateLauncher(action,button){
  if(action==='logout'){route.accountName='';route.accountDraft='';route.worlds=[];route.worldIndex=0;route.worldDraft='';route.worldSettings=defaultWorldSettings();state.entryChoice=null;state.summaryReviewed=false;return navigate('splash')}
  if(action==='noop')return;
 }
+function syncCreatorTools(){
+ const random=el('identityDice'),detail=el('detailsToggle'),topNext=el('nextTop');
+ const mobile=el('creatorMobileTools'),actions=el('creatorSubbar')?.querySelector('.subbar-actions');
+ if(!random||!detail||!topNext||!mobile||!actions)return;
+ const target=window.matchMedia('(max-width:550px)').matches?mobile:actions;
+ for(const button of [random,detail])if(button.parentElement!==target){if(target===actions)actions.insertBefore(button,topNext);else mobile.appendChild(button)}
+}
+window.addEventListener('resize',syncCreatorTools);
 function render(){
- const inCreator=route.screen==='creator';el('creatorShell').hidden=!inCreator;el('launcher').hidden=inCreator;
+  const inCreator=route.screen==='creator';el('creatorShell').hidden=!inCreator;el('launcher').hidden=inCreator;
  if(!inCreator){renderLauncher();return;}
  const w=selectedDemoWorld();updateWorldClock();
- if(el('accountBtn'))el('accountBtn').textContent='⚙ '+(route.accountName||'Demo Account')+' ▾';
  renderRail();el('stage').innerHTML=renderStage();
  const isIdentity=state.stage===1,subbar=el('creatorSubbar'),random=el('identityDice'),topNext=el('nextTop');
  subbar?.classList.toggle('identity-active',isIdentity);
  if(random)random.hidden=!isIdentity;
  if(topNext){topNext.hidden=state.stage>=7;const nextLabel=state.stage===5?'Continue to Summary':state.stage===6?'Continue to Opening':'Next step';topNext.textContent='▶';topNext.setAttribute('aria-label',nextLabel);topNext.title=nextLabel;}
- const toggle=el('detailsToggle');if(toggle){toggle.hidden=!isIdentity;toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));toggle.querySelector('.details-toggle-label').textContent='Detail';toggle.setAttribute('aria-label',state.showAttributeDetails?'Detail shown; hide numeric attribute adjustments':'Detail hidden; show numeric attribute adjustments');toggle.title=state.showAttributeDetails?'Hide numeric detail':'Show numeric detail';toggle.querySelector('.details-eye').innerHTML=state.showAttributeDetails?'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/>':'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="M3 21 21 3"/>';}}
+ const toggle=el('detailsToggle');syncCreatorTools();if(toggle){toggle.hidden=!isIdentity;toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));toggle.querySelector('.details-toggle-label').textContent='Detail';toggle.setAttribute('aria-label',state.showAttributeDetails?'Detail shown; hide numeric attribute adjustments':'Detail hidden; show numeric attribute adjustments');toggle.title=state.showAttributeDetails?'Hide numeric detail':'Show numeric detail';toggle.querySelector('.details-eye').innerHTML=state.showAttributeDetails?'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/>':'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="M3 21 21 3"/>';}}
 
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}/* Color selection is cosmetic: preserve World Entry, Summary review and the first decision. */if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;return render()}if(b.dataset.conditionToggle){const group=b.dataset.group,id=b.dataset.conditionToggle,selected=state.selectedConditions[group];if(!conditions[group]?.some(c=>c.id===id))return;state.selectedConditions[group]=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id];const inspector=group==='negative'?'inspectedNegative':'inspectedPositive';state[inspector]=state.selectedConditions[group].includes(id)?id:(state.selectedConditions[group].at(-1)||null);invalidateOpening();render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='creatorBack'){if(state.stage>0)return nav(state.stage-1);return navigateLauncher('characters',b)}if(b.id==='creatorHome'){return navigateLauncher('welcome',b)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='accountBtn')return el('account').classList.toggle('open');if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){document.documentElement.style.filter=document.documentElement.style.filter?'':'brightness(1.17)';el('account').classList.remove('open');}});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}/* Color selection is cosmetic: preserve World Entry, Summary review and the first decision. */if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;return render()}if(b.dataset.conditionToggle){const group=b.dataset.group,id=b.dataset.conditionToggle,selected=state.selectedConditions[group];if(!conditions[group]?.some(c=>c.id===id))return;state.selectedConditions[group]=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id];const inspector=group==='negative'?'inspectedNegative':'inspectedPositive';state[inspector]=state.selectedConditions[group].includes(id)?id:(state.selectedConditions[group].at(-1)||null);invalidateOpening();render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='creatorBack'){if(state.stage>0)return nav(state.stage-1);return navigateLauncher('characters',b)}if(b.id==='creatorHome'){return navigateLauncher('welcome',b)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){const bright=document.documentElement.classList.toggle('preview-brighter');b.textContent=bright?'Use original brightness':'Increase display brightness';return;}});
 document.addEventListener('change',e=>{const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
 document.addEventListener('input',e=>{
  if(e.target.id==='previewWorldName'){route.worldDraft=e.target.value;return;}
