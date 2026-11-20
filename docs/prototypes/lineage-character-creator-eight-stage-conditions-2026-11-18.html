@@ -622,10 +622,10 @@
 .launcher-top{padding:12px clamp(14px,2vw,30px);min-height:72px;width:100%}
 .launcher-brand{min-width:0}
 .launcher-brand>div{min-width:0}
-.launcher-subbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;min-height:44px;padding:6px clamp(14px,2vw,30px);background:#1b252a;border-bottom:1px solid #475052;width:100%}
+.launcher-subbar{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:center;min-height:36px;padding:3px clamp(14px,2vw,30px);background:#1b252a;border-bottom:1px solid #475052;width:100%}
 .launcher-subbar-back{grid-column:1;justify-self:start;min-width:0}
 .launcher-subbar-home{grid-column:2;justify-self:center}
-.launcher-subbar-status{grid-column:3;justify-self:end;text-align:right;color:#aeb8b7;font-size:11px;white-space:nowrap}
+.launcher-subbar-status{grid-column:3;justify-self:end;text-align:right;color:#aeb8b7;font-size:11px;white-space:nowrap;min-height:1em}
 .launcher-subbar .launcher-subbar-action{display:inline-flex;align-items:center;justify-content:center;min-height:33px;padding:7px 14px;white-space:nowrap;font-size:11px;font-weight:800;letter-spacing:.04em;border:1px solid #d0ad77;border-radius:999px;background:linear-gradient(180deg,#e1c490,#b98f58);color:#192021}
 .launcher-subbar .launcher-subbar-action:hover{background:linear-gradient(180deg,#ecd09e,#c7a06d)}
 @media(max-width:900px){.chrome .top{justify-content:space-between}.chrome .subbar{grid-column:1}}
@@ -642,7 +642,7 @@
  .launcher-brand-mark{width:35px;height:35px;font-size:22px}
  .launcher-brand-name{font-size:18px}
  .launcher-brand-sub{font-size:8px}
- .launcher-subbar{padding:7px 12px;min-height:40px}
+ .launcher-subbar{padding:4px 12px;min-height:32px}
  .launcher-subbar-status{font-size:10px}
  .launcher-subbar .launcher-subbar-action{min-height:32px;padding:6px 10px;font-size:10px}
 }
@@ -667,6 +667,38 @@
 .subbar-back-btn,.subbar-home,.subbar-next{min-width:39px;min-height:35px;padding:6px 10px;display:inline-flex;justify-content:center;align-items:center;font-size:16px;line-height:1}
 .launcher-subbar .launcher-subbar-action{min-width:39px;min-height:35px;padding:6px 10px;font-size:16px;line-height:1}
 @media(max-width:550px){.subbar-back-btn,.subbar-home,.subbar-next,.launcher-subbar .launcher-subbar-action{min-width:35px;min-height:33px;font-size:14px;padding:5px 8px}.nav-house-icon{width:16px;height:16px}.launcher-invitation{font-size:24px}}
+
+/* 2026-11-19: Compact landscape geography cards, with unobtrusive resource
+   indicators over the image (not a baked-in promise of exact local spawns). */
+.geo-section{padding:13px 0 18px}
+.geo-parent-label{font:600 11px/1.5 Inter,'Segoe UI',sans-serif;color:#d1b783;letter-spacing:.05em;margin:0 0 12px}
+.geo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.geo-card{display:flex;flex-direction:column;min-width:0;padding:0;overflow:hidden;border:1px solid #4c5656;border-radius:13px;background:#1b2428;color:#f1eadc;cursor:pointer;text-align:left;transition:border-color .14s,box-shadow .14s,transform .14s}
+.geo-card:hover{border-color:#c4a374;transform:translateY(-2px)}
+.geo-card:focus-visible{outline:2px solid #e2c28b;outline-offset:3px}
+.geo-card.selected{border-color:#d7b77e;box-shadow:0 0 0 2px #d1ab6b,0 12px 26px #0003}
+.geo-picture{position:relative;display:block;overflow:hidden;aspect-ratio:4/3;width:100%;isolation:isolate;background:radial-gradient(circle at 68% 23%,#9b9e8372,transparent 35%),linear-gradient(160deg,#38584e,#203037 64%,#20252b)}
+.geo-picture.geo-marine{background:radial-gradient(circle at 79% 24%,#bfb39165,transparent 34%),linear-gradient(167deg,#587c78,#355e66 49%,#1a3544)}
+.geo-picture.geo-highland{background:radial-gradient(circle at 63% 17%,#b9aaa06a,transparent 36%),linear-gradient(140deg,#67766f,#354c50 55%,#283038)}
+.geo-picture.geo-dryland{background:radial-gradient(circle at 72% 22%,#d3b78787,transparent 32%),linear-gradient(165deg,#766a4a,#564b39 58%,#323b35)}
+.geo-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;z-index:1;transition:transform .3s ease}
+.geo-card:hover .geo-photo{transform:scale(1.025)}
+.geo-fallback-mark{position:absolute;inset:0;display:grid;place-items:center;z-index:0;font:60px Georgia,serif;color:#ede1bd28}
+.geo-picture-shade{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,transparent 48%,#0a1517ae 100%);pointer-events:none}
+.geo-selected-mark{position:absolute;z-index:5;top:10px;right:10px;display:grid;place-items:center;border-radius:999px;border:1px solid #e8cf9a;background:#d9b57c;color:#1d2424;font-size:14px;font-weight:900;width:27px;height:27px;box-shadow:0 2px 9px #0007}
+.geo-resource-row{position:absolute;bottom:9px;right:10px;left:10px;z-index:4;display:flex;justify-content:flex-end;align-items:center;gap:5px;min-height:33px}
+.geo-resource{position:relative;display:grid;place-items:center;flex:none;overflow:hidden;width:35px;height:35px;background:#141e20d6;border:1px solid #c4b3948a;border-radius:10px;box-shadow:0 2px 8px #0007;cursor:help}
+.geo-resource:focus-visible{outline:2px solid #f5d69b;outline-offset:2px}
+.geo-resource-fallback{display:grid;place-items:center;line-height:1;color:#edd7ac;z-index:0}.geo-resource-svg{width:21px;height:21px;display:block}
+.geo-resource img{position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);object-fit:contain;z-index:1;filter:drop-shadow(0 1px 3px #000a)}
+.geo-card-footer{display:flex;flex-direction:column;gap:3px;min-width:0;min-height:67px;padding:11px 13px 12px}
+.geo-card-name{font:18px/1.15 Georgia,'Times New Roman',serif;color:#f5e4c9;overflow-wrap:anywhere}
+.geo-card-sub{font-size:11px;line-height:1.3;color:#aab9b3;text-transform:capitalize;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.geo-card.selected .geo-card-name{color:#e7c48f}
+@media(max-width:1100px){.geo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
+@media(max-width:680px){.geo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.geo-card-footer{padding:9px;min-height:65px}.geo-card-name{font-size:15px}.geo-card-sub{font-size:10px}.geo-resource{width:28px;height:28px;border-radius:8px}.geo-resource-svg{width:17px;height:17px}.geo-resource-row{bottom:6px;right:6px;left:6px;gap:3px}}
+@media(max-width:480px){.geo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.geo-picture{aspect-ratio:4/3}.geo-card-footer{min-height:62px;padding:9px}.geo-card-name{font-size:14px}.geo-card-sub{font-size:9px}.geo-resource{width:25px;height:25px;border-radius:7px}.geo-resource-svg{width:16px;height:16px}.geo-resource-row{bottom:5px;gap:3px;right:5px;left:5px}}
+
 </style>
 </head>
 <body>
@@ -1056,16 +1088,72 @@ function renderIdentity(){
  ${renderPortrait(true)}
  ${footer('Randomize identity')}`;
 }
+
+/* Geographic card presentation is a design preview of source-derived resource indicators.
+   Region biome/indicator keys: packages/content/base/world/regions.json.
+   Settlement type/indicator keys: packages/content/base/world/settlements.json,
+   using the resource icon categories/derivation of worldSelectionCatalog.ts.
+   Image paths mirror the 100-file retained art manifest. */
+const GEO_REGION_META = {"Kaelvar":["mediterranean woodland · steppe","TOLM"],"Valtherion":["mixed forest · deciduous forest","TFLM"],"Serathyl":["temperate rainforest · mixed forest","TOGH"],"Draemor":["prairie · deciduous forest","TFGL"],"Talmyra":["seasonal forest · savanna","TOGL"],"The Auric Marches":["dry scrub · steppe","LMS"],"Verdant Thalos":["mediterranean woodland · mixed forest","FOGLT"],"The Shattercap Isles":["conifer islands · cold marine","TH"],"The Crownlands":["taiga · mixed forest","FHTMS"],"The Embersteppe":["dry steppe · prairie","LFM"],"The Sapphire Rivers":["alluvial mixed forest · floodplain","FOGHS"],"The Jade Expanse":["prairie · steppe","FOL"],"The Windward Spine":["alpine · cloud forest","MSL"],"The Green Reach":["rainforest · wet forest","TGH"],"The Sailor's Verge":["chaparral coast · mixed forest","HOFG"],"The Heart Basin":["prairie · mixed deciduous","FGLO"],"The Emerald Mantle":["deciduous forest · mixed forest","LOTG"],"The Stormcap Coast":["storm coast · estuary","H"],"The Thorn Peninsula":["dry forest · savanna","TOGM"],"The Silver Valleys":["seasonal forest · river valleys","TFLM"],"The Watcher Coast":["cliff coast · dry coastal forest","THMS"],"The Myridian Chain":["mixed forest archipelago · temperate rainforest","TOHM"],"The Lantern Isles":["seasonal tropical forest · mangrove","TOGH"],"The Serpent's Wake":["mangrove · dry forest","TGHM"],"The Dawnreach Isles":["taiga · conifer forest","THM"],"Starfall Isle":["mixed forest archipelago · temperate rainforest","THM"],"The Pearlwake Keys":["marine shelf · chaparral","OHM"],"Zenith Isle":["rocky shoals · marine shelf","TMS"],"The Lantern Crown":["seasonal tropical forest · chaparral","TOHM"],"Glasswake Quay":["chaparral · seasonal tropical forest","TGM"],"Deepglow Reef":["mangrove · marine shelf","TOH"],"Stormfang Isle":["mangrove · dry forest","THM"],"The Blackreef Keys":["reef shelf · mangrove","THM"],"Stormhook Reach":["reef shelf · savanna","THM"],"Aurora Reach":["taiga · conifer forest","THM"],"The Nacre Shelf":["cold marine · conifer forest","TOHM"],"Whalebone Edge":["tundra · cold marine","THM"]};
+const GEO_SETTLEMENT_META = {"Aurelis":["city","TOL"],"Vinecross":["market town","TFOL"],"Oliveford":["village","TFOG"],"Sunmeadow":["town","TFOG"],"Redcliff Quay":["harbor town","TOLH"],"Stonevein":["city","LMS"],"Coppergate":["town","LMS"],"Sunscar Watch":["fort","LMS"],"Brineharbor":["harbor town","TOH"],"Northhook Keep":["fort","TH"],"Gullsreach":["village","TH"],"Highcrown":["city","TFHM"],"Blueflow":["city","TFHM"],"Ledgerford":["town","TFHM"],"Kingsbridge":["town","TFH"],"Harvestrest":["city","FGL"],"Greenharrow":["village","FOGL"],"Golden Barrow":["town","FL"],"Orchardhome":["market town","FOGL"],"Silvergrove":["city","TGHM"],"Headwater Bastion":["fort","THM"],"Whitebark Gate":["town","TGHM"],"Ashsaddle":["market town","LM"],"Coalspur":["town","LM"],"Stepwell Redoubt":["fort","LM"],"Passglass Hold":["city","LMS"],"Northpass Redoubt":["fort","LMS"],"Slatewake":["town","LMS"],"Verdeward":["city","TGHM"],"Timbercross":["town","TGHM"],"Dyehollow":["village","TGHM"],"Seabanner":["port city","OH"],"Tidecrown":["harbor town","TOH"],"Islemarket":["market town","OHM"],"Mastfield":["town","TOH"],"Riverthrone":["city","FGL"],"Granary Crown":["city","FGLM"],"Millrun":["market town","FGLS"],"Basinford":["town","FGLM"],"Pasturemeet":["town","TOGL"],"Longmeadow":["market town","TOGL"],"Applemarsh":["village","TFOG"],"Breaksail":["harbor town","THM"],"Stormwatch Citadel":["citadel","HM"],"Southlight":["village","HM"],"Sunspire Reach":["city","FLHM"],"Silvermere":["market town","FOGL"],"Confederate Ford":["town","TFGL"],"Redroot Warrens":["citadel","FLM"],"Saltfang Anchorage":["harbor town","TOGH"],"Thornwatch":["fort","TOG"],"Spicehook":["market town","TOGM"],"Watcher's Gate":["citadel","HMS"],"Obsidian Stair":["town","HMS"],"Mistfen Landing":["harbor town","HS"],"Starfall Port":["port city","OH"],"Pearlwake":["harbor town","OHM"],"Chainlight Bastion":["fort","S"],"Harbormast Quay":["harbor town","OH"],"Lantern Key":["harbor town","OH"],"Driftglass Outpost":["outpost","G"],"Lantern Deep":["city","OH"],"Stormfang Haven":["harbor town","HM"],"Blackreef Anchorage":["outpost","TH"],"Squallhook Refuge":["outpost","TH"],"Aurora Anchorage":["harbor town","THM"],"Whalebone Watch":["outpost","H"],"Nacredeep":["city","OH"],"Quarrymule Camp":["camp","LMS"],"Moonwell Grove":["hamlet","TOGH"],"Icehook Jetty":["ferry post","THM"],"Redreed Ford":["ferry post","LM"],"Haywarden Estate":["estate","TOGL"],"Barkmill Hamlet":["hamlet","TGHM"],"Southlock Ferry":["ferry post","FGL"],"Barleyhearth Estate":["estate","FGLM"],"Glasswake Shrine":["village","GM"],"Foammarket Ferry":["ferry post","OH"],"Dockreed Estate":["estate","FOH"],"Bridgewatch Ferry":["ferry post","TFH"],"Stormhook Watch":["outpost","H"],"Kelpnet Hamlet":["hamlet","THM"],"Sunpasture Estate":["estate","FLM"],"Cliffsalt Priory":["monastery","GHM"],"Pepperfield Estate":["estate","TOG"],"Caskbank Estate":["estate","TFOL"],"Blackglass Camp":["camp","THMS"],"Deepecho Camp":["camp","OLMS"]};
+const GEO_REGION_ART = new Set(["The Auric Marches","Verdant Thalos","The Shattercap Isles","The Crownlands","The Embersteppe","The Sapphire Rivers","The Jade Expanse","The Windward Spine","The Green Reach","The Sailor's Verge","The Heart Basin","The Emerald Mantle","The Stormcap Coast"]);
+const GEO_SETTLEMENT_NO_ART = new Set(["Dyehollow","Starfall Port","Pearlwake","Chainlight Bastion","Harbormast Quay","Lantern Key","Driftglass Outpost","Lantern Deep","Stormfang Haven","Blackreef Anchorage","Squallhook Refuge","Aurora Anchorage","Whalebone Watch","Nacredeep","Icehook Jetty","Glasswake Shrine","Foammarket Ferry","Stormhook Watch","Pepperfield Estate"]);
+const GEO_RESOURCE_TONES={
+ T:['Timber','resource-timber.png'],F:['Field crops','resource-field-crops.png'],
+ O:['Orchards','resource-orchards.png'],G:['Garden produce','resource-garden-produce.png'],
+ L:['Livestock','resource-livestock.png'],H:['Fish and game','resource-fish-and-game.png'],
+ M:['Ore','resource-ore.png'],S:['Stone','resource-stone.png']
+};
+const GEO_RESOURCE_SYMBOLS={
+ T:'<path d="M12 3 6 11h3l-4 5h14l-4-5h3L12 3Z"/><path d="M12 16v5"/>',
+ F:'<path d="M12 21V5m0 5-5-4m5 8-5-3m5-1 5-4m-5 8 5-3"/><path d="M7 6 5 4m12 2 2-2"/>',
+ O:'<path d="M12 7c-7-4-10 4-6 10 2 3 4 4 6 3 2 1 4 0 6-3 4-6 1-14-6-10Z"/><path d="M12 7c0-3 1-4 4-5"/>',
+ G:'<path d="M12 21V9m0 5c-5 0-8-3-8-7 5 0 8 2 8 7Zm0-4c0-5 3-7 8-7 0 4-3 7-8 7Z"/>',
+ L:'<circle cx="7" cy="6" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="20" cy="10" r="1"/><circle cx="4" cy="12" r="1"/><path d="M10 12c2-3 4-3 6 0l3 4c2 4-2 6-5 4-2-1-3-1-5 0-3 2-6 0-5-4l6-4Z"/>',
+ H:'<path d="M3 12c4-5 11-6 16 0-5 6-12 5-16 0Z"/><path d="M19 12l3-4v8l-3-4ZM8 12h1"/>',
+ M:'<path d="m4 20 12-12m-1-4 5 5M11 7l6 6m-5-7 4-3m1 0 4 4"/>',
+ S:'<path d="m7 4 10-1 5 8-8 10-11-7L7 4Z"/><path d="m7 4 5 8 10-1M12 12l2 9"/>'
+};
+function geoResourceSvg(code){return `<svg class="geo-resource-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GEO_RESOURCE_SYMBOLS[code]||''}</svg>`;}
+const GEO_ASSET_COMMIT='712982fbf72b158280df0ac89dc903d3b1832ab4';
+const GEO_ASSET_ROOT=`https://raw.githubusercontent.com/vagabond1215/Lineage_Reforged/${GEO_ASSET_COMMIT}/apps/rpg-ui/public/character-creator/`;
+function geoSlug(value){return value.toLowerCase().replace(/^the /,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function geoResourceIcons(codes,scope){return [...new Set(String(codes||'').split(''))].slice(0,4).map(code=>{
+ const item=GEO_RESOURCE_TONES[code];if(!item)return '';
+ const [label,file]=item;
+ const help=`${label} · ${scope==='settlement'?'local and regional':'regional'} indication, not a guaranteed gathering site`;
+ return `<span class="geo-resource" role="img" aria-label="${esc(help)}" title="${esc(help)}"><span class="geo-resource-fallback" aria-hidden="true">${geoResourceSvg(code)}</span><img loading="lazy" decoding="async" alt="" aria-hidden="true" src="${GEO_ASSET_ROOT}region-resources/${file}" onerror="this.style.display='none'" /></span>`;
+ }).join('')}
+function geoCard(type,id,name,selected){
+ const continent=type==='continent'; const region=type==='region';
+ const info=continent||region?GEO_REGION_META[name]:GEO_SETTLEMENT_META[name];
+ const biome=continent||region?info?.[0]||'':(GEO_REGION_META[state.region]?.[0]||'');
+ const indicators=info?.[continent||region?1:1]||'';
+ const settlementKind=(!continent&&!region?info?.[0]||'':'');
+ const path=continent?`continents/continent-${id.replace(/^region\./,'').replaceAll('_','-')}.png`:
+ region?(GEO_REGION_ART.has(name)?`regions/region-${geoSlug(name)}.png`:''):
+ (!GEO_SETTLEMENT_NO_ART.has(name)?`settlements/settlement-${geoSlug(name)}.png`:'');
+ const className=/(marine|reef|shoal|coast|archipelago|island|mangrove|estuary)/i.test(biome)?'marine':
+ /(mountain|alpine|rock|tundra|taiga|conifer)/i.test(biome)?'highland':
+ /(steppe|savanna|scrub|prairie)/i.test(biome)?'dryland':'woodland';
+ const meta=settlementKind || biome;
+ const iconContent=geoResourceIcons(indicators,type);
+ const image=path?`<img class="geo-photo" loading="lazy" decoding="async" src="${GEO_ASSET_ROOT}${path}" alt="" onerror="this.style.display='none'" />`:'';
+ const labels=[...new Set(String(indicators).split(''))].slice(0,4).map(code=>GEO_RESOURCE_TONES[code]?.[0]).filter(Boolean).join(', ');
+ return `<button type="button" class="geo-card ${selected?'selected':''}" data-pick="${type}" data-value="${esc(id)}" aria-pressed="${selected}" aria-label="${esc(name)}. ${esc(meta)}. ${labels?'Resource indications: '+labels+'. ':''}${selected?'Selected':'Select this location'}" title="${esc(name)}${labels?' · '+labels:''}">
+  <span class="geo-picture geo-${className}">${image}<span class="geo-fallback-mark" aria-hidden="true">✧</span><span class="geo-picture-shade" aria-hidden="true"></span>${selected?'<span class="geo-selected-mark" aria-hidden="true">✓</span>':''}<span class="geo-resource-row" aria-label="Resource indicators">${iconContent}</span></span>
+  <span class="geo-card-footer"><strong class="geo-card-name">${esc(name)}</strong><span class="geo-card-sub">${esc(meta)}</span></span>
+ </button>`;
+}
+
 function renderGeography(){
  const g=geo.find(x=>x[0]===state.continent)||geo[5];
- const regionChoices=g[2];const locs=geoKnown[state.region]||[];
- const content=state.stage===2?`<div class="optiongrid two">${geo.map(([id,name])=>card(id,name,'Authored macro geography','continent',state.continent===id,true)).join('')}</div>`:
- state.stage===3?`<div class="optiongrid two">${regionChoices.map(name=>card(name,name,g[1],'region',state.region===name,true)).join('')}</div>`:
- locs.length?`<div class="optiongrid two">${locs.map(name=>card(name,name,'Catalog settlement · start unverified', 'settlement',state.settlement===name,true)).join('')}</div>`:
- `<div class="inlinealert">This preview does not include this region's settlement fixture. No starting site is invented.</div>`;
- const context=state.stage===2?'':`<div class="selection-context"><span class="pill">${esc(g[1])}</span>${state.stage===4?`<span class="pill">${esc(state.region)} · ${locs.length} catalog localities</span>`:''}</div>`;
- const accessNote='';
- return `<section class="section" aria-label="${esc(steps[state.stage])} selections">${context}${accessNote}${content}</section>${footer()}`;
+ const choices=g[2];const settlements=geoKnown[state.region]||[];
+ const context=state.stage===2?'':`<div class="geo-parent-label">${esc(state.stage===3?g[1]:state.region)}</div>`;
+ const tiles=state.stage===2?geo.map(([id,name])=>geoCard('continent',id,name,state.continent===id)):
+ state.stage===3?choices.map(name=>geoCard('region',name,name,state.region===name)):
+ settlements.map(name=>geoCard('settlement',name,name,state.settlement===name));
+ return `<section class="section geo-section" aria-label="${esc(steps[state.stage])} selections">${context}<div class="geo-grid">${tiles.join('')}</div></section>${footer()}`;
 }
 function renderWorldEntry(){
  const items=scenarios.filter(x=>x.pool===state.pool);
@@ -1120,7 +1208,7 @@ function renderLauncher(){
  const screen=route.screen;
  let content='';
  if(screen==='splash'){
-  content=launcherFrame(`<div class="launcher-center"><p class="launcher-lead">A chronicle of lives, choices and legacies. Return to your account or begin a new journey.</p></div><div class="launcher-frame launcher-center" style="max-width:720px;margin:34px auto 0"><p class="launcher-invitation">Begin your line. Reforge its story into a legacy.</p><div class="launcher-actions" style="justify-content:center">${launcherButton('Log In','login')}${launcherButton('Create Account','register','secondary')}</div></div>`);
+  content=launcherFrame(`<div class="launcher-frame launcher-center" style="max-width:720px;margin:34px auto 0"><p class="launcher-invitation">A chronicle of lives, choices and legacies.<br/><br/>Found your line and forge your Legacy.</p><div class="launcher-actions" style="justify-content:center">${launcherButton('Log In','login')}${launcherButton('Create Account','register','secondary')}</div></div>`);
  }
  if(screen==='login'){
   content=launcherFrame(`<section class="launcher-frame"><p class="launcher-eyebrow">Local account access</p><h1 class="launcher-title" style="font-size:38px">Log In</h1><label class="launcher-label" for="previewAccountPicker">Existing account</label><select id="previewAccountPicker" class="launcher-input"><option>Preview Adventurer (demo account)</option></select><div class="launcher-actions">${launcherButton('Continue as Preview Adventurer','loginDemo')}${launcherButton('Create Account','register','secondary')}</div></section>`,true);
@@ -1157,8 +1245,9 @@ function renderLauncher(){
  // Reuse the creator subbar layout: Back left, Home centered and contextual state right.
  const backTarget={login:'splash',register:'splash',welcome:'splash',worlds:'welcome',newWorld:'worlds',overview:'worlds',characters:'overview'}[screen];
  const homeTarget=signed?'welcome':'splash';
- const context={splash:'Entrance',login:'Account access',register:'Account creation',welcome:'Game mode',worlds:'World Library',newWorld:'World creation',overview:'World Overview',characters:'Characters'}[screen]||'Preview';
- const subbar=`<nav class="launcher-subbar" aria-label="Launcher navigation"><div class="launcher-subbar-back">${backTarget?launcherButton('◀',backTarget,'subbar-action','aria-label="Back" title="Back"'):'<span class="launcher-nav-spacer"></span>'}</div><div class="launcher-subbar-home">${launcherButton('<svg class="nav-house-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>',homeTarget,'subbar-action','aria-label="Home" title="Home"')}</div><div class="launcher-subbar-status" aria-label="Current section">${esc(context)}</div></nav>`;
+ const context={splash:'',login:'Account access',register:'Account creation',welcome:'Game mode',worlds:'World Library',newWorld:'World creation',overview:'World Overview',characters:'Characters'}[screen]||'Preview';
+ const homeButton=screen==='splash'?'<span class="launcher-nav-spacer"></span>':launcherButton('<svg class="nav-house-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>',homeTarget,'subbar-action','aria-label="Home" title="Home"');
+ const subbar=`<nav class="launcher-subbar" aria-label="Launcher navigation"><div class="launcher-subbar-back">${backTarget?launcherButton('◀',backTarget,'subbar-action','aria-label="Back" title="Back"'):'<span class="launcher-nav-spacer"></span>'}</div><div class="launcher-subbar-home">${homeButton}</div><div class="launcher-subbar-status" aria-label="Current section">${esc(context)}</div></nav>`;
  el('launcher').innerHTML=`<div class="launcher-chrome">${top}${subbar}</div><main id="launcherMain">${content}</main>`;
  updateClock();
 }
