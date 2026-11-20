@@ -743,6 +743,71 @@
  .launcher-login-frame{padding:23px 17px}
 }
 @media(max-width:350px){.launcher-account-picker-row .launcher-primary{padding-inline:9px;font-size:12px}}
+
+/* 2026-11-20 creator review: scenic geography cards must read LANDSCAPE,
+   not as near-square cards once their label footers are included. Give the
+   enclosing section equal real gutters, and keep all card side borders visible.
+   Resource overlays, IDs, geography choices and image URLs are unchanged. */
+.section.geo-section{
+  padding:18px clamp(16px,2vw,26px) 23px;
+  box-sizing:border-box;
+  overflow:visible;
+}
+.geo-grid{
+  gap:14px;
+  padding:2px;
+  align-items:stretch;
+  box-sizing:border-box;
+}
+.geo-card{
+  box-sizing:border-box;
+  border:1px solid #627072;
+  border-radius:12px;
+  min-height:0;
+  box-shadow:0 2px 8px #060d1240;
+}
+.geo-card.selected{
+  border-color:#e0bc7e;
+  box-shadow:inset 0 0 0 1px #e0bc7e,0 6px 19px #0005;
+}
+.geo-picture{aspect-ratio:16/9;flex:none}
+.geo-card-footer{
+  gap:3px;
+  min-height:48px;
+  padding:8px 12px 9px;
+  justify-content:center;
+}
+.geo-card-name{font-size:17px;line-height:1.13}
+.geo-card-sub{font-size:10px;line-height:1.24;-webkit-line-clamp:1}
+@media(max-width:1100px){.geo-grid{gap:12px}}
+@media(max-width:680px){
+  .section.geo-section{padding:14px 13px 16px}
+  .geo-grid{gap:11px}
+  .geo-picture{aspect-ratio:16/9}
+  .geo-card-footer{min-height:46px;padding:7px 10px 8px}
+  .geo-card-name{font-size:15px}
+  .geo-card-sub{font-size:10px}
+}
+@media(max-width:550px){
+  /* One wide image per row retains a legible scenic view and resource overlay. */
+  .geo-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+  .geo-picture{aspect-ratio:16/9}
+  .geo-card-footer{min-height:46px}
+  .geo-card-name{font-size:17px}
+  .geo-resource{width:32px;height:32px}
+  .geo-resource-svg{width:20px;height:20px}
+  .geo-resource-row{bottom:8px;right:9px;left:9px;gap:5px}
+}
+/* Home is an in-game destination, not a launcher or character-creation action. */
+.launcher-subbar{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.launcher-subbar-status{grid-column:2}
+.chrome .subbar,.chrome .subbar:not(.identity-active){
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:1fr;
+  align-items:center;
+}
+.chrome .subbar .subbar-back{grid-column:1;grid-row:1}
+.chrome .subbar .subbar-actions,.chrome .subbar:not(.identity-active) .subbar-actions{grid-column:2;grid-row:1}
 </style>
 </head>
 <body>
@@ -754,7 +819,6 @@
   </header>
   <nav class="subbar" id="creatorSubbar" aria-label="Creator navigation">
     <div class="subbar-back"><button type="button" id="creatorBack" class="primary subbar-back-btn" aria-label="Back to previous creator step or Characters" title="Back">◀</button></div>
-    <div class="subbar-center"><button type="button" class="primary subbar-home" id="creatorHome" title="Home" aria-label="Return to Welcome / Main"><svg class="nav-house-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></button></div>
     <div class="subbar-actions">
       <button type="button" class="outlinebtn subbar-random" id="identityDice" aria-label="Randomize Identity selections without changing name" title="Randomize Identity selections without changing name" hidden>⚄ Randomize Identity</button>
       <button type="button" id="detailsToggle" class="details-toggle" aria-pressed="false" aria-label="Detail hidden; show numeric attribute adjustments" title="Toggle numeric attribute details"><svg class="details-eye" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="m3 21 18-18"/></svg><span class="details-toggle-label">Detail</span></button>
@@ -1290,10 +1354,8 @@ function renderLauncher(){
  const top=`<header class="launcher-top"><div class="launcher-brand"><span class="launcher-brand-mark">✧</span><div><div class="launcher-brand-name">LINEAGE REFORGED</div><div class="launcher-brand-sub">THE FIRST WORLD</div></div></div><div class="launcher-top-right"><span id="launcherClock" aria-label="Local time">LOCAL</span><span class="launcher-account-label">${signed?esc(route.accountName):'Guest'}</span>${systemMenu(signed)}</div></header>`;
  // Reuse the creator subbar layout: Back left, Home centered and contextual state right.
  const backTarget={login:'splash',register:'splash',welcome:'splash',worlds:'welcome',newWorld:'worlds',overview:'worlds',characters:'overview'}[screen];
- const homeTarget=signed?'welcome':'splash';
  const context={splash:'',login:'',register:'Account creation',welcome:'',worlds:'',newWorld:'World creation',overview:'World Overview',characters:'Characters'}[screen]||'';
- const homeButton=['splash','login','welcome'].includes(screen)?'<span class="launcher-nav-spacer"></span>':launcherButton('<svg class="nav-house-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg>',homeTarget,'subbar-action','aria-label="Home" title="Home"');
- const subbar=`<nav class="launcher-subbar" aria-label="Launcher navigation"><div class="launcher-subbar-back">${backTarget?launcherButton('◀',backTarget,'subbar-action','aria-label="Back" title="Back"'):'<span class="launcher-nav-spacer"></span>'}</div><div class="launcher-subbar-home">${homeButton}</div><div class="launcher-subbar-status" aria-label="Current section">${esc(context)}</div></nav>`;
+ const subbar=`<nav class="launcher-subbar" aria-label="Launcher navigation"><div class="launcher-subbar-back">${backTarget?launcherButton('◀',backTarget,'subbar-action','aria-label="Back" title="Back"'):'<span class="launcher-nav-spacer"></span>'}</div><div class="launcher-subbar-status" aria-label="Current section">${esc(context)}</div></nav>`;
  el('launcher').innerHTML=`<div class="launcher-chrome">${top}${subbar}</div><main id="launcherMain">${content}</main>`;
  updateClock();
 }
@@ -1348,7 +1410,7 @@ function render(){
  if(topNext){topNext.hidden=state.stage>=7;const nextLabel=state.stage===5?'Continue to Summary':state.stage===6?'Continue to Opening':'Next step';topNext.textContent='▶';topNext.setAttribute('aria-label',nextLabel);topNext.title=nextLabel;}
  const toggle=el('detailsToggle');syncCreatorTools();if(toggle){toggle.hidden=!isIdentity;toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));toggle.querySelector('.details-toggle-label').textContent='Detail';toggle.setAttribute('aria-label',state.showAttributeDetails?'Detail shown; hide numeric attribute adjustments':'Detail hidden; show numeric attribute adjustments');toggle.title=state.showAttributeDetails?'Hide numeric detail':'Show numeric detail';toggle.querySelector('.details-eye').innerHTML=state.showAttributeDetails?'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/>':'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="M3 21 21 3"/>';}}
 
-document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}/* Color selection is cosmetic: preserve World Entry, Summary review and the first decision. */if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;return render()}if(b.dataset.conditionToggle){const group=b.dataset.group,id=b.dataset.conditionToggle,selected=state.selectedConditions[group];if(!conditions[group]?.some(c=>c.id===id))return;state.selectedConditions[group]=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id];const inspector=group==='negative'?'inspectedNegative':'inspectedPositive';state[inspector]=state.selectedConditions[group].includes(id)?id:(state.selectedConditions[group].at(-1)||null);invalidateOpening();render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='creatorBack'){if(state.stage>0)return nav(state.stage-1);return navigateLauncher('characters',b)}if(b.id==='creatorHome'){return navigateLauncher('welcome',b)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){const bright=document.documentElement.classList.toggle('preview-brighter');b.textContent=bright?'Use original brightness':'Increase display brightness';return;}});
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}/* Color selection is cosmetic: preserve World Entry, Summary review and the first decision. */if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;return render()}if(b.dataset.conditionToggle){const group=b.dataset.group,id=b.dataset.conditionToggle,selected=state.selectedConditions[group];if(!conditions[group]?.some(c=>c.id===id))return;state.selectedConditions[group]=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id];const inspector=group==='negative'?'inspectedNegative':'inspectedPositive';state[inspector]=state.selectedConditions[group].includes(id)?id:(state.selectedConditions[group].at(-1)||null);invalidateOpening();render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='creatorBack'){if(state.stage>0)return nav(state.stage-1);return navigateLauncher('characters',b)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){const bright=document.documentElement.classList.toggle('preview-brighter');b.textContent=bright?'Use original brightness':'Increase display brightness';return;}});
 document.addEventListener('change',e=>{const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
 document.addEventListener('input',e=>{
  if(e.target.id==='previewWorldName'){route.worldDraft=e.target.value;return;}
