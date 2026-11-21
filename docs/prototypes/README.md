@@ -1,15 +1,18 @@
 # Interactive UI prototype: cross-thread continuity and in-ChatGPT preview
 
-Updated: **2026-11-19**. Repository: **[vagabond1215/Lineage_Reforged](https://github.com/vagabond1215/Lineage_Reforged)**.
+Updated: **2026-11-20**. Repository: **[vagabond1215/Lineage_Reforged](https://github.com/vagabond1215/Lineage_Reforged)**.
 
 This page is the **starting point for every new ChatGPT/Codex thread working on the standalone Lineage: Reforged UI preview**. Read it alongside root `AGENTS.md` and the relevant design/implementation contracts. The goal is to preserve the entire interactive prototype and the correct presentation method without reconstructing an earlier chat.
 
 ## Source of truth and version selection
 
-- **Default-branch baseline:** [`docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html`](lineage-character-creator-eight-stage-conditions-2026-11-18.html). This is a *complete, self-contained HTML/CSS/JavaScript page*, not a screenshot, external iframe, or a React production entry point.
+- **Current full review snapshot on `master` (first place to open):** [`lineage-reforged-current-interactive-preview.html`](lineage-reforged-current-interactive-preview.html). This is the exact complete standalone HTML/CSS/JavaScript reviewed at PR #103 commit `dbc7d7c407569a4f9623d4c7471ab4048d213ec7`. **Git blob SHA `9af614928c5a558e3a448faeea31a601564464e9`** and file byte length **316,249** match the original preview. The source is one actual HTML file, not a wrapper, iframe, screenshot or React production entry. The image bytes are already in this repo and are referenced by pinned GitHub URLs rather than embedded in the HTML.
+- **Historical default-branch starter (not the latest review):** [`lineage-character-creator-eight-stage-conditions-2026-11-18.html`](lineage-character-creator-eight-stage-conditions-2026-11-18.html) on `master` is retained for comparison. **Do not substitute it for the latest current snapshot.** The active PR modifies this historical path and currently has identical full HTML content to the master snapshot.
 - **Active UI-review candidate as of 2026-11-20:** [draft PR #103](https://github.com/vagabond1215/Lineage_Reforged/pull/103), branch `codex/creator-cosmetic-color-continuity-2026-11-19`. The latest complete HTML preserves geography, World Creator, centered Create actions and inset navigation while adding **blank initial character names, sex/lineage-aware random naming, separate calendar and weather popups, and compact 16-hue-column palettes with per-category saturation/brightness controls**. Preview head commit `dbc7d7c407569a4f9623d4c7471ab4048d213ec7`, exact Git HTML blob `9af614928c5a558e3a448faeea31a601564464e9`. **Draft, unmerged review work**, not the default branch.
 - **World Creator contract:** [player-first World Creator, World Library and character entry gate](../design/first-world-player-first-world-creator-and-library-implementation-gate-2026-11-17.md).
 - **Character Creator design contract:** [eight-stage Identity, Build/Aptitude and Conditions review](../design/character-creator-eight-stage-identity-build-aptitude-conditions-review-2026-11-18.md).
+
+**All necessary preview artifacts are in GitHub, not just in an old chat:** current full code at [`lineage-reforged-current-interactive-preview.html`](lineage-reforged-current-interactive-preview.html), the machine-readable [complete asset/source manifest](lineage-reforged-current-preview.manifest.json), [offline integrity checker](verify-current-preview.mjs), and [optional Chromium interaction/screenshot checker](preview-browser-smoke.py). Current image sources remain the **100 retained geography-art files** (including selected duplicates), **eight resource icons**, and six related live seasonal images already tracked under `apps/rpg-ui/public/`. No additional 376 MB duplicate image copy is necessary. Note the season images are for the live app, not embedded in this standalone preview.
 
 **Always fetch live GitHub refs and open PR state first.** Check the exact default-branch commit, candidate PR head, changed paths, and blob SHA before choosing the review source. The links above are pointers, not authorization to assume a particular PR is still open or is already integrated. A previous conversation attachment may be an older snapshot. Treat it as a visual/reference artifact unless the user explicitly selects it for promotion and it has been compared against current repository source. Do not silently replace a newer GitHub version with an older upload.
 
@@ -25,6 +28,16 @@ For requests such as “show the updated preview”, “open in the GPT browser�
 6. A `sandbox:/mnt/data/...` link is valid **only after the exact file has been created or verified in the current runtime**. Never infer a local file path from a GitHub path, display name, or old conversation. ChatGPT may not support rendering/expanding HTML in every client; state that limitation accurately instead of asserting the preview was displayed.
 
 **Expected user-facing delivery:** one direct, verified, self-contained `.html` preview attachment, a concise description of the change and checks, and optionally a separate GitHub source/PR link. Do not offer only a screenshot or code listing when the user asks for an interactive preview.
+
+## Recover, validate, and preview from a fresh checkout
+
+The current full code snapshot and all dependency *paths* are committed on `master`. Fetching only the original November 18 file or a screenshot loses later design work.
+
+1. Open `docs/prototypes/lineage-reforged-current-interactive-preview.html` or copy its exact bytes into the current ChatGPT output workspace, then link that local HTML as the in-app interactive preview. The latest snapshot is independently recoverable even if draft PR #103 later closes.
+2. Run `node docs/prototypes/verify-current-preview.mjs` from a complete repo checkout. This verifies the 316,249-byte HTML and Git/SHA256 fingerprints, inline JavaScript syntax, feature markers, and that **114 tracked image paths** exist (100 geography, 8 resources, 6 live seasonal assets). Add `--hash-assets` to verify the underlying PNG bytes against retained Git blob SHAs. **The source artwork must be checked out**; this test is not intended for a partial docs-only export.
+3. Optionally run `python3 docs/prototypes/preview-browser-smoke.py` after installing Python Playwright and Chromium. Its five viewport checks run with network images blocked and exercise naming, color controls, calendar/weather popups and all eight creator stages. Pass `--screenshots` to generate fresh local review PNGs under `docs/prototypes/review-screenshots/`; screenshots from prior ChatGPT sessions need not be reuploaded to recover the UI.
+4. Geography image URLs are pinned to repository commit `712982fbf72b158280df0ac89dc903d3b1832ab4` for artwork retention consistency. The HTML uses a deliberate neutral fallback if a client blocks the remote images. **HTML/CSS/JS are self-contained; original image bytes are separate tracked repository assets.** Do not claim this one HTML contains all 376 MB of artwork.
+5. For a new requested UI revision, compare the live draft PR head with the `master` snapshot before editing. After validation, update the topic PR and refresh **the master snapshot, manifest fingerprints, and this handoff** in step, keeping production integration separately reviewed.
 
 ## Features and continuity to preserve
 
