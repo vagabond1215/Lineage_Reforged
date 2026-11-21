@@ -1416,7 +1416,7 @@ const GEO_RESOURCE_SYMBOLS={
 function geoResourceSvg(code){return `<svg class="geo-resource-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${GEO_RESOURCE_SYMBOLS[code]||''}</svg>`;}
 const GEO_ASSET_COMMIT='712982fbf72b158280df0ac89dc903d3b1832ab4';
 const GEO_ASSET_ROOT=`https://raw.githubusercontent.com/vagabond1215/Lineage_Reforged/${GEO_ASSET_COMMIT}/apps/rpg-ui/public/character-creator/`;
-function geoSlug(value){return value.toLowerCase().replace(/^the /,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function geoSlug(value){return value.toLowerCase().replace(/^the /,'').replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
 function geoResourceIcons(codes,scope){return [...new Set(String(codes||'').split(''))].slice(0,4).map(code=>{
  const item=GEO_RESOURCE_TONES[code];if(!item)return '';
  const [label,file]=item;
