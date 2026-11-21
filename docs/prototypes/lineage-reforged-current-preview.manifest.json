@@ -631,7 +631,15 @@
     ],
     "verifySourceBinaryEquality": "Git blob SHA of master snapshot equals original reviewed PR blob",
     "externalArtNetworkLoads": "not fully tested; resource and geography image URLs fall back when blocked",
-    "productionReactAndSaveSystems": "not tested/modified"
+    "productionReactAndSaveSystems": "not tested/modified",
+    "gitHubMasterAssetReadback": {
+      "date": "2026-11-20",
+      "geography100Of100PresentAndSHAEqual": true,
+      "resourceIcons8Of8PresentAndSHAEqual": true,
+      "seasonArt6Of6PresentAndSHAEqual": true,
+      "scope": "GitHub per-path content metadata sha checked at master; original art bytes remain in-place",
+      "total114Of114": true
+    }
   },
   "handoff": "docs/prototypes/README.md"
 }
