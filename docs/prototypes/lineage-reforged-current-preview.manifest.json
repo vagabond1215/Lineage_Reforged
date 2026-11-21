@@ -4,17 +4,22 @@
   "purpose": "Durable, source-verifiable complete interactive-preview code and linked-art inventory for GitHub/ChatGPT cross-thread continuity. No production activation.",
   "primary": {
     "path": "docs/prototypes/lineage-reforged-current-interactive-preview.html",
-    "sizeBytes": 318536,
-    "gitBlobSha": "caf7323bcf22a5deb29b0b04376b659ba31763c3",
-    "sha256": "621ebc3f4743468839725c1e7f06bd183397ab7595d22f347fdb1e36a9ef59ea",
+    "sizeBytes": 333799,
+    "gitBlobSha": "801bd1042d032cfa5d38dc59dda61f5bf5afc61e",
+    "sha256": "c0c29a10c36c5206e3720950f3e385aa782cc6e34afff11960b3a37a15b58c12",
     "codeStructure": "single HTML document with inline CSS and JavaScript; no external JS, CSS, iframe or runtime fetch",
     "originalReviewSource": {
       "branch": "codex/creator-cosmetic-color-continuity-2026-11-19",
-      "commit": "12046b7c39f8805549a1de9cc0127646965d7df1",
+      "commit": "725755a92d2a4d917247b5aa22ac8b2d723d3e4e",
       "path": "docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html",
       "draftPullRequest": 103
     },
-    "masterSnapshotCommit": "792994836dd889d4aa981850507c736c00a8c00a"
+    "previousMasterSnapshotCommit": "f69f015495b4d8bdb5ea9c55a423e28b903d4eee",
+    "chatGPTVisualization": {
+      "pageUrl": "https://chatgpt.com/space/page_6e31c80eb9908191b1bf58b26152892c",
+      "sourceSha256": "c0c29a10c36c5206e3720950f3e385aa782cc6e34afff11960b3a37a15b58c12",
+      "mode": "actual complete HTML uploaded to native visualization, readback verified; not an iframe"
+    }
   },
   "images": {
     "mode": "image URLs are calculated at runtime from the historical, immutable GitHub source commit below; the HTML uses a neutral fallback where an image is unavailable or blocked. Image bytes are stored at the listed repo paths, not embedded in the HTML.",
@@ -621,15 +626,8 @@
   },
   "verification": {
     "command": "node docs/prototypes/verify-current-preview.mjs",
-    "optionalBrowser": "python3 docs/prototypes/preview-browser-smoke.py (requires Playwright and Chromium; checks dynamic skin anchor counts)",
-    "testedBrowserWidths": [
-      1440,
-      1280,
-      768,
-      375,
-      320
-    ],
-    "verifySourceBinaryEquality": "Git blob SHA of master snapshot equals original reviewed PR blob",
+    "optionalBrowser": "python3 docs/prototypes/preview-browser-smoke.py (requires Playwright and Chromium; updated for login, direct World entry, sample families and dynamic skin counts; not executed at this revision)",
+    "verifySourceBinaryEquality": "The draft preview blob and master snapshot use the exact same Git blob; ChatGPT visualization SHA-256 checked",
     "externalArtNetworkLoads": "not fully tested; resource and geography image URLs fall back when blocked",
     "productionReactAndSaveSystems": "not tested/modified",
     "gitHubMasterAssetReadback": {
@@ -654,7 +652,40 @@
       "checks": "10 lineages x 3 categories at 1440, 1280, 768, 375, 320px; no JS errors or horizontal overflow; source provenance and bounded lightness inspected; JavaScript syntax passed",
       "sourceColorsPreserved": true,
       "productionColorsChanged": false
-    }
+    },
+    "previousPaletteBrowserWidths": [
+      1440,
+      1280,
+      768,
+      375,
+      320
+    ],
+    "currentRevision": {
+      "sourceSyntax": "PASS via JavaScript Function compiler",
+      "sourceSmoke": "PASS, actual source/controller functions in isolated DOM stub",
+      "checks": [
+        "unselected login blocked",
+        "incorrect password blocked",
+        "demo login and session preference",
+        "direct World entry and four sample tiles",
+        "collapsed quick Play",
+        "preview-only quick Play",
+        "heir tab",
+        "ancestry tab",
+        "succession eligibility",
+        "shared heir creator context",
+        "inherited lineage selection",
+        "record pending heir and return",
+        "cannot duplicate completion after leaving creator",
+        "successor becomes available; ancestor retained",
+        "new World is empty and isolated",
+        "fresh creator and valid palette default",
+        "logout clears mock state"
+      ],
+      "browser": "NOT RUN at this revision",
+      "production": "NOT RUN; no production files or Save semantics changed"
+    },
+    "sourceSmoke": "node docs/prototypes/preview-source-smoke.mjs"
   },
   "handoff": "docs/prototypes/README.md"
 }

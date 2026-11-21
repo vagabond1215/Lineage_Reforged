@@ -43,7 +43,54 @@ def main() -> None:
             page.on("pageerror", lambda err: errors.append(str(err)))
             page.route("**/*", lambda route: route.abort() if route.request.url.startswith("http") else route.continue_())
             page.set_content(html, wait_until="domcontentloaded")
-            page.evaluate("route.screen='creator';state.stage=1;render()")
+
+            # Real click-through regression for the new launcher/family review.
+            login = page.locator("#previewLoginButton")
+            assert login.is_disabled()
+            assert page.locator("#previewPassword").is_disabled()
+            page.locator("#previewAccountPicker").select_option("preview-adventurer")
+            assert login.is_enabled()
+            page.locator("#previewPassword").fill("wrong")
+            login.click()
+            assert "demo" in page.locator("#previewLoginError").inner_text()
+            page.locator("#previewPassword").fill("demo")
+            page.locator("#previewStayLoggedIn").check()
+            login.click()
+            page.locator('[data-launch="chronicle"]').click()
+            page.locator('[data-launch="selectWorld"]').first.click()
+            assert page.locator(".save-tile").count() == 4
+            assert page.locator(".launcher-invitation").inner_text() == "Every life has a beginning."
+            assert page.locator(".save-detail").count() == 0
+            page.locator('[data-launch="playSave"][data-character-id="aldric"]').click()
+            assert page.locator("#dialogTitle").inner_text() == "Aldric Ashford"
+            page.locator("#dialogbg .dialogfooter button").click()
+            page.locator('[data-launch="expandSave"][data-character-id="aldric"]').click()
+            page.locator('[data-launch="saveTab"][data-character-id="aldric"][data-tab="heirs"]').click()
+            assert "Elara Ashford" in page.locator(".save-detail").inner_text()
+            assert "Not yet eligible" in page.locator(".save-detail").inner_text()
+            page.locator('[data-launch="saveTab"][data-character-id="aldric"][data-tab="ancestry"]').click()
+            assert "Rowan Ashford" in page.locator(".family-tree").first.inner_text()
+            page.locator('[data-launch="saveTab"][data-character-id="aldric"][data-tab="heirs"]').click()
+            page.locator('[data-launch="startHeir"][data-character-id="aldric"]').click()
+            assert "Aldric Ashford" in page.locator(".heir-context").inner_text()
+            assert page.locator('[data-pick="lineage"]').count() == 1
+            page.locator("#creatorBack").click()
+            page.locator('[data-launch="showSuccession"][data-character-id="brenna"]').click()
+            page.locator('[data-launch="confirmSuccession"][data-character-id="dain"]').click()
+            page.locator('[data-launch="succeedHeir"][data-character-id="dain"]').click()
+            assert page.locator('[data-launch="playSave"][data-character-id="dain"]').count() == 1
+            assert page.locator(".save-tile").count() == 5
+            assert not page.evaluate("document.documentElement.scrollWidth > innerWidth + 1")
+            page.locator('.launcher-subbar-back [data-launch="worlds"]').click()
+            page.locator('[data-launch="newWorld"]').click()
+            page.locator("#previewWorldName").fill("Empty test World")
+            page.locator('[data-launch="createWorld"]').click()
+            assert page.locator(".save-tile").count() == 0
+            assert "No characters yet" in page.locator("#launcherMain").inner_text()
+            page.locator('[data-launch="startCreator"]').click()
+            page.evaluate("state.stage=1;render()")
+            for key in ("skin", "hair", "eyes"):
+                assert page.locator(f'[data-color="{key}"][aria-pressed="true"]').count() == 1
             assert page.locator("#creatorHeaderName").inner_text() == ""
             assert page.locator("#firstName").input_value() == ""
             assert page.evaluate("stageValid(1)") is False
@@ -124,7 +171,7 @@ def main() -> None:
             if args.screenshots and width in (1280, 375):
                 page.evaluate("state.stage=1;render()")
                 page.screenshot(path=str(screenshot_dir / f"identity-{width}.png"), full_page=True)
-            report.append({"width": width, "paletteColumns": columns, "calendarMonths": 13, "daysPerMonth": 8, "allNamePools": "PASS", "creatorStages": 8, "overflow": False, "pageErrors": 0})
+            report.append({"width": width, "paletteColumns": columns, "calendarMonths": 13, "daysPerMonth": 8, "allNamePools": "PASS", "creatorStages": 8, "sampleFamilyReview": "PASS", "overflow": False, "pageErrors": 0})
             page.close()
         browser.close()
     print(json.dumps({"status": "PASS", "browserChecks": report}, indent=2))

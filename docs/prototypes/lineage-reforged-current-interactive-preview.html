@@ -708,6 +708,8 @@
 .launcher-account-picker-row{display:flex;align-items:stretch;gap:10px;min-width:0}
 .launcher-account-picker-row .launcher-input{min-width:0;flex:1 1 auto;margin:0}
 .launcher-account-picker-row .launcher-primary{flex:none;align-self:stretch;width:auto}
+.launcher-splash-account-row{max-width:480px;margin:24px auto 0}
+.launcher-splash-account-row .launcher-primary:disabled{background:#343b3b;border-color:#555a55;color:#a6aaa4;opacity:1;cursor:not-allowed}
 .launcher-account-create{justify-content:center;margin-top:24px}
 .launcher-account-create .launcher-secondary{min-width:160px}
 .launcher-login-frame{padding-block:36px}
@@ -964,6 +966,39 @@
  .palette-sliders{grid-template-columns:1fr;gap:9px}.palette-row{grid-template-columns:24px minmax(0,1fr);gap:7px}
 }
 @media(max-width:355px){.palette-grid,.palette-grid.palette-skin,.palette-grid.palette-hair,.palette-grid.palette-eyes{--swatch-size:22px;--swatch-gap:4px}}
+
+/* November 21 extended launcher and family review */
+.login-stack{display:grid;gap:10px;max-width:480px;margin:24px auto 0;text-align:left}
+.login-stack .launcher-input{margin:0;min-width:0}
+.login-stack .launcher-primary:disabled{background:#343b3b;border-color:#555a55;color:#a6aaa4;opacity:1;cursor:not-allowed}
+.login-stay{display:flex;align-items:center;gap:8px;color:#c6c6b9;font-size:12px}
+.login-stay input{appearance:none;width:34px;height:20px;flex:none;border-radius:12px;border:1px solid #626860;background:#30383a;position:relative;margin:0;cursor:pointer}
+.login-stay input:before{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:#aaa99a;left:3px;top:3px}
+.login-stay input:checked{background:#8b795a;border-color:#c9a878}.login-stay input:checked:before{left:17px;background:#f1e2c8}
+.login-hint{font-size:11px;color:#a9aaa0;margin:0}
+.save-library{display:grid;gap:12px;max-width:960px;margin:auto}
+.save-tile{background:linear-gradient(150deg,#222d30,#192125);border:1px solid #495550;border-radius:14px;min-width:0;overflow:hidden}
+.save-head{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px}
+.save-portrait{width:64px;aspect-ratio:3/4;border:1px solid #756d55;border-radius:8px;background:radial-gradient(ellipse at 45% 25%,#686454,#273335 65%,#192124);display:grid;place-items:center;color:#ddc79f;font:31px Georgia,serif}
+.save-name{font:normal clamp(19px,3vw,25px) Georgia,serif;color:#f0ddba;margin:0 0 4px;overflow-wrap:anywhere}
+.save-meta{font-size:12px;color:#b7bcb3;overflow-wrap:anywhere}.save-status{font-size:11px;color:#b9cba6;margin-left:6px}.save-status.deceased,.save-status.retired{color:#b9b3a8}.save-status.draft{color:#d6b77f}
+.save-actions{display:flex;gap:7px;align-items:center}.save-play,.save-expand{min-width:42px;min-height:42px;border-radius:8px;font-size:16px;cursor:pointer}
+.save-play{border:1px solid #c9a878;color:#172023;background:#c9a878}.save-expand{border:1px solid #5a635b;background:#20282b;color:#e2c79b}
+.save-detail{padding:14px 16px 16px;border-top:1px solid #414b4e;display:grid;gap:12px}
+.save-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+.save-tab,.heir-action{border:1px solid #596059;border-radius:7px;background:#1a2427;color:#d6cebb;padding:9px 8px;font-size:12px;cursor:pointer}
+.save-tab[aria-selected=true]{border-color:#c9a878;background:#3a352c;color:#f0d7aa}
+.save-panel{display:grid;gap:8px}
+.save-statgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.save-stat{display:flex;justify-content:space-between;gap:5px;background:#172023;border:1px solid #3c4847;border-radius:6px;padding:7px 10px;color:#d6d1c2;font-size:12px}
+.heir-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:10px;border:1px solid #46514e;border-radius:9px;background:#182124;align-items:center}
+.heir-row strong{color:#e7d4b4;display:block;overflow-wrap:anywhere}.heir-row small{color:#aeb7ad;display:block;margin-top:3px}
+.heir-buttons{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:5px}.heir-action.gold{border-color:#a89067;color:#e5c99a}
+.family-tree{border-left:1px solid #7b705a;padding-left:13px;margin:0 0 0 8px;display:grid;gap:8px}
+.family-node{border:1px solid #4e5751;border-radius:7px;background:#1b2528;padding:9px 12px;color:#d9c8ae;overflow-wrap:anywhere}
+.family-node.current{border-color:#c9a878}.family-node small{display:block;color:#aeb7ad;font-size:11px}
+.heir-context{background:#292b25;border:1px solid #887552;border-radius:8px;padding:12px;margin:0 0 14px;color:#e3cda4;font-size:12px}
+@media(max-width:550px){.save-head{grid-template-columns:48px minmax(0,1fr) auto;gap:8px;padding:12px}.save-portrait{width:48px;font-size:23px}.save-actions{flex-direction:column;gap:5px}.save-play,.save-expand{min-width:34px;min-height:34px}.save-meta{font-size:11px}.save-detail{padding:12px}.heir-row{grid-template-columns:1fr}.heir-buttons{justify-content:flex-start}.save-stat{padding:7px 6px}.login-stack .launcher-primary{min-width:66px}}
 </style>
 </head>
 <body>
@@ -1112,9 +1147,10 @@ function labelWorldOption(id,value){return WORLD_OPTION_GROUPS[id]?.options.find
 function worldSettingGroup(id,value,columns=3){const group=WORLD_OPTION_GROUPS[id];return `<div role="group" aria-label="${group.label}" class="world-setting-options" data-setting-group="${id}" style="--world-option-columns:${columns}">${group.options.map(o=>`<button type="button" class="world-setting-option ${value===o.id?'selected':''}" data-launch="worldSetting" data-setting="${id}" data-value="${o.id}" aria-pressed="${value===o.id}"><strong>${o.label}</strong><small>${o.description}</small></button>`).join('')}</div>`;}
 function worldSettingsReview(settings){const s=normalizedWorldSettings(settings);return `<div class="world-setup-review" aria-live="polite"><h3>World settings</h3><dl class="world-review-values"><div><dt>Difficulty</dt><dd>${labelWorldOption('difficulty',s.difficulty)}</dd></div><div><dt>Temperature</dt><dd>${labelWorldOption('temperature',s.temperature)}</dd></div><div><dt>Rainfall</dt><dd>${labelWorldOption('moisture',s.moisture)}</dd></div><div><dt>Starting Season</dt><dd>${labelWorldOption('season',s.season)}</dd></div></dl></div>`;}
 function worldSettingsSummary(settings){const s=normalizedWorldSettings(settings);return `Difficulty: ${labelWorldOption('difficulty',s.difficulty)} · Climate: ${labelWorldOption('temperature',s.temperature)} / ${labelWorldOption('moisture',s.moisture)} · Season: ${labelWorldOption('season',s.season)}`;}
-function worldSettingsOverview(settings){const s=normalizedWorldSettings(settings);return `<div class="world-configuration-summary"><div><small>Difficulty</small><strong>${labelWorldOption('difficulty',s.difficulty)}</strong></div><div><small>Temperature</small><strong>${labelWorldOption('temperature',s.temperature)}</strong></div><div><small>Rainfall</small><strong>${labelWorldOption('moisture',s.moisture)}</strong></div><div><small>Starting Season</small><strong>${labelWorldOption('season',s.season)}</strong></div></div>`;}
-const route={screen:'splash',accountName:'',progression:'chronicle',worlds:[],worldIndex:0,worldDraft:'',accountDraft:'',worldSettings:defaultWorldSettings()};
+const route={screen:'splash',accountName:'',progression:'chronicle',worlds:[],worldIndex:0,worldDraft:'',accountDraft:'',worldSettings:defaultWorldSettings(),stayLoggedIn:false,expandedSaves:{},saveTabs:{},creatorContext:null};
 const state={stage:1,lineage:'lineage.human',firstName:'',lastName:'',name:'',inspectedNegative:null,inspectedPositive:null,selectedConditions:{negative:[],positive:[]},sex:'female',age:'prime',height:'normal',build:'stocky',aptitude:'versatile',skin:19,hair:36,eyes:33,continent:'region.myridian_chain',region:'Starfall Isle',settlement:'Starfall Port',pool:'ordinary',scenario:'core.room_paid',validation:false,portrait:false,summaryReviewed:false,entryChoice:null,showAttributeDetails:false};
+for(const key of ['skin','hair','eyes'])state[key]=firstSourceColorIndex(key);
+const freshCreatorState=JSON.parse(JSON.stringify(state));
 const groups=[
   {name:'Power',keys:['STR','CON','VIT'],desc:'Power is your ability to exert and withstand physical force. It governs physical impact, resilience and recovery.'},
   {name:'Prowess',keys:['DEX','AGI','CHA'],desc:'Prowess is control in action: precise technique, agile movement and the presence to influence others.'},
@@ -1378,7 +1414,7 @@ function renderStage(){
  return '';
 }
 function card(id,name,meta,category,selected,geoCard=false){const lineageCard=category==='lineage';return `<button type="button" class="optioncard ${geoCard?'cardgeo':''} ${lineageCard?'cardlineage':''} ${selected?'selected':''}" data-pick="${esc(category)}" data-value="${esc(id)}" aria-pressed="${selected}"><div class="cardart"><span class="initial">${esc(name.slice(0,1))}</span></div><div class="optiontitle">${esc(name)}</div><div class="optionmeta">${esc(meta)}</div></button>`}
-function renderLineage(){return `<section class="section" aria-label="Choose your lineage"><div class="optiongrid lineage-grid">${lineages.map(([id,name])=>card(id,name,'Playable ancestry','lineage',state.lineage===id)).join('')}</div></section>${footer()}`}
+function renderLineage(){const p=characterById(route.creatorContext?.parentId);const ids=p?lineages.filter(x=>x[0]===p.lineage):lineages;return '<section class="section" aria-label="Choose your lineage">'+(p?'<div class="heir-context">Create an heir of '+esc(p.name)+' · Generation '+(p.generation+1)+'</div>':'')+'<div class="optiongrid lineage-grid">'+ids.map(([id,name])=>card(id,name,p?'Inherited lineage · demo':'Playable ancestry','lineage',state.lineage===id)).join('')+'</div></section>'+footer()}
 const directChoiceAdjustments={
  sex:{female:{AGI:1,STR:-1},male:{}},
  age:{young_adult:{AGI:1,WIS:-1},prime:{STR:1,AGI:-1},mature:{WIS:1,STR:-1},senior:{WIS:1,VIT:-1}},
@@ -1515,7 +1551,7 @@ function renderWorldEntry(){
 }
 function renderSummary(){
  const s=findScenario(state.scenario);
- return `<div class="finalgrid"><div><section class="section"><div class="secthead"><h2>${esc(fullName()||getName())} · ${esc(getLineageName())}</h2></div><div class="detailbox"><h3>Character</h3><p class="final-narrative">${esc(summarySentence())}</p><div class="line"><span>Identity</span><strong>${esc(state.sex)}, ${esc(state.age)}, ${esc(builds.find(x=>x.id===state.build)?.label||state.build)} · ${esc(aptitudes.find(x=>x.id===state.aptitude)?.label||state.aptitude)}</strong></div><div class="line"><span>Appearance</span><strong>${esc(selectedPaletteName('skin'))} skin · ${esc(selectedPaletteName('hair'))} hair · ${esc(selectedPaletteName('eyes'))} eyes</strong></div><div class="line"><span>Attributes</span><strong>${getDerivedStats().total} total · 90 base + 10 automatically generated</strong></div><div class="line"><span>Conditions</span><strong>${['negative','positive'].flatMap(group=>state.selectedConditions[group].map(id=>conditions[group].find(c=>c.id===id)?.name||id)).map(esc).join(', ')||'None selected'}</strong></div><div class="line"><span>Starting geography</span><strong>${esc(state.settlement||'Not selected')}</strong></div><div class="line"><span>Continent / Region</span><strong>${esc((geo.find(x=>x[0]===state.continent)||[])[1]||'')}, ${esc(state.region)}</strong></div><div class="line"><span>World Entry</span><strong>${esc(s?.name||'Not selected')}</strong></div></div><div class="detailbox"><h3>Legacy & succession</h3><div class="line"><span>Fresh Start / Heir Start</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Legacy preparations</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Selected benefits</span><strong class="ghost">Unavailable</strong></div></div><div class="detailbox"><h3>Starting state</h3><div class="line"><span>Skills & traits</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Equipment & currency</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Save slot / collision</span><strong class="ghost">Unavailable</strong></div></div></section></div><div>${renderPortrait()}<section class="section" style="margin-top:12px"><h2 style="font:normal 20px Georgia,serif;margin:0 0 12px">Your opening</h2><p class="subtle">${esc(s?.blurb||'Choose an ordinary Core opening.')}</p><p class="subtle" style="margin-top:12px">Continue to Opening to read the scene. Its first choice is the intended combined entry decision and character-submit transaction, held in this preview.</p></section></div></div>${footer()}`;
+ return `<div class="finalgrid"><div><section class="section"><div class="secthead"><h2>${esc(fullName()||getName())} · ${esc(getLineageName())}</h2></div><div class="detailbox"><h3>Character</h3><p class="final-narrative">${esc(summarySentence())}</p><div class="line"><span>Identity</span><strong>${esc(state.sex)}, ${esc(state.age)}, ${esc(builds.find(x=>x.id===state.build)?.label||state.build)} · ${esc(aptitudes.find(x=>x.id===state.aptitude)?.label||state.aptitude)}</strong></div><div class="line"><span>Appearance</span><strong>${esc(selectedPaletteName('skin'))} skin · ${esc(selectedPaletteName('hair'))} hair · ${esc(selectedPaletteName('eyes'))} eyes</strong></div><div class="line"><span>Attributes</span><strong>${getDerivedStats().total} total · 90 base + 10 automatically generated</strong></div><div class="line"><span>Conditions</span><strong>${['negative','positive'].flatMap(group=>state.selectedConditions[group].map(id=>conditions[group].find(c=>c.id===id)?.name||id)).map(esc).join(', ')||'None selected'}</strong></div><div class="line"><span>Starting geography</span><strong>${esc(state.settlement||'Not selected')}</strong></div><div class="line"><span>Continent / Region</span><strong>${esc((geo.find(x=>x[0]===state.continent)||[])[1]||'')}, ${esc(state.region)}</strong></div><div class="line"><span>World Entry</span><strong>${esc(s?.name||'Not selected')}</strong></div></div><div class="detailbox"><h3>Legacy & succession</h3><div class="line"><span>Fresh Start / Heir Start</span><strong>${route.creatorContext?.type==='heir'?'Heir of '+esc(characterById(route.creatorContext.parentId)?.name||'Unknown'):'Fresh Start'}</strong></div><div class="line"><span>Legacy preparations</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Selected benefits</span><strong class="ghost">Unavailable</strong></div></div><div class="detailbox"><h3>Starting state</h3><div class="line"><span>Skills & traits</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Equipment & currency</span><strong class="ghost">Unavailable</strong></div><div class="line"><span>Save slot / collision</span><strong class="ghost">Unavailable</strong></div></div></section></div><div>${renderPortrait()}<section class="section" style="margin-top:12px"><h2 style="font:normal 20px Georgia,serif;margin:0 0 12px">Your opening</h2><p class="subtle">${esc(s?.blurb||'Choose an ordinary Core opening.')}</p><p class="subtle" style="margin-top:12px">Continue to Opening to read the scene. Its first choice is the intended combined entry decision and character-submit transaction, held in this preview.</p></section></div></div>${footer()}`;
 }
 function renderOpening(){
  const s=findScenario(state.scenario);
@@ -1523,7 +1559,7 @@ function renderOpening(){
  const chosen=state.entryChoice&&state.entryChoice.scenario===s.id?state.entryChoice:null;
  const label=chosen?(chosen.choice==='a'?s.a:s.b):null;
  const decision=chosen?
- `<div class="opening-receipt" role="status"><strong>First decision recorded</strong><span>${esc(label)}</span></div><p>Your choice becomes part of this opening.</p><p>The next chapter is not available yet.</p><button type="button" class="outlinebtn" id="resetEntryChoice">Revisit the first decision</button>`:
+ `<div class="opening-receipt" role="status"><strong>First decision recorded</strong><span>${esc(label)}</span></div><p>Your choice becomes part of this opening.</p><p>The next chapter is not available yet.</p><button type="button" class="primary" data-launch="recordPreviewCharacter">${route.creatorContext?.type==='heir'?'Record demo heir':'Add character to preview'}</button> <button type="button" class="outlinebtn" id="resetEntryChoice">Revisit the first decision</button>`:
  `<h3>Your first decision</h3><p>Choose the action that will set your story in motion.</p><div class="opening-choices" role="group" aria-label="First World Entry decision"><button type="button" class="opening-choice" data-entry-choice="a"><span class="choice-name">${esc(s.a)}</span><span class="choice-meta">A · Choose</span></button><button type="button" class="opening-choice" data-entry-choice="b"><span class="choice-name">${esc(s.b)}</span><span class="choice-meta">B · Choose</span></button></div>`;
  return `<section class="opening-sheet" aria-labelledby="openingSceneTitle"><div class="opening-kicker">The beginning · ${esc(s.name)}</div><h2 id="openingSceneTitle">${esc(s.name)}</h2><p class="opening-place">${esc(getName())} · ${esc(state.settlement)} · Ordinary Core · Editorial narrative</p><div class="opening-prose"><p>${esc(s.intro)}</p></div><div class="opening-decision" aria-live="polite">${decision}</div></section><div class="opening-actions"><button type="button" class="outlinebtn" id="backSummary">← Back to Summary</button></div>`;
 }
@@ -1533,7 +1569,7 @@ function next(){
  if(state.stage<7)nav(state.stage+1);
 }
 function selectGeo(which,value){if(which==='continent'){state.continent=value;state.region=(geo.find(x=>x[0]===value)?.[2]||[])[0]||'';state.settlement=(geoKnown[state.region]||[])[0]||'';}else if(which==='region'){state.region=value;state.settlement=(geoKnown[value]||[])[0]||'';}else state.settlement=value;state.scenario=null;state.pool='ordinary';invalidateOpening();render()}
-function selectLineage(value){state.lineage=value;state.skin=firstSourceColorIndex('skin');state.hair=firstSourceColorIndex('hair');state.eyes=firstSourceColorIndex('eyes');state.portrait=false;state.scenario=null;invalidateOpening();render()}
+function selectLineage(value){const parent=characterById(route.creatorContext?.parentId);if(parent&&value!==parent.lineage)return;state.lineage=value;state.skin=firstSourceColorIndex('skin');state.hair=firstSourceColorIndex('hair');state.eyes=firstSourceColorIndex('eyes');state.portrait=false;state.scenario=null;invalidateOpening();render()}
 function randomIdentity(){const pick=a=>a[Math.floor(Math.random()*a.length)];for(const key of Object.keys(identityChoices)){state[key]=pick(identityChoices[key])[0]}state.build=pick(builds).id;state.aptitude=pick(aptitudes).id;state.skin=randomSourceColorIndex('skin');state.hair=randomSourceColorIndex('hair');state.eyes=randomSourceColorIndex('eyes');state.validation=false;invalidateOpening();render()}
 const CREATOR_NAME_POOLS={
  'lineage.human':{male:'Aldren Alric Bennet Corin Darian Dorian Evren Galen Hadric Jorren Lucan Marten Merek Rowan Soren Tavian Caedric Eldan Rennic Vaelor'.split(' '),female:'Adelyn Alina Brynna Catrin Delia Elira Ilya Isolde Jessa Maris Roslyn Selene Talia Vera Wenna Ysolde Enara Elowen Mirielle Teryn'.split(' '),surnames:'Ashford Blackmere Dovewell Fairmarch Fenmere Harrowfield Lark Rooke Stone Thorne Vale Westmere Brackenford Hallowmere'.split(' ')},
@@ -1547,7 +1583,7 @@ const CREATOR_NAME_POOLS={
  'lineage.half_goblin':{male:'Bex Clink Dax Fivver Jarik Jex Kep Kiv Miv Nib Pask Rekk Rilo Skit Tekk Tivik Nikko Vikk Brix Zek'.split(' '),female:'Avi Brixa Delli Fira Jessa Jix Kiri Lix Mina Miri Nelli Pixa Rina Sela Tavi Vixi Kessa Rika Brizzi Nix'.split(' '),surnames:'Brassnail Crowfix Cinderclip Dustratchet Jingleshard Knifepenny Latch Pennycog Quickwire Ragbolt Rookscrap Tinsprocket Wickscrap Quicklock'.split(' ')},
  'lineage.half_merfolk':{male:'Alaris Aren Ceryn Coris Delmar Eiran Kaelis Maren Nerin Nerio Oris Pelion Sareth Soren Thalor Varen Orimar Nethros Elor Corvin'.split(' '),female:'Aela Aelune Coral Cerys Eirene Faelis Isola Lyris Marielle Mira Nerina Nerissa Osyra Saela Sereia Thessa Delira Maerina Solira Thalena'.split(' '),surnames:'Bluewake Brinehaven Coralwind Deepcurrent Foamrider Harbormist Moontide Reefsong Saltmere Seaglass Tideborne Wavecrest Mistreef Seaweave'.split(' ')}
 };
-function randomName(){const pool=CREATOR_NAME_POOLS[state.lineage]||CREATOR_NAME_POOLS['lineage.human'];const pick=items=>items[Math.floor(Math.random()*items.length)];state.firstName=pick(pool[state.sex==='female'?'female':'male']);state.lastName=pick(pool.surnames);syncName();state.validation=false;invalidateOpening();render()}
+function randomName(){const pool=CREATOR_NAME_POOLS[state.lineage]||CREATOR_NAME_POOLS['lineage.human'];const pick=items=>items[Math.floor(Math.random()*items.length)];state.firstName=pick(pool[state.sex==='female'?'female':'male']);state.lastName=characterById(route.creatorContext?.parentId)?.surname||pick(pool.surnames);syncName();state.validation=false;invalidateOpening();render()}
 function openDialog(title,body,actions,eyebrow='World Entry'){el('dialogEyebrow').textContent=eyebrow;el('dialogTitle').textContent=title;el('dialogBody').innerHTML=body;el('dialogActions').innerHTML=actions;el('dialogbg').classList.add('open');}
 function story(sid){
  const s=findScenario(sid);if(!s)return;
@@ -1591,15 +1627,68 @@ function updateCreatorWeather(){
  const fields=[['Current weather',world?.started&&world?.weatherLabel?String(world.weatherLabel):'Unavailable'],['Temperature',world?.started&&world?.temperatureLabel?String(world.temperatureLabel):'Unavailable'],['Temperature tendency',labelWorldOption('temperature',settings.temperature)],['Rainfall tendency',labelWorldOption('moisture',settings.moisture)]];
  rows.innerHTML=fields.map(([label,value])=>`<div class="creator-calendar-row"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('');
 }
+
+/* Synthetic, in-memory character and succession review records. */
+let demoCharacterSequence=0;
+const demoStatKeys=['STR','CON','VIT','DEX','AGI','CHA','INT','WIS','SPT'];
+function demoStats(v){return Object.fromEntries(demoStatKeys.map((k,i)=>[k,v[i]??10]));}
+function demoCharacters(){
+ const row=(id,family,parentId,name,surname,lineage,sex,age,generation,status,listed,location,occupation,stats,designated,lastPlayed)=>({id,family,parentId,name,surname,lineage:'lineage.'+lineage,sex,age,generation,status,listed,location,occupation,stats:stats?demoStats(stats):null,designated,lastPlayed:lastPlayed||'Never'});
+ return [
+ row('aldric','ashford',null,'Aldric Ashford','Ashford','human','male',34,1,'alive',true,'Starfall Port','Wanderer',[14,12,11,10,9,10,11,12,11],'elara','2 hours ago'),
+ row('elara','ashford','aldric','Elara Ashford','Ashford','human','female',18,2,'eligible',false,'Starfall Port','Apprentice',[10,11,11,12,13,11,10,10,12]),
+ row('rowan','ashford','aldric','Rowan Ashford','Ashford','human','male',12,2,'dependent',false,'Starfall Port','Child',null),
+ row('brenna','ironvein',null,'Brenna Ironvein','Ironvein','dwarf','female',89,1,'deceased',true,'Coppergate','Smith',[13,14,13,10,8,9,10,12,11],'dain','6 days ago'),
+ row('dain','ironvein','brenna','Dain Ironvein','Ironvein','dwarf','male',30,2,'eligible',false,'Coppergate','Apprentice',[12,13,12,11,9,10,10,11,12]),
+ row('maeriel','starwillow',null,'Maeriel Starwillow','Starwillow','elf','female',null,1,'draft',true,'Not chosen','Unassigned',null,null,'Not started'),
+ row('maris','vale',null,'Maris Vale','Vale','half_merfolk','female',62,1,'retired',true,'Starfall Port','Navigator',[9,10,12,12,13,11,10,12,11],null,'12 days ago')
+ ];
+}
+function worldCharacters(w=selectedDemoWorld()){return w?(w.characters||(w.characters=[])):[];}
+function characterById(id){return worldCharacters().find(c=>c.id===id);}
+function heirsOf(id){return worldCharacters().filter(c=>c.parentId===id);}
+function lineageLabel(id){return lineages.find(c=>c[0]===id)?.[1]||'Unknown';}
+function statusLabel(s){return ({alive:'Alive',deceased:'Deceased',retired:'Retired',draft:'Creation incomplete',eligible:'Eligible heir',dependent:'Not yet eligible',pending:'Heir recorded'})[s]||s;}
+function canSucceed(p,c){return !!(p&&c&&!p.successorId&&['deceased','retired'].includes(p.status)&&c.parentId===p.id&&c.status==='eligible');}
+function charAction(c){if(c.status==='alive')return ['▶','Play','playSave'];if(c.status==='draft')return ['▶','Continue Creation','continueCreation'];if(heirsOf(c.id).some(h=>canSucceed(c,h)))return ['↳','Continue Legacy','showSuccession'];return ['⌘','View History','showHistory'];}
+function saveAction(label,action,id,cls='heir-action',extra=''){return '<button type="button" class="'+cls+'" data-launch="'+action+'" data-character-id="'+esc(id)+'" '+extra+'>'+label+'</button>';}
+function familyTree(c){
+ const family=worldCharacters().filter(x=>x.family===c.family),seen=new Set();
+ const node=x=>{if(seen.has(x.id))return '';seen.add(x.id);const children=family.filter(y=>y.parentId===x.id);return '<div class="family-node '+(x.id===c.id?'current':'')+'">'+esc(x.name)+'<small>Generation '+x.generation+' · '+esc(statusLabel(x.status))+'</small></div>'+(children.length?'<div class="family-tree">'+children.map(node).join('')+'</div>':'');};
+ return '<div aria-label="Ancestry"><strong>House '+esc(c.surname||c.name)+'</strong><div class="family-tree">'+family.filter(x=>!family.some(y=>y.id===x.parentId)).map(node).join('')+'</div></div>';
+}
+function heirDetails(p){
+ const heirs=heirsOf(p.id);
+ return '<div class="save-meta">'+heirs.length+' recorded · '+heirs.filter(h=>h.status==='eligible').length+' eligible</div>'+heirs.map(h=>'<div class="heir-row"><div><strong>'+esc(h.name)+(p.designated===h.id?' · Designated':'')+'</strong><small>Generation '+h.generation+(h.age!=null?' · Age '+h.age:'')+' · '+esc(statusLabel(h.status))+'</small></div><div class="heir-buttons">'+saveAction('Details','heirDetails',h.id)+(h.status==='eligible'&&p.status==='alive'&&p.designated!==h.id?saveAction('Designate','designateHeir',h.id):'')+(canSucceed(p,h)?saveAction('Continue as Heir','confirmSuccession',h.id,'heir-action gold'):'')+'</div></div>').join('')+(p.status==='alive'?saveAction('+ Create New Heir','startHeir',p.id,'heir-action gold'):'');
+}
+function renderSaveTile(c){
+ const open=!!route.expandedSaves[c.id],tab=route.saveTabs[c.id]||'overview',a=charAction(c),count=heirsOf(c.id).length;
+ const overview='<div class="save-statgrid">'+(c.stats?demoStatKeys.map(k=>'<div class="save-stat"><span>'+k+'</span><strong>'+c.stats[k]+'</strong></div>').join(''):'<span class="save-meta">Attributes not recorded.</span>')+'</div><div class="save-meta">'+esc(c.occupation)+' · House '+esc(c.surname||c.name)+'</div>';
+ const details=open?'<div class="save-detail"><div class="save-tabs" role="tablist" aria-label="Character details">'+['overview','heirs','ancestry'].map(t=>saveAction(t[0].toUpperCase()+t.slice(1),'saveTab',c.id,'save-tab','role="tab" data-tab="'+t+'" aria-selected="'+(tab===t)+'"')).join('')+'</div><div role="tabpanel" class="save-panel">'+(tab==='heirs'?heirDetails(c):tab==='ancestry'?familyTree(c):overview)+'</div></div>':'';
+ return '<article class="save-tile" aria-label="'+esc(c.name)+'"><div class="save-head"><div class="save-portrait" aria-hidden="true">'+esc(c.name[0])+'</div><div><h2 class="save-name">'+esc(c.name)+'</h2><div class="save-meta">'+esc(lineageLabel(c.lineage))+' · '+esc(c.sex)+(c.age!=null?' · '+c.age+' years':'')+' <span class="save-status '+esc(c.status)+'">'+esc(statusLabel(c.status))+'</span></div><div class="save-meta">'+esc(c.location)+' · Generation '+c.generation+' · '+count+' heir'+(count===1?'':'s')+'</div><div class="save-meta">Last played: '+esc(c.lastPlayed)+'</div></div><div class="save-actions">'+saveAction(a[0],a[2],c.id,'save-play','aria-label="'+a[1]+' '+esc(c.name)+'" title="'+a[1]+'"')+saveAction(open?'⌃':'⌄','expandSave',c.id,'save-expand','aria-label="'+(open?'Hide':'Show')+' details for '+esc(c.name)+'" aria-expanded="'+open+'"')+'</div></div>'+details+'</article>';
+}
+function startPreviewCreator(parent=null,draft=null){
+ Object.assign(state,JSON.parse(JSON.stringify(freshCreatorState)));route.creatorContext=parent?{type:'heir',parentId:parent.id}:draft?{type:'draft',draftId:draft.id}:null;
+ const c=parent||draft;if(c){state.lineage=c.lineage;state.lastName=c.surname||'';state.age='young_adult';if(draft){state.firstName=draft.name.split(' ')[0];state.sex=draft.sex;}}
+ for(const key of ['skin','hair','eyes'])state[key]=firstSourceColorIndex(key);state.stage=0;syncName();state.validation=false;
+}
+function recordPreviewCharacter(){
+ if(route.screen!=='creator'||state.stage!==7||!stageValid(7))return false;
+ const ctx=route.creatorContext,p=ctx?.type==='heir'?characterById(ctx.parentId):null,old=ctx?.type==='draft'?characterById(ctx.draftId):null;
+ if(ctx?.type==='heir'&&(!p||p.status!=='alive'))return false;
+ const id=old?.id||'demo-character-'+(++demoCharacterSequence),d=getDerivedStats();
+ const record={id,family:p?.family||old?.family||id,parentId:p?.id||null,name:fullName(),surname:state.lastName.trim()||state.firstName.trim(),lineage:state.lineage,sex:state.sex,age:null,ageBand:state.age,generation:p?p.generation+1:1,status:p?'pending':'alive',listed:!p,location:state.settlement,lastPlayed:'Not started',occupation:'Wanderer',stats:{...d.attrs}};
+ if(old)Object.assign(old,record);else worldCharacters().push(record);
+ if(p){route.expandedSaves[p.id]=true;route.saveTabs[p.id]='heirs';} route.creatorContext=null;return true;
+}
+function showPreviewCharacter(c){openDialog(c.name,'<p>'+esc(c.location)+' · '+esc(statusLabel(c.status))+'</p><p>Sample character record. Gameplay and real Save loading are not connected.</p>','<button id="dialogClose">Back to Characters</button>','Character preview');}
+
 function renderLauncher(){
  const signed=Boolean(route.accountName);
  const screen=route.screen;
  let content='';
  if(screen==='splash'){
-  content=launcherFrame(`<div class="launcher-frame launcher-center" style="max-width:720px;margin:34px auto 0"><p class="launcher-invitation">A chronicle of lives, choices and legacies.<br/><br/>Found your line and forge your Legacy.</p><div class="launcher-actions" style="justify-content:center">${launcherButton('Log In','login')}</div></div>`);
- }
- if(screen==='login'){
-  content=launcherFrame(`<section class="launcher-frame launcher-login-frame"><div class="launcher-account-picker-row"><select id="previewAccountPicker" class="launcher-input" aria-label="Select account"><option>Preview Adventurer (demo account)</option></select>${launcherButton('Continue','loginDemo')}</div></section>`,true);
+  content=launcherFrame(`<div class="launcher-frame launcher-center" style="max-width:720px;margin:34px auto 0"><p class="launcher-invitation">A chronicle of lives, choices and legacies.<br/><br/>Found your line and forge your Legacy.</p><div class="login-stack"><select id="previewAccountPicker" class="launcher-input" aria-label="Select account"><option value="" selected>Select account</option><option value="preview-adventurer">Preview Adventurer (demo account)</option></select><div class="launcher-account-picker-row"><input id="previewPassword" type="password" class="launcher-input" aria-label="Demo password" placeholder="Password" autocomplete="off" disabled/>${launcherButton('Log In','loginDemo','primary','id="previewLoginButton" disabled')}</div><label class="login-stay"><input id="previewStayLoggedIn" type="checkbox" role="switch" aria-label="Stay logged in"/>Stay logged in</label><p class="login-hint">Demo password: demo</p><div id="previewLoginError" class="launcher-alert" role="alert"></div></div></div>`);
  }
  if(screen==='register'){
   content=launcherFrame(`<section class="launcher-frame"><p class="launcher-eyebrow">New local account</p><h1 class="launcher-title" style="font-size:38px">Create Account</h1><p class="launcher-muted">Choose the name your account will carry.</p><label class="launcher-label" for="previewNewName">Display name</label><input id="previewNewName" maxlength="48" class="launcher-input" autocomplete="off" placeholder="Your character-world account" value="${esc(route.accountDraft)}"/><div id="accountCreateError" role="alert" class="launcher-alert"></div></section>`,true);
@@ -1608,7 +1697,7 @@ function renderLauncher(){
   content=launcherFrame(`<div class="launcher-center"><h1 class="launcher-title">Welcome back, ${esc(route.accountName)}</h1></div><div class="launcher-cards"><button type="button" data-launch="chronicle" class="launcher-card"><small>Repeat-run adventure</small><strong>Chronicle</strong><p>Live many lives, build a legacy, and earn rewards that shape future journeys.</p><span>Explore Chronicle Worlds</span></button><button type="button" class="launcher-card" disabled aria-disabled="true"><small>Long-term progression</small><strong>Persistent</strong><p>Build one enduring life through skills, work, relationships and lasting achievements.</p><span>Coming Soon</span></button></div>`);
  }
  if(screen==='worlds'){
-  content=launcherFrame(`<div class="launcher-frame"><div class="launcher-worldline"><div><strong>World Library</strong><small>${route.worlds.length} World${route.worlds.length===1?'':'s'}</small></div></div>${route.worlds.length?`<div class="launcher-cards">${route.worlds.map((w,i)=>`<button type="button" class="launcher-card" data-launch="selectWorld" data-world-index="${i}"><small>${esc(w.source)} · Chronicle</small><strong>${esc(w.name)}</strong><p>First World · Individual World<br/>${esc(worldSettingsSummary(w.settings))}</p><span>Open World Overview</span></button>`).join('')}</div>`:'<p class="launcher-muted" style="padding-top:25px">No Worlds yet. Create one to begin.</p>'}</div>`);
+  content=launcherFrame(`<div class="launcher-frame"><div class="launcher-worldline"><div><strong>World Library</strong><small>${route.worlds.length} World${route.worlds.length===1?'':'s'}</small></div></div>${route.worlds.length?`<div class="launcher-cards">${route.worlds.map((w,i)=>`<button type="button" class="launcher-card" data-launch="selectWorld" data-world-index="${i}"><small>${esc(w.source)} · Chronicle</small><strong>${esc(w.name)}</strong><p>First World · Individual World<br/>${esc(worldSettingsSummary(w.settings))}</p><span>View Characters</span></button>`).join('')}</div>`:'<p class="launcher-muted" style="padding-top:25px">No Worlds yet. Create one to begin.</p>'}</div>`);
  }
  if(screen==='newWorld'){
   const settings=normalizedWorldSettings(route.worldSettings);
@@ -1621,18 +1710,14 @@ function renderLauncher(){
    <div id="worldDraftSummary">${worldSettingsReview(settings)}</div><div id="worldCreateError" role="alert" class="launcher-alert"></div></div>`);
 
  }
- if(screen==='overview'){
-  const w=selectedDemoWorld();if(!w){route.screen='worlds';return renderLauncher();}
-  content=launcherFrame(`<div class="launcher-center"><p class="launcher-eyebrow">Chronicle · Individual World</p><h1 class="launcher-title">${esc(w.name)}</h1><p class="launcher-lead">A World of choices, consequences, and lives yet to be written.</p></div><div class="launcher-frame launcher-split"><div><h2>World Overview</h2><p class="launcher-muted">Authored geography: First World. Gameplay mode: Individual World.</p>${worldSettingsOverview(w.settings)}</div><div><h2>Characters</h2><p class="launcher-muted">Your characters will appear here.</p><div class="launcher-actions">${launcherButton('View Characters','characters')}</div></div></div>`);
- }
  if(screen==='characters'){
   const w=selectedDemoWorld();if(!w){route.screen='worlds';return renderLauncher();}
-  content=launcherFrame(`<div class="launcher-center"><p class="launcher-eyebrow">${esc(w.name)} · Chronicle</p><h1 class="launcher-title">Characters</h1><p class="launcher-lead">Every life in this World begins here.</p></div><div class="launcher-frame"><h2>No characters yet</h2><p class="launcher-muted">Create your first character to begin the next chapter.</p></div>`);
+  content=launcherFrame(`<div class="launcher-center"><p class="launcher-invitation">Every life has a beginning.</p></div>${worldCharacters(w).some(c=>c.listed)?'<div class="save-library">'+worldCharacters(w).filter(c=>c.listed).map(renderSaveTile).join('')+'</div>':'<div class="launcher-frame"><h2>No characters yet</h2><p class="launcher-muted">Create your first character to begin the next chapter.</p></div>'}`);
  }
  const top=`<header class="launcher-top"><div class="launcher-brand"><span class="launcher-brand-mark">✧</span><div><div class="launcher-brand-name">LINEAGE REFORGED</div><div class="launcher-brand-sub">THE FIRST WORLD</div></div></div><div class="launcher-top-right"><span id="launcherClock" aria-label="Local time">LOCAL</span><span class="launcher-account-label">${signed?esc(route.accountName):'Guest'}</span>${systemMenu(signed)}</div></header>`;
  // Shared pre-game navigation: Back at left; contextual Create action centered.
- const backTarget={login:'splash',register:'splash',welcome:'splash',worlds:'welcome',newWorld:'worlds',overview:'worlds',characters:'overview'}[screen];
- const creationAction={splash:['Create Account','register'],login:['Create Account','register'],register:['Create Account','createDemo'],worlds:['Create World','newWorld'],newWorld:['Create World','createWorld'],characters:['Create Character','startCreator']}[screen];
+ const backTarget={register:'splash',welcome:'splash',worlds:'welcome',newWorld:'worlds',characters:'worlds'}[screen];
+ const creationAction={splash:['Create Account','register'],register:['Create Account','createDemo'],worlds:['Create World','newWorld'],newWorld:['Create World','createWorld'],characters:['Create Character','startCreator']}[screen];
  const centerCreate=creationAction?launcherButton(creationAction[0],creationAction[1],'subbar-create',`aria-label="${creationAction[0]}" title="${creationAction[0]}"`):'';
  const subbar=`<nav class="launcher-subbar" aria-label="Launcher navigation"><div class="launcher-subbar-back">${backTarget?launcherButton('◀',backTarget,'subbar-action','aria-label="Back" title="Back"'):'<span class="launcher-nav-spacer"></span>'}</div><div class="launcher-subbar-create-slot">${centerCreate}</div><div class="launcher-subbar-end" aria-hidden="true"></div></nav>`;
  el('launcher').innerHTML=`<div class="launcher-chrome">${top}${subbar}</div><main id="launcherMain">${content}</main>`;
@@ -1654,20 +1739,36 @@ function navigateLauncher(action,button){
   const summary=el('worldDraftSummary');if(summary)summary.innerHTML=worldSettingsReview(route.worldSettings);
   return;
  }
- if(action==='splash'||action==='login'||action==='register'||action==='welcome'||action==='worlds'||action==='overview'||action==='characters'){return navigate(action)}
- if(action==='loginDemo'){route.accountName='Preview Adventurer';route.worlds=[{name:'Starfall World',source:'Fixture',settings:defaultWorldSettings()}];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome')}
+ if(action==='splash'||action==='register'||action==='welcome'||action==='worlds'||action==='characters'){return navigate(action)}
+ if(action==='loginDemo'){if(route.screen!=='splash'||el('previewAccountPicker')?.value!=='preview-adventurer')return;if(el('previewPassword')?.value!=='demo'){el('previewLoginError').textContent='Use the demo password: demo';el('previewPassword')?.focus();return;}route.stayLoggedIn=!!el('previewStayLoggedIn')?.checked;route.expandedSaves={};route.saveTabs={};route.accountName='Preview Adventurer';route.worlds=[{name:'Starfall World',source:'Fixture',settings:defaultWorldSettings(),characters:demoCharacters()}];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome')}
  if(action==='createDemo'){
   const name=(el('previewNewName')?.value||'').trim();if(!name){const e=el('accountCreateError');if(e)e.textContent='Enter a display name for the demo account.';el('previewNewName')?.focus();return}
   route.accountName=name;route.accountDraft=name;route.worlds=[];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome');
  }
  if(action==='chronicle'){route.progression='chronicle';return navigate('worlds')}
- if(action==='selectWorld'){route.worldIndex=Number(button.dataset.worldIndex)||0;return navigate('overview')}
+ if(action==='selectWorld'){const index=Number(button.dataset.worldIndex);if(!Number.isInteger(index)||!route.worlds[index])return;route.worldIndex=index;return navigate('characters')}
  if(action==='createWorld'){
   const name=(el('previewWorldName')?.value||'').trim();if(!name){const e=el('worldCreateError');if(e)e.textContent='Enter a World name to create the in-memory demo.';el('previewWorldName')?.focus();return}
-  route.worldDraft=name;route.worlds.push({name,source:'Created in preview',settings:normalizedWorldSettings(route.worldSettings)});route.worldIndex=route.worlds.length-1;return navigate('overview');
+  route.worldDraft=name;route.worlds.push({name,source:'Created in preview',settings:normalizedWorldSettings(route.worldSettings)});route.worldIndex=route.worlds.length-1;return navigate('characters');
  }
- if(action==='startCreator'){state.stage=0;state.validation=false;return navigate('creator')}
- if(action==='logout'){route.accountName='';route.accountDraft='';route.worlds=[];route.worldIndex=0;route.worldDraft='';route.worldSettings=defaultWorldSettings();state.entryChoice=null;state.summaryReviewed=false;return navigate('splash')}
+ if(action==='startCreator'){if(!selectedDemoWorld())return;startPreviewCreator();return navigate('creator')}
+
+ if(action==='recordPreviewCharacter'){if(recordPreviewCharacter())return navigate('characters');return;}
+ if(action==='confirmSuccession'){const c=characterById(button?.dataset.characterId),p=characterById(c?.parentId);if(!canSucceed(p,c))return;return openDialog('Continue as '+c.name,'<p>Begin a new playable chapter through this sample heir. The ancestor remains in family history.</p>',saveAction('Continue Legacy','succeedHeir',c.id,'heir-action gold')+' <button id="dialogClose">Cancel</button>','Succession preview');}
+ if(action==='succeedHeir'){const c=characterById(button?.dataset.characterId),p=characterById(c?.parentId);if(!canSucceed(p,c))return;c.status='alive';c.listed=true;c.lastPlayed='Not started';p.successorId=c.id;el('dialogbg').classList.remove('open');return navigate('characters');}
+ if(['expandSave','saveTab','playSave','continueCreation','showSuccession','showHistory','heirDetails','designateHeir','startHeir'].includes(action)){
+  if(route.screen!=='characters')return;const c=characterById(button?.dataset.characterId);if(!c)return;
+  if(action==='expandSave'){route.expandedSaves[c.id]=!route.expandedSaves[c.id];render();return;}
+  if(action==='saveTab'&&['overview','heirs','ancestry'].includes(button.dataset.tab)){route.saveTabs[c.id]=button.dataset.tab;route.expandedSaves[c.id]=true;render();return;}
+  if(action==='playSave'&&c.status==='alive')return showPreviewCharacter(c);
+  if(action==='continueCreation'&&c.status==='draft'){startPreviewCreator(null,c);return navigate('creator');}
+  if(action==='showSuccession'||action==='showHistory'){route.expandedSaves[c.id]=true;route.saveTabs[c.id]=action==='showSuccession'?'heirs':'ancestry';render();return;}
+  if(action==='heirDetails')return openDialog(c.name,'<p>'+esc(statusLabel(c.status))+' · Generation '+c.generation+'</p>'+(c.age!=null?'<p>Age '+c.age+'</p>':''),'<button id="dialogClose">Close</button>','Family record');
+  if(action==='designateHeir'){const p=characterById(c.parentId);if(p?.status==='alive'&&c.status==='eligible'){p.designated=c.id;render();}return;}
+  if(action==='startHeir'&&c.status==='alive'){startPreviewCreator(c);return navigate('creator');}
+ }
+
+ if(action==='logout'){route.accountName='';route.accountDraft='';route.stayLoggedIn=false;route.expandedSaves={};route.saveTabs={};route.creatorContext=null;route.worlds=[];route.worldIndex=0;route.worldDraft='';route.worldSettings=defaultWorldSettings();state.entryChoice=null;state.summaryReviewed=false;return navigate('splash')}
  if(action==='noop')return;
 }
 function syncCreatorTools(){
@@ -1690,7 +1791,7 @@ function render(){
  const toggle=el('detailsToggle');syncCreatorTools();if(toggle){toggle.hidden=!isIdentity;toggle.setAttribute('aria-pressed',String(state.showAttributeDetails));toggle.querySelector('.details-toggle-label').textContent='Detail';toggle.setAttribute('aria-label',state.showAttributeDetails?'Detail shown; hide numeric attribute adjustments':'Detail hidden; show numeric attribute adjustments');toggle.title=state.showAttributeDetails?'Hide numeric detail':'Show numeric detail';toggle.querySelector('.details-eye').innerHTML=state.showAttributeDetails?'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/>':'<path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3.1"/><path d="M3 21 21 3"/>';}}
 
 document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.calendarMonth){creatorViewedMonth=Number(b.dataset.calendarMonth);updateCreatorCalendar();return;}if(b.dataset.launch){navigateLauncher(b.dataset.launch,b);return;}if(b.dataset.nav!==undefined)return nav(Number(b.dataset.nav));if(b.dataset.pick){const k=b.dataset.pick,v=b.dataset.value;if(k==='lineage')selectLineage(v);else selectGeo(k,v);return}/* Color selection is cosmetic: preserve World Entry, Summary review and the first decision. */if(b.dataset.color){state[b.dataset.color]=Number(b.dataset.index);state.portrait=false;return render()}if(b.dataset.conditionToggle){const group=b.dataset.group,id=b.dataset.conditionToggle,selected=state.selectedConditions[group];if(!conditions[group]?.some(c=>c.id===id))return;state.selectedConditions[group]=selected.includes(id)?selected.filter(x=>x!==id):[...selected,id];const inspector=group==='negative'?'inspectedNegative':'inspectedPositive';state[inspector]=state.selectedConditions[group].includes(id)?id:(state.selectedConditions[group].at(-1)||null);invalidateOpening();render();return}if(b.dataset.profile){state[b.dataset.profile]=b.dataset.choiceValue;state.validation=false;invalidateOpening();return render()}if(b.dataset.sex){state.sex=b.dataset.sex;invalidateOpening();return render()}if(b.dataset.pool){state.pool=b.dataset.pool;state.scenario=null;invalidateOpening();return render()}if(b.dataset.story){return story(b.dataset.story)}if(b.dataset.entryChoice){return chooseOpening(b.dataset.entryChoice)}if(b.id==='creatorBack'){if(state.stage>0)return nav(state.stage-1);return navigateLauncher('characters',b)}if(b.id==='detailsToggle'){state.showAttributeDetails=!state.showAttributeDetails;return render()}if(b.id==='resetEntryChoice'){state.entryChoice=null;return render()}if(b.id==='backSummary')return nav(6);if(b.id==='nextTop'||b.id==='next')return next();if(b.id==='nameDice')return randomName();if(b.id==='identityDice')return randomIdentity();if(b.id==='generate')return portraitPrompt();if(b.id==='dialogClose'||b.id==='closeContinuation')return el('dialogbg').classList.remove('open');if(b.id==='copyPrompt'){const text=el('promptText')?.textContent||'';if(navigator.clipboard?.writeText)navigator.clipboard.writeText(text).then(()=>{b.textContent='Copied'}).catch(()=>{b.textContent='Select text to copy'});return}if(b.id==='mobileToggle'){const open=el('railCollapse').classList.toggle('open');b.setAttribute('aria-expanded',String(open));return}if(b.id==='themeBtn'){const bright=document.documentElement.classList.toggle('preview-brighter');b.textContent=bright?'Use original brightness':'Increase display brightness';return;}});
-document.addEventListener('change',e=>{const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
+document.addEventListener('change',e=>{if(e.target.id==='previewAccountPicker'){const login=el('previewLoginButton'),pw=el('previewPassword'),selected=e.target.value==='preview-adventurer';if(login)login.disabled=!selected;if(pw){pw.disabled=!selected;if(!selected)pw.value='';}if(el('previewLoginError'))el('previewLoginError').textContent='';return;}const fld=e.target.dataset.field;if(fld){state[fld]=e.target.value;invalidateOpening();render()}});
 document.addEventListener('input',e=>{
  if(e.target.dataset.paletteSlider){const key=e.target.dataset.paletteSlider,channel=e.target.dataset.channel;if(!paletteAdjust[key]||!['s','b'].includes(channel))return;paletteAdjust[key][channel]=Math.max(0,Math.min(100,Number(e.target.value)));const out=document.querySelector(`[data-palette-output="${key}-${channel}"]`);if(out)out.textContent=paletteAdjust[key][channel]+'%';refreshPaletteSwatches(key);return;}
  if(e.target.id==='previewWorldName'){route.worldDraft=e.target.value;return;}
@@ -1703,7 +1804,7 @@ document.addEventListener('input',e=>{
   const notice=document.querySelector('.validation');if(notice)notice.classList.remove('show');
  }
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){el('dialogbg').classList.remove('open');for(const id of ['creatorCalendar','creatorWeather']){const popup=el(id);if(popup)popup.open=false;}}});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='previewPassword'&&!el('previewLoginButton')?.disabled){e.preventDefault();navigateLauncher('loginDemo',el('previewLoginButton'));return;}if(e.key==='Escape'){el('dialogbg').classList.remove('open');for(const id of ['creatorCalendar','creatorWeather']){const popup=el(id);if(popup)popup.open=false;}}});
 el('dialogbg').addEventListener('click',e=>{if(e.target===el('dialogbg'))el('dialogbg').classList.remove('open')});
 for(const [target,other] of [['creatorCalendar','creatorWeather'],['creatorWeather','creatorCalendar']]){el(target)?.addEventListener('toggle',()=>{if(el(target).open&&el(other))el(other).open=false;});}
 if(window.matchMedia('(max-width:550px)').matches){el('railCollapse').classList.remove('open');el('mobileToggle').setAttribute('aria-expanded','false')}

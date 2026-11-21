@@ -40,7 +40,9 @@ for (const marker of [
   'const CREATOR_NAME_POOLS=', 'function randomName()', 'function paletteAnchors(key)',
   'function updateCreatorWeather()', 'id="creatorCalendar"', 'id="creatorWeather"',
   'function renderLineage()', 'function renderGeography()', 'const GEO_SETTLEMENT_META',
-  'const WORLD_OPTION_GROUPS='
+  'const WORLD_OPTION_GROUPS=', 'id="previewPassword"', 'id="previewStayLoggedIn"',
+  'function renderSaveTile(c)', 'function heirDetails(p)', 'function familyTree(c)',
+  'function recordPreviewCharacter()', 'Every life has a beginning.'
 ]) assert.ok(html.includes(marker), `Missing creator feature ${marker}`);
 
 const artwork = manifest.images.retainedGeographyArt;
