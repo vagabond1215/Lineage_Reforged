@@ -15,6 +15,11 @@ import { isNativeTargetCampaignSnapshot } from "../../../../packages/engines/gam
 import { hasPendingNormalDefeat, validatePendingNormalDefeatRecoveryProvenance } from "../../../../packages/engines/game-engine/src/normal-defeat.js";
 import { isStoredCampaignControl, isStoredSaveEnvelope, isStoredNativeGearEnvelope, type CampaignPublicationConsumerPlan, type LoadedCampaignSave, type StoredSaveEnvelope, type StoredNativeGearEnvelope } from "./saveManager.js";
 import { SAVE_SLOT_ORDER, type SaveSlotId, type SaveSlotMetadata } from "./state.js";
+import type { ChronicleWorldCreationInput } from "./firstWorldCreationContract.js";
+import {
+  assertRetainedWorldGraph, assertSameWorldCreation, prepareDurableChronicleWorld,
+  type RetainedChronicleWorld, type RetainedWorldCreationReceipt
+} from "./firstWorldDurableRegistry.js";
 import {
   CAMPAIGN_DATABASE_NAME,
   CampaignIndexedDbStore,
@@ -28,7 +33,7 @@ import {
 
 /** Clean-epoch account and campaign authority selected by the awaited App caller. */
 export const CLEAN_EPOCH_DATABASE_NAME = "lineage.campaigns.epoch1";
-export const CLEAN_EPOCH_DATABASE_VERSION = 7;
+export const CLEAN_EPOCH_DATABASE_VERSION = 8;
 export const CLEAN_EPOCH_ACCOUNT_STORE = "accounts";
 export const CLEAN_EPOCH_ATTEMPT_STORE = "newCampaignAttempts";
 export const CLEAN_EPOCH_RECOVERY_STORE = "pendingPublicationRecoveries";
@@ -39,16 +44,21 @@ export const CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE = "firstPublicationRecoveriesV6
 export const CLEAN_EPOCH_SLOT_GENERATION_STORE = "currentSlotGenerations";
 export const CLEAN_EPOCH_ADDRESS_DELETION_STORE = "addressDeletionReceipts";
 export const CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE = "accountLifecycle";
+export const CLEAN_EPOCH_WORLD_STORE = "worldsV8";
+export const CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE = "worldCreationReceiptsV8";
 export const CLEAN_EPOCH_SESSION_STORAGE_KEY = "cataclysm-rpg-ui.epoch1.session";
 const ACCOUNT_DATA_STORES = [CLEAN_EPOCH_ATTEMPT_STORE, CLEAN_EPOCH_RECOVERY_STORE,
   CLEAN_EPOCH_DESCENDANT_RECOVERY_STORE, CLEAN_EPOCH_TERMINAL_RECOVERY_STORE,
   CLEAN_EPOCH_CAMPAIGN_ATTEMPT_STORE, CLEAN_EPOCH_CAMPAIGN_RECOVERY_STORE,
   CLEAN_EPOCH_SLOT_GENERATION_STORE, CLEAN_EPOCH_ADDRESS_DELETION_STORE,
-  "artifacts", "controls", "slots", "witnesses"] as const;
+  "artifacts", "controls", "slots", "witnesses",
+  CLEAN_EPOCH_WORLD_STORE, CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE] as const;
 const ARCHIVE_FORMAT = "lineage.clean-epoch.archive";
-const ARCHIVE_VERSION = 1;
+const ARCHIVE_VERSION = 2;
+const LEGACY_ARCHIVE_VERSION = 1;
+const LEGACY_DATABASE_VERSION = 7;
 export const CLEAN_EPOCH_ARCHIVE_MAX_BYTES = 64 * 1024 * 1024;
-const ARCHIVE_FAMILIES = [
+const ARCHIVE_V7_FAMILIES = [
   [CLEAN_EPOCH_ACCOUNT_STORE, "accountId"],
   [CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, "accountId"],
   [CLEAN_EPOCH_ATTEMPT_STORE, ["accountId", "slotId"]],
@@ -63,6 +73,11 @@ const ARCHIVE_FAMILIES = [
   ["controls", ["accountId", "campaignId"]],
   ["slots", ["accountId", "slotId"]],
   ["witnesses", ["accountId", "campaignId", "requestId"]]
+] as const;
+const ARCHIVE_FAMILIES = [
+  ...ARCHIVE_V7_FAMILIES,
+  [CLEAN_EPOCH_WORLD_STORE, ["accountId", "worldInstanceId"]],
+  [CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE, ["accountId", "creationIntentId"]]
 ] as const;
 type ArchiveFamily = { name: string; keyPath: string | string[]; count: number; sha256: string; rows: unknown[] };
 type EpochArchive = { format: string; archiveVersion: number; databaseName: string;
@@ -123,17 +138,22 @@ async function checkedArchive(text: string): Promise<EpochArchive> {
   if (new TextEncoder().encode(text).byteLength > CLEAN_EPOCH_ARCHIVE_MAX_BYTES) archiveFailure();
   let parsed: unknown;
   try { parsed = JSON.parse(text); } catch { archiveFailure(); }
-  if (!object(parsed) || parsed.format !== ARCHIVE_FORMAT || parsed.archiveVersion !== ARCHIVE_VERSION ||
+  if (!object(parsed) || parsed.format !== ARCHIVE_FORMAT ||
       parsed.databaseName !== CLEAN_EPOCH_DATABASE_NAME ||
-      parsed.databaseVersion !== CLEAN_EPOCH_DATABASE_VERSION ||
       typeof parsed.createdAt !== "string" || !Array.isArray(parsed.families) ||
-      parsed.families.length !== ARCHIVE_FAMILIES.length || typeof parsed.sha256 !== "string" ||
+      typeof parsed.sha256 !== "string" ||
       Object.keys(parsed).sort().join() !==
         ["archiveVersion", "createdAt", "databaseName", "databaseVersion", "families", "format", "sha256"].join())
     archiveFailure();
+  const legacyV7 = parsed.archiveVersion === LEGACY_ARCHIVE_VERSION &&
+    parsed.databaseVersion === LEGACY_DATABASE_VERSION;
+  if (!legacyV7 && (parsed.archiveVersion !== ARCHIVE_VERSION ||
+      parsed.databaseVersion !== CLEAN_EPOCH_DATABASE_VERSION)) archiveFailure();
+  const familiesSpec = legacyV7 ? ARCHIVE_V7_FAMILIES : ARCHIVE_FAMILIES;
+  if (parsed.families.length !== familiesSpec.length) archiveFailure();
   const archive = parsed as EpochArchive;
-  for (let i = 0; i < ARCHIVE_FAMILIES.length; i++) {
-    const [name, keyPath] = ARCHIVE_FAMILIES[i]!;
+  for (let i = 0; i < familiesSpec.length; i++) {
+    const [name, keyPath] = familiesSpec[i]!;
     const family = archive.families[i];
     if (!object(family) || family.name !== name ||
         !exactEqual(family.keyPath, keyPath) || !Array.isArray(family.rows) ||
@@ -159,7 +179,23 @@ async function checkedArchive(text: string): Promise<EpochArchive> {
   const { sha256, ...payload } = archive;
   if (await archiveDigest(JSON.stringify(payload)) !== sha256) archiveFailure();
   try { validateArchiveGraph(archive.families); } catch { archiveFailure(); }
-  return archive;
+  if (!legacyV7) return archive;
+  const emptyFamilyDigest = await archiveDigest("[]");
+  // A legacy v7 backup can only enter an EMPTY v8 target. All fourteen
+  // verified original family digests and rows are retained byte-for-byte.
+  // Newly introduced World authorities are empty; old Saves remain unassociated.
+  return {
+    ...archive,
+    archiveVersion: ARCHIVE_VERSION,
+    databaseVersion: CLEAN_EPOCH_DATABASE_VERSION,
+    families: [
+      ...archive.families,
+      ...ARCHIVE_FAMILIES.slice(ARCHIVE_V7_FAMILIES.length).map(([name, keyPath]) => ({
+        name, keyPath: [...keyPath], count: 0, sha256: emptyFamilyDigest, rows: []
+      }))
+    ],
+    sha256: ""
+  };
 }
 
 export type CleanEpochAccountRecord = {
@@ -835,6 +871,13 @@ function terminalReceiptsMatch(account: CleanEpochAccountRecord, recovery: Clean
 function validateDestructiveGraph(account: CleanEpochAccountRecord, rows: Map<string, unknown[]>): void {
   const accountId = account.accountId;
   const family = (name: string) => rows.get(name) ?? [];
+  // No World is silently stripped by account reset/delete or an archive export.
+  // Pair invariants are validated before ANY destructive account mutation.
+  try {
+    assertRetainedWorldGraph(accountId, accountLifecycleGeneration(account),
+      family(CLEAN_EPOCH_WORLD_STORE), family(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE),
+      account.revision);
+  } catch { fail("invalid_record", "World account graph is incomplete or invalid."); }
   const indexed = (name: string, field: string): Map<string, Record<string, unknown>> => {
     const result = new Map<string, Record<string, unknown>>();
     for (const raw of family(name)) {
@@ -1245,6 +1288,16 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
           { keyPath: ["accountId", "slotId", "slotGenerationId"] });
       if (!database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE))
         database.createObjectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE, { keyPath: "accountId" });
+      if (!database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_STORE)) {
+        const worlds = database.createObjectStore(CLEAN_EPOCH_WORLD_STORE,
+          { keyPath: ["accountId", "worldInstanceId"] });
+        worlds.createIndex("byAccount", "accountId", { unique: false });
+      }
+      if (!database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE)) {
+        const receipts = database.createObjectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE,
+          { keyPath: ["accountId", "creationIntentId"] });
+        receipts.createIndex("byAccount", "accountId", { unique: false });
+      }
       // The v5 families remain untouched as retained evidence. The v6 copies are the
       // sole active attempt/recovery authority after this atomic upgrade.
       if (event.oldVersion < 6) {
@@ -1344,6 +1397,12 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
           !database.objectStoreNames.contains(CLEAN_EPOCH_SLOT_GENERATION_STORE) ||
           !database.objectStoreNames.contains(CLEAN_EPOCH_ADDRESS_DELETION_STORE) ||
           !database.objectStoreNames.contains(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE) ||
+          !database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_STORE) ||
+          !database.objectStoreNames.contains(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE) ||
+          !database.transaction(CLEAN_EPOCH_WORLD_STORE).objectStore(CLEAN_EPOCH_WORLD_STORE)
+            .indexNames.contains("byAccount") ||
+          !database.transaction(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE)
+            .objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).indexNames.contains("byAccount") ||
           !database.transaction(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE).objectStore(CLEAN_EPOCH_TERMINAL_RECOVERY_STORE)
             .indexNames.contains("bySourcePublication")) {
         database.close(); reject(new CampaignStoreError("invalid_record", "Clean-epoch schema is incomplete.")); return;
@@ -1359,6 +1418,115 @@ export class CleanEpochAccountStore {
   constructor(private readonly db: IDBDatabase,
     private readonly beforeWrite?: CleanEpochAccountStoreOptions["beforeWrite"],
     private readonly afterWrite?: CleanEpochAccountStoreOptions["afterWrite"]) {}
+
+  /** L3b: one account-scoped, error-distinguishing World inventory, never Save-slot aliases. */
+  async listChronicleWorlds(accountId: string): Promise<RetainedChronicleWorld[]> {
+    if (!nonblank(accountId)) fail("invalid_record", "World inventory account is missing.");
+    let tx: IDBTransaction;
+    try {
+      tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE,
+        CLEAN_EPOCH_WORLD_STORE, CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE], "readonly");
+    } catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    try {
+      const [accountRaw, lifecycleRaw, worlds, receipts] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE).get(accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_STORE).index("byAccount")
+          .getAll(accountId) as IDBRequest<unknown[]>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).index("byAccount")
+          .getAll(accountId) as IDBRequest<unknown[]>)
+      ]);
+      if (accountRaw === undefined) fail("invalid_record", "World inventory account does not exist.");
+      const account = checkedAccount(accountRaw, accountId);
+      const gen = accountLifecycleGeneration(account);
+      if (lifecycleRaw !== undefined) {
+        const lifecycle = checkedLifecycle(lifecycleRaw, accountId);
+        if (lifecycle.kind === "delete" || lifecycle.completedGeneration !== gen)
+          fail("invalid_record", "World inventory account lifecycle is stale.");
+      } else if (gen !== 1) fail("invalid_record", "World inventory lacks account lifecycle authority.");
+      try { assertRetainedWorldGraph(accountId, gen, worlds, receipts, account.revision); }
+      catch { fail("invalid_record", "World inventory graph is malformed or incomplete."); }
+      await done;
+      return worlds as RetainedChronicleWorld[];
+    } catch (error) {
+      try { await done; } catch { /* retain original read failure */ }
+      throw classify(error, "invalid_record");
+    }
+  }
+
+  /** L3b: one clean-epoch transaction owns the World, receipt and account fence. */
+  async createChronicleWorld(input: ChronicleWorldCreationInput):
+    Promise<{ status: "committed" | "same_source_retry"; world: RetainedChronicleWorld;
+      receipt: RetainedWorldCreationReceipt }> {
+    let prepared: Awaited<ReturnType<typeof prepareDurableChronicleWorld>>;
+    try { prepared = await prepareDurableChronicleWorld(input); }
+    catch (error) { throw classify(error, "invalid_record"); }
+    const { world, receipt } = prepared;
+    let tx: IDBTransaction;
+    try {
+      tx = this.db.transaction([CLEAN_EPOCH_ACCOUNT_STORE, CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE,
+        CLEAN_EPOCH_WORLD_STORE, CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE], "readwrite");
+    } catch (error) { throw classify(error, "unavailable"); }
+    const done = complete(tx);
+    let status: "committed" | "same_source_retry" = "committed";
+    let expectedWorld: RetainedChronicleWorld = world;
+    let expectedReceipt: RetainedWorldCreationReceipt = receipt;
+    try {
+      const [accountRaw, lifecycleRaw, worlds, receipts] = await Promise.all([
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_STORE).get(world.accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_ACCOUNT_LIFECYCLE_STORE).get(world.accountId) as IDBRequest<unknown>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_STORE).index("byAccount")
+          .getAll(world.accountId) as IDBRequest<unknown[]>),
+        requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).index("byAccount")
+          .getAll(world.accountId) as IDBRequest<unknown[]>)
+      ]);
+      if (accountRaw === undefined) fail("invalid_record", "World creation account is missing.");
+      const account = checkedAccount(accountRaw, world.accountId);
+      const gen = accountLifecycleGeneration(account);
+      if (lifecycleRaw !== undefined) {
+        const lifecycle = checkedLifecycle(lifecycleRaw, world.accountId);
+        if (lifecycle.kind === "delete" || lifecycle.completedGeneration !== gen)
+          fail("invalid_record", "World creation account lifecycle is invalid.");
+      } else if (gen !== 1) fail("invalid_record", "World creation account has no generation receipt.");
+      if (gen !== world.accountLifecycleGeneration) fail("stale_head", "World creation account generation changed.");
+      try { assertRetainedWorldGraph(world.accountId, gen, worlds, receipts, account.revision); }
+      catch { fail("invalid_record", "World creation sees invalid prior World or receipt."); }
+      if (worlds.length !== 0) {
+        try { assertSameWorldCreation(prepared,
+          worlds[0] as RetainedChronicleWorld, receipts[0] as RetainedWorldCreationReceipt); }
+        catch { fail("conflict", "A different World creation intent already owns this account."); }
+        status = "same_source_retry";
+        expectedWorld = worlds[0] as RetainedChronicleWorld;
+        expectedReceipt = receipts[0] as RetainedWorldCreationReceipt;
+      } else {
+        if (account.revision !== receipt.expectedAccountRevision)
+          fail("stale_head", "World creation account revision changed.");
+        if (account.accountId !== input.account.accountId)
+          fail("invalid_record", "World creation account scope is inconsistent.");
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_STORE).add(world));
+        this.afterWrite?.(tx);
+        this.beforeWrite?.(tx);
+        await requestValue(tx.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE).add(receipt));
+        this.afterWrite?.(tx);
+      }
+      await done;
+    } catch (error) {
+      try { tx.abort(); } catch { /* transaction already finalized */ }
+      try { await done; } catch { /* original error retains precedence */ }
+      throw classify(error, "aborted");
+    }
+    const read = await this.listChronicleWorlds(world.accountId);
+    if (read.length !== 1 || !exactEqual(read[0], expectedWorld))
+      fail("readback_failed", "Chronicle World creation committed without exact durable readback.");
+    const check = this.db.transaction(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE, "readonly");
+    const receiptRead = await requestValue(check.objectStore(CLEAN_EPOCH_WORLD_CREATION_RECEIPT_STORE)
+      .get([world.accountId, receipt.creationIntentId]) as IDBRequest<unknown>);
+    if (!exactEqual(receiptRead, expectedReceipt))
+      fail("readback_failed", "Chronicle World creation receipt failed exact durable readback.");
+    return { status, world: expectedWorld, receipt: expectedReceipt };
+  }
 
   /** The complete epoch, including deleted-account tombstones, is one read snapshot. */
   async exportArchive(): Promise<string> {
