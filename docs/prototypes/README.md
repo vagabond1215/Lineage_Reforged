@@ -54,7 +54,7 @@ The prototype's route starts at the branded Splash/Log In/Create Account, then W
 7. Summary
 8. Opening
 
-Maintain ten playable lineage palettes: Human, Dwarf, Gnome, Halfling, Elf, Dark Elf, Half Troll, Half Orc, Half Goblin and Half Merfolk. The extended color palette is visually cosmetic; a newly invented color is not a gameplay rule or a reason to mark its swatch “unverified” to players. The source/proposal provenance of palette data still matters to production integration and must not be silently converted into authorized Save IDs. Color families are displayed in a column-first progression from upper-left toward lower-right, with evenly spaced swatches; preserve the responsive skin, hair and eye grids unless the user asks to change them.
+Maintain ten playable lineage palettes: Human, Dwarf, Gnome, Halfling, Elf, Dark Elf, Half Troll, Half Orc, Half Goblin and Half Merfolk. The extended color palette is visually cosmetic; a newly invented color is not a gameplay rule or a reason to mark its swatch “unverified” to players. The source/proposal provenance of palette data still matters to production integration and must not be silently converted into authorized Save IDs. The current compact preview palettes use **16 columns of available lineage-specific hues** on desktop (8 columns on narrow displays), ordered by hue with muted colors above more vivid shades; skin has 2 rows, hair/eyes 3, and each group has independent saturation and brightness controls. This supersedes historical column-first 42/84/84 grid geometry; preserve the original lineage source-color families and cosmetic-only semantics.
 
 UI requirements recorded by owner review:
 
