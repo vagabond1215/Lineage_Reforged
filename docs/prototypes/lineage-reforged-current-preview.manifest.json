@@ -1,20 +1,20 @@
 {
   "schema": "lineage_reforged.standalone_preview_retention.v1",
-  "asOf": "2026-11-20",
+  "asOf": "2026-11-21",
   "purpose": "Durable, source-verifiable complete interactive-preview code and linked-art inventory for GitHub/ChatGPT cross-thread continuity. No production activation.",
   "primary": {
     "path": "docs/prototypes/lineage-reforged-current-interactive-preview.html",
-    "sizeBytes": 316271,
-    "gitBlobSha": "be2381f6de27b990ad7bef2e726f68e3a84df679",
-    "sha256": "b46cee5e83743b5ad24b5127f5b44772c78fc26f2583288971547ad7c76fcc2c",
+    "sizeBytes": 318536,
+    "gitBlobSha": "caf7323bcf22a5deb29b0b04376b659ba31763c3",
+    "sha256": "621ebc3f4743468839725c1e7f06bd183397ab7595d22f347fdb1e36a9ef59ea",
     "codeStructure": "single HTML document with inline CSS and JavaScript; no external JS, CSS, iframe or runtime fetch",
     "originalReviewSource": {
       "branch": "codex/creator-cosmetic-color-continuity-2026-11-19",
-      "commit": "bf6da2f5336899b75cd87f29143295e6b12774c8",
+      "commit": "12046b7c39f8805549a1de9cc0127646965d7df1",
       "path": "docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html",
       "draftPullRequest": 103
     },
-    "masterSnapshotCommit": "7470d7c3099fc994841704592bd75a5e00a8846b"
+    "masterSnapshotCommit": "792994836dd889d4aa981850507c736c00a8c00a"
   },
   "images": {
     "mode": "image URLs are calculated at runtime from the historical, immutable GitHub source commit below; the HTML uses a neutral fallback where an image is unavailable or blocked. Image bytes are stored at the listed repo paths, not embedded in the HTML.",
@@ -621,7 +621,7 @@
   },
   "verification": {
     "command": "node docs/prototypes/verify-current-preview.mjs",
-    "optionalBrowser": "python3 docs/prototypes/preview-browser-smoke.py (requires Playwright and Chromium)",
+    "optionalBrowser": "python3 docs/prototypes/preview-browser-smoke.py (requires Playwright and Chromium; checks dynamic skin anchor counts)",
     "testedBrowserWidths": [
       1440,
       1280,
@@ -639,6 +639,21 @@
       "seasonArt6Of6PresentAndSHAEqual": true,
       "scope": "GitHub per-path content metadata sha checked at master; original art bytes remain in-place",
       "total114Of114": true
+    },
+    "paletteQA": {
+      "date": "2026-11-21",
+      "change": "Source-only OKLab farthest-point anchors, bounded lightness, gamut-safe chroma reduction and muted-to-vivid rows",
+      "columnsWide": 16,
+      "columnsNarrow": 8,
+      "skinDistinctSourceAnchorsRange": [
+        7,
+        10
+      ],
+      "hairAnchors": 16,
+      "eyeAnchors": 16,
+      "checks": "10 lineages x 3 categories at 1440, 1280, 768, 375, 320px; no JS errors or horizontal overflow; source provenance and bounded lightness inspected; JavaScript syntax passed",
+      "sourceColorsPreserved": true,
+      "productionColorsChanged": false
     }
   },
   "handoff": "docs/prototypes/README.md"
