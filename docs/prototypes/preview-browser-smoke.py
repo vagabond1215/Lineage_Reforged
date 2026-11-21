@@ -47,7 +47,12 @@ def main() -> None:
             assert page.locator("#creatorHeaderName").inner_text() == ""
             assert page.locator("#firstName").input_value() == ""
             assert page.evaluate("stageValid(1)") is False
-            assert [page.locator(f'[data-color="{key}"]').count() for key in ("skin", "hair", "eyes")] == [32, 48, 48]
+            counts = [page.locator(f'[data-color="{key}"]').count() for key in ("skin", "hair", "eyes")]
+            anchors = page.evaluate("""() => Object.fromEntries(
+              ['skin','hair','eyes'].map(key => [key,paletteAnchors(key).length])
+            )""")
+            assert counts == [anchors["skin"] * 2, anchors["hair"] * 3, anchors["eyes"] * 3]
+            assert 6 <= anchors["skin"] <= 16 and anchors["hair"] == anchors["eyes"] == 16
             expected_columns = 16 if width > 900 else 8
             columns = page.locator(".palette-grid.palette-skin").evaluate(
                 "e=>getComputedStyle(e).gridTemplateColumns.split(' ').filter(Boolean).length"
@@ -72,6 +77,27 @@ def main() -> None:
             page.keyboard.press("Escape")
             assert not page.locator("#creatorWeather").evaluate("e=>e.open")
             for lineage in LINEAGES:
+                quality = page.evaluate("""lin => {
+                  state.lineage = lin;
+                  const result = {};
+                  for (const key of ['skin','hair','eyes']) {
+                    const anchors = paletteAnchors(key), options = paletteOptions(key);
+                    const source = paletteCatalog[lin][key];
+                    result[key] = {
+                      anchors: anchors.length,
+                      allSource: anchors.every(a => source.some(c => c.hex === a.hex)),
+                      count: options.length,
+                      minL: Math.min(...options.map(c => colorLab(c.hex).L)),
+                      maxL: Math.max(...options.map(c => colorLab(c.hex).L))
+                    };
+                  }
+                  return result;
+                }""", lineage)
+                for key, group in quality.items():
+                    assert group["allSource"], (width, lineage, key, "non-source hue")
+                    assert group["count"] == group["anchors"] * (2 if key == "skin" else 3)
+                    assert group["anchors"] >= (6 if key == "skin" else 16)
+                    assert group["minL"] > 0.22 and group["maxL"] < 0.95
                 for sex in ("male", "female"):
                     got = page.evaluate("""([lin,sex])=>{
                       state.lineage=lin;state.sex=sex;randomName();
