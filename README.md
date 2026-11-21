@@ -22,7 +22,7 @@ Strategic continuity lives in:
 
 ## Interactive UI Preview (new ChatGPT threads)
 
-The canonical standalone eight-stage Character Creator / World Creator source is [the self-contained HTML prototype](docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html). For the current review branch, how to provide an **actual interactive HTML attachment inside ChatGPT** (rather than a blocked external iframe), version selection, all ten lineage palettes, World settings, testing and cross-thread handoff, **start with [docs/prototypes/README.md](docs/prototypes/README.md)**. Read live open PRs before treating a candidate as integrated. This preview is not production gameplay or a Save owner.
+The **complete current interactive preview** is preserved on `master` as [the standalone HTML snapshot](docs/prototypes/lineage-reforged-current-interactive-preview.html), with the [full file-and-art manifest](docs/prototypes/lineage-reforged-current-preview.manifest.json), [integrity checker](docs/prototypes/verify-current-preview.mjs), and [optional browser/screenshot checker](docs/prototypes/preview-browser-smoke.py). The historical November 18 HTML remains as a baseline; draft PR #103 carries ongoing review work. For exact source selection, attaching the **actual HTML inside ChatGPT** (not a blocked external iframe), artwork source paths, and cross-thread handoff, read [docs/prototypes/README.md](docs/prototypes/README.md) first. The snapshot and archived assets are review resources, not production gameplay or a Save owner.
 
 ## Codex Workspace
 
