@@ -4,17 +4,17 @@
   "purpose": "Durable, source-verifiable complete interactive-preview code and linked-art inventory for GitHub/ChatGPT cross-thread continuity. No production activation.",
   "primary": {
     "path": "docs/prototypes/lineage-reforged-current-interactive-preview.html",
-    "sizeBytes": 316249,
-    "gitBlobSha": "9af614928c5a558e3a448faeea31a601564464e9",
-    "sha256": "54c17b944edbeff49ac6ebd43cea7d903ac8e8858ee40de7ff365d771c1c39ae",
+    "sizeBytes": 316271,
+    "gitBlobSha": "be2381f6de27b990ad7bef2e726f68e3a84df679",
+    "sha256": "b46cee5e83743b5ad24b5127f5b44772c78fc26f2583288971547ad7c76fcc2c",
     "codeStructure": "single HTML document with inline CSS and JavaScript; no external JS, CSS, iframe or runtime fetch",
     "originalReviewSource": {
       "branch": "codex/creator-cosmetic-color-continuity-2026-11-19",
-      "commit": "dbc7d7c407569a4f9623d4c7471ab4048d213ec7",
+      "commit": "bf6da2f5336899b75cd87f29143295e6b12774c8",
       "path": "docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html",
       "draftPullRequest": 103
     },
-    "masterSnapshotCommit": "34836972b531d549a380a745f9686f2d33bd8696"
+    "masterSnapshotCommit": "7470d7c3099fc994841704592bd75a5e00a8846b"
   },
   "images": {
     "mode": "image URLs are calculated at runtime from the historical, immutable GitHub source commit below; the HTML uses a neutral fallback where an image is unavailable or blocked. Image bytes are stored at the listed repo paths, not embedded in the HTML.",
@@ -599,7 +599,16 @@
         "path": "apps/rpg-ui/public/seasons/season-withering.png",
         "sha": "eb4639e8a41432efedae58e9892cb661af0c99ce"
       }
-    ]
+    ],
+    "sourcePathAudit": {
+      "checkedAgainstRetainedManifest": "2026-11-20",
+      "continentCardImages": 9,
+      "regionCardImages": 13,
+      "settlementCardImages": 69,
+      "totalCardImagePaths": 91,
+      "all91CardImagePathsInManifest": true,
+      "fix": "Apostrophes in Sailor's Verge and Watcher's Gate are removed in slugs, matching existing files region-sailors-verge.png and settlement-watchers-gate.png."
+    }
   },
   "linkedData": {
     "geoSelection": "apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts",
