@@ -1,0 +1,628 @@
+{
+  "schema": "lineage_reforged.standalone_preview_retention.v1",
+  "asOf": "2026-11-20",
+  "purpose": "Durable, source-verifiable complete interactive-preview code and linked-art inventory for GitHub/ChatGPT cross-thread continuity. No production activation.",
+  "primary": {
+    "path": "docs/prototypes/lineage-reforged-current-interactive-preview.html",
+    "sizeBytes": 316249,
+    "gitBlobSha": "9af614928c5a558e3a448faeea31a601564464e9",
+    "sha256": "54c17b944edbeff49ac6ebd43cea7d903ac8e8858ee40de7ff365d771c1c39ae",
+    "codeStructure": "single HTML document with inline CSS and JavaScript; no external JS, CSS, iframe or runtime fetch",
+    "originalReviewSource": {
+      "branch": "codex/creator-cosmetic-color-continuity-2026-11-19",
+      "commit": "dbc7d7c407569a4f9623d4c7471ab4048d213ec7",
+      "path": "docs/prototypes/lineage-character-creator-eight-stage-conditions-2026-11-18.html",
+      "draftPullRequest": 103
+    },
+    "masterSnapshotCommit": "34836972b531d549a380a745f9686f2d33bd8696"
+  },
+  "images": {
+    "mode": "image URLs are calculated at runtime from the historical, immutable GitHub source commit below; the HTML uses a neutral fallback where an image is unavailable or blocked. Image bytes are stored at the listed repo paths, not embedded in the HTML.",
+    "pinnedImageCommit": "712982fbf72b158280df0ac89dc903d3b1832ab4",
+    "urlPrefix": "https://raw.githubusercontent.com/vagabond1215/Lineage_Reforged/712982fbf72b158280df0ac89dc903d3b1832ab4/apps/rpg-ui/public/character-creator/",
+    "existingArtManifest": "docs/design/character-creator-geography-art-retention-manifest-2026-11-17.json",
+    "snapshotCounts": {
+      "fullRetainedImageRecords": 100,
+      "continentImageFilesIncludingSelectedVariants": 18,
+      "regionImages": 13,
+      "settlementImages": 69,
+      "resourceIconImages": 8,
+      "optionalLiveSeasonImages": 6
+    },
+    "locationCounts": {
+      "startingContinentsAndIslandSystems": 9,
+      "regions": 28,
+      "settlements": 88
+    },
+    "noAssignedArt": {
+      "regionCards": 15,
+      "settlementCards": 19
+    },
+    "retainedGeographyArt": [
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+        "sha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+        "bytes": 3447850
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png",
+        "sha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+        "bytes": 3447850
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+        "sha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+        "bytes": 4020839
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-draemor.png",
+        "sha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+        "bytes": 4020839
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+        "sha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+        "bytes": 3702529
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png",
+        "sha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+        "bytes": 3702529
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+        "sha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+        "bytes": 3134923
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png",
+        "sha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+        "bytes": 3134923
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+        "sha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+        "bytes": 4134968
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png",
+        "sha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+        "bytes": 4134968
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+        "sha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+        "bytes": 3886699
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png",
+        "sha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+        "bytes": 3886699
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+        "sha": "41463961513046fe9a96be1ae69325b69ff41eed",
+        "bytes": 3649255
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png",
+        "sha": "41463961513046fe9a96be1ae69325b69ff41eed",
+        "bytes": 3649255
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+        "sha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+        "bytes": 3764727
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png",
+        "sha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+        "bytes": 3764727
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+        "sha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+        "bytes": 3630571
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png",
+        "sha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+        "bytes": 3630571
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-auric-marches.png",
+        "sha": "e95111c34397e992bbf1a1a6a8d74cc0b75ca4f6",
+        "bytes": 3503495
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-crownlands.png",
+        "sha": "89680110d73f8d8cff11e50ca1c8469545698c71",
+        "bytes": 3648107
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-embersteppe.png",
+        "sha": "2b38d1e66e51b805a6454899a07ffd79d21cc7c9",
+        "bytes": 3166600
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-emerald-mantle.png",
+        "sha": "89302e6756d0ef4ccf574651d0ac6041240d5069",
+        "bytes": 3498852
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-green-reach.png",
+        "sha": "6ebdea7ca2ec4e2c1b3e26a5be3fb3a31a96c16c",
+        "bytes": 3721632
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-heart-basin.png",
+        "sha": "79a3914dbde70f87c9869b2e9a616f3f16e6caf9",
+        "bytes": 3847580
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-jade-expanse.png",
+        "sha": "45333b7fc37c30f8a2e01ca56c2da9fe16865541",
+        "bytes": 3529921
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-sailors-verge.png",
+        "sha": "d33350f0661a181bcab960a0cbddc97a76d9ff8d",
+        "bytes": 3598109
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-sapphire-rivers.png",
+        "sha": "523223e821ca347f41d93376a0c18ff60c60bd83",
+        "bytes": 3597670
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-shattercap-isles.png",
+        "sha": "15ec1a4005c16e9132650515d47f2d1f92a81819",
+        "bytes": 3137615
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-stormcap-coast.png",
+        "sha": "b53054b01faed0508d40cf846c94558ced9f4b8d",
+        "bytes": 3357356
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-verdant-thalos.png",
+        "sha": "192783202677c0fe124e44f4974b3da52dfb5ae1",
+        "bytes": 3673055
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/regions/region-windward-spine.png",
+        "sha": "d893effaef64d56bbd4e13d3192c662adebc752d",
+        "bytes": 3475893
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-applemarsh.png",
+        "sha": "8263e76909426d71a3d3fc5d86ec9d8f069592cb",
+        "bytes": 3744805
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-ashsaddle.png",
+        "sha": "2fb870738d3b41bd0b68f531b7299fd32b766d6d",
+        "bytes": 4039229
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-aurelis.png",
+        "sha": "11d4ea7812e3be3c8b0253b67702bba16bc3d027",
+        "bytes": 3523179
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-barkmill-hamlet.png",
+        "sha": "866ff3b643a7a4502c5350ed74d3d4c62b37feba",
+        "bytes": 4370645
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-barleyhearth-estate.png",
+        "sha": "ea02e0c069e12ae0c4569688b7fdde6926fe64e5",
+        "bytes": 3907596
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-basinford.png",
+        "sha": "1fcb4576c3320213f958f5163ad7ad0c99ab174a",
+        "bytes": 4112785
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-blackglass-camp.png",
+        "sha": "77d68fe9d480a5d227c5ad6043bd488af23ea9a9",
+        "bytes": 3700766
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-blueflow.png",
+        "sha": "c16443c57d78ea38a1fd1cfcdad7ba9ed7b64393",
+        "bytes": 3636242
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-breaksail.png",
+        "sha": "3f9d6088fc8d65df01a0d8d806e37450a70a9b2d",
+        "bytes": 3682596
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-bridgewatch-ferry.png",
+        "sha": "e810e6723e06aa9a2ad003d7899a8d50e1360d0b",
+        "bytes": 3679279
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-brineharbor.png",
+        "sha": "dfc5c4e8e43a584c0f0382148eb8984667a8e5fc",
+        "bytes": 3428802
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-caskbank-estate.png",
+        "sha": "e5dd6132c3ee9e57c1991dbf54678d5ac48afd6c",
+        "bytes": 3748905
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-cliffsalt-priory.png",
+        "sha": "421361e095f4126f10b63924fc1ab9f17dccff4f",
+        "bytes": 3730132
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-coalspur.png",
+        "sha": "321528b9f48b1f5c8c31b7395dbe64426f8df432",
+        "bytes": 4022215
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-confederate-ford.png",
+        "sha": "c2fd581d42724202790d9b1703d06a2db67e163b",
+        "bytes": 4429345
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-coppergate.png",
+        "sha": "e46755c3a3945e065c5575305eaac796d5ffde7c",
+        "bytes": 3714518
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-deepecho-camp.png",
+        "sha": "766964014e3c107a145d3067d6d4699f7059820a",
+        "bytes": 3777020
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-dockreed-estate.png",
+        "sha": "33444f9c0fe4c1701928f3a05ad2305b46089255",
+        "bytes": 4001070
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-golden-barrow.png",
+        "sha": "19262c2cf1953a953e371b3c8d52ca6cc984b868",
+        "bytes": 3904293
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-granary-crown.png",
+        "sha": "4d30cf79a1961ecdf378c30e68c5d3f7371c0263",
+        "bytes": 4025128
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-greenharrow.png",
+        "sha": "df9fa6964b4d463358cf03721be74471e2dd741d",
+        "bytes": 3727898
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-gullsreach.png",
+        "sha": "41888079ae078e87baed14415c1e9591d827df39",
+        "bytes": 3695501
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-harvestrest.png",
+        "sha": "e15574c6c80fd36564568b339b248e5224d2bd1e",
+        "bytes": 3870161
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-haywarden-estate.png",
+        "sha": "fbcd11aeecd44dbcb43a78704392c05b9bd65c34",
+        "bytes": 4047364
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-headwater-bastion.png",
+        "sha": "906ea38927a3b474835082e1ef7dd2fc1589be24",
+        "bytes": 3555195
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-highcrown.png",
+        "sha": "7954b442971e43e13fd398f3dc2afad3994d9013",
+        "bytes": 3704046
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-islemarket.png",
+        "sha": "61ba06039027906c9ba89482dfc0e71eed30ef86",
+        "bytes": 3915060
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-kelpnet-hamlet.png",
+        "sha": "b1d270e61f0a54f5782ff8b54c10cd5844519677",
+        "bytes": 3527456
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-kingsbridge.png",
+        "sha": "14d6ed5f8a6915505aff108e9eb12e1fee3396c4",
+        "bytes": 3459260
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-ledgerford.png",
+        "sha": "54f96ec78151718ce0be58aca3e271b40ffad805",
+        "bytes": 3926588
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-longmeadow.png",
+        "sha": "84aa6353fbb4d76406e1c89d691ddd975763e201",
+        "bytes": 4159513
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-mastfield.png",
+        "sha": "aefa49dd057f9f031ec2d1fb1690e4b4865e8269",
+        "bytes": 3879620
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-millrun.png",
+        "sha": "4398d7b97e1d4ba71e29922754c5ce0ede6731fd",
+        "bytes": 3821480
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-mistfen-landing.png",
+        "sha": "aa7efcdaef25ba010e0bf0cc00e7f3cc9f9350b4",
+        "bytes": 3357629
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-moonwell-grove.png",
+        "sha": "aef8b5c41d2b2cb57961f5afdbcc3b143c283e12",
+        "bytes": 3782526
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-northhook-keep.png",
+        "sha": "836d1a2d51fcab647e7ac22d5a45ff3913e7a31b",
+        "bytes": 3249520
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-northpass-redoubt.png",
+        "sha": "717d0941bac3ed281959531bcb9e4bb44754313d",
+        "bytes": 3644332
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-obsidian-stair.png",
+        "sha": "c7d3f62e97023d8ecef621ace4d429fa3b7cc8bc",
+        "bytes": 3838801
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-oliveford.png",
+        "sha": "6da3ad612919e8605fa7c34788405eadd291277a",
+        "bytes": 3574047
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-orchardhome.png",
+        "sha": "5760e94c4e26e94fc04ec3ed5326889148654370",
+        "bytes": 4113908
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-passglass-hold.png",
+        "sha": "44487dc35055e2f1de947f85579db877fb48d0a7",
+        "bytes": 3904275
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-pasturemeet.png",
+        "sha": "bb9bedf9a397f14c8b25adb3af8c27d75af063fa",
+        "bytes": 4069763
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-quarrymule-camp.png",
+        "sha": "f5f70b47a077979ee312a59d8fd42a31db48ee6f",
+        "bytes": 3783245
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-redcliff-quay.png",
+        "sha": "0b9ac14609d00cf23e0fe51d83e832f10740fea0",
+        "bytes": 3675119
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-redreed-ford.png",
+        "sha": "84a2fa89dcf4097d469a7f03ad3e2bac499ef543",
+        "bytes": 3670733
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-redroot-warrens.png",
+        "sha": "4465374c977d82f689430a48c80659c04b309ae8",
+        "bytes": 4474675
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-riverthrone.png",
+        "sha": "133602e09ac4131f13d3e88485de1200bec9514b",
+        "bytes": 3976435
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-saltfang-anchorage.png",
+        "sha": "32ab85f3d296de2f07412324e19496fdf1b3aff3",
+        "bytes": 3746839
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-seabanner.png",
+        "sha": "aece8351ebbcc439a92cf777e8f4be1d615d89d4",
+        "bytes": 3905743
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-silvergrove.png",
+        "sha": "59885543fdaec6852d798466bc595e2fcaae8de9",
+        "bytes": 3483335
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-silvermere.png",
+        "sha": "609cf12c6dbb7c3329949adf7e54f4cecb7899f3",
+        "bytes": 3852119
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-slatewake.png",
+        "sha": "0e04a906b5ee6c3a6236a77f92790ae7ff16c8be",
+        "bytes": 4165671
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-southlight.png",
+        "sha": "1565ea9446425adf7fa6875700d4d12059671f84",
+        "bytes": 3583662
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-southlock-ferry.png",
+        "sha": "3622168e1cf7cca88cb8e5610199e5bedda9e3e1",
+        "bytes": 3893963
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-spicehook.png",
+        "sha": "a608a18750369487c9eef3f62a4f95cbaab30130",
+        "bytes": 3945470
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-stepwell-redoubt.png",
+        "sha": "3ecfbc9bdf384f5f169d773cd8f8336d91021c05",
+        "bytes": 3978515
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-stonevein.png",
+        "sha": "2500535b2cb5396937c719a96b43bbfc6db9d8ef",
+        "bytes": 3714999
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-stormwatch-citadel.png",
+        "sha": "48f2750ee4c451ff851d2d0dcabb76a0342cd3e0",
+        "bytes": 3493232
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-sunmeadow.png",
+        "sha": "3a4d2996495d3136d9cd5bb71edf8427cb5d7f22",
+        "bytes": 3655789
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-sunpasture-estate.png",
+        "sha": "7afe1b90e988f804ccf72c547d0b30604ca35b4d",
+        "bytes": 4122262
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-sunscar-watch.png",
+        "sha": "d88d4ea40f3406654c2dd92cd26032d018f0a34c",
+        "bytes": 3318067
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-sunspire-reach.png",
+        "sha": "bd6b32c3454e864a394a8da88c03bf4939e220b9",
+        "bytes": 4086109
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-thornwatch.png",
+        "sha": "7716ab18c66fd8841868fe9f110875f4197627c7",
+        "bytes": 4101797
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-tidecrown.png",
+        "sha": "f6957dc5c166b2e37aa29cce26f44b52f4df7e12",
+        "bytes": 3923356
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-timbercross.png",
+        "sha": "2f15eb8b57f9509d8b9c5b10e94b58ed4c025e5c",
+        "bytes": 4324670
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-verdeward.png",
+        "sha": "7985d6ef1d7dc6298fd861192ce387ccdaa4c21c",
+        "bytes": 4068002
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-vinecross.png",
+        "sha": "c4c97ce3ed39a7c0b1a5f1a0d8a0985862970e0f",
+        "bytes": 3596185
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-watchers-gate.png",
+        "sha": "7c7e78a7283ec3a7aeeed01c8d2d8aba948c0cc1",
+        "bytes": 3833860
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/settlements/settlement-whitebark-gate.png",
+        "sha": "f5d938ce3928ed56709c75e7019e480363d2dcea",
+        "bytes": 3777857
+      }
+    ],
+    "retainedResourceIcons": [
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-timber.png",
+        "sha": "b6dc1c3aae6b785ce320d4ff7ad72558d14b2e21"
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-field-crops.png",
+        "sha": "86fefbfc7635af08abf71d5952578fcbb3e28773"
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-orchards.png",
+        "sha": "14fb66024caec3defb5612358f155703fe5899fa"
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-garden-produce.png",
+        "sha": "eed5d4f4d1f64cac658eddb487aa83051805cefe"
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-livestock.png",
+        "sha": "53d2f7b6382982a0efe2b778ae837d484a4ab166"
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-fish-and-game.png",
+        "sha": "3f12422a991c206e5bfd710fbb0c650b599e8a54"
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-ore.png",
+        "sha": "b06a5e41515d17a44dc93abad655a84c7769c37a"
+      },
+      {
+        "path": "apps/rpg-ui/public/character-creator/region-resources/resource-stone.png",
+        "sha": "9045a7b5d677bf096b7b079de3f226b3fcf04e7c"
+      }
+    ],
+    "relatedLiveSeasonArtNotLoadedByStandalone": [
+      {
+        "path": "apps/rpg-ui/public/seasons/season-deepfrost.png",
+        "sha": "1e9102ad3644b07177794740eb06aedac5b6f3aa"
+      },
+      {
+        "path": "apps/rpg-ui/public/seasons/season-thaw.png",
+        "sha": "1dc3211f55956429a060acff0964b0b2d8701684"
+      },
+      {
+        "path": "apps/rpg-ui/public/seasons/season-waking.png",
+        "sha": "a63e08d3be23756f07caad9f2548ed6c5649b8fe"
+      },
+      {
+        "path": "apps/rpg-ui/public/seasons/season-swelter.png",
+        "sha": "7752356f1898ed54064381433f00c46e81cba9eb"
+      },
+      {
+        "path": "apps/rpg-ui/public/seasons/season-harvest.png",
+        "sha": "4c96593dff017eb3c72a35cb196af9a07a24bfa2"
+      },
+      {
+        "path": "apps/rpg-ui/public/seasons/season-withering.png",
+        "sha": "eb4639e8a41432efedae58e9892cb661af0c99ce"
+      }
+    ]
+  },
+  "linkedData": {
+    "geoSelection": "apps/rpg-ui/src/game-shell/worldSelectionCatalog.ts",
+    "sourceRegions": "packages/content/base/world/regions.json",
+    "sourceSettlements": "packages/content/base/world/settlements.json",
+    "canonicalSeasonNames": "packages/content/base/world/calendar.json",
+    "canonicalTimeMath": "packages/shared/time/src/index.ts",
+    "sexAndLineageNaming": "apps/rpg-ui/src/game-shell/characterCreationCatalog.ts",
+    "liveCalendarWeatherPattern": "apps/rpg-ui/src/components/TopStatusBar.tsx"
+  },
+  "verification": {
+    "command": "node docs/prototypes/verify-current-preview.mjs",
+    "optionalBrowser": "python3 docs/prototypes/preview-browser-smoke.py (requires Playwright and Chromium)",
+    "testedBrowserWidths": [
+      1440,
+      1280,
+      768,
+      375,
+      320
+    ],
+    "verifySourceBinaryEquality": "Git blob SHA of master snapshot equals original reviewed PR blob",
+    "externalArtNetworkLoads": "not fully tested; resource and geography image URLs fall back when blocked",
+    "productionReactAndSaveSystems": "not tested/modified"
+  },
+  "handoff": "docs/prototypes/README.md"
+}
