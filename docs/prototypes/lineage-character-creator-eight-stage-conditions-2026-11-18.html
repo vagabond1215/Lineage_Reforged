@@ -876,14 +876,59 @@
   .launcher-subbar .launcher-subbar-action,.launcher-subbar .launcher-subbar-create,.chrome .subbar button{font-size:11px;padding-inline:8px}
   .launcher-subbar .launcher-subbar-create{min-width:108px}
 }
+
+/* 2026-11-20: character-creation identity and source-aligned calendar/climate header. */
+.creator-identity{display:flex;align-items:center;gap:11px;min-width:0;flex:0 1 auto}
+.creator-avatar{width:42px;height:42px;flex:none;display:grid;place-items:center;border:1px solid #bda371;background:#222b2c;color:#e6cc9e;border-radius:10px}
+.creator-avatar svg{width:26px;height:26px}
+.creator-character-name{font:normal clamp(17px,1.6vw,23px) Georgia,'Times New Roman',serif;color:#f5e6ca;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:230px}
+.chrome .top{justify-content:space-between;gap:14px}
+.chrome .righttop{display:flex;align-items:center;gap:14px;min-width:0}
+.creator-calendar{position:relative;z-index:75;min-width:0;flex:none}
+.creator-calendar summary::-webkit-details-marker{display:none}
+.creator-calendar summary::marker{content:''}
+.creator-calendar-trigger{display:flex;gap:8px;align-items:center;cursor:pointer;list-style:none;border:1px solid transparent;border-radius:8px;padding:7px 9px;background:#1d272b;color:#cbd4ce;max-width:244px}
+.creator-calendar-trigger:hover,.creator-calendar[open] .creator-calendar-trigger{border-color:#aa8e62;background:#2a3231}
+.creator-calendar-trigger:focus-visible{outline:2px solid #d3ad76;outline-offset:2px}
+.creator-season-art{display:grid;place-items:center;flex:none;width:35px;height:35px;border:1px solid #5c6968;border-radius:8px;background:#29383c;color:#d9bf8d}
+.creator-season-art svg{width:24px;height:24px}
+.creator-calendar-lines{display:grid;gap:2px;min-width:0;font-size:10px;line-height:1.28;text-align:left;white-space:nowrap}
+.creator-calendar-lines span{overflow:hidden;text-overflow:ellipsis}
+.creator-calendar-lines span:first-child{font-size:11px;color:#e8d6b5}
+.creator-calendar-panel{position:absolute;z-index:90;top:calc(100% + 10px);right:-54px;width:min(360px,calc(100vw - 22px));max-height:min(68vh,530px);overflow-y:auto;padding:16px;background:#1b252a;border:1px solid #797464;border-radius:14px;box-shadow:0 22px 70px #000a;color:#e6ddcc}
+.creator-calendar-title{font:normal 23px Georgia,serif;color:#f0dfc0}
+.creator-calendar-location{font-size:11px;color:#aab7b3;margin:3px 0 12px}
+.creator-calendar-section{border-top:1px solid #465051;padding:10px 0 6px}
+.creator-calendar-section h3{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#d4b27c;margin:0 0 8px}
+.creator-calendar-row{display:flex;align-items:baseline;justify-content:space-between;gap:12px;font-size:11px;padding:5px 0}
+.creator-calendar-row span{color:#aeb8b4}.creator-calendar-row strong{font-weight:600;color:#efe4d0;text-align:right}
+/* One shared gutter for the start of the main creator panel. */
+:root{--creator-main-gutter:16px}
+.body .content{padding:var(--creator-main-gutter) var(--creator-main-gutter) 44px;max-width:none;margin:0}
+.body .content .section.geo-section{padding:14px 16px 18px}
+.body .railinner{padding-top:var(--creator-main-gutter)}
+.railstat .resources{margin-top:0}
+@media(max-width:850px){.creator-calendar-trigger{padding:4px}.creator-calendar-lines{font-size:9px}.creator-calendar-lines span:first-child{font-size:10px}.creator-character-name{max-width:140px}.chrome .righttop{gap:8px}}
+@media(max-width:650px){:root{--creator-main-gutter:12px}.creator-avatar{width:34px;height:34px;border-radius:8px}.creator-avatar svg{width:22px;height:22px}.creator-identity{gap:6px}.creator-character-name{font-size:15px;max-width:105px}.creator-calendar-lines{display:none}.creator-season-art{width:32px;height:32px}.creator-calendar-panel{right:-78px}.chrome .righttop{gap:5px}.body .content .section.geo-section{padding:12px 12px 15px}}
+@media(max-width:380px){.creator-character-name{max-width:77px;font-size:14px}.creator-calendar-panel{right:-70px}.chrome .top{gap:5px}}
+
+/* Preserve one nonwrapping mobile header row and a viewport-contained calendar popup. */
+@media(max-width:650px){
+ .chrome .top{display:flex!important;align-items:center;justify-content:space-between;gap:6px}
+ .chrome .top .righttop{display:flex!important;flex:0 0 auto;flex-wrap:nowrap;align-items:center;gap:5px}
+ .creator-identity{flex:1 1 auto;min-width:0}
+ .creator-calendar{flex:none}
+ .creator-calendar-panel{position:fixed;top:calc(var(--app-topbar-height) - 2px);left:12px;right:12px;width:auto;max-width:none;max-height:calc(100vh - var(--app-topbar-height) - 16px);box-sizing:border-box}
+}
+@media(max-width:370px){.chrome .top{padding-left:8px;padding-right:8px}.creator-character-name{max-width:70px}.chrome .righttop{gap:3px!important}}
 </style>
 </head>
 <body>
 <div id="launcher" class="launcher-screen"></div>
 <div class="shell" id="creatorShell" hidden><div class="chrome">
   <header class="top" aria-label="Application bar">
-    <div class="brand topbrand"><div class="brandmark">✧</div><div><div class="brandname">LINEAGE REFORGED</div><div class="brandsub">CHRONICLE</div></div></div>
-    <div class="righttop"><div class="clock-stack" aria-label="Local and World clocks"><div class="clock" id="clock">LOCAL --:--</div><div class="world-clock" id="worldClock" title="Awaiting an owner-backed World clock">WORLD --:--</div></div><details class="system-menu"><summary aria-label="System menu" title="System menu"><svg class="system-dots-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></summary><div class="system-menu-panel"><button type="button" data-launch="settings">Settings</button><button type="button" data-launch="logout">Log out</button></div></details></div>
+    <div class="creator-identity" aria-label="Character identity"><span class="creator-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.4"/><path d="M4.5 20c.6-4.4 3.5-6.5 7.5-6.5s6.9 2.1 7.5 6.5"/></svg></span><strong class="creator-character-name" id="creatorHeaderName">Aerin</strong></div>
+    <div class="righttop"><details class="creator-calendar" id="creatorCalendar"><summary class="creator-calendar-trigger" aria-label="Open World calendar and climate" title="World calendar and climate"><span class="creator-season-art" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9 7 7m10 10 2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"/></svg></span><span class="creator-calendar-lines"><span id="creatorCalendarLine">Date -- · Season --</span><span id="creatorWeatherLine">Time --:-- · Weather unavailable</span></span></summary><div class="creator-calendar-panel" role="group" aria-label="Calendar and climate detail"><div class="creator-calendar-title">Calendar &amp; Climate</div><p class="creator-calendar-location" id="creatorCalendarLocation">First World</p><div id="creatorCalendarRows"></div></div></details><div class="clock-stack" aria-label="Local and World clocks"><div class="clock" id="clock">LOCAL --:--</div><div class="world-clock" id="worldClock" title="Awaiting an owner-backed World clock">WORLD --:--</div></div><details class="system-menu"><summary aria-label="System menu" title="System menu"><svg class="system-dots-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg></summary><div class="system-menu-panel"><button type="button" data-launch="settings">Settings</button><button type="button" data-launch="logout">Log out</button></div></details></div>
   </header>
   <nav class="subbar" id="creatorSubbar" aria-label="Creator navigation">
     <div class="subbar-back"><button type="button" id="creatorBack" class="primary subbar-back-btn" aria-label="Back to previous creator step or Characters" title="Back">◀</button></div>
@@ -893,7 +938,7 @@
       <button type="button" class="primary subbar-next" id="nextTop" aria-label="Next step" title="Next step">▶</button>
     </div>
   </nav>
-</div><div class="body"><aside class="rail"><div class="railinner"><button type="button" id="mobileToggle" class="mobiletoggle" aria-controls="railCollapse" aria-expanded="true">☰ Creation steps & character summary</button><div class="railcollapse open" id="railCollapse"><nav class="railnav" id="railNav"></nav><div class="railhr"></div><div class="railstat"><div class="who" id="railName">Aerin</div><div class="resources" id="resources"></div><div class="statgroups" id="statgroups"></div></div></div></div></aside><main class="content" aria-labelledby="stepTitle"><div class="creator-mobile-tools" id="creatorMobileTools"></div><h1 id="stepTitle" class="visually-hidden">Identity</h1><span id="sectionLabel" hidden></span><span id="stepSubtitle" hidden></span><div id="stage"></div></main></div></div>
+</div><div class="body"><aside class="rail"><div class="railinner"><button type="button" id="mobileToggle" class="mobiletoggle" aria-controls="railCollapse" aria-expanded="true">☰ Creation steps & character summary</button><div class="railcollapse open" id="railCollapse"><nav class="railnav" id="railNav"></nav><div class="railhr"></div><div class="railstat"><div class="resources" id="resources"></div><div class="statgroups" id="statgroups"></div></div></div></div></aside><main class="content" aria-labelledby="stepTitle"><div class="creator-mobile-tools" id="creatorMobileTools"></div><h1 id="stepTitle" class="visually-hidden">Identity</h1><span id="sectionLabel" hidden></span><span id="stepSubtitle" hidden></span><div id="stage"></div></main></div></div>
 <div class="dialogbg" id="dialogbg" role="presentation"><section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle"><div class="eyebrow" id="dialogEyebrow">World Entry</div><h2 id="dialogTitle"></h2><div id="dialogBody"></div><div id="dialogActions" class="dialogactions"></div><div class="dialogfooter"><button class="quiet" type="button" id="dialogClose">Close ✕</button></div></section></div>
 <script>
 const steps=['Lineage','Identity','Continent','Region','Settlement','World Entry','Summary','Opening'];
@@ -1191,9 +1236,9 @@ function summarySentence(){
 }
 function renderRail(){
  const d=getDerivedStats();
- el('railName').textContent=fullName()||'Unnamed Wanderer';
+ el('creatorHeaderName').textContent=fullName()||'Unnamed Wanderer';
  el('railNav').innerHTML=steps.map((s,i)=>`<button type="button" class="navbtn ${state.stage===i?'active':''}" data-nav="${i}" ${canVisit(i)?'':'disabled'} aria-current="${state.stage===i?'step':'false'}"><span class="num">${i+1}</span><span>${s}</span>${stageValid(i)?'<span class="done">✓</span>':''}</button>`).join('');
- el('resources').innerHTML=[['hp','HP',d.resources.hp,120],['mp','MP',d.resources.mp,60],['stamina','ST',d.resources.stamina,100]].map(([id,label,value,baseline])=>`<div class="resbar ${id}" role="img" aria-label="${label} ${value}, comparative capacity bar, not current over maximum" title="Source-based attribute maxima projection excluding body, equipment, Legacy, active conditions and World Entry. Comparative scale, not current HP/MP/Stamina."><span class="resbar-label">${label}</span><div class="resbar-track"><span class="resbar-fill" style="width:${Math.max(3,Math.min(100,100*value/(baseline*1.8)))}%"></span></div><strong class="resbar-value">${value}</strong></div>`).join('');
+ el('resources').innerHTML=[['hp','HP',d.resources.hp],['mp','MP',d.resources.mp],['stamina','ST',d.resources.stamina]].map(([id,label,value])=>`<div class="resbar ${id}" role="img" aria-label="${label} ${value} of ${value}, full at character creation" title="Full ${label} at character creation. ${value} is the current calculated capacity, not a comparative gauge."><span class="resbar-label">${label}</span><div class="resbar-track"><span class="resbar-fill" style="width:100%"></span></div><strong class="resbar-value">${value}</strong></div>`).join('');
  el('statgroups').innerHTML=groups.map(g=>`<section class="statgroup" aria-label="${g.name} attributes"><div class="grouplabel">${g.name}</div><div class="groupvalues">${g.keys.map(k=>`<div class="statline"><span title="${esc(effects[k])}">${k}</span><strong>${d.attrs[k]}</strong></div>`).join('')}</div></section>`).join('');
 }
 function renderStage(){
@@ -1386,6 +1431,27 @@ function launcherFrame(content,narrow=false) {return `<div class="launcher-main 
 const systemDots='<svg class="system-dots-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="5" r="1.9"/><circle cx="12" cy="12" r="1.9"/><circle cx="12" cy="19" r="1.9"/></svg>';
 function systemMenu(signed){return `<details class="system-menu"><summary aria-label="System menu" title="System menu">${systemDots}</summary><div class="system-menu-panel"><button type="button" data-launch="settings">Settings</button>${signed?'<button type="button" data-launch="logout">Log out</button>':''}</div></details>`;}
 function selectedDemoWorld(){return route.worlds[route.worldIndex]||null;}
+const previewSeasonNames={deepfrost:'Deepfrost',thaw:'Thaw',waking:'Waking',swelter:'Swelter',harvest:'Harvest',withering:'Withering',authored:'Scenario Default'};
+function updateCreatorCalendar(){
+ const world=selectedDemoWorld(),settings=normalizedWorldSettings(world?.settings||route.worldSettings);
+ const requestedSeason=previewSeasonNames[settings.season]||'Scenario Default';
+ const seasonLabel=settings.season==='authored'?'Season --':`Start: ${requestedSeason}`;
+ const liveSeason=world?.started===true&&typeof world.season==='string'&&world.season.trim()?world.season.trim():null;
+ const liveDate=world?.started===true&&typeof world.date==='string'&&world.date.trim()?world.date.trim():null;
+ const rawTime=world?.started===true?world.worldTime:null;
+ const clockTime=typeof rawTime==='string'&&/^\d{1,2}:\d{2}$/.test(rawTime)?rawTime:'--:--';
+ const title=el('creatorCalendarLine');if(title)title.textContent=`${liveDate||'Date --'} · ${liveSeason||seasonLabel}`;
+ const weather=el('creatorWeatherLine');if(weather)weather.textContent=`${clockTime} · Weather unavailable`;
+ const place=el('creatorCalendarLocation');if(place)place.textContent=world?.name||'First World';
+ const rows=el('creatorCalendarRows');if(!rows)return;
+ const groups=[
+  ['Current Time',[['World date',liveDate||'Unavailable'],['World time',clockTime]]],
+  ['Season',[['Current',liveSeason||'Unavailable'],['World starting season',requestedSeason]]],
+  ['Climate',[['Temperature tendency',labelWorldOption('temperature',settings.temperature)],['Rainfall tendency',labelWorldOption('moisture',settings.moisture)],['Current weather','Unavailable']]],
+  ['Temperature',[['Current temperature','Unavailable']]]
+ ];
+ rows.innerHTML=groups.map(([heading,entries])=>`<section class="creator-calendar-section"><h3>${esc(heading)}</h3>${entries.map(([label,value])=>`<div class="creator-calendar-row"><span>${esc(label)}</span><strong>${esc(value)}</strong></div>`).join('')}</section>`).join('');
+}
 function renderLauncher(){
  const signed=Boolean(route.accountName);
  const screen=route.screen;
@@ -1476,7 +1542,7 @@ window.addEventListener('resize',syncCreatorTools);
 function render(){
   const inCreator=route.screen==='creator';el('creatorShell').hidden=!inCreator;el('launcher').hidden=inCreator;
  if(!inCreator){renderLauncher();return;}
- const w=selectedDemoWorld();updateWorldClock();
+ const w=selectedDemoWorld();updateWorldClock();updateCreatorCalendar();
  renderRail();el('stage').innerHTML=renderStage();
  const isIdentity=state.stage===1,subbar=el('creatorSubbar'),random=el('identityDice'),topNext=el('nextTop');
  subbar?.classList.toggle('identity-active',isIdentity);
@@ -1497,7 +1563,7 @@ document.addEventListener('input',e=>{
   const notice=document.querySelector('.validation');if(notice)notice.classList.remove('show');
  }
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape')el('dialogbg').classList.remove('open')});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){el('dialogbg').classList.remove('open');const calendar=el('creatorCalendar');if(calendar)calendar.open=false;}});
 el('dialogbg').addEventListener('click',e=>{if(e.target===el('dialogbg'))el('dialogbg').classList.remove('open')});
 if(window.matchMedia('(max-width:550px)').matches){el('railCollapse').classList.remove('open');el('mobileToggle').setAttribute('aria-expanded','false')}
 function updateWorldClock(){
