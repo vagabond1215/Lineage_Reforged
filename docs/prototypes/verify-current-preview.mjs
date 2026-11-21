@@ -42,7 +42,9 @@ for (const marker of [
   'function renderLineage()', 'function renderGeography()', 'const GEO_SETTLEMENT_META',
   'const WORLD_OPTION_GROUPS=', 'id="previewPassword"', 'id="previewStayLoggedIn"',
   'function renderSaveTile(c)', 'function heirDetails(p)', 'function familyTree(c)',
-  'function recordPreviewCharacter()', 'Every life has a beginning.'
+  'function recordPreviewCharacter()', 'Every life has a beginning.',
+  'function renderFamilyLibrary(w)', 'function familyGroups(members)', 'function familyHeirParent(members)',
+  'function familyTreeBody(id,selected)', 'family-tree-scroll', 'function familyResume(members)'
 ]) assert.ok(html.includes(marker), `Missing creator feature ${marker}`);
 
 const artwork = manifest.images.retainedGeographyArt;
