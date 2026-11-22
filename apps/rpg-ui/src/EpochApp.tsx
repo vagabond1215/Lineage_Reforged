@@ -18,7 +18,8 @@ import { createDefaultCharacterCreationFormState, validateCharacterCreationForm 
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
 import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen.js';
-import { isAccountPresentationEnabled, isWorldPresentationEnabled } from './game-shell/accountPresentationGate.js';
+import { canSelectSplashUiVersion, isAccountPresentationEnabled, isWorldPresentationEnabled,
+  splashUiVersionUrl, type SplashUiVersion } from './game-shell/accountPresentationGate.js';
 import { WelcomeWorldPresentation } from './game-shell/components/WelcomeWorldPresentation.js';
 import { WelcomeScreen } from './game-shell/components/WelcomeScreen.js';
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen.js';
@@ -177,8 +178,9 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   developmentNativeV3 = false }:
   { candidateNativeV3?: boolean; stagingNativeV3?: boolean; developmentNativeV3?: boolean } = {}) {
   // The separately built staging entry enforces its exact origin before this component mounts.
-  const nativeCandidate = stagingNativeV3 || shouldSelectNativeDevelopmentEntry(
-    developmentNativeV3, import.meta.env.DEV, window.location.hostname, window.location.pathname) ||
+  const nativeDevelopmentEntry = shouldSelectNativeDevelopmentEntry(
+    developmentNativeV3, import.meta.env.DEV, window.location.hostname, window.location.pathname);
+  const nativeCandidate = stagingNativeV3 || nativeDevelopmentEntry ||
     (candidateNativeV3 && import.meta.env.DEV &&
     window.location.pathname.endsWith('/native-selected-session-qa.html'));
   // Ephemeral, loopback-only QA opt-in. No account or Save preference is persisted.
@@ -189,6 +191,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     welcomeEnabled, window.location.hostname, window.location.search);
   const worldPresentation = isWorldPresentationEnabled(import.meta.env.DEV,
     welcomeEnabled, window.location.hostname, window.location.search);
+  const splashUiVersionAvailable = canSelectSplashUiVersion(
+    nativeDevelopmentEntry, window.location.hostname, stagingNativeV3, candidateNativeV3);
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
   const [blockDetail, setBlockDetail] = useState('');
@@ -687,11 +691,21 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   </div>;
 
   const current = state;
+  const selectSplashUiVersion = (version: SplashUiVersion) => {
+    if (!splashUiVersionAvailable || state.screen !== 'ACCOUNT_ACCESS' || actionPending.current) return;
+    const currentUrl = new URL(window.location.href);
+    const target = splashUiVersionUrl(currentUrl, version);
+    if (target.href !== currentUrl.href) window.location.replace(target.href);
+  };
   const dismissNotice = () => dispatch({ type: 'SET_NOTICE', notice: null });
   const common = { notice: current.screen === 'IN_GAME' ? current.notice : null, onDismissNotice: dismissNotice };
   let content;
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
     welcomeBranding={welcomeEnabled}
+    {...(splashUiVersionAvailable ? { splashUiVersion: {
+      active: worldPresentation ? 'preview' : welcomeEnabled ? null : 'classic',
+      busy, onSelect: selectSplashUiVersion
+    } } : {})}
     presentationPreview={accountPresentation} clockLabel={clockLabel} clockTitle={clockNow.toString()}
     allowAccountDeletion
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}

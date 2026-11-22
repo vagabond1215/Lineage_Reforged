@@ -72,3 +72,31 @@ test('gated picker displays real journey metadata and uniquely labels duplicate 
     assert.deepEqual(options(render([])), new Map([['', 'Select an account']]));
   } finally { await vite.close(); }
 });
+
+test('both splash layouts render an optional non-submit selector for first account and existing picker', async () => {
+  const vite = await createServer({ server: { middlewareMode: true, hmr: false }, appType: 'custom' });
+  try {
+    const { LocalAccountAccessScreen } = await vite.ssrLoadModule('/src/game-shell/components/LocalAccountAccessScreen.tsx');
+    for (const mode of ['create_first_account', 'pick_account']) {
+      for (const preview of [false, true]) {
+        const props = { mode, notice: null, themeMode: 'dark', presentationPreview: preview,
+          accounts: mode === 'pick_account' ? [{accountId:'synthetic', displayName:'Synthetic'}] : [] };
+        const render = splashUiVersion => renderToStaticMarkup(React.createElement(LocalAccountAccessScreen,
+          {...props, splashUiVersion}));
+        assert.doesNotMatch(render(undefined), /aria-label="UI version"/);
+        const active = preview ? 'preview' : 'classic';
+        const markup = render({ active, busy: false, onSelect: assert.fail });
+        const selector = markup.match(/<section aria-label="UI version"[^>]*>(.*?)<\/section>/)[1];
+        for (const [version, label] of [['classic', 'Classic UI'], ['preview', 'New UI Preview']]) {
+          const button = selector.match(new RegExp(`<button [^>]*>${label}</button>`))[0];
+          assert.match(button, /type="button"/);
+          assert.match(button, new RegExp(`aria-pressed="${version === active}"`));
+        }
+        const partial = render({active: null, busy: true, onSelect: assert.fail});
+        const busySelector = partial.match(/<section aria-label="UI version"[^>]*>(.*?)<\/section>/)[1];
+        assert.equal((busySelector.match(/aria-pressed="false" disabled=""/g) ?? []).length, 2);
+        assert.match(busySelector, /clears unsent form entries/);
+      }
+    }
+  } finally { await vite.close(); }
+});

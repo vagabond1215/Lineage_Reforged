@@ -10,6 +10,7 @@ import type { GameShellNotice } from "../state.js";
 import { NoticeBanner } from "./NoticeBanner.js";
 import { ShellBrandLogo } from "./ShellBrandLogo.js";
 import { AppShell } from "./AppShell.js";
+import type { SplashUiVersion } from "../accountPresentationGate.js";
 
 type LocalAccountAccessScreenProps = {
   mode: "pick_account" | "create_first_account";
@@ -41,6 +42,11 @@ type LocalAccountAccessScreenProps = {
   onToggleThemeMode: () => void;
   welcomeBranding?: boolean;
   presentationPreview?: boolean;
+  splashUiVersion?: {
+    active: SplashUiVersion | null;
+    busy: boolean;
+    onSelect: (version: SplashUiVersion) => void;
+  };
   clockLabel?: string;
   clockTitle?: string;
 };
@@ -105,6 +111,7 @@ export function LocalAccountAccessScreen({
   onToggleThemeMode,
   welcomeBranding = false,
   presentationPreview = false,
+  splashUiVersion,
   clockLabel = '',
   clockTitle = ''
 }: LocalAccountAccessScreenProps) {
@@ -326,6 +333,20 @@ export function LocalAccountAccessScreen({
         </div>
 
         </>}
+
+        {splashUiVersion && <section aria-label="UI version" className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-3 text-sm">
+          <div className="flex flex-wrap gap-2">
+            {(['classic', 'preview'] as const).map(version => <button key={version} type="button"
+              aria-pressed={splashUiVersion.active === version} disabled={submitting || splashUiVersion.busy}
+              onClick={() => splashUiVersion.onSelect(version)}
+              className={`${headerButtonClass} min-h-11 px-3 py-1 disabled:opacity-60 aria-pressed:border-[color:var(--color-text-strong)] aria-pressed:bg-[color:var(--color-surface-strong)] aria-pressed:font-semibold`}>
+              {version === 'classic' ? 'Classic UI' : 'New UI Preview'}
+            </button>)}
+          </div>
+          <p className="mt-2">Development preview — some features are unavailable.</p>
+          {splashUiVersion.active === null && <p>Some preview features are enabled.</p>}
+          <p>Switching reloads the page and clears unsent form entries.</p>
+        </section>}
 
         {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}
 
