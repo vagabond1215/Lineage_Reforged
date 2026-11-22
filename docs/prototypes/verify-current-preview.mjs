@@ -41,9 +41,9 @@ for (const marker of [
   'function updateCreatorWeather()', 'id="creatorCalendar"', 'id="creatorWeather"',
   'function renderLineage()', 'function renderGeography()', 'const GEO_SETTLEMENT_META',
   'const WORLD_OPTION_GROUPS=', 'id="previewPassword"', 'id="previewStayLoggedIn"',
-  'function renderSaveTile(c)', 'function heirDetails(p)', 'function familyTree(c)',
+  'function renderSaveTile(c)', 'function renderNamedHeirSlot(c)', 'function renderVacantHeirSlots(c,depth)', 'function renderCharacterStats(c)',
   'function recordPreviewCharacter()', 'Every life has a beginning.',
-  'function renderFamilyLibrary(w)', 'function renderFamilyMembers(members)', 'function familyMemberCategory(c)', 'family-tree-button',
+  'function renderFamilyLibrary(w,historical=false)', 'function openCodex()', 'function heirAgeEligible(c)', 'function renderFamilyMembers(members)', 'function familyMemberCategory(c)', 'family-tree-button',
   'function familyTreeBody(id,selected)', 'family-tree-scroll', 'function familyResume(members)'
 ]) assert.ok(html.includes(marker), `Missing creator feature ${marker}`);
 
