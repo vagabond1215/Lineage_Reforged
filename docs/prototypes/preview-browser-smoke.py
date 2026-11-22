@@ -92,7 +92,11 @@ def main() -> None:
             assert header_continue["x"] >= header_title["x"] + header_title["width"] - 1
             assert abs(header_continue["y"] + header_continue["height"]/2 - header_title["y"] - header_title["height"]/2) < 3
             assert page.locator(".launcher-invitation").inner_text() == "Every life has a beginning."
-            assert page.locator(".save-detail").count() == 0
+            # Closing Codex hides its retained dialog body. Only the active
+            # character library must start collapsed; historical detail markup
+            # can remain in the closed dialog without being visible.
+            assert page.locator("#launcherMain .save-detail").count() == 0
+            assert not page.locator(".codex-library .save-detail").is_visible()
             page.locator('[data-launch="playSave"][data-character-id="celyra"]').click()
             assert page.locator("#dialogTitle").inner_text() == "Celyra Ashford"
             page.locator("#dialogbg .dialogfooter button").click()
