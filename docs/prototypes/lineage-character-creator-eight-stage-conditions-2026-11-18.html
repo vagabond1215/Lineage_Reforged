@@ -1064,6 +1064,8 @@
 #dialogbg:has(.codex-library) .dialog{width:min(940px,100%);max-height:90vh}
 .codex-intro{font-size:12px;color:#b5bdb2;line-height:1.5;margin:0 0 12px}
 @media(max-width:550px){.family-member-row .save-tile{grid-template-columns:44px minmax(0,1fr)}.family-member-row .save-tile.expanded{grid-template-columns:clamp(52px,23%,80px) minmax(0,1fr)}.family-member-row .save-portrait{width:100%;min-height:65px}.family-member-row .save-head{grid-template-columns:minmax(0,1fr) auto;padding:8px;gap:5px}.family-member-row .save-detail{padding:8px}.save-statgroups{grid-template-columns:1fr}.save-statgroup{padding:5px 0;border-left:0;border-top:1px solid #46514a}.save-statgroup:first-child{border-top:0;padding-top:0}.save-statgroup h3{margin:0 0 3px}.save-statgroup-values{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.save-statline{font-size:10px;gap:2px;align-items:baseline}.save-statline strong{font-size:11px}.heir-slot{padding:8px;gap:6px}.heir-slot-name{font-size:12px}.heir-slot .heir-action{font-size:10px;padding:7px 6px}.launcher-codex{font-size:11px;padding:4px 6px}.codex-intro{font-size:11px}}
+/* Independent heir World Entry review, never an asset grant */
+.heir-entry-list{display:grid;gap:9px;margin:12px 0}.heir-entry-option{display:block;text-align:left;width:100%;padding:12px;border:1px solid #535e53;border-radius:8px;background:#202b2d;color:#e3d8c3;cursor:pointer}.heir-entry-option[aria-checked=true]{border-color:#c9a878;background:#35392e}.heir-entry-option:disabled{opacity:.57;cursor:not-allowed}.heir-entry-heading{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:normal 18px Georgia,serif;color:#ecd4ad}.heir-entry-option small{font:11px Inter,'Segoe UI',sans-serif;color:#c0b69f}.heir-entry-option p{font-size:12px;margin:6px 0;color:#c3c9bd}.heir-entry-summary{border-top:1px solid #626b5d;padding:10px 0;color:#ddcfb6;font-size:12px}.heir-entry-summary strong{display:block;color:#e5c69a;font-size:14px}.heir-entry-note{font-size:11px;color:#b2b9ae}.heir-entry-heading span:first-child{overflow-wrap:anywhere}@media(max-width:550px){.heir-entry-heading{font-size:16px;flex-wrap:wrap}.heir-entry-option{padding:10px}}
 </style>
 </head>
 <body>
@@ -1720,6 +1722,9 @@ function demoCharacters(){
   prestigeHeirsUnlocked:['edmund','aldric','brenna'].includes(c.id),
   heirCapacity:c.id==='aldric'?2:['edmund','brenna'].includes(c.id)?1:0,
   heirUsedIds:c.id==='edmund'?['aldric']:c.id==='aldric'?['celyra']:[],
+  // Review-only scenario evidence, not production Prestige tiers or family wealth.
+  heirEntryUnlocks:c.id==='brenna'?['modest_support','political_marriage']:c.id==='aldric'?['modest_support']:[],
+  heirEntryFacts:c.id==='dain'?['independent_departure','family_support']:c.id==='unborn-ashford'?['independent_departure']:[],
   lastActiveOrder:c.id==='aldric'?2:c.id==='celyra'?1:0
  }));
 }
@@ -1770,10 +1775,27 @@ function renderNamedHeirSlot(c){
  const title=offspringName(c),kind=unborn?'Conceived offspring':entitlementBlock(p,c)?'Offspring':'Heir candidate';
  return '<div class="heir-slot named" data-heir-id="'+esc(c.id)+'" data-birth-state="'+esc(c.birthState)+'"><div><button type="button" class="heir-slot-name" data-launch="heirDetails" data-character-id="'+esc(c.id)+'">'+esc(title)+'</button><div class="save-meta">'+kind+(c.age!=null?' · Age '+c.age:'')+' · '+esc(reason)+'</div></div><div class="heir-slot-actions">'+saveAction(label,unborn?'prepareUnbornHeir':'confirmSuccession',c.id,'heir-action gold','aria-label="'+label+': '+esc(title)+'" title="'+esc(reason)+'" '+(ready?'':'disabled'))+'</div></div>';
 }
-function heirHandoff(p,c,unborn){
+/* Illustrative alternatives, not canonical scenario IDs, costs or balance. */
+const HEIR_ENTRY_REVIEW=[
+ {id:'ostracized',name:'Ostracized',aid:'Little or no assistance',description:'Estranged, disowned or excluded from family support. Start with only lawfully accessible personal belongings, if any.',unlock:null,facts:['estrangement']},
+ {id:'own_way',name:'Make Your Own Way',aid:'Minimal assistance',description:'Leave the household to gain experience independently, without relying on the family estate.',unlock:null,facts:['independent_departure']},
+ {id:'modest_support',name:'A Family Send-Off',aid:'Limited assistance',description:'Family-backed departure with permitted travel or starting support, subject to actual available resources.',unlock:'modest_support',facts:['family_support']},
+ {id:'political_marriage',name:'Political Marriage',aid:'Conditional marriage settlement or dowry',description:'An eligible, consenting adult marriage may convey a negotiated settlement, obligations or connections.',unlock:'political_marriage',facts:['adult_marriage','marriage_agreement']},
+ {id:'estate_succession',name:'Estate Successor',aid:'Variable lawful inheritance',description:'Assume only the estate rights and obligations that remain after lawful claims, liabilities and elapsed World events.',unlock:'estate_succession',facts:['estate_claim','estate_reconciled']}
+];
+function heirEntryEligibility(p,c,entry){
+ if(!entry||!p||!c)return 'Entry unavailable';
+ if(entry.unlock&&!(p.heirEntryUnlocks||[]).includes(entry.unlock))return 'Prestige unlock required';
+ if(entry.facts.some(f=>!(c.heirEntryFacts||[]).includes(f)))return 'Family circumstances not established';
+ return '';
+}
+function heirEntryOptions(p,c){return HEIR_ENTRY_REVIEW.map(entry=>({entry,block:heirEntryEligibility(p,c,entry)}));}
+function heirHandoff(p,c,unborn,selectedId){
  if(!(unborn?canPrepareUnborn(p,c):canSucceed(p,c)))return;
- const body='<div class="heir-context"><strong>'+esc(offspringName(c))+'</strong><div>Progenitor: '+esc(p.name)+' · Prestige heir slots: '+esc(heirUsage(p))+'</div></div><p>'+(unborn?'This child was already conceived in gameplay. Only an unborn, unnamed offspring may enter heir creation from this screen.':'This is an existing born offspring. Identity and world history must be preserved; activation is not a fresh character creation.')+'</p><p>'+(unborn?'Future restricted family creation will resolve the permitted identity choices from the actual conception and family record.':'Activation requests the authoritative time-skip or maturity wait as applicable, then restricted family creation and inheritance reconciliation.')+'</p><p class="codex-intro">Restricted family creation, World time coordination, inheritance and durable entitlement consumption are not implemented. No child, game time, estate or playable Save is changed in this preview.</p>';
- return openDialog(unborn?'Create Heir':'Activate '+offspringName(c),body,'<button class="heir-action gold" disabled>'+(unborn?'Restricted creator unavailable':'Activate Heir unavailable')+'</button>','Heir workflow preview');
+ const options=heirEntryOptions(p,c),selected=options.find(x=>x.entry.id===selectedId&&!x.block)?.entry||null;
+ const action=unborn?'prepareUnbornHeir':'confirmSuccession';
+ const body='<div class="heir-context"><strong>'+esc(offspringName(c))+'</strong><div>Progenitor: '+esc(p.name)+' · Prestige heir slots: '+esc(heirUsage(p))+'</div></div><p>'+(unborn?'Already conceived in gameplay; unborn and unnamed. Restricted family creation must preserve the conception record. The entry preview does not predict future circumstances.':'Existing born offspring. Activation requests time-skip or maturity waiting as applicable and preserves established identity and history.')+'</p><h3>Heir World Entry</h3><p class="heir-entry-note">Separate from ordinary Core starts. Prestige opens additional possibilities, but actual family circumstances and available assets determine eligibility. Illustrative options only; no costs, amounts or entitlements are assigned.</p><div class="heir-entry-list" role="radiogroup" aria-label="Heir World Entry">'+options.map(({entry,block})=>'<button type="button" class="heir-entry-option" role="radio" aria-checked="'+(selected?.id===entry.id)+'" data-launch="selectHeirEntry" data-character-id="'+esc(c.id)+'" data-entry-id="'+entry.id+'" data-path="'+(unborn?'unborn':'born')+'" '+(block?'disabled':'')+'><div class="heir-entry-heading"><span>'+esc(entry.name)+'</span><small>'+esc(block||'Available in review')+'</small></div><p>'+esc(entry.description)+'</p><small>Support: '+esc(entry.aid)+'</small></button>').join('')+'</div>'+(selected?'<div class="heir-entry-summary"><strong>Selected: '+esc(selected.name)+'</strong>'+esc(selected.aid)+' · Actual grants and obligations require authoritative resolution.</div>':'<p class="heir-entry-note">Choose an available entry to inspect its intended starting circumstances.</p>')+'<p class="codex-intro">Restricted family creation, World time coordination, inheritance and durable entitlement consumption are not implemented. No child, game time, estate, reward or playable Save is changed in this preview.</p>';
+ return openDialog(unborn?'Create Heir':'Activate '+offspringName(c),body,'<button class="heir-action gold" disabled>'+(unborn?'Restricted creator unavailable':'Activate Heir unavailable')+'</button>','Heir World Entry · preview');
 }
 function renderFamilyMembers(members){
  const seen=new Set(),sort=(a,b)=>a.generation-b.generation||(b.age??-1)-(a.age??-1)||offspringName(a).localeCompare(offspringName(b))||a.id.localeCompare(b.id);
@@ -1925,6 +1947,12 @@ function navigateLauncher(action,button){
   }
   if(action==='revealFamilyRecord'&&c)return revealFamilyRecord(c);
   return;
+ }
+ if(action==='selectHeirEntry'){
+  if(route.screen!=='characters')return;
+  const c=characterById(button?.dataset.characterId),p=characterById(c?.parentId),entry=HEIR_ENTRY_REVIEW.find(x=>x.id===button?.dataset.entryId),unborn=button?.dataset.path==='unborn';
+  if(!(unborn?canPrepareUnborn(p,c):canSucceed(p,c))||heirEntryEligibility(p,c,entry))return;
+  return heirHandoff(p,c,unborn,entry.id);
  }
  if(action==='confirmSuccession'||action==='prepareUnbornHeir'){
   const c=characterById(button?.dataset.characterId),p=characterById(c?.parentId);
