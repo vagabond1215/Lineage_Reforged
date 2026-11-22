@@ -14,6 +14,11 @@ account_qa = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(account_qa)
 GRAPH = account_qa.GRAPH
 seasons = json.loads((here.parents[2]/'packages/content/base/world/calendar.json').read_text())['seasons']
+SESSION_KEY = 'cataclysm-rpg-ui.epoch1.session'
+
+
+def session_account(page):
+    return page.evaluate('(key) => JSON.parse(localStorage.getItem(key))?.accountId', SESSION_KEY)
 
 
 def run(origin, screenshots):
@@ -35,10 +40,10 @@ def run(origin, screenshots):
                     page.on('pageerror',lambda err: errors.append(str(err)))
                     page.goto(full,wait_until='networkidle')
 
-                    def register(name):
+                    def register(name, account_password=password):
                         page.get_by_label('Display Name',exact=True).fill(name)
-                        page.get_by_label('Password',exact=True).fill(password)
-                        page.get_by_label('Confirm Password',exact=True).fill(password)
+                        page.get_by_label('Password',exact=True).fill(account_password)
+                        page.get_by_label('Confirm Password',exact=True).fill(account_password)
                         page.get_by_label('Stay signed in',exact=True).check()
                         page.get_by_role('button',name='Create Account',exact=True).click()
                         expect(page.locator('[data-world-presentation="welcome"]')).to_be_visible()
@@ -59,6 +64,8 @@ def run(origin, screenshots):
                         expect(page.locator('[data-world-presentation="configuration"]')).to_be_visible()
 
                     register('World QA A')
+                    account_a = session_account(page)
+                    assert account_a
                     expect(page.get_by_role('button',name=re.compile('^Persistent'))).to_be_disabled()
                     assert 'World time' not in page.locator('body').inner_text()
                     expect(page.locator('header time')).to_contain_text('Local time')
@@ -123,23 +130,36 @@ def run(origin, screenshots):
                     page.get_by_role('button',name='Back to World Library',exact=True).click()
                     page.get_by_role('button',name='Back to Welcome',exact=True).click()
                     expect(page.locator('[data-world-presentation="welcome"]')).to_be_visible()
-                    # Existing owner callback, not a local pretend logout.
-                    page.get_by_role('button',name='Back to account access (sign out)',exact=True).click()
+                    assert session_account(page) == account_a
+                    page.get_by_role('button',name='Sign Out',exact=True).click()
                     expect(page.get_by_label('Account',exact=True)).to_be_visible()
                     assert page.evaluate("localStorage.getItem('cataclysm-rpg-ui.epoch1.session')===null")
                     page.get_by_role('button',name='Create Account',exact=True).click()
-                    register('World QA B')
+                    second_password = password + ' second'
+                    register('World QA A', second_password)
+                    account_b = session_account(page)
+                    assert account_b and account_b != account_a
                     open_library()
                     open_configuration()
                     expect(page.get_by_label('World name (review only)',exact=True)).to_have_value('')
-                    menu('World QA B').click()
+                    menu('World QA A').click()
                     page.get_by_role('button',name='Logout',exact=True).click()
                     expect(page.get_by_label('Account',exact=True)).to_be_visible()
-                    page.get_by_label('Account',exact=True).select_option(label='World QA A')
-                    page.get_by_label('Password',exact=True).fill(password)
-                    page.get_by_label('Stay logged in',exact=True).check()
-                    page.get_by_role('button',name='Log In',exact=True).click()
-                    expect(page.locator('[data-world-presentation="welcome"]')).to_be_visible()
+                    picker = page.get_by_label('Account',exact=True)
+                    options = picker.get_by_role('option',name=re.compile('^World QA A — .+ \(account [12]\)$'))
+                    expect(options).to_have_count(2)
+                    assert len(set(options.all_text_contents())) == 2
+                    for account_id, account_password in [(account_b, second_password), (account_a, password)]:
+                        picker.select_option(value=account_id)
+                        expect(picker).to_have_value(account_id)
+                        page.get_by_label('Password',exact=True).fill(account_password)
+                        page.get_by_label('Stay logged in',exact=True).check()
+                        page.get_by_role('button',name='Log In',exact=True).click()
+                        expect(page.locator('[data-world-presentation="welcome"]')).to_be_visible()
+                        assert session_account(page) == account_id
+                        if account_id == account_b:
+                            page.get_by_role('button',name='Sign Out',exact=True).click()
+                            expect(picker).to_be_visible()
                     # Missing either opt-in preserves the old L1 gate.
                     for query in ['?welcomeL1=1&accountPresentation=1','?welcomeL1=1&worldPresentation=1']:
                         page.goto(origin+'/'+query,wait_until='networkidle')

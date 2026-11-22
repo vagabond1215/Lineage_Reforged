@@ -27,7 +27,6 @@ export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, cl
   const [review, dispatch] = useReducer(worldReviewReducer, undefined, createWorldReviewState);
   const configuring = worlds && review.view === 'configuration';
   const back = () => {
-    if (!worlds) { onLogout(); return; }
     if (configuring) dispatch({ type: 'BACK' });
     else onBack();
   };
@@ -48,9 +47,11 @@ export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, cl
       </details>
     </>}
     subBar={<nav aria-label="World review navigation" className="grid min-h-11 grid-cols-[1fr_auto_1fr] items-center gap-2">
-      <div><button type="button" disabled={busy} onClick={back} className={control}
-        aria-label={!worlds ? 'Back to account access (sign out)' : configuring ? 'Back to World Library' : 'Back to Welcome'}
-        title={!worlds ? 'Sign out and return to account access' : 'Back'}>Back</button></div>
+      <div>{worlds
+        ? <button type="button" disabled={busy} onClick={back} className={control}
+            aria-label={configuring ? 'Back to World Library' : 'Back to Welcome'} title="Back">Back</button>
+        : <button type="button" disabled={busy} onClick={onLogout} className={control}
+            title="Sign out and return to account access">Sign Out</button>}</div>
       {worlds && !configuring
         ? <button type="button" disabled={busy} className={control}
             onClick={() => dispatch({ type: 'OPEN_CONFIGURATION' })}>Create World</button>

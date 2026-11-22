@@ -45,21 +45,49 @@ type LocalAccountAccessScreenProps = {
   clockTitle?: string;
 };
 
+const noJourneyRecorded = "No journey recorded yet.";
+
 function formatLastPlayedAt(lastPlayedAt: string | undefined): string {
   if (!lastPlayedAt) {
-    return "No journey recorded yet.";
+    return noJourneyRecorded;
   }
 
   const parsed = new Date(lastPlayedAt);
 
   if (Number.isNaN(parsed.valueOf())) {
-    return "No journey recorded yet.";
+    return noJourneyRecorded;
   }
 
   return new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(parsed);
+}
+
+function accountPickerLabels(accounts: LocalAccountPickerEntry[]) {
+  const idsByName = new Map<string, string[]>();
+  for (const { displayName, accountId } of accounts) {
+    const ids = idsByName.get(displayName) ?? [];
+    ids.push(accountId);
+    idsByName.set(displayName, ids);
+  }
+
+  const duplicateNumbers = new Map<string, number>();
+  for (const ids of idsByName.values()) {
+    if (ids.length > 1) {
+      ids.sort().forEach((id, index) => duplicateNumbers.set(id, index + 1));
+    }
+  }
+
+  return accounts.map(account => {
+    const number = duplicateNumbers.get(account.accountId);
+    const lastPlayed = formatLastPlayedAt(account.lastPlayedAt);
+    const journey = lastPlayed === noJourneyRecorded ? lastPlayed : `Last played: ${lastPlayed}`;
+    return {
+      accountId: account.accountId,
+      label: `${account.displayName} — ${journey}${number === undefined ? "" : ` (account ${number})`}`
+    };
+  });
 }
 
 export function LocalAccountAccessScreen({
@@ -384,8 +412,8 @@ export function LocalAccountAccessScreen({
                         onChange={event => handleSelectAccount(event.target.value)}
                         className="w-full min-w-0 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-3 py-3">
                         <option value="">Select an account</option>
-                        {accounts.map(account => <option key={account.accountId} value={account.accountId}>
-                          {account.displayName}
+                        {accountPickerLabels(accounts).map(account => <option key={account.accountId} value={account.accountId}>
+                          {account.label}
                         </option>)}
                       </select>
                     </div>
