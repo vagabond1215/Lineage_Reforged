@@ -1,0 +1,361 @@
+{
+  "format": "lineage-reborn.default-global-scenario-source-manifest.v1",
+  "manifestVersion": 1,
+  "status": "SOURCE_CONTRACT_ONLY_RUNTIME_HELD",
+  "provenance": {
+    "authoredAgainstMasterCommit": "0ba37e127302b7ea0e63f8737bfdfd3610a3d068",
+    "contentPinType": "git-blob-sha1",
+    "contentPinMeaning": "Git object ID of the exact file bytes, not SHA-256(raw file)",
+    "templateRawUtf8Sha256": "72bffd19f80900849795bbbf143a60d856d03a2622bf8533cf0b31a010510255",
+    "sourceManifestFingerprintForExistingL2AndDraftL3b": "sha256:72bffd19f80900849795bbbf143a60d856d03a2622bf8533cf0b31a010510255",
+    "policy": "Reject a source mismatch; build/runtime adapters must check the complete dependency closure, not just five settlement records.",
+    "pinnedFullSourceSetFingerprint": "sha256:9482870a7784f877bb8c789f65f29dea8fd62a18392381dc1ffd7a3f7e2659eb",
+    "pinnedFullSourceSetFingerprintAlgorithm": "SHA-256 of UTF-8 lines sorted lexicographically by relative repository path: each line is <path> + U+0009 (TAB) + lowercase 40-hex Git blob SHA1 + U+000A (LF), including final LF; includes pinnedSourceFiles, pinnedAlgorithmFiles, pinnedJavaScriptEntrypoints; excludes manifest JSON itself to avoid recursive hashing.",
+    "fullSourceSetFingerprintMeaning": "Aggregate identity of the 41 pinned canonical content, TypeScript owner, JavaScript entrypoint and time files. Valid only after all source blob identities are checked against actual bytes; it is not the same as the template-only sourceManifestFingerprint used by the preexisting L2 candidate and draft L3b store."
+  },
+  "worldBlueprint": {
+    "id": "world_map.first_world",
+    "sourceContentVersion": null,
+    "manifestPinVersion": 1,
+    "sharedAcrossWorldInstances": true,
+    "settlementAnchorPolicy": "88 authored identities retained; 878 category target slots are not spawned settlements",
+    "sovereigntyPolicy": "Geographic-parent colors do not define political control."
+  },
+  "defaultGlobalScenario": {
+    "id": "world_scenario.first_world.chronicle_default_v1",
+    "version": 1,
+    "default": true,
+    "otherScenariosEnabled": false,
+    "sourceTemplateId": "world_template.first_world.starfall_port.chronicle_v1",
+    "sourceTemplateVersion": 1,
+    "runtimeEligible": false,
+    "worldEntryScenesAreSeparate": true,
+    "permittedStartingContext": {
+      "macroRegionId": "region.myridian_chain",
+      "regionId": "region.starfall_isle",
+      "localityBandId": "region_locality.myridian_ports",
+      "worldHexId": "world_hex.myridian_ports",
+      "settlementId": "settlement.starfall_port",
+      "localAreaTemplateId": "area_template.starfall_port.harbor_approach_v1",
+      "localAreaStatus": "draft_not_yet_runtime_walkability_accepted"
+    }
+  },
+  "startingClock": {
+    "owner": "packages/shared/time/src/index.ts#createInitialClock",
+    "engineCalendarAtTickZero": {
+      "tick": 0,
+      "subday": 1,
+      "day": 1,
+      "month": 1,
+      "season": "Deepfrost",
+      "year": 1
+    },
+    "historicalEraOrAbsoluteDate": null,
+    "historicalCalendarEpoch": null,
+    "worldInstanceClock": {
+      "elapsedWorldSeconds": 0,
+      "paused": false,
+      "lastAuthoritativeUpdateAt": null
+    },
+    "note": "Engine's relative tick-zero calendar is source-backed; no historical start date or absolute world-time epoch has been approved."
+  },
+  "worldRules": {
+    "progressionMode": "chronicle",
+    "worldKind": "individual",
+    "hardcore": false,
+    "difficultyPreset": null,
+    "worldRules": null,
+    "stakesRules": null,
+    "pausePolicy": "allow",
+    "speedMultiplier": 1,
+    "worldTimeEpoch": null,
+    "allowsPlayerTimeSkip": false,
+    "timePolicyVersion": null,
+    "worldQuotaPerAccount": 1,
+    "persistentModeEnabled": false,
+    "livingWorldEnabled": false
+  },
+  "hiddenSeedAndNamedStreamPolicy": {
+    "version": 1,
+    "requiredForFutureCommittedWorlds": true,
+    "masterSeedMaterial": "32 cryptographically random bytes, generated once at accepted World creation; never user-visible or logged",
+    "seedImplementationStatus": "NOT_IMPLEMENTED_IN_DRAFT_L3B",
+    "namedStreamNamespaceRequires": [
+      "scenarioId",
+      "scenarioVersion",
+      "generationPolicyVersion",
+      "streamName",
+      "scopeOrAnchorId"
+    ],
+    "streamDerivationAndSamplingAlgorithmVersion": null,
+    "enabledRngStreams": [],
+    "futureReservedNames": [
+      "settlement.minor",
+      "npc.local",
+      "ecology.local",
+      "weather.local",
+      "quest.offer"
+    ],
+    "futureStreamRule": "No stream can draw until its algorithm/version, source hash, eligibility, exclusions, caps and exact-once receipt have separately accepted implementations.",
+    "economyInitialRng": "none; engine-derived baseline, no new random price generator",
+    "rerollOnReload": false
+  },
+  "genesisCommitContract": {
+    "accountOwned": true,
+    "creationIntentIdRequired": true,
+    "atomicWorldAndReceipt": true,
+    "sourceHashAndGenerationFenceRequired": true,
+    "requiredCommittedState": [
+      "World identity and scenario/blueprint/template versions",
+      "Exact source fingerprints and hidden master seed policy/value",
+      "Chronicle/Individual non-Hardcore rules",
+      "Versioned World and engine tick-zero clocks",
+      "One civilization-engine-derived five-settlement economy snapshot",
+      "One COMMITTED creation-intent receipt, bound to the same account/world/source",
+      "Explicitly empty character and Save associations, area instances and event records"
+    ],
+    "explicitlyUninitialized": [
+      "Politically authoritative borders, claims, offices, diplomacy and rulers",
+      "Settlement-level religion influence, religious institutions and governments",
+      "Unplaced minor settlements and 878 development category slots",
+      "Additional worldwide populations, initial demographics and civilization events",
+      "Local ecology, weather, resource nodes, NPCs, encounters, quests and campaigns",
+      "Player-tradable inventories, provider services and generated item stock"
+    ],
+    "exactIntentRetry": "Return retained committed World and receipt; conflicting payload or incomplete pair fails closed; never overwrite or rebuild committed economy.",
+    "successfulNewWorldInitialEconomyTick": 0,
+    "allowedCharacterCountAtCreate": 0,
+    "allowedSaveAssociationCountAtCreate": 0,
+    "worldAndReceiptPostCommitReadbackRequired": true,
+    "sourceIdentityGapInDraftL3b": "Draft L3b stores the template-only fingerprint, not the complete 41-input source set identity; the approved runtime must bind a versioned complete source-set fingerprint or fail closed before first commit. Do not change existing Save ownership."
+  },
+  "initialEconomy": {
+    "owner": "existing-civilization-engine",
+    "producer": "packages/engines/civilization-engine/src/starfall-base-economy.ts#buildStarfallBaseEconomyPreview",
+    "engineAlgorithmChain": [
+      "buildEconomyStateFromContent",
+      "aggregateEconomyHierarchy",
+      "buildSettlementMarketStates",
+      "buildSettlementSimulationProfiles"
+    ],
+    "localSettlementIds": [
+      "settlement.starfall_port",
+      "settlement.harbormast_quay",
+      "settlement.foammarket_ferry"
+    ],
+    "externalTradeContextSettlementIds": [
+      "settlement.pearlwake",
+      "settlement.chainlight_bastion"
+    ],
+    "authoredFocusCategories": [
+      "fish",
+      "grain",
+      "rope",
+      "timber",
+      "metal"
+    ],
+    "servicesEnabled": false,
+    "inventoryItemsMinted": false,
+    "nodeAndBrowserProjectionParityRequired": true,
+    "browserSafeSourceAdapterStatus": "NOT_IMPLEMENTED"
+  },
+  "pinnedSourceFiles": [
+    {
+      "path": "packages/content/base/world/templates/starfall_port_chronicle_v1.json",
+      "gitBlobSha1": "e6d90c1e47756b364d2af8b50bfcd0b34981cb79"
+    },
+    {
+      "path": "packages/content/base/world/world_maps.json",
+      "gitBlobSha1": "139ed99bd858535bb6a072eee58b697bfcdaa9bd"
+    },
+    {
+      "path": "packages/content/base/world/settlements.json",
+      "gitBlobSha1": "7e00f4243e96909e161ec09a2e8a4c3395f89216"
+    },
+    {
+      "path": "packages/content/base/civilization/guilds.json",
+      "gitBlobSha1": "41530d41d0e5c6d92900099bd27fc58bca73c9e8"
+    },
+    {
+      "path": "packages/content/base/world/regions.json",
+      "gitBlobSha1": "04516952ad97d830d2f49d915137197947e22b3a"
+    },
+    {
+      "path": "packages/content/base/world/region_localities.json",
+      "gitBlobSha1": "99189f9d18e4b0bd08d1264c8a0d2a9a7e058f76"
+    },
+    {
+      "path": "packages/content/base/world/regional_ecology_profiles.json",
+      "gitBlobSha1": "c12bf6f372216e3fc1c8a0bee45bceea7a4f7914"
+    },
+    {
+      "path": "packages/content/base/items/items.json",
+      "gitBlobSha1": "3ebc6aef15878e0c9dca1d53627b2ed7d4ede281"
+    },
+    {
+      "path": "packages/content/base/civilization/market_item_values.json",
+      "gitBlobSha1": "4879a5e6a0c54dcd22ed50f64a6c0dcefaea6637"
+    },
+    {
+      "path": "packages/content/base/civilization/production_chains.json",
+      "gitBlobSha1": "a4182827ee6c18e00a7b963656f416c8967584cb"
+    },
+    {
+      "path": "packages/content/base/player/skills.json",
+      "gitBlobSha1": "d473f29132bb7f92aaf2752f10a017d2a567a666"
+    },
+    {
+      "path": "packages/content/base/civilization/workplaces.json",
+      "gitBlobSha1": "70f179eaa9926aa5d72451215ba33afd4acc10a4"
+    },
+    {
+      "path": "packages/content/base/civilization/buildings.json",
+      "gitBlobSha1": "3919ee03aa0438210e4e15ed576cc7b637b3f36b"
+    },
+    {
+      "path": "packages/content/base/world/transport_profiles.json",
+      "gitBlobSha1": "53241f0a09e064ec69e076878d5617c2eae97256"
+    },
+    {
+      "path": "packages/content/base/world/world_hexes.json",
+      "gitBlobSha1": "75dd6f54855fadcff46758cd8847a458c672e0f5"
+    },
+    {
+      "path": "packages/content/base/world/world_hex_edges.json",
+      "gitBlobSha1": "d844906fcd7265281af2317a8c7f60025177a8be"
+    },
+    {
+      "path": "packages/content/base/world/travel_networks.json",
+      "gitBlobSha1": "8a6fbf39292b83280307d7a73f2aa6207bffa0cc"
+    },
+    {
+      "path": "packages/content/base/world/habitats.json",
+      "gitBlobSha1": "f71907f3214c402f57a62b9e30909fd87693634b"
+    },
+    {
+      "path": "packages/content/base/world/biomes.json",
+      "gitBlobSha1": "4455f891f85282fc7620c4d8f00e10af4fca5016"
+    },
+    {
+      "path": "packages/content/base/world/flora.json",
+      "gitBlobSha1": "535c165f08802560c655df8ebcafb739a314defa"
+    },
+    {
+      "path": "packages/content/base/world/fauna.json",
+      "gitBlobSha1": "cbdcd27ee6aafd1862906636e71a4ea28e3e758e"
+    },
+    {
+      "path": "packages/content/base/world/minerals.json",
+      "gitBlobSha1": "2e6a59fdce687932f4923e7bb43b4110a3ef9fca"
+    }
+  ],
+  "pinnedAlgorithmFiles": [
+    {
+      "path": "packages/shared/time/src/index.ts",
+      "gitBlobSha1": "a49f38c2fda8743b0da0ec61bcde243321aedf83"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/firstWorldCreationContract.ts",
+      "gitBlobSha1": "249f1c9b21d5166a1c9679383f335a38552ef3b9"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/content.ts",
+      "gitBlobSha1": "f2763966c330fa133d17baca8ce971db0ecd9170"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/starfall-base-economy.ts",
+      "gitBlobSha1": "1b3a52621ce97916493416b98ba661c08357b590"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/economy.ts",
+      "gitBlobSha1": "08fd1dd56d99be1a3b822d22cb66a39be4d0983e"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/runtime-economy.ts",
+      "gitBlobSha1": "8903a42135ebe334f582d2afd54c9b8eb0eb3bfe"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/settlement-simulation.ts",
+      "gitBlobSha1": "e10631ce9b4427991e1ab1751d141974d017bfae"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/spatial-world.ts",
+      "gitBlobSha1": "7ff05c5f94b0fdf77727dbce6f1e860f44677520"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/transport-runtime.ts",
+      "gitBlobSha1": "67ec6b5b411b711678253a1ff0c93917edb35f67"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/resource-taxonomy.ts",
+      "gitBlobSha1": "600a6a2b6f915af65bb83acb9cf137a19f635ee6"
+    }
+  ],
+  "acceptance": {
+    "jsonAndCurrentSourceReview": "PASS_41_OF_41_PINNED_BLOBS_AND_TEMPLATE_SHA256_CONNECTOR_SOURCE_CHECK",
+    "executableManifestHashValidation": "NOT_RUN",
+    "engineNodeBrowserParity": "NOT_RUN",
+    "disposableChromiumWorldCreate": "NOT_RUN",
+    "historicalNativeV3SaveCompatibility": "NOT_RUN",
+    "activationAllowed": false,
+    "javaScriptLoaderAndBridgeSourceReview": "PASS_STATIC_SOURCE_REVIEW_NINE_ENTRYPOINTS_EXECUTABLE_PARITY_NOT_RUN",
+    "fullSourceSetAggregateFingerprint": "PASS_CONNECTOR_SHA256_STANDARD_TEST_VECTORS_AND_41_PIN_AGGREGATION_EXECUTABLE_REPO_CHECK_NOT_RUN"
+  },
+  "pinnedJavaScriptEntrypoints": [
+    {
+      "path": "packages/engines/civilization-engine/src/content.js",
+      "gitBlobSha1": "d15f64990774efe6226e66806bf0649ea01123ba",
+      "kind": "standalone_node_filesystem_loader_not_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/starfall-base-economy.js",
+      "gitBlobSha1": "7c8bfe9d92ca8a2978e6605165d9053bb949947e",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/economy.js",
+      "gitBlobSha1": "2192a0458fa5bd5c00efab991a4c19014a758c9a",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/runtime-economy.js",
+      "gitBlobSha1": "09c2a3f7cccb9a206573181c73b9be9e8586e512",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/settlement-simulation.js",
+      "gitBlobSha1": "e237dc6418eb286943a2414975c3e3ea0fe6d7b9",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/spatial-world.js",
+      "gitBlobSha1": "a4693ad846586532f7fc4e3758a1aaa44726489a",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/transport-runtime.js",
+      "gitBlobSha1": "d71ff29ea3366430a1163a28ef8064861c06689c",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/resource-taxonomy.js",
+      "gitBlobSha1": "ebf6deea03e68ac99a4b21642bf430630eb85c19",
+      "kind": "typescript_reexport_bridge"
+    },
+    {
+      "path": "packages/shared/time/src/index.js",
+      "gitBlobSha1": "a88bebe96f470afc5d96b8f77de3243af90ac59e",
+      "kind": "typescript_reexport_bridge"
+    }
+  ],
+  "runtimeModuleResolutionBoundary": {
+    "status": "SOURCE_OBSERVED_BROWSER_EXECUTION_NOT_VERIFIED",
+    "moduleImportSpecifier": "./content.js",
+    "distinction": "The actual content.js file is a standalone filesystem loader, unlike sibling .js files that re-export TypeScript modules.",
+    "inspectedContentExports": "43/43 named exported function names present in content.ts and content.js (connector static comparison, not behavioral parity)",
+    "requiredAdapterInvariant": "The same validated, source-pinned canonical content must be supplied through the module path actually resolved by both Node and Chromium. Modifying only content.ts is insufficient until runtime resolution is demonstrated.",
+    "contentCache": "The loadJsonFile contentCache is module-scoped; runtime-economy, settlement-simulation, spatial-world and transport-runtime also retain module-level derived caches. Do not mix manifest revisions within a loaded realm.",
+    "browserAlternative": "Prefer a narrow, manifest-gated canonical content provider or verified build-time source bundle that retains original engine algorithms and works with the existing .js import graph.",
+    "acceptanceBoundary": "Source pins and static inspection are not executable Node/Chromium parity or browser World-creation acceptance."
+  }
+}

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash, webcrypto } from 'node:crypto';
 import { indexedDB, IDBKeyRange } from 'fake-indexeddb';
 import { prepareDurableChronicleWorld } from '../../apps/rpg-ui/src/game-shell/firstWorldDurableRegistry.ts';
-import { readFileSync } from 'node:fs';
+import { verifySourcePack } from '../../apps/rpg-ui/qa/first-world-a1/source-pack.mjs';
 
 import { createDefaultAccountProfileState } from '../../packages/engines/game-engine/src/legacy-account.ts';
 import { createCredentialRecord } from '../../apps/rpg-ui/src/game-shell/launcherAuthManager.ts';
@@ -188,7 +188,8 @@ test('L3a nonempty v7 account survives upgrade, v7 archive restore, reset and de
   target.close();
 });
 
-const starfallSource = readFileSync('packages/content/base/world/templates/starfall_port_chronicle_v1.json', 'utf8');
+const sourcePack = verifySourcePack();
+const starfallSource = sourcePack.bytes.get(sourcePack.templatePath).toString('utf8');
 async function syntheticAccount(owner, accountId='account.synthetic.world') {
   const createdAt='2026-11-17T00:00:00.000Z';
   const password='synthetic-world-password';
@@ -209,10 +210,11 @@ function worldInput(accountId='account.synthetic.world', intent='alpha') {
     sourceTemplateJson:starfallSource
   };
 }
-test('L3b durable creation writes one source-derived World and one receipt, with no characters or shop activation',async()=>{
+test('L3b durable creation writes one source-derived World and one receipt, with no characters or shop activation',async t=>{
   const name=unique('world-create');
   const owner=await openCleanEpochAccountStore({name,factory:indexedDB});
   await syntheticAccount(owner);
+  const beforeArchive = await owner.exportArchive();
   const request=worldInput();
   const projected=await prepareDurableChronicleWorld(request);
   assert.equal(projected.world.economyState.owner,'civilization-engine');
@@ -231,7 +233,14 @@ test('L3b durable creation writes one source-derived World and one receipt, with
   const same=await owner.createChronicleWorld(request);
   assert.equal(same.status,'same_source_retry');
   assert.deepEqual(same.world,first.world);
-  const archive=JSON.parse(await owner.exportArchive());
+  const archiveRaw = await owner.exportArchive();
+  const archive=JSON.parse(archiveRaw);
+  assert.deepEqual(archive.families.slice(0,14), JSON.parse(beforeArchive).families.slice(0,14));
+  const rowBytes = Buffer.byteLength(JSON.stringify(first.world));
+  const receiptBytes = Buffer.byteLength(JSON.stringify(first.receipt));
+  const archiveDeltaBytes = Buffer.byteLength(archiveRaw) - Buffer.byteLength(beforeArchive);
+  assert.equal(archiveDeltaBytes, rowBytes + receiptBytes);
+  t.diagnostic(JSON.stringify({ rowBytes, receiptBytes, archiveDeltaBytes }));
   assert.equal(archive.families[14].count,1);
   assert.equal(archive.families[15].count,1);
   assert.equal(archive.databaseVersion,8);
