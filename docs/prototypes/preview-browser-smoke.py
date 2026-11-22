@@ -74,13 +74,15 @@ def main() -> None:
             assert ashford.locator('.family-head [data-launch="familyContinue"]').count() == 1
             assert ashford.locator(".family-metrics, .family-emblem, .family-group-title, [data-launch='familyNewHeir']").count() == 0
             assert ashford.locator(".save-tile").count() == 3
-            assert ashford.locator(".heir-slot.named").count() == 2
-            assert ashford.locator(".heir-slot.vacant").count() == 3
+            assert ashford.locator(".heir-slot.named").count() == 4
+            assert ashford.locator(".heir-slot.vacant").count() == 0
+            assert ashford.locator('[data-heir-id="nessa"] [data-launch="confirmSuccession"]').is_disabled()
+            assert ashford.locator('[data-heir-id="unborn-ashford"] [data-launch="prepareUnbornHeir"]').is_enabled()
             assert ashford.locator('[data-heir-id="elara"] [data-launch="confirmSuccession"]').is_disabled()
             assert ashford.locator('[data-heir-id="rowan"] [data-launch="confirmSuccession"]').is_disabled()
             assert page.locator('[data-heir-id="dain"] [data-launch="confirmSuccession"]').is_enabled()
             assert ashford.locator(".family-member-row[id]").evaluate_all("rows=>rows.map(r=>r.id)") == [
-                "family-member-edmund", "family-member-aldric", "family-member-celyra", "family-member-elara", "family-member-rowan"]
+                "family-member-edmund", "family-member-aldric", "family-member-celyra", "family-member-nessa", "family-member-elara", "family-member-rowan", "family-member-unborn-ashford"]
             root = page.locator("#family-member-edmund").bounding_box()
             child = page.locator("#family-member-aldric").bounding_box()
             grandchild = page.locator("#family-member-celyra").bounding_box()
@@ -98,7 +100,7 @@ def main() -> None:
             assert page.locator("#dialogTitle").inner_text() == "Celyra Ashford"
             page.locator("#dialogbg .dialogfooter button").click()
             page.locator('[data-launch="openFamilyTree"][data-family-id="ashford"]').click()
-            assert page.locator(".family-tree-scroll .tree-person").count() == 5
+            assert page.locator(".family-tree-scroll .tree-person").count() == 7
             page.locator('[data-launch="selectTreePerson"][data-character-id="edmund"]').click()
             assert "Edmund Ashford" in page.locator(".tree-selection").inner_text()
             page.locator('[data-launch="revealFamilyRecord"][data-character-id="edmund"]').click()
@@ -115,16 +117,20 @@ def main() -> None:
             tile = aldric.bounding_box()
             assert abs(portrait["height"] - tile["height"]) <= 2
             assert portrait["x"] < aldric.locator(".save-record").bounding_box()["x"]
-            page.locator('[data-launch="startHeir"][data-character-id="aldric"]').click()
-            assert "Aldric Ashford" in page.locator(".heir-context").inner_text()
-            assert page.locator('[data-pick="lineage"]').count() == 1
-            page.locator("#creatorBack").click()
+            before = page.evaluate("JSON.stringify(route.worlds)")
+            page.locator('[data-heir-id="unborn-ashford"] [data-launch="prepareUnbornHeir"]').click()
+            assert page.locator("#dialogTitle").inner_text() == "Create Heir"
+            assert page.locator("#dialogActions button").is_disabled()
+            page.locator("#dialogbg .dialogfooter button").click()
             page.locator('[data-heir-id="dain"] [data-launch="confirmSuccession"]').click()
             assert page.locator("#dialogTitle").inner_text() == "Activate Dain Ironvein"
-            page.locator('[data-launch="succeedHeir"][data-character-id="dain"]').click()
-            assert page.locator('[data-launch="playSave"][data-character-id="dain"]').count() == 1
-            assert page.locator('[data-family-section="active"] [data-family="ironvein"]').count() == 1
-            assert page.locator('[data-heir-id="dain"]').count() == 0
+            assert "time-skip" in page.locator("#dialogBody").inner_text()
+            assert page.locator("#dialogActions button").is_disabled()
+            page.locator("#dialogbg .dialogfooter button").click()
+            assert page.evaluate("JSON.stringify(route.worlds)") == before
+            assert page.locator('[data-launch="playSave"][data-character-id="dain"]').count() == 0
+            assert page.locator('[data-family-section="awaiting"] [data-family="ironvein"]').count() == 1
+            assert page.locator('[data-heir-id="dain"]').count() == 1
             assert page.locator('[data-family="vale"]').count() == 0
             assert not page.evaluate("document.documentElement.scrollWidth > innerWidth + 1")
             page.locator('.launcher-subbar-back [data-launch="worlds"]').click()
