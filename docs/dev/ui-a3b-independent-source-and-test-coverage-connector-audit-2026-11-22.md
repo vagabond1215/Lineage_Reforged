@@ -5,7 +5,7 @@
 ## Exact latest Codex run and review basis
 
 - Latest published Codex branch: `codex/a3b-world-creator-integration-2026-11-22` at **`4c38da5905f253cc704176f3f91dd7e7f44a61e6`**, documentation publication; runtime/test commit **`7a46f5771e0785ad7a2d9c1da54ccf200153eeef`**.
-- Direct parent of runtime/test work: `connector/a3b-inert-a3a-source-stage-2026-11-22` **`cfa19afda16a11c01c56925dbce9a03022c389a5`**. Git compare: two commits ahead, zero behind, 14 paths modified/added including 8 app source paths, 2 new tests and 4 coordination/receipt paths. The integration did not merge UI or owner histories.
+- Direct parent of runtime/test work: `connector/a3b-inert-a3a-source-stage-2026-11-22` **`cfa19afda16a11c01c56925dbce9a03022c389a5`**. Git compare: two commits ahead, zero behind, 14 paths modified/added: 7 app source paths, 2 new test paths and 5 coordination/receipt paths. The integration did not merge UI or owner histories.
 - Existing World-owner foundation draft PR #102 `connector/l3a-world-v8-migration-preflight-2026-11-17` **`e74f9e1414d02cde60ba03aa088afc166f2634b1`**; initial UI A3a `codex/ui-shell-account-first-slice-2026-11-21` **`7624adc2f54b72204717ad18a2e4294454d9bfb1`**; default `master` **`20abe83c2aa97ba4699711a9815d9b95e0d3df44`**. All still unchanged at final source check.
 - Reference evidence: `docs/dev/ui-a3b-functional-world-creation-receipt-2026-11-22.md` Git blob **`9ce2026237cd53698e588e99a441a1b5f76c2dc5`**, branch-side Codex report, not an independently re-executed Connector browser run. The source commit's exact paths and Git blobs were read via the Connector. No visibility of uncommitted/unpushed local Codex work.
 
