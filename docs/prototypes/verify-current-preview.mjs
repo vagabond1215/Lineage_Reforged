@@ -41,7 +41,7 @@ for (const marker of [
   'function updateCreatorWeather()', 'id="creatorCalendar"', 'id="creatorWeather"',
   'function renderLineage()', 'function renderGeography()', 'const GEO_SETTLEMENT_META',
   'const WORLD_OPTION_GROUPS=', 'id="previewPassword"', 'id="previewStayLoggedIn"',
-  'function renderSaveTile(c)', 'function renderNamedHeirSlot(c)', 'function heirHandoff(p,c,unborn)', 'function canPrepareUnborn(p,c)', 'function renderCharacterStats(c)',
+  'function renderSaveTile(c)', 'function renderNamedHeirSlot(c)', 'function heirHandoff(p,c,unborn,selectedId)', 'const HEIR_ENTRY_REVIEW=', 'function heirEntryEligibility(p,c,entry)', 'function heirEntryOptions(p,c)', 'function canPrepareUnborn(p,c)', 'function renderCharacterStats(c)',
   'function recordPreviewCharacter()', 'Every life has a beginning.',
   'function renderFamilyLibrary(w,historical=false)', 'function openCodex()', 'function entitlementBlock(p,c)', 'function offspringOf(id)', 'function renderFamilyMembers(members)', 'function familyMemberCategory(c)', 'family-tree-button',
   'function familyTreeBody(id,selected)', 'family-tree-scroll', 'function familyResume(members)'

@@ -58,6 +58,8 @@ Then contextually add: **fantasy character portrait**, lineage appearance, woman
 
 ## 4. Contextual World Entry supplies and Prestige
 
+> 2026-11-21: [Separate Heir World Entry](heir-world-entry-prestige-assistance-inheritance-intent-2026-11-21.md) is an additional deferred path for actual offspring, not an ordinary Core or Backstory option. Prestige unlocks and real family circumstances govern assistance; do not port it into unrestricted fresh starts.
+
 The preview demonstrates three **illustrative, non-canonical** pairs:
 - Stonevein / **The Mine Road** → travel clothes, water skin, work gloves.
 - Highcrown / **The City Gate** → travel clothes, water flask, one meal.

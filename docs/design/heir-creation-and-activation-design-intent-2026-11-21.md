@@ -26,6 +26,10 @@ An unborn already-named offspring does not qualify for the Create Heir exception
 4. Run the restricted family creator and inheritance engine with permitted choices and established identity fixed wherever authoritative. The exact sequence and transaction boundaries require future engineering contracts; no ordinary Core opening may overwrite a known heir's origin.
 5. Only upon an accepted authoritative result, publish the linked playable character and consume the appropriate entitlement once with durable receipts. Revalidation and atomic/idempotent settlement must prevent duplicate heirs, capacity overspend, duplicate property transfers or replaying a deceased character. Failure/cancellation must not fabricate a child, award inheritance or silently advance time.
 
+## Separate Heir World Entry
+
+The [Heir World Entry design intent](heir-world-entry-prestige-assistance-inheritance-intent-2026-11-21.md) adds independently gated starting circumstances and variable assistance. It is distinct from ordinary Core entry. Actual eligibility and support must be resolved from family history, Prestige and available authority after applicable time resolution; no grant or marriage is fabricated. Preview selection is provisional and held.
+
 ## Standalone review UI
 
 - Nested family display lists real sample offspring records, including named born children and conceived unborn unnamed records. Do not generate numbered empty child rows from capacity. Expanded progenitor details show separate Prestige use status.

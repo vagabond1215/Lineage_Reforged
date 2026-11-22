@@ -120,11 +120,23 @@ def main() -> None:
             before = page.evaluate("JSON.stringify(route.worlds)")
             page.locator('[data-heir-id="unborn-ashford"] [data-launch="prepareUnbornHeir"]').click()
             assert page.locator("#dialogTitle").inner_text() == "Create Heir"
+            assert page.locator(".heir-entry-option").count() == 5
+            assert page.locator('[data-entry-id="own_way"]').is_enabled()
+            assert page.locator('[data-entry-id="political_marriage"]').is_disabled()
+            page.locator('[data-entry-id="own_way"]').click()
+            assert "Selected: Make Your Own Way" in page.locator(".heir-entry-summary").inner_text()
             assert page.locator("#dialogActions button").is_disabled()
             page.locator("#dialogbg .dialogfooter button").click()
             page.locator('[data-heir-id="dain"] [data-launch="confirmSuccession"]').click()
             assert page.locator("#dialogTitle").inner_text() == "Activate Dain Ironvein"
             assert "time-skip" in page.locator("#dialogBody").inner_text()
+            assert page.locator(".heir-entry-option").count() == 5
+            assert page.locator('[data-entry-id="political_marriage"]').is_disabled()
+            assert "Family circumstances not established" in page.locator('[data-entry-id="political_marriage"]').inner_text()
+            assert "Prestige unlock required" in page.locator('[data-entry-id="estate_succession"]').inner_text()
+            page.locator('[data-entry-id="modest_support"]').click()
+            assert page.locator('[data-entry-id="modest_support"]').get_attribute("aria-checked") == "true"
+            assert "Selected: A Family Send-Off" in page.locator(".heir-entry-summary").inner_text()
             assert page.locator("#dialogActions button").is_disabled()
             page.locator("#dialogbg .dialogfooter button").click()
             assert page.evaluate("JSON.stringify(route.worlds)") == before
