@@ -43,7 +43,7 @@ for (const marker of [
   'const WORLD_OPTION_GROUPS=', 'id="previewPassword"', 'id="previewStayLoggedIn"',
   'function renderSaveTile(c)', 'function heirDetails(p)', 'function familyTree(c)',
   'function recordPreviewCharacter()', 'Every life has a beginning.',
-  'function renderFamilyLibrary(w)', 'function familyGroups(members)', 'function familyHeirParent(members)',
+  'function renderFamilyLibrary(w)', 'function renderFamilyMembers(members)', 'function familyMemberCategory(c)', 'family-tree-button',
   'function familyTreeBody(id,selected)', 'family-tree-scroll', 'function familyResume(members)'
 ]) assert.ok(html.includes(marker), `Missing creator feature ${marker}`);
 
