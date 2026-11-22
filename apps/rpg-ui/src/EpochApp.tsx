@@ -18,7 +18,8 @@ import { createDefaultCharacterCreationFormState, validateCharacterCreationForm 
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
 import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen.js';
-import { isAccountPresentationEnabled } from './game-shell/accountPresentationGate.js';
+import { isAccountPresentationEnabled, isWorldPresentationEnabled } from './game-shell/accountPresentationGate.js';
+import { WelcomeWorldPresentation } from './game-shell/components/WelcomeWorldPresentation.js';
 import { WelcomeScreen } from './game-shell/components/WelcomeScreen.js';
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen.js';
 import { NoticeToast } from './game-shell/components/NoticeToast.js';
@@ -185,6 +186,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') &&
     new URLSearchParams(window.location.search).get('welcomeL1') === '1';
   const accountPresentation = isAccountPresentationEnabled(import.meta.env.DEV,
+    welcomeEnabled, window.location.hostname, window.location.search);
+  const worldPresentation = isWorldPresentationEnabled(import.meta.env.DEV,
     welcomeEnabled, window.location.hostname, window.location.search);
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
@@ -719,7 +722,13 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     }, { ok: false, message: 'Account operation is already pending or blocked.' })}
     themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')} />;
   else if (current.screen === 'WELCOME_AUTHENTICATED' || current.screen === 'WORLD_LIBRARY_GATE')
-    content = <WelcomeScreen profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
+    content = worldPresentation ? <WelcomeWorldPresentation
+      key={`${current.accountProfile.accountId}:${current.screen}`}
+      profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
+      busy={busy} clockLabel={clockLabel} clockTitle={clockNow.toString()}
+      themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')}
+      onContinue={continueToWorlds} onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })}
+      onLogout={logout} /> : <WelcomeScreen profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
       busy={busy} onContinue={continueToWorlds}
       onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })} onLogout={logout} />;
   else if (current.screen === 'MAIN_MENU') content = <MainMenuScreen {...common}
