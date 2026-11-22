@@ -12,6 +12,13 @@ if (import.meta.env.PROD && import.meta.env.MODE === 'world-source-review' &&
   });
 }
 
+if (import.meta.env.PROD && import.meta.env.MODE === 'world-owner-review' &&
+    (location.hostname === '127.0.0.1' || location.hostname === 'localhost')) {
+  void import('./worldOwnerReview.js').then(({ openWorldOwnerReview, seedOriginalV7 }) => {
+    Object.defineProperty(window, 'worldOwnerReview', { value: { openWorldOwnerReview, seedOriginalV7 } });
+  });
+}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />

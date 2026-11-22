@@ -39,6 +39,7 @@ export default defineConfig(({ command }) => {
     define: {
       __LINEAGE_NATIVE_STAGING_ORIGIN__: JSON.stringify(origin),
       __LINEAGE_VERIFIED_WORLD_SOURCE_BUILD__: 'false',
+      __LINEAGE_WORLD_OWNER_REVIEW_BUILD__: 'false',
     },
     build: { outDir: outputDir, emptyOutDir: true, copyPublicDir: false }
   };

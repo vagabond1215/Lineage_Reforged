@@ -1,0 +1,27 @@
+{
+  "format": "lineage.first-world-owner-source.v3",
+  "parentFingerprint": "sha256:63ba33dc9873ce49e2a2d98ba9744e9e0c45a2ac88ef244212968bb371752437",
+  "pins": [
+    {
+      "path": "apps/rpg-ui/build/first-world-owner-source.mjs",
+      "gitBlobSha1": "2fe9971bf4097ab86119dfed973c613fed1778df"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/cleanEpochAccountAdapter.ts",
+      "gitBlobSha1": "afaa6036b290903ff88e99a3cf324cd94711c35a"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/cleanEpochAccountStore.ts",
+      "gitBlobSha1": "d0deba66b3bc977738577e6dce2a06df4c2a9a1d"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/world-source/pilot.ts",
+      "gitBlobSha1": "0a651074445819b4d7564a0970bf36c31e9ffe7d"
+    },
+    {
+      "path": "apps/rpg-ui/vite.config.ts",
+      "gitBlobSha1": "494f6c907b34479e7bbd90c56434682f045e6be5"
+    }
+  ],
+  "runtimeFingerprint": "sha256:90d19ed5fa6f9c06bc093d6f775b65a5b69ad12b66a40362bd42a3bf948cfe33"
+}
