@@ -1,5 +1,7 @@
 # ACTIVE: Starfall World template → L2 owner/registry design gate (main-first)
 
+> **2026-11-22 A2a execution status.** The [standard app source and compact tick-zero evidence](world-a2a-app-source-and-compact-genesis-receipt-2026-11-22.md) is ready for independent Connector review on draft PR #102. A2b atomic browser create/reopen, World/Save binding and production activation remain held.
+
 > **2026-11-22 A1 independent Connector source pass / A2 execution priority:** [World A2 atomic browser create and persistence preflight](world-a2-atomic-browser-create-and-persistence-preflight-2026-11-22.md). 41/41 source pins and additional registry producer pin verified against exact PR102 Git tree; A1 Node/Chromium tests remain *Codex-reported*, not independently rerun. A2a actual app source seam, manifest versioning and compact-vs-full state policy first; A2b real owner Chromium commit/reopen only after A2a review or scoped authorization. Do not alter immutable A1 pin in place. Keep all default/Save/production holds.
 
 > **2026-11-22 World A1 status.** The browser content and tick-zero economy checkpoint is implemented on draft PR #102. [Execution evidence](world-a1-browser-tick-zero-economy-receipt-2026-11-22.md) is ready for independent Connector review. The [pinned work order](https://github.com/vagabond1215/Lineage_Reforged/blob/a55cec30de87a6e256f984311b59e121210f9961/docs/dev/world-creation-persistence-first-functional-milestone-2026-11-22.md) continues to hold A2 atomic browser creation, reopening and production activation.
