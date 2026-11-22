@@ -30,7 +30,7 @@ GRAPH = """async () => {
 }"""
 
 
-def run(origin, screenshots):
+def run(origin, screenshots, selected_width=None):
     parsed = urlsplit(origin)
     assert parsed.hostname == '127.0.0.1' and parsed.port, 'Require isolated loopback port'
     assert origin == os.environ.get('LINEAGE_TASK_OWNED_ORIGIN'), 'Confirm registered task-owned origin'
@@ -41,6 +41,8 @@ def run(origin, screenshots):
         browser = p.chromium.launch(headless=True, executable_path=os.environ['CHROMIUM_EXECUTABLE'])
         try:
             for width, height in [(1440,900),(1280,860),(768,980),(375,812),(320,700)]:
+                if selected_width is not None and width != selected_width:
+                    continue
                 context = browser.new_context(viewport={'width':width,'height':height})
                 try:
                     page = context.new_page()
@@ -52,6 +54,11 @@ def run(origin, screenshots):
                       crypto.subtle.deriveBits=async(...args)=>{
                         if(window.__holdAuth) await new Promise(r=>window.__releaseAuth=r);
                         return derive(...args);
+                      };
+                      const fileText=File.prototype.text;
+                      File.prototype.text=async function(){
+                        if(window.__holdArchive) await new Promise(r=>window.__releaseArchive=r);
+                        return fileText.call(this);
                       };""")
                     page.goto(gated, wait_until='networkidle')
                     expect(page.locator('[data-account-presentation="contextual"]')).to_be_visible()
@@ -100,10 +107,26 @@ def run(origin, screenshots):
                     expect(page.get_by_label('Stay logged in', exact=True)).not_to_be_checked()
                     page.get_by_text('Manage selected account', exact=True).click()
                     expect(page.get_by_role('button', name='Delete Account', exact=True)).to_be_visible()
+                    page.get_by_label('Password', exact=True).fill('wrong-deletion-password')
+                    page.evaluate('window.__holdAuth=true;window.__releaseAuth=null')
+                    page.get_by_role('button', name='Delete Account', exact=True).click()
+                    expect(page.get_by_text('Working…', exact=True)).to_be_visible()
+                    expect(page.get_by_role('button', name='Delete Account', exact=True)).to_be_disabled()
+                    page.wait_for_function('typeof window.__releaseAuth === "function"')
+                    page.evaluate('window.__holdAuth=false;window.__releaseAuth()')
+                    expect(page.get_by_role('alert')).to_be_visible()
+                    assert page.evaluate(GRAPH) == initial, 'Rejected deletion changed account graph'
+                    picker.select_option(label='Shell QA A')
+                    picker.select_option(label='Shell QA B')
                     page.get_by_text('Restore epoch backup', exact=True).first.click()
                     expect(page.get_by_label('Choose epoch backup file', exact=True)).to_be_visible()
+                    page.evaluate('window.__holdArchive=true')
                     page.get_by_label('Choose epoch backup file', exact=True).set_input_files({
                         'name':'invalid.json','mimeType':'application/json','buffer':b'{}'})
+                    expect(page.get_by_text('Working…', exact=True)).to_be_visible()
+                    expect(page.get_by_label('Choose epoch backup file', exact=True)).to_be_disabled()
+                    page.wait_for_function('typeof window.__releaseArchive === "function"')
+                    page.evaluate('window.__holdArchive=false;window.__releaseArchive()')
                     expect(page.get_by_role('alert')).to_contain_text('Restore failed')
                     assert page.evaluate(GRAPH) == initial, 'Rejected restore changed account graph'
                     # Hide management panels, then verify the reviewed form geometry.
@@ -131,9 +154,9 @@ def run(origin, screenshots):
                     expect(page.get_by_label('Password', exact=True)).to_be_focused()
                     page.keyboard.type(password)
                     page.get_by_label('Stay logged in', exact=True).check()
-                    page.evaluate('window.__holdAuth=true')
+                    page.evaluate('window.__holdAuth=true;window.__releaseAuth=null')
                     page.get_by_label('Password', exact=True).press('Enter')
-                    expect(page.get_by_text('Signing in…', exact=True)).to_be_visible()
+                    expect(page.get_by_text('Working…', exact=True)).to_be_visible()
                     expect(picker).to_be_disabled()
                     expect(login).to_be_disabled()
                     expect(page.get_by_role('button', name='Create Account', exact=True)).to_be_disabled()
@@ -189,5 +212,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--origin',required=True)
     parser.add_argument('--screenshots',type=Path)
+    parser.add_argument('--width',type=int,choices=[1440,1280,768,375,320])
     args = parser.parse_args()
-    run(args.origin.rstrip('/'),args.screenshots)
+    run(args.origin.rstrip('/'),args.screenshots,args.width)

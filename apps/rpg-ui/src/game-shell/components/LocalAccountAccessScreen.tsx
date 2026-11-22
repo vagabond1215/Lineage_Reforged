@@ -408,7 +408,7 @@ export function LocalAccountAccessScreen({
                         onChange={event => setStayLoggedIn(event.target.checked)} className="h-4 w-4" />
                       <span>Stay logged in</span>
                     </label>
-                    {submitting && <p role="status" className="text-sm">Signing in…</p>}
+                    {submitting && <p role="status" className="text-sm">Working…</p>}
                   </fieldset>
                 </form>
                 {selectedAccount && <div className="space-y-3 text-sm">
