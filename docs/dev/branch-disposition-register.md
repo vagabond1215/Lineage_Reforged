@@ -1496,3 +1496,8 @@ Draft PR102 on connector/l3a-world-v8-migration-preflight-2026-11-17, starting d
 ## 2026-11-22 — A2a standard app source and compact genesis
 
 Draft PR102 stays HOLD_NAMED_CONSUMER on connector/l3a-world-v8-migration-preflight-2026-11-17 from 29a3bf087c5993c1ef4ba0e6b4e0c758046f3d21, source b5e8fb83b36d0989c3ae558a90910e456e643b6d, with independent exact-head A2a review as its trigger before A2b. [A2a evidence](world-a2a-app-source-and-compact-genesis-receipt-2026-11-22.md). PR103 unchanged for visual provenance. UI topic a55cec30 and map lanes were preserved. No merge, branch retirement, staging publication or activation.
+
+
+## 2026-11-22 — Independent Connector A2a source pass / A2b local handoff
+
+[Exact source, Word owner and compact candidate review](world-a2a-independent-connector-review-and-a2b-owner-gate-2026-11-22.md). PR102 b43efbe6, master 20abe83c, UI a55cec30. Source pins 50/50 matched against Git tree; 22 content + 10 algorithm + 9 JS entrypoints + original registry + 8 v2 successor. No missing/duplicate/mismatched blobs. Old L3b World writer still calls Node-only genesis; compact PREPARED_NOT_COMMITTED candidate is not a durable row. Current one-World revision-zero validator cannot accept future mutable state, and user account session validation remains a separate caller obligation. Bounded A2b local implementation prepared: immutable new source identity, effective rules/seed/scenario binding, authenticated atomic World+receipt, real Chromium create/reopen/rollback and archive/native Save parity. Scope review only: NO runtime changes, merge, UI activation, PR transition or version change. Local A2a QA remains Codex-reported; Connector did not re-execute. Keep all holds and ordinary UI/map work untouched.
