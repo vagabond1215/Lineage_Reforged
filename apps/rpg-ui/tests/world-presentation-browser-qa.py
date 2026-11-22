@@ -161,6 +161,58 @@ def verify_launcher_admission(page, context, full, account_id):
         probe.close()
 
 
+def verify_creator_intent(context, full):
+    probe = context.new_page()
+    try:
+        probe.goto(full, wait_until='networkidle')
+        probe.evaluate("""async () => {
+          const resource = name => performance.getEntriesByType('resource')
+            .find(entry => new URL(entry.name).pathname.endsWith('/' + name + '.js')).name;
+          const {default: React} = await import(resource('react'));
+          const {default: ReactDOM} = await import(resource('react-dom_client'));
+          const {WorldCreator} = await import('/src/game-shell/components/WorldCreator.tsx');
+          const site = document.createElement('div');
+          site.id = 'creator-intent-fixture';
+          document.body.append(site);
+          window.testWorldRequests = [];
+          function Fixture() {
+            const [busy, setBusy] = React.useState(false);
+            return React.createElement(WorldCreator, {
+              busy, onBusyChange: setBusy,
+              onCreate: intent => {
+                window.testWorldRequests.push(intent);
+                return new Promise(resolve => {window.finishWorldRequest = resolve;});
+              },
+              onVerified: id => {window.verifiedWorld = id;},
+            });
+          }
+          ReactDOM.createRoot(site).render(React.createElement(Fixture));
+        }""")
+        creator = probe.locator('#creator-intent-fixture')
+        submit = creator.get_by_role('button', name='Create World', exact=True)
+        creator.get_by_label('World name', exact=True).fill('  Retry test  ')
+        expect(submit).to_be_disabled()
+        creator.get_by_role('checkbox', name=re.compile('^Confirm these settings')).check()
+        expect(submit).to_be_enabled()
+        creator.locator('form').evaluate('form => { form.requestSubmit(); form.requestSubmit(); }')
+        expect(submit).to_be_disabled()
+        requests = probe.evaluate('window.testWorldRequests')
+        assert len(requests) == 1 and requests[0]['displayName'] == 'Retry test'
+        probe.evaluate("window.finishWorldRequest({status:'readback-failed',message:'Try again.'})")
+        expect(creator.get_by_role('alert')).to_contain_text('World verification failed.')
+        retry = creator.get_by_role('button', name='Retry Create World', exact=True)
+        retry.click()
+        assert probe.evaluate('window.testWorldRequests') == requests * 2
+        probe.evaluate("window.finishWorldRequest({status:'verified',worldInstanceId:'world.instance.wrong'})")
+        expect(creator.get_by_role('alert')).to_contain_text('differs from this request')
+        assert probe.evaluate('window.verifiedWorld === undefined')
+        retry.click()
+        probe.evaluate("window.finishWorldRequest({status:'verified',worldInstanceId:window.testWorldRequests[0].proposedWorldInstanceId})")
+        assert probe.evaluate('window.verifiedWorld') == requests[0]['proposedWorldInstanceId']
+    finally:
+        probe.close()
+
+
 def run(origin, screenshots, selected_width=None):
     parsed = urlsplit(origin)
     assert parsed.hostname == '127.0.0.1' and parsed.port
@@ -200,10 +252,12 @@ def run(origin, screenshots, selected_width=None):
                         page.get_by_role('button',name=re.compile('^Chronicle')).focus()
                         page.keyboard.press('Enter')
                         expect(page.locator('[data-world-presentation="library"]')).to_be_visible()
+                        expect(page.get_by_role('heading',name='Your Worlds')).to_be_focused()
 
                     def open_configuration():
-                        page.get_by_role('button',name='Create World',exact=True).click()
+                        page.get_by_role('button',name='Create New World',exact=True).click()
                         expect(page.locator('[data-world-presentation="configuration"]')).to_be_visible()
+                        expect(page.get_by_role('heading',name='World Creator')).to_be_focused()
 
                     register('World QA A')
                     account_a = session_account(page)
@@ -225,29 +279,52 @@ def run(origin, screenshots, selected_width=None):
                     initial_graph = page.evaluate(GRAPH)
                     initial_storage = page.evaluate('JSON.stringify(Object.entries(localStorage).sort())')
                     open_library()
-                    expect(page.get_by_text('No Worlds available',exact=True)).to_be_visible()
-                    expect(page.locator('#world-review-boundary')).to_contain_text('World registry unavailable')
+                    expect(page.get_by_text('World inventory unavailable',exact=True)).to_be_visible()
+                    expect(page.locator('#world-pilot-capacity')).to_contain_text('one World per account')
                     assert page.get_by_text('View Characters',exact=True).count() == 0
                     open_configuration()
-                    expect(page.get_by_role('radio',name='Individual',exact=True)).to_be_checked()
-                    expect(page.get_by_role('radio',name='Living — Coming Soon',exact=True)).to_be_disabled()
+                    original_theme = page.locator('[data-theme]').first.get_attribute('data-theme')
+                    menu('World QA A').click()
+                    theme_toggle = page.get_by_role('button',name=re.compile('Switch to (light|dark) mode'))
+                    theme_toggle.click()
+                    expect(page.locator('[data-theme]').first).to_have_attribute(
+                        'data-theme','light' if original_theme == 'dark' else 'dark')
+                    assert not page.evaluate('document.documentElement.scrollWidth>innerWidth+1')
+                    if screenshots:
+                        screenshots.mkdir(parents=True,exist_ok=True)
+                        page.screenshot(path=str(screenshots/f'world-creator-alternate-theme-{width}.png'))
+                    theme_toggle.click()
+                    expect(page.locator('[data-theme]').first).to_have_attribute('data-theme',original_theme)
+                    menu('World QA A').click()
+                    expect(page.get_by_text('Individual',exact=True)).to_be_visible()
+                    expect(page.get_by_text('Persistent, Living and Hardcore are Coming Soon.',exact=True)).to_be_visible()
                     expect(page.get_by_role('combobox',name=re.compile('^Difficulty'))).to_be_disabled()
-                    expect(page.get_by_role('button',name='Create World (unavailable)',exact=True)).to_be_disabled()
-                    for label in ['Hardcore','Climate variability','Disasters','Extreme weather']:
-                        expect(page.get_by_label(label,exact=True)).to_be_disabled()
+                    final_create = page.get_by_role('button',name='Create World',exact=True)
+                    expect(final_create).to_be_disabled()
+                    for label in ['Temperature', 'Rainfall', 'Starting season']:
+                        expect(page.get_by_role('combobox',name=label,exact=True)).to_be_disabled()
                     season = page.get_by_role('combobox',name=re.compile('^Starting season'))
                     assert season.locator('option').all_text_contents() == ['Scenario Default']+seasons
-                    page.get_by_label('World name (review only)',exact=True).fill('Discard this draft')
-                    page.get_by_role('combobox',name=re.compile('^Temperature')).select_option(label='Hot')
-                    page.get_by_role('combobox',name=re.compile('^Rainfall')).select_option(label='Wet')
-                    season.select_option(label='Harvest')
+                    name = page.get_by_label('World name',exact=True)
+                    confirm = page.get_by_role('checkbox',name=re.compile('^Confirm these settings'))
+                    name.fill('  ')
+                    name.press('Tab')
+                    expect(name).to_have_attribute('aria-invalid','true')
+                    expect(confirm).to_be_disabled()
+                    name.fill('x'*81)
+                    expect(name).to_have_attribute('aria-invalid','true')
+                    name.fill('  Discard this draft  ')
+                    expect(name).to_have_attribute('aria-invalid','false')
+                    expect(page.get_by_text(re.compile('^Discard this draft · Chronicle'))).to_be_visible()
+                    confirm.check()
+                    expect(final_create).to_be_disabled()
+                    name.press('Enter')
                     assert page.evaluate(GRAPH) == initial_graph
                     assert page.evaluate('JSON.stringify(Object.entries(localStorage).sort())') == initial_storage
                     assert not page.evaluate('document.documentElement.scrollWidth>innerWidth+1')
-                    if screenshots and width in (1280,375):
+                    if screenshots:
                         screenshots.mkdir(parents=True,exist_ok=True)
                         page.screenshot(path=str(screenshots/f'world-review-{width}.png'),full_page=True)
-                    final_create = page.get_by_role('button',name='Create World (unavailable)',exact=True)
                     final_create.scroll_into_view_if_needed()
                     expect(final_create).to_be_visible()
                     expect(final_create).to_be_disabled()
@@ -258,16 +335,23 @@ def run(origin, screenshots, selected_width=None):
                         page.screenshot(path=str(screenshots/f'world-review-bottom-{width}.png'),full_page=True)
                     page.get_by_role('button',name='Back to World Library',exact=True).click()
                     open_configuration()
-                    expect(page.get_by_label('World name (review only)',exact=True)).to_have_value('')
+                    expect(name).to_have_value('')
+                    expect(confirm).not_to_be_checked()
                     expect(season).to_have_value('Scenario Default')
                     expect(page.get_by_role('combobox',name=re.compile('^Temperature'))).to_have_value('Normal')
                     expect(page.get_by_role('combobox',name=re.compile('^Rainfall'))).to_have_value('Normal')
-                    page.get_by_label('World name (review only)',exact=True).fill('Discard on unmount')
+                    name.fill('Discard from Home')
+                    page.get_by_role('button',name='Home',exact=True).click()
+                    expect(page.locator('[data-world-presentation="welcome"]')).to_be_visible()
+                    open_library()
+                    open_configuration()
+                    expect(name).to_have_value('')
+                    name.fill('Discard on unmount')
                     page.reload(wait_until='networkidle')
                     expect(page.locator('[data-world-presentation="welcome"]')).to_be_visible()
                     open_library()
                     open_configuration()
-                    expect(page.get_by_label('World name (review only)',exact=True)).to_have_value('')
+                    expect(name).to_have_value('')
                     assert page.evaluate(GRAPH) == initial_graph
                     page.get_by_role('button',name='Back to World Library',exact=True).click()
                     page.get_by_role('button',name='Back to Welcome',exact=True).click()
@@ -283,7 +367,7 @@ def run(origin, screenshots, selected_width=None):
                     assert account_b and account_b != account_a
                     open_library()
                     open_configuration()
-                    expect(page.get_by_label('World name (review only)',exact=True)).to_have_value('')
+                    expect(name).to_have_value('')
                     menu('World QA A').click()
                     page.get_by_role('button',name='Logout',exact=True).click()
                     expect(page.get_by_label('Account',exact=True)).to_be_visible()
@@ -319,6 +403,8 @@ def run(origin, screenshots, selected_width=None):
                     if width == 1280:
                         verify_launcher_admission(page, context, full, account_a)
                         print('PASS: launcher rejects stale session, mismatched identity, unavailable owner, inventory and capture faults', flush=True)
+                        verify_creator_intent(context, full)
+                        print('PASS: isolated Creator callback serializes submit and preserves request identity through retry', flush=True)
                     # Missing either opt-in preserves the old L1 gate.
                     for query in ['?welcomeL1=1&accountPresentation=1','?welcomeL1=1&worldPresentation=1']:
                         page.goto(origin+'/'+query,wait_until='networkidle')

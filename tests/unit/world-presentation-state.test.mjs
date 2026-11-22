@@ -1,26 +1,32 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createWorldReviewState, worldReviewReducer } from '../../apps/rpg-ui/src/game-shell/worldPresentationState.ts';
+import { createWorldIntent, createWorldReviewState, validatedWorldName, worldReviewReducer }
+  from '../../apps/rpg-ui/src/game-shell/worldPresentationState.ts';
 
-test('review draft cannot be edited outside configuration and never gains a runtime identity', () => {
+test('only a verified result from the Creator highlights the matching World in the Library', () => {
   const initial = createWorldReviewState();
-  assert.equal(worldReviewReducer(initial, {type:'EDIT',field:'name',value:'Injected'}), initial);
-  const config = worldReviewReducer(initial, {type:'OPEN_CONFIGURATION'});
-  const edited = worldReviewReducer(config, {type:'EDIT',field:'name',value:'Visual review'});
-  assert.equal(edited.draft.name, 'Visual review');
-  assert.equal(config.draft.name, '');
-  assert.deepEqual(Object.keys(edited).sort(), ['draft','view']);
-  assert.deepEqual(Object.keys(edited.draft).sort(), ['name','rainfall','season','temperature']);
+  const verified = {type:'VERIFIED',worldInstanceId:'world.instance.synthetic'};
+  assert.equal(worldReviewReducer(initial, verified), initial);
+  const creator = worldReviewReducer(initial, {type:'OPEN_CONFIGURATION'});
+  assert.deepEqual(worldReviewReducer(creator, verified),
+    {view:'library',highlightedWorldId:verified.worldInstanceId});
+  assert.deepEqual(worldReviewReducer(creator, {type:'BACK'}), initial);
 });
 
-test('Back, reopening and a new component instance discard the whole illustrative draft', () => {
-  let review = worldReviewReducer(createWorldReviewState(), {type:'OPEN_CONFIGURATION'});
-  for (const [field,value] of [['name','Discard me'],['temperature','Hot'],['rainfall','Wet'],['season','Harvest']])
-    review = worldReviewReducer(review, {type:'EDIT',field,value});
-  assert.deepEqual(worldReviewReducer(review, {type:'BACK'}), createWorldReviewState());
-  const reopened = worldReviewReducer(review, {type:'OPEN_CONFIGURATION'});
-  assert.deepEqual(reopened.draft, createWorldReviewState().draft);
-  const fresh = createWorldReviewState();
-  assert.notEqual(fresh.draft, review.draft);
-  assert.equal(fresh.draft.name, '');
+test('Creator names follow the owner length, trimming and control-character limits', () => {
+  for (const invalid of ['', '   ', 'x'.repeat(81), 'bad\u0000name', '\tname', 'name\u007f']) {
+    assert.equal(validatedWorldName(invalid), null);
+  }
+  assert.equal(validatedWorldName('  River & Stone  '), 'River & Stone');
+  assert.equal(validatedWorldName('x'.repeat(80)), 'x'.repeat(80));
+});
+
+test('the form intent carries only supported fields and generates distinct stable identities per request', () => {
+  const first = createWorldIntent('Same name');
+  const second = createWorldIntent('Same name');
+  assert.deepEqual(Object.keys(first).sort(), ['creationIntentId','displayName','proposedWorldInstanceId']);
+  assert.match(first.creationIntentId, /^world\.create\./);
+  assert.match(first.proposedWorldInstanceId, /^world\.instance\./);
+  assert.notEqual(first.creationIntentId, second.creationIntentId);
+  assert.notEqual(first.proposedWorldInstanceId, second.proposedWorldInstanceId);
 });

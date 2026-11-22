@@ -25,13 +25,38 @@ test('real Welcome/World component renders authenticated, unavailable and disabl
     assert.doesNotMatch(welcome,/>Back<\/button>/);
     assert.doesNotMatch(welcome,/<aside|World time|View Characters/);
     const library = renderToStaticMarkup(React.createElement(WelcomeWorldPresentation, {...props,worlds:true}));
-    assert.match(library,/World registry unavailable/);
-    assert.match(library,/No Worlds available/);
-    assert.match(library,/Create World/);
+    assert.match(library,/World inventory unavailable/);
+    assert.match(library,/Create New World/);
+    assert.match(library,/>Home<\/button>/);
     assert.match(library,/aria-label="Back to Welcome"/);
     assert.doesNotMatch(library,/Open existing launcher/);
     assert.doesNotMatch(library,/View Characters|World created|worldInstanceId/);
     assert.equal(calls,0,'render must not invoke account or navigation owners');
+  } finally { await vite.close(); }
+});
+
+test('Library separates unavailable, empty, blocked, verification failure and the owner-provided capacity card', async () => {
+  const vite = await createServer({ server: { middlewareMode: true, hmr: false }, appType: 'custom' });
+  try {
+    const { WorldLibrary } = await vite.ssrLoadModule('/src/game-shell/components/WorldLibrary.tsx');
+    const { WelcomeWorldPresentation } = await vite.ssrLoadModule('/src/game-shell/components/WelcomeWorldPresentation.tsx');
+    const render = inventory => renderToStaticMarkup(React.createElement(WorldLibrary, {inventory}));
+    assert.match(render({status:'loading'}), /role="status">Verifying World inventory/);
+    assert.match(render({status:'empty'}), /No Worlds yet/);
+    assert.match(render({status:'blocked',message:'World owner unavailable'}), /role="alert">World owner unavailable/);
+    assert.match(render({status:'readback-failed',message:'Read again'}), /World verification failed/);
+    const world = {worldInstanceId:'world.instance.fixture',displayName:'Owner fixture',
+      rules:{ progressionMode:'chronicle',worldKind:'individual',difficulty:'mortal' },
+      scenario:{id:'world_scenario.first_world.chronicle_default_v1',version:1},createdAt:'2026-11-22T00:00:00Z'};
+    const inventory = {status:'ready',world};
+    const ready = renderToStaticMarkup(React.createElement(WelcomeWorldPresentation, {
+      profile:{displayName:'Fixture'},worlds:true,busy:false,themeMode:'dark',inventory,
+    }));
+    assert.match(ready,/Owner fixture/);
+    assert.match(ready,/world\.instance\.fixture/);
+    assert.match(ready,/disabled=""[^>]*>Create New World<\/button>/);
+    assert.match(ready,/Pilot capacity reached/);
+    assert.doesNotMatch(ready,/>Play<|>Open World<|World created\./);
   } finally { await vite.close(); }
 });
 
