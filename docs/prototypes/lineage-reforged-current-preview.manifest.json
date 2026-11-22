@@ -626,7 +626,7 @@
   },
   "verification": {
     "command": "node docs/prototypes/verify-current-preview.mjs",
-    "optionalBrowser": "python3 docs/prototypes/preview-browser-smoke.py (updated for independent heir World Entry catalog selection and held actions; Chromium not run at this revision)",
+    "optionalBrowser": "python3 docs/prototypes/preview-browser-smoke.py (Codex local five-viewport pass, exact HTML unchanged; see local checkpoint)",
     "verifySourceBinaryEquality": "The draft preview blob and master snapshot use the exact same Git blob; ChatGPT visualization SHA-256 checked",
     "externalArtNetworkLoads": "not fully tested; resource and geography image URLs fall back when blocked",
     "productionReactAndSaveSystems": "not tested/modified",
@@ -727,8 +727,23 @@
         "unborn path can inspect provisional entry",
         "entry review cannot spend or mutate World/offspring/estate"
       ],
-      "browser": "NOT RUN at this revision",
-      "production": "NOT RUN; standalone preview and design intent only"
+      "browser": "PASS reported by Codex local exact-HTML Playwright/Chromium smoke after test correction at 1440/1280/768/375/320; independently reviewed source and receipt by Connector; not production visual acceptance",
+      "production": "NOT RUN; standalone preview and design intent only",
+      "localCheckpoint": {
+        "baseCommit": "d312daf051c7a834541c250799a766343fc361fe",
+        "sourceTestCommit": "31174f5454ab1f9d1cce9a0d7b9762cded9b13a1",
+        "receiptCommit": "bc171008fa4a59370be3527c9e852460f61bab40",
+        "receiptPath": "docs/dev/ui-preview-local-verification-checkpoint-2026-11-21.md",
+        "connectorReviewPath": "docs/dev/ui-preview-connector-checkpoint-acceptance-and-shell-resume-2026-11-21.md",
+        "localAssetHashes": "PASS 114/114",
+        "keyboardLogin": "PASS",
+        "localArtDecode": "PASS 59 instances, 17 distinct original assets",
+        "launcherTests": "PASS 18/18",
+        "nodeTypecheck": "PASS",
+        "directVite": "PASS",
+        "uiTypecheck": "FAIL 119 existing baseline diagnostics; combined build blocked",
+        "productionAcceptance": "NOT RUN"
+      }
     },
     "sourceSmoke": "node docs/prototypes/preview-source-smoke.mjs"
   },

@@ -25,3 +25,6 @@ Report baseline head, branch/commit, changed source/tests, mapping or blockers, 
 
 
 **2026-11-21 Connector follow-through:** [Connector orientation and first bounded Codex slice](ui-preview-connector-orientation-and-codex-first-slice-2026-11-21.md) contains exact-head read-only source mapping, refreshed 62 source checks, 32 markers and 114/114 master asset metadata matches, actual runtime-owner differences, focused test commands and an S-size first shell/account presentation checkpoint. Use it to avoid duplicate inventory; local verification/delta, browser and production acceptance remain mandatory. No production code or preview bytes changed.
+
+
+**2026-11-21 current UI continuation:** [Connector checkpoint acceptance and bounded shell resume](ui-preview-connector-checkpoint-acceptance-and-shell-resume-2026-11-21.md). V1/V2 reviewed and accepted for master integration; V3 specifically authorized for local repair, with exact-diagnostic baseline comparison. Continue directly into the first isolated shell/account presentation package if its affected surface is clear and no new diagnostics are introduced. Unrelated pre-existing diagnostics are non-gating for this isolated slice, not a clean production build. Do not repeat unchanged standalone verification or broaden to 119-error cleanup. All World/Save and deployment holds remain.
