@@ -14,6 +14,7 @@ type Props = {
   themeMode: 'dark' | 'light';
   onToggleThemeMode: () => void;
   onContinue: () => void;
+  onOpenExistingLauncher: () => void;
   onBack: () => void;
   onLogout: () => void;
 };
@@ -23,7 +24,7 @@ const selectClass = 'w-full min-w-0 rounded-lg border border-[color:var(--color-
 
 /** Presentation only, mounted after the existing authenticated Welcome/gate owner. */
 export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, clockTitle,
-  themeMode, onToggleThemeMode, onContinue, onBack, onLogout }: Props) {
+  themeMode, onToggleThemeMode, onContinue, onOpenExistingLauncher, onBack, onLogout }: Props) {
   const [review, dispatch] = useReducer(worldReviewReducer, undefined, createWorldReviewState);
   const configuring = worlds && review.view === 'configuration';
   const back = () => {
@@ -46,7 +47,8 @@ export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, cl
         </div>
       </details>
     </>}
-    subBar={<nav aria-label="World review navigation" className="grid min-h-11 grid-cols-[1fr_auto_1fr] items-center gap-2">
+    subBar={<nav aria-label={worlds ? 'World review navigation' : 'Welcome navigation'}
+      className="grid min-h-11 grid-cols-[1fr_auto_1fr] items-center gap-2">
       <div>{worlds
         ? <button type="button" disabled={busy} onClick={back} className={control}
             aria-label={configuring ? 'Back to World Library' : 'Back to Welcome'} title="Back">Back</button>
@@ -56,7 +58,9 @@ export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, cl
         ? <button type="button" disabled={busy} className={control}
             onClick={() => dispatch({ type: 'OPEN_CONFIGURATION' })}>Create World</button>
         : <span />}
-      <span />
+      {worlds ? <span /> :
+        <button type="button" onClick={onOpenExistingLauncher} disabled={busy}
+          className={`${control} justify-self-end whitespace-nowrap`}>Open existing launcher</button>}
     </nav>}
   >
     <div data-world-presentation={worlds ? review.view : 'welcome'} className="mx-auto w-full max-w-4xl space-y-5">

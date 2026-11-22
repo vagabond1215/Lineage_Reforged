@@ -655,6 +655,18 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     dispatch({ type: 'OPEN_WORLD_LIBRARY_GATE' });
   }, undefined);
 
+  const openExistingLauncher = () => {
+    if (!worldPresentation || state.screen !== 'WELCOME_AUTHENTICATED') return;
+    const { launcherSession, accountProfile } = state;
+    void guarded(async () => {
+      if (!services) throw new Error('Epoch owner is unavailable.');
+      const account = await services.accounts.validateSession(launcherSession);
+      if (account.accountId !== accountProfile.accountId || account.accountId !== launcherSession.accountId)
+        throw new Error('The selected account changed. Sign in again.');
+      await showMenu(launcherSession, account.accountId, null, 'characters');
+    }, undefined, false); // Use the validated account returned by the owner for admission.
+  };
+
   const applyLegacy = (action: EpochLegacyAction) => void guarded(async () => {
     if (state.screen !== 'MAIN_MENU' || !services) return;
     const expectedRevision = menuAccountRevision.current;
@@ -728,6 +740,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       busy={busy} clockLabel={clockLabel} clockTitle={clockNow.toString()}
       themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')}
       onContinue={continueToWorlds} onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })}
+      onOpenExistingLauncher={openExistingLauncher}
       onLogout={logout} /> : <WelcomeScreen profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
       busy={busy} onContinue={continueToWorlds}
       onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })} onLogout={logout} />;

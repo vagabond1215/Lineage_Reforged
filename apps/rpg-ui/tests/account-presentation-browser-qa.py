@@ -74,6 +74,9 @@ def run(origin, screenshots, selected_width=None):
                         page.get_by_role('button', name='Create Account', exact=True).click()
                         expect(page.get_by_role('heading', name='Welcome back, '+name, exact=True)).to_be_visible()
                         expect(page.get_by_role('button', name='Persistent', exact=False)).to_be_disabled()
+                        dismiss = page.get_by_role('button', name='Dismiss Account Created notification')
+                        if dismiss.count():
+                            dismiss.click()
                         page.get_by_role('button', name='Logout', exact=True).click()
                         expect(page.get_by_label('Account', exact=True)).to_be_visible()
 
@@ -103,6 +106,7 @@ def run(origin, screenshots, selected_width=None):
                     login.click()
                     expect(page.get_by_text('Could Not Sign In', exact=True)).to_be_visible()
                     expect(login).to_be_enabled()
+                    expect(picker).to_have_value(account_a)
                     assert page.evaluate(GRAPH) == initial, 'Failed login changed account graph'
                     picker.select_option(value=account_b)
                     expect(page.get_by_label('Password', exact=True)).to_have_value('')
@@ -117,6 +121,7 @@ def run(origin, screenshots, selected_width=None):
                     page.wait_for_function('typeof window.__releaseAuth === "function"')
                     page.evaluate('window.__holdAuth=false;window.__releaseAuth()')
                     expect(page.get_by_role('alert')).to_be_visible()
+                    expect(picker).to_have_value(account_b)
                     assert page.evaluate(GRAPH) == initial, 'Rejected deletion changed account graph'
                     picker.select_option(value=account_a)
                     picker.select_option(value=account_b)
@@ -130,6 +135,7 @@ def run(origin, screenshots, selected_width=None):
                     page.wait_for_function('typeof window.__releaseArchive === "function"')
                     page.evaluate('window.__holdArchive=false;window.__releaseArchive()')
                     expect(page.get_by_role('alert')).to_contain_text('Restore failed')
+                    expect(picker).to_have_value(account_b)
                     assert page.evaluate(GRAPH) == initial, 'Rejected restore changed account graph'
                     # Hide management panels, then verify the reviewed form geometry.
                     page.get_by_text('Manage selected account', exact=True).click()

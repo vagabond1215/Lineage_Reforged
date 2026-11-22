@@ -11,13 +11,17 @@ test('real Welcome/World component renders authenticated, unavailable and disabl
     let calls = 0;
     const props = {profile:{accountId:'synthetic-render',displayName:'Verified <Name>'},busy:false,
       clockLabel:'10:15 AM',clockTitle:'Local clock',themeMode:'dark',
-      onToggleThemeMode:()=>calls++,onContinue:()=>calls++,onBack:()=>calls++,onLogout:()=>calls++};
+      onToggleThemeMode:()=>calls++,onContinue:()=>calls++,onBack:()=>calls++,onLogout:()=>calls++,
+      onOpenExistingLauncher:()=>calls++};
     const welcome = renderToStaticMarkup(React.createElement(WelcomeWorldPresentation, {...props,worlds:false}));
     assert.match(welcome,/Welcome back, Verified &lt;Name&gt;/);
     assert.match(welcome,/data-world-presentation="welcome"/);
     assert.match(welcome,/disabled=""[^>]*><span[^>]*>Persistent/);
     assert.match(welcome,/Local time 10:15 AM/);
     assert.match(welcome,/>Sign Out<\/button>/);
+    assert.match(welcome,/>Open existing launcher<\/button>/);
+    const busy = renderToStaticMarkup(React.createElement(WelcomeWorldPresentation, {...props,worlds:false,busy:true}));
+    assert.match(busy,/<button[^>]*disabled=""[^>]*>Open existing launcher<\/button>/);
     assert.doesNotMatch(welcome,/>Back<\/button>/);
     assert.doesNotMatch(welcome,/<aside|World time|View Characters/);
     const library = renderToStaticMarkup(React.createElement(WelcomeWorldPresentation, {...props,worlds:true}));
@@ -25,6 +29,7 @@ test('real Welcome/World component renders authenticated, unavailable and disabl
     assert.match(library,/No Worlds available/);
     assert.match(library,/Create World/);
     assert.match(library,/aria-label="Back to Welcome"/);
+    assert.doesNotMatch(library,/Open existing launcher/);
     assert.doesNotMatch(library,/View Characters|World created|worldInstanceId/);
     assert.equal(calls,0,'render must not invoke account or navigation owners');
   } finally { await vite.close(); }
@@ -53,12 +58,15 @@ test('gated picker displays real journey metadata and uniquely labels duplicate 
     assert.match(markup, /<option value="" selected=""/);
     assert.deepEqual(options(render([...accounts].reverse())), labels);
     assert.equal(new Set(labels.values()).size, accounts.length + 1);
+    const formatDate = new Intl.DateTimeFormat('en-US', {dateStyle:'medium', timeStyle:'short'});
+    const firstDate = formatDate.format(new Date(accounts[2].lastPlayedAt));
+    const secondDate = formatDate.format(new Date(accounts[4].lastPlayedAt));
+    const expectedMetadata = ['No journey recorded yet.', 'No journey recorded yet.',
+      `Last played: ${firstDate}`, `Last played: ${firstDate}`, `Last played: ${secondDate}`];
     for (const [index, account] of accounts.entries()) {
       const label = labels.get(account.accountId);
-      assert.ok(label.startsWith(name));
-      assert.ok(label.endsWith(`(account ${index + 1})`));
+      assert.equal(label, `${name} — ${expectedMetadata[index]} (account ${index + 1})`);
       assert.ok(!label.includes(account.accountId));
-      assert.match(label, [ /No journey recorded/, /No journey recorded/, /Last played: Jan 5/, /Last played: Jan 5/, /Last played: Feb 10/ ][index]);
     }
     assert.doesNotMatch(render(accounts, false), /<option|\(account [1-5]\)/);
     assert.deepEqual(options(render([])), new Map([['', 'Select an account']]));
