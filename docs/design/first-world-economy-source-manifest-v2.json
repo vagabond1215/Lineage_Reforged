@@ -1,0 +1,45 @@
+{
+  "format": "lineage.first-world-economy-source.v2",
+  "scenario": {
+    "id": "world_scenario.first_world.chronicle_default_v1",
+    "version": 1
+  },
+  "loaderVersion": 2,
+  "compactVersion": 1,
+  "previousFingerprint": "sha256:c489ca61176bc3a2100f9ee80839760fc2733c9bce84be1555abe3525f3537ca",
+  "implementationPins": [
+    {
+      "path": "apps/rpg-ui/build/first-world-browser-loader.mjs",
+      "gitBlobSha1": "61dba4d9b991fedff27d406d1eff14382c6ba384"
+    },
+    {
+      "path": "apps/rpg-ui/build/first-world-source-pack.mjs",
+      "gitBlobSha1": "3e58c4654091424e6a6e88c207b9f98b4ae1af87"
+    },
+    {
+      "path": "apps/rpg-ui/build/first-world-source-worker.mjs",
+      "gitBlobSha1": "9e6b8ca2da331f2c5685ee7e721d6884c9d5f5bc"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/world-source/candidate.mjs",
+      "gitBlobSha1": "d7847b64e267cf3d619e2f3023fb2c55c06f2a43"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/world-source/canonical-content.mjs",
+      "gitBlobSha1": "e87d246926ec24451850107035953048f8ecb5b3"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/world-source/client.ts",
+      "gitBlobSha1": "b9da81561ad74babc9a60070a067a751ac88f1ff"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/world-source/worker-content.mjs",
+      "gitBlobSha1": "8353e17cab236d201b938fcc602af367ebb0fa05"
+    },
+    {
+      "path": "apps/rpg-ui/src/game-shell/world-source/worker.mjs",
+      "gitBlobSha1": "6fe54ae5b6a0cfc82ed653ee512b74bec8250bef"
+    }
+  ],
+  "runtimeFingerprint": "sha256:63ba33dc9873ce49e2a2d98ba9744e9e0c45a2ac88ef244212968bb371752437"
+}

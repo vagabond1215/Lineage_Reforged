@@ -1414,7 +1414,20 @@ export async function openCleanEpochAccountStore(options: CleanEpochAccountStore
   return new CleanEpochAccountStore(db, options.beforeWrite, options.afterWrite);
 }
 
+declare const __LINEAGE_VERIFIED_WORLD_SOURCE_BUILD__: boolean;
+
 export class CleanEpochAccountStore {
+  /** Browser source preflight only. Draft commit and retained v8 contracts are separate. */
+  static async prepareChronicleWorldSource(
+    ...args: Parameters<typeof import('./world-source/client.js').prepareBrowserWorldSource>
+  ) {
+    if (typeof __LINEAGE_VERIFIED_WORLD_SOURCE_BUILD__ === 'undefined' || !__LINEAGE_VERIFIED_WORLD_SOURCE_BUILD__) {
+      throw new Error('Verified World source preparation requires the standard compiled application.');
+    }
+    const { prepareBrowserWorldSource } = await import('./world-source/client.js');
+    return prepareBrowserWorldSource(...args);
+  }
+
   constructor(private readonly db: IDBDatabase,
     private readonly beforeWrite?: CleanEpochAccountStoreOptions["beforeWrite"],
     private readonly afterWrite?: CleanEpochAccountStoreOptions["afterWrite"]) {}

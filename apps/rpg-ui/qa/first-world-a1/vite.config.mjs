@@ -2,6 +2,7 @@ import { fileURLToPath } from 'node:url';
 import { relative } from 'node:path';
 import { defineConfig, normalizePath } from 'vite';
 import { loaderPath, repository, verifySourcePack } from './source-pack.mjs';
+import { transformVerifiedContentLoader } from '../../build/first-world-browser-loader.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const assetsId = '\0virtual:first-world-a1-assets';
@@ -39,7 +40,8 @@ export default defineConfig({
     transform(code, id) {
       if (id.startsWith('\0')) return;
       const path = normalizePath(relative(repository, id));
-      if (!/\.[cm]?[jt]sx?$/.test(path) || path.startsWith('apps/rpg-ui/qa/first-world-a1/')) return;
+      if (!/\.[cm]?[jt]sx?$/.test(path) || path.startsWith('apps/rpg-ui/qa/first-world-a1/') ||
+          path === 'apps/rpg-ui/src/game-shell/world-source/canonical-content.mjs') return;
       const pinned = sourcePack.bytes.get(path);
       if (!pinned) this.error(`Unpinned First World browser dependency: ${path}`);
       const canonical = pinned.toString('utf8');
@@ -49,15 +51,7 @@ export default defineConfig({
         this.error(`First World build input differs from the verified source: ${path}`);
       }
       if (path !== loaderPath) return;
-      const fromNode = /import \{ readFileSync \} from "node:fs";[\s\S]*?\n/;
-      const readFromDisk = '    const fileUrl = new URL(relativePath, import.meta.url);\n    const raw = readFileSync(fileUrl, "utf8");';
-      const parse = 'const parsed = JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw);';
-      if (!fromNode.test(canonical) || !canonical.includes(readFromDisk) || !canonical.includes(parse))
-        this.error('The pinned civilization content loader no longer matches the browser adapter.');
-      return canonical
-        .replace(fromNode, 'import { readCanonicalText, freezeCanonical } from "virtual:first-world-a1-reader";\n')
-        .replace(readFromDisk, '    const raw = readCanonicalText(relativePath);')
-        .replace(parse, 'const parsed = freezeCanonical(JSON.parse(raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw));');
+      return transformVerifiedContentLoader(canonical, readerId.slice(1));
     },
   }],
 });

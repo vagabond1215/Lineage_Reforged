@@ -1,6 +1,7 @@
 import { sites } from '@openai/sites-vite-plugin';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { firstWorldSourceWorker } from './build/first-world-source-worker.mjs';
 
 export default defineConfig(async ({ command }) => {
   const plugins = [react(), sites()];
@@ -14,5 +15,9 @@ export default defineConfig(async ({ command }) => {
     plugins.push(cloudflare({ viteEnvironment: { name: 'server' } }));
   }
 
-  return { plugins };
+  return {
+    plugins,
+    define: { __LINEAGE_VERIFIED_WORLD_SOURCE_BUILD__: JSON.stringify(command === 'build') },
+    worker: { format: 'es' as const, plugins: () => [firstWorldSourceWorker()] },
+  };
 });
