@@ -31,3 +31,8 @@ Archive growth equals that fixture's World row (6,721,130 bytes) and receipt (43
 - FP-001 and FP-017 exercised the actual engine chain in both runtimes. FP-002 preserves separate acceptance for transactional creation, migration, and Save. FP-009 records the starting, implementation and publication heads. FP-011/014 checked content and transitive code ownership with exact byte pins, including negative browser witnesses. The original migration suite retained synthetic rollback, retry, lifecycle and archive checks (FP-004/005/018/019).
 
 PR #102 remains draft and retained for independent A1 review. PR #103 and the UI and map lanes retain their existing dispositions. Production activation, native-v3 Save and migration acceptance, and UI wiring are held. A2 will separately address exact source/scenario/rules/seed binding and real atomic create, reopen and fault evidence once authorized.
+
+
+## Independent Connector source review (2026-11-22)
+
+The exact PR102 Git tree at 2f0043d2 contains every one of the published 41 distinct pinned paths with matching Git blob SHA; the extra registry pin cf58c82d also matches. No independent runtime rerun or alteration of A1 results. [A2 preflight and owner handoff](world-a2-atomic-browser-create-and-persistence-preflight-2026-11-22.md) addresses the immutable historical pin boundary, runtime-app integration, exact full vs derived state and accepted create/reopen scope. A1 remains WORLD_A1_READY_FOR_CONNECTOR_REVIEW for executable evidence; Connector source review passes. 
