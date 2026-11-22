@@ -1006,22 +1006,20 @@
 .family-section-title small{font:12px Inter,'Segoe UI',sans-serif;color:#b0b7ad}
 .family-card{border:1px solid #536054;border-radius:14px;background:#182124;overflow:hidden;min-width:0}
 .family-card.awaiting{border-color:#806b4f}.family-card.inactive{border-color:#495352}
-.family-head{padding:18px;background:linear-gradient(135deg,#28332f,#1d2629);display:grid;gap:12px}
-.family-title-row{display:flex;align-items:center;gap:12px}.family-emblem{width:44px;height:50px;border:1px solid #8b7959;border-radius:7px;display:grid;place-items:center;color:#dcbe8d;background:#34352a;font:25px Georgia,serif;flex:none}
-.family-title{margin:0;font:normal clamp(22px,3vw,29px) Georgia,serif;color:#f0dcbb;overflow-wrap:anywhere}
-.family-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px}
-.family-metric{background:#192325;border:1px solid #414e48;border-radius:7px;padding:8px 9px;min-width:0}
-.family-metric strong{display:block;color:#e6cba3;font-size:18px}.family-metric small{font-size:11px;color:#b7bdb2;overflow-wrap:anywhere}
-.family-resume{font-size:12px;color:#bec5b9}.family-resume strong{color:#eddbb9}
-.family-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.family-action{border:1px solid #897653;background:#242c2a;border-radius:8px;color:#e2cba6;min-height:43px;padding:8px 5px;font-size:12px;cursor:pointer}
-.family-action.primary-family{background:#c9a878;color:#1b2320;border-color:#c9a878;font-weight:700}
+.family-head{padding:12px 16px;background:linear-gradient(135deg,#28332f,#1d2629);border-bottom:1px solid #424f48}
+.family-title-row{display:flex;align-items:center;gap:10px;min-width:0}
+.family-title{margin:0;flex:1;min-width:0;font:normal clamp(22px,3vw,29px) Georgia,serif;color:#f0dcbb;overflow-wrap:anywhere}
+.family-tree-button{width:38px;height:38px;display:grid;place-items:center;flex:none;background:transparent;border:0;color:#d6bc8f;border-radius:6px;cursor:pointer}
+.family-tree-button svg{width:25px;height:25px}.family-tree-button:hover,.family-tree-button:focus-visible{background:#3a3d2f;outline:1px solid #b79b72}
+.family-action{border:1px solid #897653;background:#242c2a;border-radius:8px;color:#e2cba6;min-height:36px;padding:7px 12px;font-size:12px;cursor:pointer;flex:none;white-space:nowrap}
+.family-action.primary-family{background:#c9a878;color:#1b2320;border-color:#c9a878;font-weight:700;margin-left:auto}
 .family-action:disabled{opacity:.43;cursor:not-allowed;background:#303837;color:#a6aba4;border-color:#535b55}
-.family-members{padding:12px;display:grid;gap:12px;min-width:0}
-.family-group{min-width:0;display:grid;gap:7px}.family-group-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:0;padding:4px 2px;color:#c4c9bf;font-size:12px;font-weight:650}
-.family-group-title small{font-weight:400;color:#a7ada3}.family-group-toggle{width:100%;border:1px solid #414b47;border-radius:7px;background:#1b2528;padding:9px;color:#b8beb2;cursor:pointer;text-align:left}
-.family-group .save-tile{border-color:#434e49;border-radius:9px}.family-group .save-head{padding:12px}
-.family-empty{font-size:11px;color:#929b94;padding:3px 4px}
+.family-members{padding:12px;min-width:0}
+.family-member-list{list-style:none;margin:0;padding:0;display:grid;gap:7px;min-width:0}
+.family-member{min-width:0;display:grid;gap:7px}
+.family-member-row{min-width:0;margin-inline-start:min(calc(var(--member-depth)*18px),108px);position:relative}
+.family-member-row[data-child=true]:before{content:"";position:absolute;left:-10px;top:0;width:9px;height:22px;border-left:1px solid #657060;border-bottom:1px solid #657060;border-bottom-left-radius:3px;pointer-events:none}
+.family-member-row .save-tile{border-color:#434e49;border-radius:9px}.family-member-row .save-head{padding:12px}
 .family-tree-scroll{max-height:min(43vh,360px);overflow:auto;padding:14px 12px;background:#141d20;border:1px solid #424e49;border-radius:9px;overscroll-behavior:contain}
 .family-tree-scroll:focus-visible{outline:2px solid #c9a878}
 .tree-canvas{display:flex;gap:16px;width:max-content;min-width:100%;justify-content:center;align-items:flex-start}
@@ -1036,7 +1034,7 @@
 .tree-children>.tree-branch:first-child:after{left:50%}.tree-children>.tree-branch:last-child:after{right:50%}
 .tree-selection{display:grid;gap:7px;margin-top:12px;padding:12px;border:1px solid #5b6154;background:#232c29;border-radius:8px}
 .tree-selection strong{color:#ecd5ad}.tree-selection .heir-buttons{justify-content:flex-start}.tree-caption{color:#aeb9ad;font-size:11px;margin:0 0 8px}
-@media(max-width:550px){.family-head{padding:12px}.family-members{padding:8px}.family-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.family-group .save-head{padding:9px}.family-actions{gap:5px}.family-action{font-size:11px}.family-section-title{font-size:19px}}
+@media(max-width:550px){.family-head{padding:9px 10px}.family-members{padding:8px}.family-title-row{gap:7px}.family-tree-button{width:32px;height:34px}.family-tree-button svg{width:22px;height:22px}.family-action{padding:6px 9px;font-size:11px}.family-member-row{margin-inline-start:min(calc(var(--member-depth)*11px),33px)}.family-member-row[data-child=true]:before{left:-7px;width:6px;height:18px}.family-member-row .save-head{padding:9px;grid-template-columns:40px minmax(0,1fr) auto;gap:7px}.family-member-row .save-portrait{width:40px}.family-member-row .save-name{font-size:17px}.family-section-title{font-size:19px}}
 </style>
 </head>
 <body>
@@ -1185,7 +1183,7 @@ function labelWorldOption(id,value){return WORLD_OPTION_GROUPS[id]?.options.find
 function worldSettingGroup(id,value,columns=3){const group=WORLD_OPTION_GROUPS[id];return `<div role="group" aria-label="${group.label}" class="world-setting-options" data-setting-group="${id}" style="--world-option-columns:${columns}">${group.options.map(o=>`<button type="button" class="world-setting-option ${value===o.id?'selected':''}" data-launch="worldSetting" data-setting="${id}" data-value="${o.id}" aria-pressed="${value===o.id}"><strong>${o.label}</strong><small>${o.description}</small></button>`).join('')}</div>`;}
 function worldSettingsReview(settings){const s=normalizedWorldSettings(settings);return `<div class="world-setup-review" aria-live="polite"><h3>World settings</h3><dl class="world-review-values"><div><dt>Difficulty</dt><dd>${labelWorldOption('difficulty',s.difficulty)}</dd></div><div><dt>Temperature</dt><dd>${labelWorldOption('temperature',s.temperature)}</dd></div><div><dt>Rainfall</dt><dd>${labelWorldOption('moisture',s.moisture)}</dd></div><div><dt>Starting Season</dt><dd>${labelWorldOption('season',s.season)}</dd></div></dl></div>`;}
 function worldSettingsSummary(settings){const s=normalizedWorldSettings(settings);return `Difficulty: ${labelWorldOption('difficulty',s.difficulty)} · Climate: ${labelWorldOption('temperature',s.temperature)} / ${labelWorldOption('moisture',s.moisture)} · Season: ${labelWorldOption('season',s.season)}`;}
-const route={screen:'splash',accountName:'',progression:'chronicle',worlds:[],worldIndex:0,worldDraft:'',accountDraft:'',worldSettings:defaultWorldSettings(),stayLoggedIn:false,expandedSaves:{},saveTabs:{},familyArchives:{},creatorContext:null};
+const route={screen:'splash',accountName:'',progression:'chronicle',worlds:[],worldIndex:0,worldDraft:'',accountDraft:'',worldSettings:defaultWorldSettings(),stayLoggedIn:false,expandedSaves:{},saveTabs:{},creatorContext:null};
 const state={stage:1,lineage:'lineage.human',firstName:'',lastName:'',name:'',inspectedNegative:null,inspectedPositive:null,selectedConditions:{negative:[],positive:[]},sex:'female',age:'prime',height:'normal',build:'stocky',aptitude:'versatile',skin:19,hair:36,eyes:33,continent:'region.myridian_chain',region:'Starfall Isle',settlement:'Starfall Port',pool:'ordinary',scenario:'core.room_paid',validation:false,portrait:false,summaryReviewed:false,entryChoice:null,showAttributeDetails:false};
 for(const key of ['skin','hair','eyes'])state[key]=firstSourceColorIndex(key);
 const freshCreatorState=JSON.parse(JSON.stringify(state));
@@ -1698,26 +1696,28 @@ function isPlayable(c){return c?.status==='alive'&&c.playable!==false;}
 function heirSlots(c){return Math.max(0,(Number.isInteger(c?.heirCapacity)?c.heirCapacity:0)-heirsOf(c?.id).length);}
 function canCreateHeir(c){return !!(c&&c.status==='alive'&&heirSlots(c)>0);}
 function familyMembers(id){return worldCharacters().filter(c=>c.family===id);}
-function familyName(members){const root=members.find(c=>!members.some(p=>p.id===c.parentId))||members[0];return 'House '+(root?.surname||root?.name||'Unknown');}
+function familyName(members){const root=members.find(c=>!members.some(p=>p.id===c.parentId))||members[0];return root?.surname||root?.name||'Unknown';}
 function familyResume(members){return members.filter(isPlayable).sort((a,b)=>(b.lastActiveOrder||0)-(a.lastActiveOrder||0)||a.generation-b.generation||a.id.localeCompare(b.id))[0]||null;}
-function familyHeirParent(members){return members.filter(canCreateHeir).sort((a,b)=>a.generation-b.generation||(b.age??-1)-(a.age??-1)||a.id.localeCompare(b.id))[0]||null;}
 function familySuccessors(members){return members.filter(c=>canSucceed(characterById(c.parentId),c));}
 function familyState(members){return members.some(isPlayable)?'active':familySuccessors(members).length?'awaiting':'inactive';}
-function familyGroups(members){
- const group=(playable,hasHeirs)=>members.filter(c=>isPlayable(c)===playable&&(heirsOf(c.id).length>0)===hasHeirs).sort((a,b)=>a.generation-b.generation||(b.age??-1)-(a.age??-1)||a.name.localeCompare(b.name));
- return [{id:'play-with',name:'Playable with heirs',members:group(true,true),archive:false},{id:'play-without',name:'Playable without heirs',members:group(true,false),archive:false},{id:'nonplay-with',name:'Non-playable with heirs',members:group(false,true),archive:true},{id:'nonplay-without',name:'Non-playable without heirs',members:group(false,false),archive:true}];
-}
-function familyArchiveKey(id,group){return id+'|'+group;}
+/* Keep category state on each record for a later icon pass; no category headings. */
+function familyMemberCategory(c){return (isPlayable(c)?'play':'nonplay')+(heirsOf(c.id).length?'-with':'-without');}
+const familyTreeIcon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21v-5m-5 5h10M12 3l-5 6h3l-5 6h14l-5-6h3z"/></svg>';
 function familyButton(label,action,id,disabled=false,primary=false,title=''){return '<button type="button" class="family-action '+(primary?'primary-family':'')+'" data-launch="'+action+'" data-family-id="'+esc(id)+'" '+(disabled?'disabled ':'')+(title?'title="'+esc(title)+'" ':'')+'>'+label+'</button>';}
+function renderFamilyMembers(members){
+ const seen=new Set(),sort=(a,b)=>a.generation-b.generation||(b.age??-1)-(a.age??-1)||a.name.localeCompare(b.name)||a.id.localeCompare(b.id);
+ const node=(c,depth)=>{if(seen.has(c.id))return '';seen.add(c.id);
+  const children=members.filter(x=>x.parentId===c.id).sort(sort).map(x=>node(x,depth+1)).filter(Boolean);
+  return '<li class="family-member" data-member-id="'+esc(c.id)+'" data-parent-id="'+esc(c.parentId||'')+'"><div class="family-member-row" id="family-member-'+esc(c.id)+'" data-category="'+familyMemberCategory(c)+'" data-depth="'+depth+'" data-child="'+(depth>0)+'" style="--member-depth:'+depth+'">'+renderSaveTile(c)+'</div>'+(children.length?'<ul class="family-member-list">'+children.join('')+'</ul>':'')+'</li>';
+ };
+ const roots=members.filter(c=>!members.some(p=>p.id===c.parentId)).sort(sort).map(c=>node(c,0));
+ // Defensive fallback preserves orphaned/cyclic records rather than hiding them.
+ const rest=members.filter(c=>!seen.has(c.id)).sort(sort).map(c=>node(c,0));
+ return '<ul class="family-member-list" aria-label="Family members in parent-child order">'+roots.concat(rest).join('')+'</ul>';
+}
 function renderFamilyCard(id,members){
- const active=members.filter(isPlayable),resume=familyResume(members),parent=familyHeirParent(members),successors=familySuccessors(members),status=familyState(members),slots=members.filter(canCreateHeir).reduce((n,c)=>n+heirSlots(c),0),draft=members.find(c=>c.status==='draft');
- const metrics=[[active.length,'Playable'],[members.length-active.length,'Non-playable'],[members.filter(c=>c.status==='eligible').length,'Eligible heirs'],[slots,'Available heir slots']];
- const groups=familyGroups(members).map(g=>{
-  const key=familyArchiveKey(id,g.id),open=!g.archive||(route.familyArchives[key]??g.members.some(c=>c.status==='draft'));
-  const title=g.archive?'<button type="button" class="family-group-title family-group-toggle" data-launch="toggleFamilyArchive" data-family-id="'+esc(id)+'" data-group="'+g.id+'" aria-expanded="'+open+'">'+g.name+' <small>'+g.members.length+' · '+(open?'▴':'▾')+'</small></button>':'<h3 class="family-group-title">'+g.name+' <small>'+g.members.length+'</small></h3>';
-  return '<section class="family-group" data-family-group="'+g.id+'">'+title+(open?(g.members.length?g.members.map(renderSaveTile).join(''):'<div class="family-empty">None</div>'):'')+'</section>';
- }).join('');
- return '<article class="family-card '+status+'" data-family="'+esc(id)+'"><div class="family-head"><div class="family-title-row"><div class="family-emblem" aria-hidden="true">✧</div><div><h2 class="family-title">'+esc(familyName(members))+'</h2><div class="save-meta">'+members.length+' members · '+new Set(members.map(c=>c.generation)).size+' generations · '+({active:'Active family',awaiting:'Awaiting succession',inactive:'Inactive family'}[status])+'</div></div></div><div class="family-metrics">'+metrics.map(([n,label])=>'<div class="family-metric"><strong>'+n+'</strong><small>'+label+'</small></div>').join('')+'</div><div class="family-resume">Last active character: <strong>'+esc(resume?.name||'No playable character')+'</strong>'+(parent?' · New heir: '+esc(parent.name):'')+'</div><div class="family-actions">'+familyButton('Family Tree','openFamilyTree',id)+familyButton('＋ New Heir','familyNewHeir',id,!parent,false,parent?'Create heir of '+parent.name:'No eligible ancestor with an available slot')+familyButton('▶ Continue','familyContinue',id,!resume,true,resume?'Resume '+resume.name:'No playable character')+'</div>'+(status==='awaiting'?familyButton('Continue Legacy','familySuccession',id,false,false,'Choose eligible successor'):'')+(draft?saveAction('Continue Creation','continueCreation',draft.id,'heir-action gold'):'')+'</div><div class="family-members">'+groups+'</div></article>';
+ const resume=familyResume(members),status=familyState(members),name=familyName(members);
+ return '<article class="family-card '+status+'" data-family="'+esc(id)+'"><div class="family-head"><div class="family-title-row"><button type="button" class="family-tree-button" data-launch="openFamilyTree" data-family-id="'+esc(id)+'" aria-label="Open family tree for '+esc(name)+'" title="Family tree">'+familyTreeIcon+'</button><h2 class="family-title">'+esc(name)+'</h2>'+familyButton('▶ Continue','familyContinue',id,!resume,true,resume?'Resume '+resume.name:'No playable character')+'</div></div><div class="family-members">'+renderFamilyMembers(members)+'</div></article>';
 }
 function renderFamilyLibrary(w){
  const families=new Map();for(const c of worldCharacters(w)){if(!families.has(c.family))families.set(c.family,[]);families.get(c.family).push(c);}
@@ -1739,8 +1739,7 @@ function openFamilyTree(id,selected){
  openDialog(familyName(members),familyTreeBody(id,selected),'','Family tree');
 }
 function revealFamilyRecord(c,tab='overview'){
- const group=familyGroups(familyMembers(c.family)).find(g=>g.members.some(x=>x.id===c.id));if(group?.archive)route.familyArchives[familyArchiveKey(c.family,group.id)]=true;
- route.expandedSaves[c.id]=true;route.saveTabs[c.id]=tab;el('dialogbg').classList.remove('open');render();
+ route.expandedSaves[c.id]=true;route.saveTabs[c.id]=tab;el('dialogbg').classList.remove('open');render();el('family-member-'+c.id)?.scrollIntoView?.({block:'nearest'});
 }
 function resumePreviewCharacter(c){if(!isPlayable(c))return;const list=worldCharacters();c.lastActiveOrder=Math.max(0,...list.map(x=>x.lastActiveOrder||0))+1;c.lastPlayed='Just now';render();return showPreviewCharacter(c);}
 
@@ -1832,27 +1831,24 @@ function navigateLauncher(action,button){
   return;
  }
  if(action==='splash'||action==='register'||action==='welcome'||action==='worlds'||action==='characters'){return navigate(action)}
- if(action==='loginDemo'){if(route.screen!=='splash'||el('previewAccountPicker')?.value!=='preview-adventurer')return;if(el('previewPassword')?.value!=='demo'){el('previewLoginError').textContent='Use the demo password: demo';el('previewPassword')?.focus();return;}route.stayLoggedIn=!!el('previewStayLoggedIn')?.checked;route.expandedSaves={};route.saveTabs={};route.familyArchives={};route.accountName='Preview Adventurer';route.worlds=[{name:'Starfall World',source:'Fixture',settings:defaultWorldSettings(),characters:demoCharacters()}];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome')}
+ if(action==='loginDemo'){if(route.screen!=='splash'||el('previewAccountPicker')?.value!=='preview-adventurer')return;if(el('previewPassword')?.value!=='demo'){el('previewLoginError').textContent='Use the demo password: demo';el('previewPassword')?.focus();return;}route.stayLoggedIn=!!el('previewStayLoggedIn')?.checked;route.expandedSaves={};route.saveTabs={};route.accountName='Preview Adventurer';route.worlds=[{name:'Starfall World',source:'Fixture',settings:defaultWorldSettings(),characters:demoCharacters()}];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome')}
  if(action==='createDemo'){
   const name=(el('previewNewName')?.value||'').trim();if(!name){const e=el('accountCreateError');if(e)e.textContent='Enter a display name for the demo account.';el('previewNewName')?.focus();return}
   route.accountName=name;route.accountDraft=name;route.worlds=[];route.worldIndex=0;route.worldSettings=defaultWorldSettings();return navigate('welcome');
  }
  if(action==='chronicle'){route.progression='chronicle';return navigate('worlds')}
- if(action==='selectWorld'){const index=Number(button.dataset.worldIndex);if(!Number.isInteger(index)||!route.worlds[index])return;route.worldIndex=index;route.familyArchives={};route.expandedSaves={};route.saveTabs={};return navigate('characters')}
+ if(action==='selectWorld'){const index=Number(button.dataset.worldIndex);if(!Number.isInteger(index)||!route.worlds[index])return;route.worldIndex=index;route.expandedSaves={};route.saveTabs={};return navigate('characters')}
  if(action==='createWorld'){
   const name=(el('previewWorldName')?.value||'').trim();if(!name){const e=el('worldCreateError');if(e)e.textContent='Enter a World name to create the in-memory demo.';el('previewWorldName')?.focus();return}
-  route.worldDraft=name;route.worlds.push({name,source:'Created in preview',settings:normalizedWorldSettings(route.worldSettings)});route.worldIndex=route.worlds.length-1;route.familyArchives={};route.expandedSaves={};route.saveTabs={};return navigate('characters');
+  route.worldDraft=name;route.worlds.push({name,source:'Created in preview',settings:normalizedWorldSettings(route.worldSettings)});route.worldIndex=route.worlds.length-1;route.expandedSaves={};route.saveTabs={};return navigate('characters');
  }
  if(action==='startCreator'){if(!selectedDemoWorld())return;startPreviewCreator();return navigate('creator')}
 
  if(action==='recordPreviewCharacter'){if(recordPreviewCharacter())return navigate('characters');return;}
- if(route.screen==='characters'&&['openFamilyTree','familyContinue','familyNewHeir','familySuccession','toggleFamilyArchive','selectTreePerson','revealFamilyRecord'].includes(action)){
+ if(route.screen==='characters'&&['openFamilyTree','familyContinue','selectTreePerson','revealFamilyRecord'].includes(action)){
   const id=button?.dataset.familyId,members=familyMembers(id),c=characterById(button?.dataset.characterId);
   if(action==='openFamilyTree'&&members.length)return openFamilyTree(id);
   if(action==='familyContinue'){const target=familyResume(members);if(target)return resumePreviewCharacter(target);return;}
-  if(action==='familyNewHeir'){const target=familyHeirParent(members);if(target){startPreviewCreator(target);return navigate('creator');}return;}
-  if(action==='familySuccession'){const target=familySuccessors(members)[0];if(target)return openFamilyTree(id,target.id);return;}
-  if(action==='toggleFamilyArchive'){const group=familyGroups(members).find(g=>g.id===button.dataset.group&&g.archive);if(!group)return;const key=familyArchiveKey(id,group.id);route.familyArchives[key]=!(route.familyArchives[key]??group.members.some(x=>x.status==='draft'));render();return;}
   if(action==='selectTreePerson'&&c){
    const scroll=el('dialogBody').querySelector?.('.family-tree-scroll'),left=scroll?.scrollLeft||0,top=scroll?.scrollTop||0;
    openFamilyTree(c.family,c.id);const next=el('dialogBody').querySelector?.('.family-tree-scroll');if(next){next.scrollLeft=left;next.scrollTop=top;}return;
@@ -1874,7 +1870,7 @@ function navigateLauncher(action,button){
   if(action==='startHeir'&&canCreateHeir(c)){el('dialogbg').classList.remove('open');startPreviewCreator(c);return navigate('creator');}
  }
 
- if(action==='logout'){route.accountName='';route.accountDraft='';route.stayLoggedIn=false;route.expandedSaves={};route.saveTabs={};route.familyArchives={};route.creatorContext=null;route.worlds=[];route.worldIndex=0;route.worldDraft='';route.worldSettings=defaultWorldSettings();state.entryChoice=null;state.summaryReviewed=false;return navigate('splash')}
+ if(action==='logout'){route.accountName='';route.accountDraft='';route.stayLoggedIn=false;route.expandedSaves={};route.saveTabs={};route.creatorContext=null;route.worlds=[];route.worldIndex=0;route.worldDraft='';route.worldSettings=defaultWorldSettings();state.entryChoice=null;state.summaryReviewed=false;return navigate('splash')}
  if(action==='noop')return;
 }
 function syncCreatorTools(){
