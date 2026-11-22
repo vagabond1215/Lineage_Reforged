@@ -1,5 +1,7 @@
 # ACTIVE: Starfall World template → L2 owner/registry design gate (main-first)
 
+> **2026-11-22 A3b execution status.** The isolated compiled-loopback World Creator checkpoint was verified locally and is ready for independent Connector review. See the [A3b receipt](ui-a3b-functional-world-creation-receipt-2026-11-22.md). Keep PR #102 draft and hold production, World-to-Save binding, and Family Library. This status does not authorize a subsequent implementation.
+
 > **2026-11-22 A2b execution status.** The [atomic browser owner evidence](world-a2b-atomic-browser-owner-receipt-2026-11-22.md) is ready for independent Connector review on draft PR #102. World Library/Create UI, native-v3 Save binding and production activation remain held.
 
 > **2026-11-22 independent Connector A2a source review:** [World A2a exact-source review and A2b owner gate](world-a2a-independent-connector-review-and-a2b-owner-gate-2026-11-22.md). All 50 v1/v2 Git source pins match current PR102 tree; no independent Node/Chromium run, and exact-head CI statuses not reported. A2a read-only app Worker source passes scoped inspection; old createChronicleWorld transaction still Node-only and accepts no compact candidate. A2b is next bounded local implementation (new versioned source+typed contract, authenticated atomic pair, real Chromium create/reopen/rollback). No UI/Save/production activation; PR remains draft.

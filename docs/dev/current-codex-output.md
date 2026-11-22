@@ -1,3 +1,23 @@
+## 2026-11-22 — A3b functional World Creator checkpoint
+
+Unversioned World UI checkpoint on `codex/a3b-world-creator-integration-2026-11-22`, isolated from master, draft PR #102 and UI/map lanes. Source `7a46f5771e0785ad7a2d9c1da54ccf200153eeef`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
+
+### A. Files changed
+
+`EpochApp.tsx`, the UI presentation gate and four account/World components, the pilot card/readback projection, the Node tests and Chromium harness, plus the current coordination records and [focused receipt](ui-a3b-functional-world-creation-receipt-2026-11-22.md).
+
+### B. Patch summary
+
+Consumed `A3B_PREWORK_STAGED_INERT` and wired the compiled loopback presentation to the existing credential and atomic World owners. The UI requires verified World and receipt readback before announcing success. Stable requests, remembered-session reauthentication and verified library states cover navigation, restart and failure boundaries. Source commit message `feat(ui): connect review World Creator to the atomic owner`.
+
+### C. Tests or checks run
+
+37 focused Node tests, three direct Vite builds, Node typecheck, no-new-hex, both Chromium suites, DEV smoke and 55-pin verification passed. Exact UI typecheck improved from 184 to 183 diagnostics, solely the AppShell baseline fix. Combined UI build remains blocked by the 183 remaining diagnostics. The focused receipt records FP-001/002/004/005/009/010/011/014/017/018/019 evidence.
+
+### D. Risks and follow-up
+
+`UI_A3B_FUNCTIONAL_WORLD_CREATION_REVIEW_ACCEPTED` is a local checkpoint disposition. Independent Connector review is next. Keep both draft PRs and the original UI and map workspaces. No integration, branch deletion, broader activation or game-version proposal is due.
+
 ## 2026-10-26 — Stage 2 durable item-location owner gate
 
 **Source run:** unversioned Character equipment owner support; fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`, source/test/decision commit `dae9e6e6`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused Stage 2 decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).
