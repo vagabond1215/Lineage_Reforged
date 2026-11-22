@@ -1535,3 +1535,8 @@ Master snapshot remains 20abe83c2aa97ba4699711a9815d9b95e0d3df44; no integration
 ## 2026-11-22 — Splash version selector requested / continuity source review
 
 [Focused handoff](ui-splash-version-toggle-handoff-2026-11-22.md). Reviewed continuity topic e3d61289f7e3d50b25031fafa20f6e8ffbd3f1b9 against prior 06b64b29 and unchanged master 20abe83c2aa97ba4699711a9815d9b95e0d3df44. Exact scoped caller, handler and helper checks support bounded gated continuation; prior local evidence not independently rerun. F5/F6 resolved, F7 compatibility reachability restored, F2–F4 and F8 held. User requests visible Classic/New preview selector at splash. Retain topic HOLD_NAMED_CONSUMER for local DEV/loopback-only toggle then independent review; family remains queued and all runtime/activation holds apply. No source change, master integration, PR transition or version change.
+
+
+## 2026-11-22 — Splash selector ready for independent Connector review
+
+Retained UI topic `codex/ui-shell-account-first-slice-2026-11-21` from `55b54089ff7e22b866445d9b73c9c9e9b2ff7b39`. Source checkpoint `b7211b1a76e9617540a02a64443f3ac63418106c`; disposition `HOLD_NAMED_CONSUMER` for independent splash selector review before Family Library. [Execution evidence](ui-splash-version-toggle-handoff-2026-11-22.md#local-execution-evidence). PR102 `d3cd548f6b21aff11c40637c3e16026502f8e6e2` remains held for World-owner acceptance and PR103 `d6fb21d3452f56ecf962f2c7d11eae95394927ca` for visual provenance. Original main/map lane preserved. No merge, PR transition, retirement or deployment.

@@ -666,3 +666,8 @@ Review the retained topic's published head using A `3d1ac512e731f51d574a5785a99d
 ## 2026-11-22 — Splash version selector requested / continuity source review
 
 [Focused handoff](ui-splash-version-toggle-handoff-2026-11-22.md). Reviewed continuity topic e3d61289f7e3d50b25031fafa20f6e8ffbd3f1b9 against prior 06b64b29 and unchanged master 20abe83c2aa97ba4699711a9815d9b95e0d3df44. Exact scoped caller, handler and helper checks support bounded gated continuation; prior local evidence not independently rerun. F5/F6 resolved, F7 compatibility reachability restored, F2–F4 and F8 held. User requests visible Classic/New preview selector at splash. Retain topic HOLD_NAMED_CONSUMER for local DEV/loopback-only toggle then independent review; family remains queued and all runtime/activation holds apply. No source change, master integration, PR transition or version change.
+
+
+## 2026-11-22 — Splash selector ready for independent Connector review
+
+Review source checkpoint `b7211b1a76e9617540a02a64443f3ac63418106c` from `55b54089ff7e22b866445d9b73c9c9e9b2ff7b39` and the [local verification receipt](ui-splash-version-toggle-handoff-2026-11-22.md#local-execution-evidence). Verify the DEV/native-development/signed-out boundaries, complete and partial query behavior, pending protection, and account/Save neutrality. Codex ran the splash, account, and Welcome/World five-width matrices. F2, F3, F4 and F8 remain held. Family Library stays queued pending independent review. World, creator, Save, production and version holds remain.
