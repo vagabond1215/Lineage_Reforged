@@ -18,6 +18,7 @@ import { createDefaultCharacterCreationFormState, validateCharacterCreationForm 
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
 import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen.js';
+import { isAccountPresentationEnabled } from './game-shell/accountPresentationGate.js';
 import { WelcomeScreen } from './game-shell/components/WelcomeScreen.js';
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen.js';
 import { NoticeToast } from './game-shell/components/NoticeToast.js';
@@ -183,6 +184,8 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   const welcomeEnabled = nativeCandidate && import.meta.env.DEV &&
     (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') &&
     new URLSearchParams(window.location.search).get('welcomeL1') === '1';
+  const accountPresentation = isAccountPresentationEnabled(import.meta.env.DEV,
+    welcomeEnabled, window.location.hostname, window.location.search);
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
   const [blockDetail, setBlockDetail] = useState('');
@@ -674,6 +677,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   let content;
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
     welcomeBranding={welcomeEnabled}
+    presentationPreview={accountPresentation} clockLabel={clockLabel} clockTitle={clockNow.toString()}
     allowAccountDeletion
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}
     onImportArchive={file => guarded(async () => {
