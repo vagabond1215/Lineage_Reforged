@@ -1,0 +1,50 @@
+# Proposed Codex Prompt — Human-Normalized Metabolic Reserve Owner Contract And First Safe Slice
+
+<!-- repo-scope-guard -->
+> **Mandatory repository boundary:** Work only in `vagabond1215/Lineage_Reforged`. Do not mutate unrelated repositories, hosted Site accounts, or held/protected references.
+<!-- /repo-scope-guard -->
+
+**Task classification:** Unversioned cross-cutting **metabolic owner-contract and bounded first implementation decision**. Do not invent a new `DEV-` number or promote `GAME_VERSION`. Game `0.1.1-prealpha`, `INTEGRATED_LOOP` and `GAME_VERSION_NOT_READY` remain. DEV-0.7.2.13 currently owns Combat Action Result Disclosure, so do not silently replace the installed current Codex prompt or take over its active route. **Run only as an explicitly authorized isolated successor/concurrent branch after checking the real local worktree and any in-flight combat changes**. The docs-only nutrition PR #6 and UI index PR #5 are review evidence, not merged runtime authority.
+
+**Objective:** Produce a **simple, human-referenced, fantasy-lineage-adjusted nutrition/metabolism contract**, then implement **only the smallest coherent owner-backed slice** for which that contract, save/backward compatibility and focused tests are decision-complete. Do not create an isolated shadow simulation, fake player-facing bars, or a broad physical-biochemistry engine to make acceptance tests green. If implementation requires a new unresolved schema, conversion policy or balance decision, **stop at a precise decision record with a staged implementation route** rather than guess.
+
+## Required first inspection
+
+1. Fetch/prune, synchronize an authenticated checkout of the correct repository; record `master` HEAD, current worktree/upstream and delta; inspect all relevant branches, draft PR #5 and PR #6, active Codex prompt/output/handoff, historical/deferred and planning reconciliations, root/nearer AGENTS, version, source/package/build/test and branch rules. Compare candidate branch to latest master; preserve unrelated work.
+2. Read the branch `parallel/metabolic-reserve-nourishment-ux-decision-2026-10-21` at its actual latest head: `docs/design/metabolic-reserve-and-nourishment-quick-glance-design-decision-2026-10-21.md`; the accepted metabolic-energy, fat-mobilization, protein-recovery, unified attribute/nutrition and culinary decisions, UI boundary and difficulty policy. Branch design remains **draft** until reviewed; reconcile it before claiming an accepted owner contract.
+3. Trace exact runtime and persisted facts: `packages/engines/player-engine/src/body-state.ts`, `packages/shared/types/src/contracts.ts`, `packages/shared/types/src/player-origins.ts`, `packages/content/base/game/global_rules.json`, `packages/content/base/items/consumable_profiles.json`, `apps/rpg-ui/src/features/characterPanelState.ts`, `apps/rpg-ui/src/runtime/bodyStatePresentation.ts`, and all real rest/travel/combat/activity time-advancing callers and focused `tests/unit/player-body-state.test.mjs`. Check TS/JS mirror and legacy snapshot/migration requirements.
+
+## Simplified target, without importing Earth values
+
+- Use **ordinary Human** as the normalized reference (existing common metabolic multipliers are `1.0`, while current Human food-tag biases and other lineages' modifiers require reconciliation). Calibrate broad relative behavior against accepted human physiology, not a hardcoded calorie/gram chart or a universal fixed meal size. Keep **consistent game-scale units**; existing rules `dailyCalories: 100`, `proteinBaseline: 18`, `dailyHydration: 72` are current *game-balance units*, not literal kcal/grams. Do not change them merely to match an Earth recommended diet.
+- Preserve one metabolic model for all lineages. Express Elf, Dwarf, Orc, Halfling, Gnome and other **fantasy playable lineages** as authored, explainable **relative deltas** to Human, plus limited actual character/body/activity context where owners exist. Do not infer a special calorie cost from high Intelligence, magic affinity, HP/MP maximum or a real-world human race/ethnicity category. Do not rewrite existing lineage modifiers without a specific red test and accepted policy.
+- Desired **Energy** is one zero-centered, bounded **short-term/rolling surplus-or-deficit**, not today's intake, lifetime cumulative shortage, or available Stamina. The proposed **Carbs, Fat and Protein** microbars are three nonnegative **available nutrient/reserve states**, not percent-of-diet composition and not three invented daily consumption quotas. `Fat` means available dietary fat, separate from persistent long-term stored body fat. Hydration remains separately owner-backed.
+- Eating immediately records an exact admitted food/amount receipt; **absorption and usable energy advance over time** at the selected simple deterministic pace. Physical effort preferentially stresses immediate fuel; rest/sleep still has basal expenditure; rate-limited stored-fat support can cover some deficits; sustained energy + protein availability + stimulus + recovery govern later muscle condition. None of these is permission to implement speculative detailed digestion chemistry, arbitrary carb/protein-to-fat exchanges, instant food-to-Stamina or automatic Strength growth.
+- **Critical accounting:** one consumed food record must not credit calories once via its `calories` field and *again* via protein/carb/fat units. Decide and document the source-of-energy versus nutrient-distribution rule; reconcile authored food profiles, ancestry multipliers, caps, losses, daily rollovers, partial consumption and old saves. Do not invent 4/4/9 or exact Earth conversions as direct game requirements.
+- Sustained magical work causing additional metabolic demand and possible high-fat meal benefits is a **future proposed owner decision**, not a current spell action, brain-fat law or mandatory new mage subsystem.
+
+## Exact decision and implementation gate
+
+Before writing production source, publish a compact table of:
+
+1. **Reference and modifiers:** what Human-normalized profile actually means in game units; which existing lineage/individual inputs affect what, once; default/fallback behavior.
+2. **State:** the minimum number of **distinct** available nutrient buffers, signed short-term Energy balance, pending digestion and body-fat reserve (or explicit defer/compatibility strategy). Separate actual current state from `dailyCarbsConsumed`, `dailyFatConsumed`, `proteinSufficiency`, `energyReserve.quick/stored` and rollover `energyBalance` already in saves. Specify capacity/denominator for each future microbar.
+3. **Flows:** ingestion → time-aware absorption → owner-accounted supply and activity/basal demand → fuel use → optional rate-limited long-term fat storage/mobilization. Specify bounds, conservation/no-double-credit, no negative pools, stable time windows and how current rules coexist or migrate.
+4. **Durability and authority:** SaveSnapshot roundtrip and old-save defaults, clock/day boundaries, one caller entrypoint, no UI-owned math, deterministic retry/replay and no hidden balance tuning.
+5. **Defer decisions:** label any unresolved release-rate, pool size, reserve persistence, nutritional units, physiological substitution and magic activity demand; do not bury them in defaults.
+
+**Implementation rule:** If all essential choices for one genuinely connected owner/caller pathway can be decided from accepted authority, write **pre-edit failing tests** for that pathway, implement the smallest production change under the current player-body-state owner, and validate caller + persistence and Human/at least two contrasting playable lineages. Otherwise complete the design/owner-contract record and install a narrowly scoped next implementation prompt. Avoid parallel inert `new-metabolism` prototypes or partially altered saves that the live caller never uses.
+
+## Verification and evidence
+
+- Validate normal Human at rest, sleep, ordinary walking and strenuous activity; repeat equal-condition checks for contrasting lineages.
+- Verify high-energy/low-protein and protein-rich/energy-poor intake remain distinguishable; no protein instant Strength or Stamina.
+- Test food intake/stock decrement once, nonnegative available reserves, signed balance around zero, conservation, no doubled calories, elapsed-time release, deficit support limited by rate/time, rollover retaining real reserves, old snapshot migration, serialize/readback, difficulty and identity consistency.
+- Include the smallest real owner/caller integration path if changed; historical tests and fixture-only projections are not selected-client proof. For a bounded code slice run focused node tests, appropriate UI-config typecheck/build, diff check and broader relevant regressions. List commands and observed results honestly. Do not claim selected UI verification without executing it.
+- For docs-only hold, do not claim code tests or runtime acceptance; instead list missing owner choices and the next exact gate.
+
+## Output/handoff
+
+Write a dated focused audit/decision (and implementation record only if code legitimately changed), reproduce the verified repo HEAD/delta/branch and PR inventory, distinguish accepted authority from new product proposals, update current Codex output/handoff and **only when this run is explicitly authorized as the next active run**, update the current prompt/historical/planning/branch registers. Preserve protected and held branches; submit coherent commits through authenticated checkout, push/read back and provide exact SHAs and changed paths. Maintain Game `0.1.1-prealpha` and `GAME_VERSION_NOT_READY`. Do not implement the compact UI, Home, magic, broad content/balance, character-creator changes, Site deployment or unrelated combat repairs in this pass.
+
+**Success:** a simple, decision-complete, human-normalized shared reserve/metabolism contract grounded in the *existing* engine; a small proven owner slice if safely feasible; or an exact, non-speculative held decision with a ready next bounded slice.

@@ -43,6 +43,8 @@ food consumed
 
 The model deliberately avoids biochemical simulation, blood-glucose chemistry, micronutrient detail, organ-by-organ metabolism, exact hormonal modeling, or laboratory-level nutritional precision.
 
+**2026-10-21 UI/reserve source navigation:** [Metabolic Reserves And Nourishment Quick-Glance Design Decision](metabolic-reserve-and-nourishment-quick-glance-design-decision-2026-10-21.md) records the requested zero-centered Energy plus three available-nutrient microbars, identifies current engine gaps and holds exact owner contracts. This documentation-only addition does not supersede the accepted metabolic model or authorize implementation.
+
 ## 3. Distinct State Layers
 
 The following states must remain distinct even when one UI groups them together.

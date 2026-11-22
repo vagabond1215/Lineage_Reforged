@@ -282,6 +282,8 @@ Possible adaptation states:
 
 These are candidate presentation labels, not implemented values.
 
+**2026-10-21 related presentation:** [Metabolic Reserves And Nourishment Quick-Glance Design Decision](metabolic-reserve-and-nourishment-quick-glance-design-decision-2026-10-21.md) routes the proposed available-protein strip to this existing recovery/atrophy owner; it does not create a current protein-reserve field, independent growth ledger or direct food-to-Strength effect.
+
 ## 11. Difficulty And Accessibility
 
 Difficulty may independently tune:
