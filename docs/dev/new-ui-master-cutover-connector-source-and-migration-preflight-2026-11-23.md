@@ -72,3 +72,53 @@ Broad UI TypeScript **183 diagnostics** were last recorded for the preceding eig
 ## 5. Safe Connector actions and exclusions
 
 This review is confined to **one new documentation file** committed on an independent branch based at `3789c12b`. The user-visible candidate, current `master`, draft PR #102 and #103, owner migrations, scripts, tests, manifests, game version, account data and local browser profiles have not been modified by Connector. No PR was opened, merged, retargeted or closed, and no production build was activated. Source documentation is an evidence package requiring checkout verification by Codex before use.
+
+## 6. Addendum: exact owner-branch file parity and executable QA entry
+
+**Added 2026-11-23 as a separate read-only Connector pass.** Reconfirmed that \`master\` was \`20abe83c2aa97ba4699711a9815d9b95e0d3df44\`, the New UI candidate was \`3789c12b99af439ab401f282f8d0302f79f7f210\`, and the Connector's audit branch was the only extra documentation branch. No new mainline integration branch or PR was visible in the searched remote refs. An unpublished Codex worktree is not visible to this Connector.
+
+The Connector fetched **four untruncated recursive Git trees** at exact Git commits: candidate (2,344 entries), owner draft PR #102 (2,309), visual draft PR #103 (2,287), and master (2,299). It compared the candidate against PR #102 over the union of files matching:
+
+- \`apps/rpg-ui/src/game-shell/cleanEpochAccountStore*\`, \`cleanEpochAccountAdapter*\`, \`firstWorldDurableRegistry*\`, \`world-source/*\`, \`worldCreatorOwner*\`
+- \`apps/rpg-ui/build/first-world-*\`, \`apps/rpg-ui/src/worldOwnerReview*\`, \`apps/rpg-ui/vite.config.ts\`
+- \`docs/design/first-world-*\` (related design/manifest scope, not all repo files)
+
+The result is **58 union paths, 51 exact shared Git-blob matches, seven differences**. The seven nonmatches are:
+
+1. \`apps/rpg-ui/src/game-shell/worldCreatorOwner.ts\` exists on the integrated UI candidate but not on PR #102 (an intentional candidate-side World-to-UI owner bridge, which must be reviewed on its own);
+2. \`docs/design/first-world-blueprint-scenario-seeded-genesis-design-intent-2026-11-17.md\` is candidate/master-only;
+3. \`docs/design/first-world-contextual-launcher-shell-and-branching-entry-ui-contract-2026-11-17.md\` is candidate/master-only;
+4. \`docs/design/first-world-launcher-implementation-process-map-2026-11-11.md\` differs because the candidate retains master;
+5. \`docs/design/first-world-playable-vertical-slice-implementation-plan-2026-11-17.md\` differs because the candidate retains master;
+6. \`docs/design/first-world-player-first-world-creator-and-library-implementation-gate-2026-11-17.md\` is candidate/master-only;
+7. \`docs/design/first-world-player-journey-ui-base-layout-contract-2026-11-17.md\` is candidate/master-only.
+
+**Meaning:** all the shared files in this narrowly defined World-owner source/build/first-World design scope have byte-identical Git objects. This is stronger than merely noting that the 54 manifest pins are unchanged. It does **not** establish that every file in PR #102, every archived migration branch, or every historical design note was integrated. The candidate-only \`worldCreatorOwner.ts\` bridge and live \`EpochApp.tsx\` admission callbacks still require the normal functional tests. The PR #102/PR #103 histories are diverged; do not merge them wholesale.
+
+For PR #103, the candidate's \`docs/prototypes/lineage-reforged-current-interactive-preview.html\` is Git blob \`da99a105a05710b93e2cc7f692ff94b391f43f19\`, exactly **current master**. Its manifest is also exactly current master at \`9f4664568005e730aa260563d3d1a83171bd8977\`. Those files do not appear at the historical draft #103 head, and the selected-World React creator is candidate-side implementation, not PR #103 source. Keep PR #103 as a separately held provenance/history lane.
+
+### Local execution prerequisites, discovered from the checked-in harness
+
+The latest \`apps/rpg-ui/tests/first-world-a3b-ui-browser-qa.py\` source requires **both** explicit CLI parameters \`--review-origin\` and \`--ordinary-origin\`, and the matching environment variables \`LINEAGE_TASK_OWNED_ORIGIN\` and \`LINEAGE_TASK_OWNED_DEFAULT_ORIGIN\`. It also reads \`CHROMIUM_EXECUTABLE\`. The optional \`LINEAGE_CREATOR_EVIDENCE\` directory activates eight-stage screenshots and \`scroll.json\` output. The browser test refuses non-\`127.0.0.1\` URLs or URLs containing path elements at those origin arguments. Therefore, starting only one compiled review server is insufficient to run the full QA harness.
+
+For an **already verified clean isolated checkout**, a minimal PowerShell test invocation after **both** compiled origins are built, served on distinct free loopback ports and confirmed to answer HTTP is:
+
+\`\`\`powershell
+$env:LINEAGE_TASK_OWNED_ORIGIN = 'http://127.0.0.1:5244'
+$env:LINEAGE_TASK_OWNED_DEFAULT_ORIGIN = 'http://127.0.0.1:5245'
+# Set CHROMIUM_EXECUTABLE to the verified local Chromium executable path.
+# Optional evidence output, outside tracked repository paths:
+$env:LINEAGE_CREATOR_EVIDENCE = Join-Path $env:TEMP ('lineage-creator-evidence-' + [guid]::NewGuid())
+python apps/rpg-ui/tests/first-world-a3b-ui-browser-qa.py \`
+  --review-origin $env:LINEAGE_TASK_OWNED_ORIGIN \`
+  --ordinary-origin $env:LINEAGE_TASK_OWNED_DEFAULT_ORIGIN
+if ($LASTEXITCODE -ne 0) { throw 'Latest New UI Chromium acceptance failed.' }
+\`\`\`
+
+These are **example ports** only, not a claim that any local servers exist or were started. The target at 5244 must be the compiled \`world-owner-review\` client, and 5245 must be the ordinary compiled client. Require strict port-free checks and ownership of both processes, and choose different ports if those listeners are already in use. Do not kill or take over a user's existing server. The eight-stage QA includes actual World creation, the default-build Classic route and its own disposable browser contexts. An exact installed Chromium binary path and Python Playwright setup must be confirmed by the local runner.
+
+The local checkout must also separately execute \`apps/rpg-ui/tests/first-world-a2b-browser-qa.py\` for the original-v7 owner probe; its CLI has the same two origin flags. The A2b probe's review source requires its QA fixture and build admission, as documented in the existing owner receipt. Do not assume the above UI test alone proves owner migration.
+
+**Acceptance evidence to attach to the future PR:** exact candidate commit SHA; separate compiled-build commands/output and ports; successful Node/owner/Classic tests; actual Chromium exit codes and test logs for both review and ordinary builds; six selected-World creator viewports × two themes; screenshots plus computed \`scroll.json\` for each applicable viewport; v7→v8 nonempty-account and native-v3 Save continuity; blocked-tab/abort/quota; backup export/import with empty-target checks; v8-compatible Classic rollback and cross-origin transfer; a same-base 183-diagnostic TypeScript comparison; 55/55 pin readback; and approval of the World-owner migration scope.
+
+**Decision remains unchanged:** preparation-safe source parity has passed, but executable migration/rollback and latest UX acceptance remain for an authenticated Codex checkout. Neither merging master nor production activation is authorized by this appendix.
