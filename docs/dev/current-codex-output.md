@@ -1,3 +1,11 @@
+## 2026-11-22 — Selective New UI consolidation
+
+Unversioned UI support from `20abe83c` on isolated `codex/selective-ui-consolidation-2026-11-22`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
+
+- **Files and summary** The 15 reviewed A3a runtime/test blobs match exactly in `b39233997968ce36bb378580c78c460a5ca61985`, `feat(ui): consolidate reviewed development launcher presentation`. DEV Account Access selector, authenticated presentation and the read-only World Creator are available through master’s account/Save owner. [Execution receipt](ui-selective-consolidation-receipt-2026-11-22.md).
+- **Checks** Three Chromium suites at five widths, positive account lifecycle/backup and compiled Classic smoke, 39 Node/render tests, 41 pinned sources, Node typecheck, no-new-hex and both direct Vite builds passed. Same-checkout diagnostics improved from 119 to 118 solely by the reviewed AppShell repair. The combined build remains blocked. FP-001/002/009/010/017/018/019 evidence is recorded in the receipt.
+- **Follow-up** The pre-existing 5240 listener was preserved. Candidate verification used 5241. The review branch remains separate. Draft PR #102 and visual PR #103, the UI/map lanes and all broader rollout gates retain their existing dispositions. Independent review is next.
+
 ## 2026-10-26 — Stage 2 durable item-location owner gate
 
 **Source run:** unversioned Character equipment owner support; fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`, source/test/decision commit `dae9e6e6`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused Stage 2 decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).

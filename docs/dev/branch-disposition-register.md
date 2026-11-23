@@ -1,3 +1,7 @@
+## 2026-11-22 — Selective New UI candidate from master
+
+Retain `codex/selective-ui-consolidation-2026-11-22` for independent review of `b3923399` and its [execution receipt](ui-selective-consolidation-receipt-2026-11-22.md). Master `20abe83c`, A3a `7624adc2`, A3b matrix `f705857c`, Connector audit `77afc6b5`, draft PR #102 `e74f9e14`, and visual draft PR #103 `d6fb21d3` were checked for the candidate. Retain their existing owner, evidence, and map-lane dispositions. No merge, retarget, deletion or deployment is due.
+
 ## 2026-10-26 Stage 2 item-location owner gate checkpoint
 
 Fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`. GitHub returned open draft PRs #5–#17 with unchanged heads; #17 remains docs-only at `9f427961`. Source commit `dae9e6e6` is a read-only audit/test gate and consumes none of their named selected-client/evidence or design-integration triggers. #5–#16 retain `HOLD_NAMED_CONSUMER`; #17 stays draft design evidence pending owner contract review. Protected, creator, nutrition and administrative refs retain existing dispositions. No merge, rebase, retarget, PR closure, branch deletion or disposition change is due. Reinspect all exact heads before a later owner cutover or named evidence promotion. [Focused decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).
