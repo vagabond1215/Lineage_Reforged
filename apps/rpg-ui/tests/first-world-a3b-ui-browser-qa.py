@@ -29,6 +29,7 @@ SNAPSHOT = """async name => {
   } finally { db.close(); }
 }"""
 PAIR = ('worldsV8', 'worldCreationReceiptsV8')
+VIEWPORTS = [(width, 800) for width in (1440, 1280, 768, 375, 320)] + [(320, 568), (375, 667), (667, 375)]
 
 
 def button(page, name):
@@ -103,8 +104,8 @@ def open_settings(page, profile):
     page.get_by_role('menuitem', name='Settings', exact=True).click()
 
 
-def viewport_flow(browser, origin, width, theme):
-    context = browser.new_context(viewport={'width': width, 'height': 800}, color_scheme=theme)
+def viewport_flow(browser, origin, width, height, theme):
+    context = browser.new_context(viewport={'width': width, 'height': height}, color_scheme=theme)
     try:
         page = context.new_page()
         page.goto(origin + FLAGS)
@@ -123,7 +124,7 @@ def viewport_flow(browser, origin, width, theme):
         page.get_by_role('button', name='Back to Welcome').click()
         welcome(page, profile)
         library(page)
-        if width == 375:
+        if (width, height, theme) == (375, 800, 'light'):
             page.reload()
             welcome(page, profile)
             library(page)
@@ -135,7 +136,11 @@ def viewport_flow(browser, origin, width, theme):
         title = f'Chronicle {width}'
         submit = creator(page, '  ' + title + '  ')
         width_check(page)
-        submit.press('Enter')
+        page.get_by_role('checkbox', name=re.compile('Confirm these settings')).focus()
+        page.keyboard.press('Tab')
+        expect(submit).to_be_focused()
+        expect(submit).to_be_in_viewport()
+        page.keyboard.press('Enter')
         world_id = ready(page, title, success=True)
         after = snapshot(page)
         assert split_graph(before) == split_graph(after)
@@ -164,7 +169,7 @@ def viewport_flow(browser, origin, width, theme):
         button(page, 'Open existing launcher').click()
         expect(page.get_by_role('region', name='Characters')).to_be_visible()
         digest = hashlib.sha256(json.dumps([world, receipt], sort_keys=True).encode()).hexdigest()
-        print(f'PASS {width}px {theme}, UI Create/reopen, one-World quota, stable owner graph {digest}', flush=True)
+        print(f'PASS {width}x{height} {theme}, keyboard Create/reopen, quota, owner graph {digest}', flush=True)
     finally:
         context.close()
 
@@ -410,8 +415,9 @@ def run(review, ordinary):
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(executable_path=os.environ['CHROMIUM_EXECUTABLE'])
         try:
-            for width, theme in [(1440, 'dark'), (1280, 'light'), (768, 'dark'), (375, 'light'), (320, 'dark')]:
-                viewport_flow(browser, review, width, theme)
+            for width, height in VIEWPORTS:
+                for theme in ('dark', 'light'):
+                    viewport_flow(browser, review, width, height, theme)
             fault_flow(browser, review)
             stale_flow(browser, review)
             retry_flow(browser, review)
