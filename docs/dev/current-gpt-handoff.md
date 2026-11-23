@@ -1,3 +1,7 @@
+## 2026-11-22 — Functional World integration preview
+
+Review `codex/functional-world-integration-preview-2026-11-22`, runtime/test `868595f1` from clean master-based `7d96447e`. The [receipt](ui-functional-world-integration-preview-2026-11-22.md) records compiled loopback invocation, real Create and password-authenticated reopening after full Chromium restart, and exact downstream caller inventory. Use the verified World identity as the boundary for a proposed read-only selection slice. Keep PR #102 draft and preserve Family Library, association writes and production holds.
+
 ## 2026-11-22 — Selective master-based New UI candidate
 
 Review `codex/selective-ui-consolidation-2026-11-22` at its published head, source/test commit `b3923399` from master `20abe83c`. The [receipt](ui-selective-consolidation-receipt-2026-11-22.md) records source identity, DEV selector, Classic, account lifecycle, read-only Creator and pinned-source evidence. Preserve PR #102’s separate owner decision, PR #103 visual provenance, and production/Save/Family Library holds.

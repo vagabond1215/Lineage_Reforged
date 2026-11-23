@@ -1,3 +1,7 @@
+## 2026-11-22 — Functional World integration preview review
+
+Retain `codex/functional-world-integration-preview-2026-11-22` for local preview and independent review of `868595f1`. The [functional receipt](ui-functional-world-integration-preview-2026-11-22.md) records the clean selective base `7d96447e`, exact reviewed runtime `7a46f577`, source audit `77afc6b5` and prior matrix `f705857c`. Master `20abe83c`, PR #102 `e74f9e14`, visual PR #103 `d6fb21d3` and the UI/map lanes remain separate with their existing integration/evidence gates. No merge, retarget, retirement, deployment or activation is due.
+
 ## 2026-11-22 — Selective New UI candidate from master
 
 Retain `codex/selective-ui-consolidation-2026-11-22` for independent review of `b3923399` and its [execution receipt](ui-selective-consolidation-receipt-2026-11-22.md). Master `20abe83c`, A3a `7624adc2`, A3b matrix `f705857c`, Connector audit `77afc6b5`, draft PR #102 `e74f9e14`, and visual draft PR #103 `d6fb21d3` were checked for the candidate. Retain their existing owner, evidence, and map-lane dispositions. No merge, retarget, deletion or deployment is due.

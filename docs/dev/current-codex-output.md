@@ -1,3 +1,11 @@
+## 2026-11-22 — Functional World integration preview
+
+Unversioned validation on `codex/functional-world-integration-preview-2026-11-22` from the clean master-based selective candidate `7d96447e`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
+
+- **Files and scope** The compiled review gates, launcher/Creator handlers, exact A3b owner/Worker and manifests, and focused tests are in `868595f17a2d32bff7a3101a0755098831cc9cdf`, `feat(world): reconcile guarded functional launcher preview`. [Execution and reachability receipt](ui-functional-world-integration-preview-2026-11-22.md).
+- **Checks** Real Create through the app and password-authenticated reopening in a restarted browser passed. Both Chromium suites, all 16 viewport/theme combinations, ordinary DEV and compiled admission checks, 47 Node and seven render cases, 55 source pins, three direct build modes and delivered canonical assets passed. The combined build remains red at 183 diagnostics, exact A3b and 65 above the selective presentation base. The receipt maps FP-001/002/004/005/009/010/011/014/017/018/019 to evidence.
+- **Next gate** A verified World is visible in the Library. World-bound Overview, Character Library, Creator and gameplay are NOT TESTABLE. Review the selected-World read-only handoff next. PR #102 remains draft and no master integration, rollout, branch deletion or gameplay writes are due.
+
 ## 2026-11-22 — Selective New UI consolidation
 
 Unversioned UI support from `20abe83c` on isolated `codex/selective-ui-consolidation-2026-11-22`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
