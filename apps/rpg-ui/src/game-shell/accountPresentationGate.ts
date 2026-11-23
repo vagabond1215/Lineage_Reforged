@@ -14,6 +14,22 @@ export function isWorldPresentationEnabled(
     new URLSearchParams(search).get('worldPresentation') === '1';
 }
 
+export function isCompiledWorldReviewEntry(
+  production: boolean, mode: string, ownerCompiled: boolean, hostname: string, pathname: string
+): boolean {
+  return production && mode === 'world-owner-review' && ownerCompiled &&
+    (hostname === '127.0.0.1' || hostname === 'localhost') &&
+    (pathname === '/' || pathname === '/index.html');
+}
+
+export function hasWorldReviewOptIn(search: string): boolean {
+  const query = new URLSearchParams(search);
+  return ['welcomeL1', 'accountPresentation', 'worldPresentation'].every(flag => {
+    const values = query.getAll(flag);
+    return values.length === 1 && values[0] === '1';
+  });
+}
+
 export type SplashUiVersion = 'classic' | 'preview';
 
 export function canSelectSplashUiVersion(

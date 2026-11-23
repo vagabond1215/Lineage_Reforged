@@ -13,17 +13,18 @@ const environment = [
   { label: 'Starting season', defaultValue: 'Scenario Default', options: ['Scenario Default', ...calendar.seasons] },
 ];
 
-export function WorldCreator({ busy, onCreate, onBusyChange, onVerified }: {
+export function WorldCreator({ busy, onCreate, pendingIntent, onBusyChange, onVerified }: {
   busy: boolean;
   onCreate: ((intent: WorldCreationIntent) => Promise<WorldCreationResult>) | undefined;
+  pendingIntent?: WorldCreationIntent | undefined;
   onBusyChange: (busy: boolean) => void;
   onVerified: (worldInstanceId: string) => void;
 }) {
-  const [rawName, setRawName] = useState('');
+  const [rawName, setRawName] = useState(pendingIntent?.displayName ?? '');
   const [touched, setTouched] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
   const [error, setError] = useState<Exclude<WorldCreationResult, { status: 'verified' }> | null>(null);
-  const intent = useRef<WorldCreationIntent | null>(null);
+  const intent = useRef<WorldCreationIntent | null>(pendingIntent ?? null);
   const pending = useRef(false);
   const name = validatedWorldName(rawName);
   const invalid = touched && name === null;

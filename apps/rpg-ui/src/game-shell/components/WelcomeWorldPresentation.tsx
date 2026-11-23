@@ -20,6 +20,9 @@ type Props = {
   onLogout: () => void;
   inventory?: WorldLibraryState;
   onCreateWorld?: (intent: WorldCreationIntent) => Promise<WorldCreationResult>;
+  pendingIntent?: WorldCreationIntent;
+  onSignInAgain?: () => void;
+  onReopenLibrary?: () => void;
 };
 
 const control = 'launcher-control min-h-11 px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60';
@@ -27,17 +30,20 @@ const control = 'launcher-control min-h-11 px-3 py-2 text-sm disabled:cursor-not
 /** Presentation only, mounted after the existing authenticated Welcome/gate owner. */
 export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, clockTitle,
   themeMode, onToggleThemeMode, onContinue, onOpenExistingLauncher, onBack, onLogout,
-  inventory = { status: 'preview' }, onCreateWorld }: Props) {
+  inventory = { status: 'preview' }, onCreateWorld, pendingIntent, onSignInAgain, onReopenLibrary }: Props) {
   const [review, dispatch] = useReducer(worldReviewReducer, undefined, createWorldReviewState);
   const [creating, setCreating] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
   const pending = busy || creating;
   const configuring = worlds && review.view === 'configuration';
-  const canOpenCreator = inventory.status === 'preview' || inventory.status === 'empty';
+  const canOpenCreator = inventory.status === 'preview' || (inventory.status === 'empty' && !!onCreateWorld);
+  const inventoryFailed = inventory.status === 'blocked' || inventory.status === 'readback-failed';
   useEffect(() => { if (worlds) heading.current?.focus(); }, [worlds, configuring]);
   const back = () => {
-    if (configuring) dispatch({ type: 'BACK' });
-    else onBack();
+    if (configuring) {
+      dispatch({ type: 'BACK' });
+      if (pendingIntent) onReopenLibrary?.();
+    } else onBack();
   };
 
   return <AppShell
@@ -80,7 +86,7 @@ export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, cl
             className={`${control} flex min-h-56 flex-col items-start gap-4 p-6 text-left focus-visible:outline focus-visible:outline-2`}>
             <span className="text-2xl font-semibold">Chronicle</span>
             <span>Live many lives, build a legacy, and shape future journeys.</span>
-            <span>Explore Worlds (presentation review)</span>
+            <span>{onReopenLibrary ? 'Explore Worlds' : 'Explore Worlds (presentation review)'}</span>
           </button>
           <button type="button" disabled className={`${control} flex min-h-56 flex-col items-start gap-4 p-6 text-left`}>
             <span className="text-2xl font-semibold">Persistent</span><span>Coming Soon</span>
@@ -94,11 +100,14 @@ export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, cl
           {inventory.status === 'ready' ? 'Pilot capacity reached. Each account can create one World.' :
             'Pilot capacity is one World per account.'}
         </p>
-        {configuring
+        {configuring && !inventoryFailed
           ? <WorldCreator busy={pending} onBusyChange={setCreating}
               onCreate={inventory.status === 'empty' ? onCreateWorld : undefined}
+              pendingIntent={pendingIntent}
               onVerified={worldInstanceId => dispatch({ type: 'VERIFIED', worldInstanceId })} />
           : <WorldLibrary inventory={inventory} highlightedWorldId={review.highlightedWorldId} />}
+        {!configuring && inventory.status === 'empty' && onSignInAgain && <button type="button"
+          className={control} disabled={pending} onClick={onSignInAgain}>Sign in again to create a World</button>}
       </>}
     </div>
   </AppShell>;
