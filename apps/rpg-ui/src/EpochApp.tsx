@@ -18,6 +18,9 @@ import { createDefaultCharacterCreationFormState, validateCharacterCreationForm 
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
 import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen.js';
+import { canSelectSplashUiVersion, isAccountPresentationEnabled, isWorldPresentationEnabled,
+  splashUiVersionUrl, type SplashUiVersion } from './game-shell/accountPresentationGate.js';
+import { WelcomeWorldPresentation } from './game-shell/components/WelcomeWorldPresentation.js';
 import { WelcomeScreen } from './game-shell/components/WelcomeScreen.js';
 import { MainMenuScreen, type LauncherSectionId } from './game-shell/components/MainMenuScreen.js';
 import { NoticeToast } from './game-shell/components/NoticeToast.js';
@@ -175,14 +178,21 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   developmentNativeV3 = false }:
   { candidateNativeV3?: boolean; stagingNativeV3?: boolean; developmentNativeV3?: boolean } = {}) {
   // The separately built staging entry enforces its exact origin before this component mounts.
-  const nativeCandidate = stagingNativeV3 || shouldSelectNativeDevelopmentEntry(
-    developmentNativeV3, import.meta.env.DEV, window.location.hostname, window.location.pathname) ||
+  const nativeDevelopmentEntry = shouldSelectNativeDevelopmentEntry(
+    developmentNativeV3, import.meta.env.DEV, window.location.hostname, window.location.pathname);
+  const nativeCandidate = stagingNativeV3 || nativeDevelopmentEntry ||
     (candidateNativeV3 && import.meta.env.DEV &&
     window.location.pathname.endsWith('/native-selected-session-qa.html'));
   // Ephemeral, loopback-only QA opt-in. No account or Save preference is persisted.
   const welcomeEnabled = nativeCandidate && import.meta.env.DEV &&
     (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') &&
     new URLSearchParams(window.location.search).get('welcomeL1') === '1';
+  const accountPresentation = isAccountPresentationEnabled(import.meta.env.DEV,
+    welcomeEnabled, window.location.hostname, window.location.search);
+  const worldPresentation = isWorldPresentationEnabled(import.meta.env.DEV,
+    welcomeEnabled, window.location.hostname, window.location.search);
+  const splashUiVersionAvailable = canSelectSplashUiVersion(
+    nativeDevelopmentEntry, window.location.hostname, stagingNativeV3, candidateNativeV3);
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
   const [boot, setBoot] = useState<'loading' | 'ready' | 'blocked'>('loading');
   const [blockDetail, setBlockDetail] = useState('');
@@ -649,6 +659,18 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     dispatch({ type: 'OPEN_WORLD_LIBRARY_GATE' });
   }, undefined);
 
+  const openExistingLauncher = () => {
+    if (!worldPresentation || state.screen !== 'WELCOME_AUTHENTICATED') return;
+    const { launcherSession, accountProfile } = state;
+    void guarded(async () => {
+      if (!services) throw new Error('Epoch owner is unavailable.');
+      const account = await services.accounts.validateSession(launcherSession);
+      if (account.accountId !== accountProfile.accountId || account.accountId !== launcherSession.accountId)
+        throw new Error('The selected account changed. Sign in again.');
+      await showMenu(launcherSession, account.accountId, null, 'characters');
+    }, undefined, false); // Use the validated account returned by the owner for admission.
+  };
+
   const applyLegacy = (action: EpochLegacyAction) => void guarded(async () => {
     if (state.screen !== 'MAIN_MENU' || !services) return;
     const expectedRevision = menuAccountRevision.current;
@@ -669,11 +691,22 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   </div>;
 
   const current = state;
+  const selectSplashUiVersion = (version: SplashUiVersion) => {
+    if (!splashUiVersionAvailable || state.screen !== 'ACCOUNT_ACCESS' || actionPending.current) return;
+    const currentUrl = new URL(window.location.href);
+    const target = splashUiVersionUrl(currentUrl, version);
+    if (target.href !== currentUrl.href) window.location.replace(target.href);
+  };
   const dismissNotice = () => dispatch({ type: 'SET_NOTICE', notice: null });
   const common = { notice: current.screen === 'IN_GAME' ? current.notice : null, onDismissNotice: dismissNotice };
   let content;
   if (current.screen === 'ACCOUNT_ACCESS') content = <LocalAccountAccessScreen {...common}
     welcomeBranding={welcomeEnabled}
+    {...(splashUiVersionAvailable ? { splashUiVersion: {
+      active: worldPresentation ? 'preview' : welcomeEnabled ? null : 'classic',
+      busy, onSelect: selectSplashUiVersion
+    } } : {})}
+    presentationPreview={accountPresentation} clockLabel={clockLabel} clockTitle={clockNow.toString()}
     allowAccountDeletion
     mode={current.accessMode} accounts={current.accounts} onSignIn={signIn} onCreateAccount={createAccount}
     onImportArchive={file => guarded(async () => {
@@ -715,7 +748,14 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     }, { ok: false, message: 'Account operation is already pending or blocked.' })}
     themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')} />;
   else if (current.screen === 'WELCOME_AUTHENTICATED' || current.screen === 'WORLD_LIBRARY_GATE')
-    content = <WelcomeScreen profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
+    content = worldPresentation ? <WelcomeWorldPresentation
+      key={`${current.accountProfile.accountId}:${current.screen}`}
+      profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
+      busy={busy} clockLabel={clockLabel} clockTitle={clockNow.toString()}
+      themeMode={themeMode} onToggleThemeMode={() => setThemePreference(themeMode === 'dark' ? 'light' : 'dark')}
+      onContinue={continueToWorlds} onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })}
+      onOpenExistingLauncher={openExistingLauncher}
+      onLogout={logout} /> : <WelcomeScreen profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
       busy={busy} onContinue={continueToWorlds}
       onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })} onLogout={logout} />;
   else if (current.screen === 'MAIN_MENU') content = <MainMenuScreen {...common}

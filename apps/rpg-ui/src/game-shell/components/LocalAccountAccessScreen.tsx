@@ -9,6 +9,8 @@ import type {
 import type { GameShellNotice } from "../state.js";
 import { NoticeBanner } from "./NoticeBanner.js";
 import { ShellBrandLogo } from "./ShellBrandLogo.js";
+import { AppShell } from "./AppShell.js";
+import type { SplashUiVersion } from "../accountPresentationGate.js";
 
 type LocalAccountAccessScreenProps = {
   mode: "pick_account" | "create_first_account";
@@ -39,23 +41,59 @@ type LocalAccountAccessScreenProps = {
   themeMode: "dark" | "light";
   onToggleThemeMode: () => void;
   welcomeBranding?: boolean;
+  presentationPreview?: boolean;
+  splashUiVersion?: {
+    active: SplashUiVersion | null;
+    busy: boolean;
+    onSelect: (version: SplashUiVersion) => void;
+  };
+  clockLabel?: string;
+  clockTitle?: string;
 };
+
+const noJourneyRecorded = "No journey recorded yet.";
 
 function formatLastPlayedAt(lastPlayedAt: string | undefined): string {
   if (!lastPlayedAt) {
-    return "No journey recorded yet.";
+    return noJourneyRecorded;
   }
 
   const parsed = new Date(lastPlayedAt);
 
   if (Number.isNaN(parsed.valueOf())) {
-    return "No journey recorded yet.";
+    return noJourneyRecorded;
   }
 
   return new Intl.DateTimeFormat("en-US", {
     dateStyle: "medium",
     timeStyle: "short"
   }).format(parsed);
+}
+
+function accountPickerLabels(accounts: LocalAccountPickerEntry[]) {
+  const idsByName = new Map<string, string[]>();
+  for (const { displayName, accountId } of accounts) {
+    const ids = idsByName.get(displayName) ?? [];
+    ids.push(accountId);
+    idsByName.set(displayName, ids);
+  }
+
+  const duplicateNumbers = new Map<string, number>();
+  for (const ids of idsByName.values()) {
+    if (ids.length > 1) {
+      ids.sort().forEach((id, index) => duplicateNumbers.set(id, index + 1));
+    }
+  }
+
+  return accounts.map(account => {
+    const number = duplicateNumbers.get(account.accountId);
+    const lastPlayed = formatLastPlayedAt(account.lastPlayedAt);
+    const journey = lastPlayed === noJourneyRecorded ? lastPlayed : `Last played: ${lastPlayed}`;
+    return {
+      accountId: account.accountId,
+      label: `${account.displayName} — ${journey}${number === undefined ? "" : ` (account ${number})`}`
+    };
+  });
 }
 
 export function LocalAccountAccessScreen({
@@ -71,7 +109,11 @@ export function LocalAccountAccessScreen({
   onImportArchive,
   themeMode,
   onToggleThemeMode,
-  welcomeBranding = false
+  welcomeBranding = false,
+  presentationPreview = false,
+  splashUiVersion,
+  clockLabel = '',
+  clockTitle = ''
 }: LocalAccountAccessScreenProps) {
   const [selectedAccountId, setSelectedAccountId] = useState<string | null>(null);
   const [showCreateForm, setShowCreateForm] = useState(mode === "create_first_account");
@@ -207,12 +249,35 @@ export function LocalAccountAccessScreen({
     }
   };
 
-  return (
-    <div className={welcomeBranding
+  const archiveControl = onImportArchive ? (
+    <Card title="Restore epoch backup" accent="var(--color-world)">
+          <p className="text-sm text-[color:var(--color-text-soft)]">
+            Backup files contain sensitive sign-in verifier and game-state material. Keep the file private.
+            Restore requires an entirely empty epoch and cannot replace or merge existing data.
+          </p>
+          <input type="file" accept=".json,application/json" className="mt-3 block text-sm"
+            aria-label="Choose epoch backup file" disabled={submitting}
+            onChange={event => { const file = event.currentTarget.files?.[0];
+              event.currentTarget.value = '';
+              if (!file) return;
+              setArchiveError(null); setSubmitting(true);
+              void onImportArchive(file).then(result => {
+                if (!result.ok) setArchiveError(result.message);
+              }).catch(() => setArchiveError('Epoch backup restore failed. No import success was confirmed.'))
+                .finally(() => setSubmitting(false));
+            }} />
+          {archiveError && <p role="alert" className="mt-2 text-sm text-rose-700 dark:text-rose-100">{archiveError}</p>}
+        </Card>
+  ) : null;
+
+  const content = (
+    <div data-account-presentation={presentationPreview ? 'contextual' : undefined}
+      className={presentationPreview ? "mx-auto w-full max-w-xl"
+      : welcomeBranding
       ? "min-h-screen overflow-auto bg-[radial-gradient(ellipse_at_top,#34463c55,transparent_65%)] p-4 sm:p-6"
       : "h-screen overflow-auto p-4 sm:p-6"}>
       <div className="mx-auto flex min-h-full max-w-7xl flex-col gap-4">
-        {welcomeBranding && <div className="mx-auto flex max-w-xl flex-col items-center gap-4 py-8 text-center">
+        {!presentationPreview && <>{welcomeBranding && <div className="mx-auto flex max-w-xl flex-col items-center gap-4 py-8 text-center">
           <ShellBrandLogo className="max-h-36 justify-center" />
           <p className="text-sm uppercase tracking-[0.25em] text-[color:var(--color-text-soft)]">Welcome to Lineage: Reforged</p>
         </div>}
@@ -267,26 +332,25 @@ export function LocalAccountAccessScreen({
           </div>
         </div>
 
+        </>}
+
+        {splashUiVersion && <section aria-label="UI version" className="rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-3 text-sm">
+          <div className="flex flex-wrap gap-2">
+            {(['classic', 'preview'] as const).map(version => <button key={version} type="button"
+              aria-pressed={splashUiVersion.active === version} disabled={submitting || splashUiVersion.busy}
+              onClick={() => splashUiVersion.onSelect(version)}
+              className={`${headerButtonClass} min-h-11 px-3 py-1 disabled:opacity-60 aria-pressed:border-[color:var(--color-text-strong)] aria-pressed:bg-[color:var(--color-surface-strong)] aria-pressed:font-semibold`}>
+              {version === 'classic' ? 'Classic UI' : 'New UI Preview'}
+            </button>)}
+          </div>
+          <p className="mt-2">Development preview — some features are unavailable.</p>
+          {splashUiVersion.active === null && <p>Some preview features are enabled.</p>}
+          <p>Switching reloads the page and clears unsent form entries.</p>
+        </section>}
+
         {notice && <NoticeBanner notice={notice} onDismiss={onDismissNotice} />}
 
-        {onImportArchive && <Card title="Restore epoch backup" accent="var(--color-world)">
-          <p className="text-sm text-[color:var(--color-text-soft)]">
-            Backup files contain sensitive sign-in verifier and game-state material. Keep the file private.
-            Restore requires an entirely empty epoch and cannot replace or merge existing data.
-          </p>
-          <input type="file" accept=".json,application/json" className="mt-3 block text-sm"
-            aria-label="Choose epoch backup file" disabled={submitting}
-            onChange={event => { const file = event.currentTarget.files?.[0];
-              event.currentTarget.value = '';
-              if (!file) return;
-              setArchiveError(null); setSubmitting(true);
-              void onImportArchive(file).then(result => {
-                if (!result.ok) setArchiveError(result.message);
-              }).catch(() => setArchiveError('Epoch backup restore failed. No import success was confirmed.'))
-                .finally(() => setSubmitting(false));
-            }} />
-          {archiveError && <p role="alert" className="mt-2 text-sm text-rose-700 dark:text-rose-100">{archiveError}</p>}
-        </Card>}
+        {!presentationPreview && archiveControl}
 
         <div className="flex-1 space-y-4">
           {showCreateForm ? (
@@ -352,6 +416,59 @@ export function LocalAccountAccessScreen({
                     Create Account
                   </button>
                 </div>
+              </div>
+            </Card>
+          ) : presentationPreview ? (
+            <Card accent="var(--color-world)">
+              <div className="space-y-6">
+                <h1 className="text-center text-lg leading-relaxed text-[color:var(--color-text-strong)]">
+                  A chronicle of lives, choices and legacies.
+                  <span className="mt-4 block">Found your line and forge your Legacy.</span>
+                </h1>
+                <form onSubmit={event => { event.preventDefault(); void submitSelectedAccount(); }}>
+                  <fieldset disabled={submitting} className="min-w-0 space-y-3" aria-busy={submitting}>
+                    <div className="space-y-2">
+                      <label htmlFor="launcher-account-selector" className="block text-sm">Account</label>
+                      <select id="launcher-account-selector" value={selectedAccountId ?? ''}
+                        onChange={event => handleSelectAccount(event.target.value)}
+                        className="w-full min-w-0 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-3 py-3">
+                        <option value="">Select an account</option>
+                        {accountPickerLabels(accounts).map(account => <option key={account.accountId} value={account.accountId}>
+                          {account.label}
+                        </option>)}
+                      </select>
+                    </div>
+                    {accounts.length === 0 && <p className="text-sm">No local accounts yet.</p>}
+                    <div className="flex items-end gap-2">
+                      <label className="min-w-0 flex-1 space-y-2">
+                        <span className="text-sm">Password</span>
+                        <input type="password" value={password} autoComplete="current-password"
+                          disabled={!selectedAccount}
+                          onChange={event => { invalidateDeletionIntent(); setPassword(event.target.value); }}
+                          className="w-full min-w-0 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-surface-soft)] px-3 py-3" />
+                      </label>
+                      <button type="submit" disabled={!selectedAccount || submitting}
+                        className={`${headerButtonClass} min-h-12 shrink-0 px-4 py-3 text-sm disabled:opacity-60`}>
+                        Log In
+                      </button>
+                    </div>
+                    <label className="flex min-h-11 items-center gap-3 text-sm">
+                      <input type="checkbox" checked={stayLoggedIn} disabled={!selectedAccount}
+                        onChange={event => setStayLoggedIn(event.target.checked)} className="h-4 w-4" />
+                      <span>Stay logged in</span>
+                    </label>
+                    {submitting && <p role="status" className="text-sm">Working…</p>}
+                  </fieldset>
+                </form>
+                {selectedAccount && <div className="space-y-3 text-sm">
+                  <p>{formatLastPlayedAt(selectedAccount.lastPlayedAt)}</p>
+                  {allowAccountDeletion && <details>
+                    <summary className="cursor-pointer py-2">Manage selected account</summary>
+                    <button type="button" onClick={submitAccountDeletion} disabled={submitting}
+                      className={`${headerButtonClass} mt-2 px-4 py-2`}>Delete Account</button>
+                  </details>}
+                  {deletionError && <p role="alert" className="text-rose-600">{deletionError}</p>}
+                </div>}
               </div>
             </Card>
           ) : (
@@ -441,7 +558,34 @@ export function LocalAccountAccessScreen({
             </>
           )}
         </div>
+        {presentationPreview && archiveControl && <details className="text-sm">
+          <summary className="cursor-pointer py-3">Restore epoch backup</summary>
+          {archiveControl}
+        </details>}
       </div>
     </div>
   );
+
+  if (!presentationPreview) return content;
+  return <AppShell
+    brand={<img src="/branding/lineage-reforged-logo-dark-no-icon-framed.png"
+      alt="Lineage: Reforged" className="h-12 w-auto max-w-[12rem] object-contain" />}
+    accountControls={<>
+      {clockLabel && <time title={clockTitle} className="text-sm">Local time {clockLabel}</time>}
+      <details className="relative text-sm">
+        <summary className="cursor-pointer px-3 py-2">Guest</summary>
+        <div className="absolute right-0 z-40 w-48 rounded-lg border border-[color:var(--color-border)] bg-[color:var(--color-panel)] p-2">
+          <button type="button" onClick={onToggleThemeMode} className="w-full rounded px-3 py-2 text-left">
+            {themeMode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+          </button>
+        </div>
+      </details>
+    </>}
+    subBar={<nav aria-label="Account navigation" className="grid min-h-11 grid-cols-3 items-center gap-2 text-sm">
+      <div>{showCreateForm && mode === 'pick_account' && <button type="button"
+        onClick={handleHideCreateForm} disabled={submitting} className={`${headerButtonClass} px-3 py-2`}>Back</button>}</div>
+      <div className="text-center">{!showCreateForm && <button type="button" onClick={handleShowCreateForm}
+        disabled={submitting} className={`${headerButtonClass} px-3 py-2`}>Create Account</button>}</div>
+    </nav>}
+  >{content}</AppShell>;
 }
