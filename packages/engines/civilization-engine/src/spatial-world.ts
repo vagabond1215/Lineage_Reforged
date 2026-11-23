@@ -212,7 +212,7 @@ function deriveLocalityCompatibility(text: string): string[] {
   return [...tags];
 }
 
-function rarityFromBreadth(count: number): ResourceEcologyProfileRecord["rarityTendency"] {
+function rarityFromBreadth(count: number): NonNullable<ResourceEcologyProfileRecord["rarityTendency"]> {
   if (count >= 4) {
     return "abundant";
   }
@@ -231,7 +231,7 @@ function deriveEcologyProfileFromHabitats(
   const compatibleClimateBands = new Set<string>();
   const compatibleElevationBands = new Set<string>();
   const compatibleLocalityTags = new Set<string>();
-  const freshwaterCounts = new Map<string, number>();
+  const freshwaterCounts = new Map<NonNullable<ResourceEcologyProfileRecord["freshwaterAffinity"]>, number>();
 
   for (const habitatId of habitatIds) {
     const habitat = habitatsById.get(habitatId);
@@ -260,7 +260,7 @@ function deriveEcologyProfileFromHabitats(
 
   const freshwaterAffinity =
     [...freshwaterCounts.entries()].sort((left, right) => right[1] - left[1])[0]?.[0] ??
-    ("none" as ResourceEcologyProfileRecord["freshwaterAffinity"]);
+    "none";
 
   return {
     compatibleBiomeIds: [...compatibleBiomeIds],
@@ -581,6 +581,7 @@ function getContext(): SpatialWorldContext {
   const hexes = loadWorldHexContent();
   const edges = loadWorldHexEdgeContent();
   const travelNetwork = loadTravelNetworkContent()[0];
+  if (!travelNetwork) throw new Error("Missing authored travel network.");
   const habitats = loadHabitatContent();
   const biomes = loadBiomeContent();
   const flora = loadFloraContent();
@@ -1068,7 +1069,7 @@ function buildRouteSegments(
   }
 
   if (orderedHexIds.length === 1 && route.intraHexDistanceKm) {
-    const hex = context.hexesById.get(orderedHexIds[0]);
+    const hex = context.hexesById.get(orderedHexIds[0]!);
     if (!hex) {
       return { segments: [], rejection: `${route.id} references missing intra-hex '${orderedHexIds[0]}'.` };
     }
@@ -1107,8 +1108,8 @@ function buildRouteSegments(
 
   if (orderedHexIds.length >= 2) {
     for (let index = 0; index < orderedHexIds.length - 1; index += 1) {
-      const fromHexId = orderedHexIds[index];
-      const toHexId = orderedHexIds[index + 1];
+      const fromHexId = orderedHexIds[index]!;
+      const toHexId = orderedHexIds[index + 1]!;
       const edge = findEdgeBetween(context, fromHexId, toHexId);
       if (!edge) {
         return { segments: [], rejection: `${route.id} cannot traverse missing adjacency ${fromHexId} -> ${toHexId}.` };
@@ -1163,7 +1164,7 @@ export function resolveBestRoute(input: {
   frontier.set(input.fromSettlementId, { weight: 0, segments: [] });
 
   while (frontier.size > 0) {
-    const currentEntry = [...frontier.entries()].sort((left, right) => left[1].weight - right[1].weight)[0];
+    const currentEntry = [...frontier.entries()].sort((left, right) => left[1].weight - right[1].weight)[0]!;
     const [currentSettlementId, currentState] = currentEntry;
     frontier.delete(currentSettlementId);
     if (visited.has(currentSettlementId)) {

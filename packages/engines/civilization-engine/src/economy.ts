@@ -213,7 +213,7 @@ function toFriendlyLabel(value: string): string {
     .replace(/\./g, "_")
     .split("_")
     .filter(Boolean)
-    .map((part) => part[0].toUpperCase() + part.slice(1))
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
 }
 

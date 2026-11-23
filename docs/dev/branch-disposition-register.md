@@ -1,3 +1,7 @@
+## 2026-11-23 — First World TypeScript source-pack repair
+
+Retain local `codex/new-ui-mainline-final-2026-11-23` as the reviewed integration candidate. The [First World TypeScript source-pack repair](first-world-typescript-source-pack-repair-2026-11-23.md) records the TypeScript repair and unchanged historical identities. The remaining review trigger is the explicit v8 account-owner decision. Retain PR #102 for the separate owner review and PR #103 for visual provenance under their existing dispositions.
+
 ## 2026-11-23 — New UI master integration
 
 Retain local `codex/new-ui-mainline-final-2026-11-23` with tested runtime and QA `cb01fcfd60355e40f555b6edf296045f6bc5b52b` as an exact descendant of reviewed candidate `3789c12b99af439ab401f282f8d0302f79f7f210` and master `20abe83c2aa97ba4699711a9815d9b95e0d3df44`. Fetched and pruned refs, inspected existing worktrees and open PRs, and reconciled Connector audit `b19fda8181f6117468ef6ba388af454fe902ce89`. The branch remains local. Review trigger is a versioned protected-source repair that clears the strict diagnostic delta and an explicit v8 account owner decision. The [final acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md) records evidence.

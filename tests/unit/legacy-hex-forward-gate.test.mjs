@@ -26,6 +26,15 @@ test('Original legacy lines are grandfathered but newly authored dependencies ar
   assert.equal(addedLegacyHexLines(old.replace('legacy =','newName ='),old).length,1);
   assert.equal(addedLegacyHexLines(old+'\nconst legacy = value.hexAnchorId;',old).length,1);
 });
+test('The three approved route index assertions consume existing source references only',()=>{
+  const path='packages/engines/civilization-engine/src/spatial-world.ts';
+  const before='const fromHexId = orderedHexIds[index];';
+  const after='const fromHexId = orderedHexIds[index]!;';
+  assert.deepEqual(addedLegacyHexLines(after,before,path),[]);
+  assert.equal(addedLegacyHexLines(after+'\n'+after,before,path).length,1);
+  assert.equal(addedLegacyHexLines(after,before,'elsewhere.ts').length,1);
+  assert.equal(addedLegacyHexLines(after.replace('[index]', '[0]'),before,path).length,1);
+});
 test('Unrelated coordinate geometry may change without a hex coupling',()=>{
   const old='const first={x:0,y:0};';
   const next='const first={x:0,y:0};\nconst next={x:10.2,y:11.4};';

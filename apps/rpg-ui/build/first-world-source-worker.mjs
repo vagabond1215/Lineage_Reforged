@@ -1,6 +1,6 @@
 import { relative, resolve } from 'node:path';
 import { normalizePath } from 'vite';
-import { loaderPath, repository, verifyWorldSourceV2 } from './first-world-source-pack.mjs';
+import { loaderPath, repository } from './first-world-source-pack.mjs';
 import { transformVerifiedContentLoader } from './first-world-browser-loader.mjs';
 
 const assetsId = 'virtual:first-world-v2-assets';
@@ -8,7 +8,7 @@ const readerId = 'virtual:first-world-v2-reader';
 const readerPath = 'apps/rpg-ui/src/game-shell/world-source/worker-content.mjs';
 
 /** The standard app uses this only for its build-time isolated World worker graph. */
-export function firstWorldSourceWorker() {
+export function firstWorldSourceWorker(verifySource) {
   let manifest;
   let assetRefs;
   return {
@@ -16,7 +16,7 @@ export function firstWorldSourceWorker() {
     apply: 'build',
     enforce: 'pre',
     buildStart() {
-      const { bytes, pins, ...identity } = verifyWorldSourceV2();
+      const { bytes, pins, ...identity } = verifySource();
       manifest = { bytes, identity };
       assetRefs = new Map(identity.contentPins.map(({ path, gitBlobSha1 }) => [
         gitBlobSha1,

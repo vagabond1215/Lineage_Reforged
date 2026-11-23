@@ -150,6 +150,18 @@ def transfer(browser):
         complete = snapshot(original)
         assert complete['artifacts'] and all(len(complete[key]) == 1 for key in qa['PAIR'])
 
+        switch = os.environ.get('LINEAGE_MAINLINE_WORLD_SOURCE_SWITCH')
+        if switch:
+            original.close()
+            Path(switch).touch(exist_ok=False)
+            original = context.new_page()
+            original.goto(source + flags + '&integrationPhase=sourceV4')
+            qa['sign_in'](original, profile)
+            qa['library'](original)
+            assert qa['ready'](original, title) == world_id
+            assert snapshot(original) == complete
+            print('PASS historical v8 World and receipt reopened after switching the same origin to the successor build', flush=True)
+
         restored = context.new_page()
         restored.goto(destination + flags)
         expect(restored.get_by_label('Display Name', exact=True)).to_be_visible()

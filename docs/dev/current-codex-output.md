@@ -1,3 +1,7 @@
+## 2026-11-23 — First World TypeScript source-pack repair
+
+The [First World TypeScript source-pack repair](first-world-typescript-source-pack-repair-2026-11-23.md) records the approved five-file correction, historical and successor fingerprints, exact projection equivalence, and disposable v7/v8 browser evidence. Full UI TypeScript is 118 against 119 on master and 183 on the reviewed runtime. Node typecheck and direct builds pass. The same five affected engine assertions fail on both runtimes. MERGE_HELD for the explicit v8 owner decision.
+
 ## 2026-11-23 — New UI master integration acceptance
 
 Unversioned run, no parent milestone. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, development impact `supports_current_band`, game-version impact `none`. Isolated `codex/new-ui-mainline-final-2026-11-23` fast-forwarded from master `20abe83c` through reviewed UX `3789c12b` to tested runtime and QA `cb01fcfd60355e40f555b6edf296045f6bc5b52b`. Suggested receipt commit `docs(ui): record final master integration acceptance hold`.

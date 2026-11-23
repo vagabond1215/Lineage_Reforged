@@ -1,3 +1,7 @@
+## 2026-11-23 — First World TypeScript source-pack repair
+
+Use the [First World TypeScript source-pack repair](first-world-typescript-source-pack-repair-2026-11-23.md) on the local integration branch. The protected TypeScript delta is cleared and the legacy World and receipt readback path passed. Review the forward-only v8 owner decision without repeating the completed UI matrix or changing the production and World-bound publication gates.
+
 ## 2026-11-23 — New UI master integration held
 
 Inspect local `codex/new-ui-mainline-final-2026-11-23` at tested runtime `cb01fcfd60355e40f555b6edf296045f6bc5b52b` and the [final acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md). The next decision is a bounded World source-pack repair and explicit approval of the forward-only v8 account owner. The branch retains tested v8 Classic and disposable cross-origin archive recovery. The reviewed UI and integration produce the same 183 diagnostics, versus 119 on master. Five pinned engine files account for the added entries. Retain PR #102 as owner-review evidence and PR #103 as visual provenance. No review PR or production activation is due from this pass.

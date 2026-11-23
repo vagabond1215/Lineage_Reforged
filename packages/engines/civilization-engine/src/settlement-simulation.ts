@@ -162,7 +162,7 @@ function resolvePopulationProfile(settlement: SettlementContentRecord, accessSta
   const militaryPopulation = Math.min(workforcePopulation - civicPopulation, Math.round(workforcePopulation * militaryShare));
   const laborPool = Math.max(0, workforcePopulation - civicPopulation - militaryPopulation);
 
-  const weights: Record<string, number> = {
+  const weights = {
     agrarian: 1,
     extractive: 0.7,
     maritime: 0.6,
@@ -786,7 +786,7 @@ function resolveDistrictsAndPlots(
       ...Array.from({ length: counts.developed }, () => "developed" as const),
       ...Array.from({ length: counts.underdeveloped }, () => "underdeveloped" as const),
       ...Array.from({ length: counts.vacant }, () => "vacant" as const),
-      ...Array.from({ length: counts.degraded }, (_, index) => (index % 4 === 0 ? "abandoned" : "dilapidated") as const)
+      ...Array.from({ length: counts.degraded }, (_, index): SettlementPlotState["state"] => index % 4 === 0 ? "abandoned" : "dilapidated")
     ].slice(0, plotCapacity);
 
     const districtPlots = Array.from({ length: plotCapacity }, (_, index) => {
@@ -1298,7 +1298,7 @@ function resolveRepairProjects(
     .flatMap((building) =>
       building.instances
         .filter((instance) => instance.condition < 0.86)
-        .map((instance) => {
+        .map((instance): SettlementRepairProjectState => {
           const laborDays = roundNumber(
             Math.max(
               2,

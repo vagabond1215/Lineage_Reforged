@@ -1,3 +1,4 @@
+import { historicalWorldSourceReader } from '../../apps/rpg-ui/build/first-world-source-v4.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -5,7 +6,7 @@ import { resolve } from 'node:path';
 import { repository, verifyPinnedBytes, verifySourcePack } from '../../apps/rpg-ui/build/first-world-source-pack.mjs';
 
 const read = path => readFileSync(resolve(repository, path));
-const canonical = verifySourcePack();
+const canonical = verifySourcePack(historicalWorldSourceReader());
 
 test('verifies every published pin and the additional in-memory row producer', () => {
   assert.equal(canonical.contentPins.length, 22);
@@ -26,18 +27,18 @@ test('reconstructs the exact pinned checkout bytes without stripping the UTF-8 B
 });
 
 test('fails closed for missing or modified content, modified algorithms and altered pin lists', () => {
-  assert.throws(() => verifySourcePack(path => {
+  assert.throws(() => verifySourcePack(historicalWorldSourceReader(path => {
     if (path === canonical.templatePath) throw new Error('missing pinned input');
     return read(path);
-  }), /missing pinned input/);
+  })), /missing pinned input/);
   for (const changed of [canonical.templatePath, 'packages/shared/time/src/index.ts']) {
-    assert.throws(() => verifySourcePack(path =>
-      path === changed ? Buffer.concat([read(path), Buffer.from(' ')]) : read(path)), /does not match its pin/);
+    assert.throws(() => verifySourcePack(historicalWorldSourceReader(path =>
+      path === changed ? Buffer.concat([read(path), Buffer.from(' ')]) : read(path))), /does not match its pin/);
   }
-  assert.throws(() => verifySourcePack(path => {
+  assert.throws(() => verifySourcePack(historicalWorldSourceReader(path => {
     if (!path.startsWith('docs/')) return read(path);
     const manifest = JSON.parse(read(path));
     manifest.pinnedSourceFiles.pop();
     return Buffer.from(JSON.stringify(manifest));
-  }), /source-manifest-v1\.json/);
+  })), /source-manifest-v1\.json/);
 });

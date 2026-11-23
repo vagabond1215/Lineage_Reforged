@@ -1,3 +1,4 @@
+import { historicalWorldSourceReader } from '../../apps/rpg-ui/build/first-world-source-v4.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash, webcrypto } from 'node:crypto';
@@ -188,7 +189,7 @@ test('L3a nonempty v7 account survives upgrade, v7 archive restore, reset and de
   target.close();
 });
 
-const sourcePack = verifySourcePack();
+const sourcePack = verifySourcePack(historicalWorldSourceReader());
 const starfallSource = sourcePack.bytes.get(sourcePack.templatePath).toString('utf8');
 async function syntheticAccount(owner, accountId='account.synthetic.world') {
   const createdAt='2026-11-17T00:00:00.000Z';
