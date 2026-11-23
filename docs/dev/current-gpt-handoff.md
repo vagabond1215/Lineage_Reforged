@@ -635,3 +635,6 @@ Review draft PR102 source b5e8fb83b36d0989c3ae558a90910e456e643b6d from 29a3bf08
 ## 2026-11-22 — A2b authenticated atomic browser owner
 
 Review draft PR102 at its published head with source 397a601bc8997d9593ab8b4f1182f4f02e39e025 from dfbf794777c19a9758e86a11d06adfb18bf83794. [A2b evidence](world-a2b-atomic-browser-owner-receipt-2026-11-22.md) contains exact v3 pins, v8 pair transaction and separate source verification, native-v3 and v7 fixture preservation, and all browser results. Review authentication admission and atomicity before installing a separate one-World UI package. Save binding, activation and the UI/map lanes retain their existing posture.
+## 2026-11-22 — A3b runtime recheck after Connector source audit
+
+The independent Connector audit at `77afc6b5` passed source review and found an incomplete viewport matrix. The exact runtime `7a46f577` now has a fresh [Codex Chromium receipt](ui-a3b-chromium-matrix-recheck-2026-11-22.md) for 16 viewport/theme combinations, the integration scenarios and owner parity. Review the published `codex/a3b-chromium-matrix-2026-11-22` branch with harness commit `2da1d91a`. Preserve the original A3b branch and the PR #102 draft integration hold pending an owner decision. Production, World-to-Save binding, Family Library and game-version advancement remain held.

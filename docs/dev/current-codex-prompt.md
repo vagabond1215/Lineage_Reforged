@@ -1,5 +1,7 @@
 # ACTIVE: Starfall World template → L2 owner/registry design gate (main-first)
 
+> **2026-11-22 A3b runtime recheck.** The Connector source review and fresh exact-runtime Chromium matrix are complete for the compiled loopback pilot. See the [matrix receipt](ui-a3b-chromium-matrix-recheck-2026-11-22.md). The next gate is an explicit owner integration decision. This status does not authorize a merge, rollout, or Family Library implementation.
+
 > **2026-11-22 A3b execution status.** The isolated compiled-loopback World Creator checkpoint was verified locally and is ready for independent Connector review. See the [A3b receipt](ui-a3b-functional-world-creation-receipt-2026-11-22.md). Keep PR #102 draft and hold production, World-to-Save binding, and Family Library. This status does not authorize a subsequent implementation.
 
 > **2026-11-22 A2b execution status.** The [atomic browser owner evidence](world-a2b-atomic-browser-owner-receipt-2026-11-22.md) is ready for independent Connector review on draft PR #102. World Library/Create UI, native-v3 Save binding and production activation remain held.

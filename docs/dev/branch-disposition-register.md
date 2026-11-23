@@ -1509,3 +1509,6 @@ Draft PR102 stays HOLD_NAMED_CONSUMER on connector/l3a-world-v8-migration-prefli
 ## 2026-11-22 — A2b authenticated atomic browser owner
 
 Draft PR102 remains HOLD_NAMED_CONSUMER on connector/l3a-world-v8-migration-preflight-2026-11-17 from dfbf794777c19a9758e86a11d06adfb18bf83794, source 397a601bc8997d9593ab8b4f1182f4f02e39e025, pending independent exact-head A2b review before UI wiring. [Evidence](world-a2b-atomic-browser-owner-receipt-2026-11-22.md). PR103 retained for visual provenance. UI topic a55cec30 and map lanes preserved. No integration, retirement, deployment, or activation.
+## 2026-11-22 — A3b exact-runtime Chromium verification
+
+Retain `codex/a3b-chromium-matrix-2026-11-22` for owner integration review after the [expanded Chromium recheck](ui-a3b-chromium-matrix-recheck-2026-11-22.md), harness `2da1d91a`, runtime `7a46f577`. Retain the Connector source audit `77afc6b5` and original A3b publication `4c38da59` as review evidence. Fetched master `20abe83c`, PR #102 `e74f9e14`, PR #103 `d6fb21d3`, and UI topic `7624adc2` were checked against the active scope. Their existing dispositions and map-lane gates remain. No merge, retarget, branch retirement or deployment is authorized.
