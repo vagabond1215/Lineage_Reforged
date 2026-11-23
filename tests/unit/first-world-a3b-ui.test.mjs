@@ -62,7 +62,7 @@ test('creation success requires a scoped World, receipt and identical fresh inve
     scope, world.worldInstanceId));
 });
 
-test('selected World state keeps the draft and scope ephemeral and never allocates a Save slot', () => {
+test('selected World state keeps creator admission ephemeral and never allocates a Save slot', () => {
   const accountId = 'account.qa';
   const library = { screen: 'WORLD_LIBRARY_GATE', accountProfile: { accountId },
     launcherSession: { accountId, metadata: { epochGeneration: '2' } }, slots: [], notice: null };
@@ -72,13 +72,12 @@ test('selected World state keeps the draft and scope ephemeral and never allocat
   assert.equal(gameShellReducer(library, { type: 'SELECT_WORLD', world: { ...world, generation: 1 } }), library);
   const selected = gameShellReducer(library, { type: 'SELECT_WORLD', world });
   const creator = gameShellReducer(selected, { type: 'OPEN_WORLD_CHARACTER_CREATOR' });
-  const edited = gameShellReducer(creator, { type: 'UPDATE_WORLD_CHARACTER_DRAFT', draft: { playerName: 'Edited' } });
-  assert.equal(edited.world, world);
-  assert.equal(edited.characterDraft.playerName, 'Edited');
-  assert.equal(Object.hasOwn(edited.characterDraft, 'saveSlotId'), false);
-  assert.equal(gameShellReducer(edited, { type: 'CLOSE_WORLD_CHARACTER_CREATOR' }).world, world);
-  assert.deepEqual(gameShellReducer(edited, { type: 'LEAVE_SELECTED_WORLD' }), library);
-  assert.equal(Object.hasOwn(gameShellReducer(edited, {
+  assert.equal(creator.world, world);
+  assert.equal(creator.creatorOpen, true);
+  assert.deepEqual(Object.keys(creator).sort(), Object.keys(selected).sort());
+  assert.deepEqual(gameShellReducer(creator, { type: 'CLOSE_WORLD_CHARACTER_CREATOR' }), selected);
+  assert.deepEqual(gameShellReducer(creator, { type: 'LEAVE_SELECTED_WORLD' }), library);
+  assert.equal(Object.hasOwn(gameShellReducer(creator, {
     type: 'SHOW_ACCOUNT_ACCESS', accessMode: 'pick_account', accounts: [], notice: null,
   }), 'world'), false);
 });

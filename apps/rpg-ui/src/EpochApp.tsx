@@ -15,6 +15,7 @@ import { advanceNativeSelectedExploration, admitNativeSelectedEncounter,
   createNativeSelectedEncounterAdmission } from './game-shell/nativeSelectedCombat.js';
 import type { NativeCandidateAction } from './game-shell/NativeSelectedCandidatePanel.js';
 import { createDefaultCharacterCreationFormState, validateCharacterCreationForm } from './game-shell/characterCreationForm.js';
+import { SelectedWorldCreator } from './game-shell/components/SelectedWorldCreator.js';
 import { CharacterCreationScreen } from './game-shell/components/CharacterCreationScreen.js';
 import { LoadGameScreen } from './game-shell/components/LoadGameScreen.js';
 import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAccessScreen.js';
@@ -762,7 +763,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
 
   const changeWorldCreator = (open: boolean) => void guarded(async () => {
     if (!worldOwnerReview || !services || state.screen !== 'SELECTED_WORLD' ||
-        open === (state.characterDraft !== null)) return;
+        open === state.creatorOpen) return;
     const epoch = worldUiEpoch.current;
     try {
       const world = await verifyWorldSelection(services, state.launcherSession, state.world.accountId,
@@ -993,11 +994,10 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })} onLogout={logout} />;
   else if (current.screen === 'SELECTED_WORLD') {
     const toggleTheme = () => setThemePreference(themeMode === 'dark' ? 'light' : 'dark');
-    content = current.characterDraft ? <CharacterCreationScreen {...common}
-      selectedWorld={current.world} form={current.characterDraft} accountProfile={current.accountProfile}
-      onReturnToMainMenu={() => changeWorldCreator(false)} onSignOut={logout}
-      onChange={draft => dispatch({ type: 'UPDATE_WORLD_CHARACTER_DRAFT', draft })}
-      themeMode={themeMode} onToggleThemeMode={toggleTheme} />
+    content = current.creatorOpen ? <SelectedWorldCreator
+      key={current.world.worldInstanceId} world={current.world} busy={busy} notice={current.notice}
+      onBack={() => changeWorldCreator(false)} onSignOut={logout}
+      themeMode={themeMode} onToggleTheme={toggleTheme} />
       : <WorldCharactersScreen world={current.world} busy={busy} themeMode={themeMode}
           onToggleTheme={toggleTheme} onBack={continueToWorlds} onSignOut={logout}
           onCreateCharacter={() => changeWorldCreator(true)} />;

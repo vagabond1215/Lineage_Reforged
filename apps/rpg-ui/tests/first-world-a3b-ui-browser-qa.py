@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 import re
+from pathlib import Path
 from tempfile import TemporaryDirectory
 from urllib.parse import urlsplit
 
@@ -108,41 +109,166 @@ def open_selected_creator(page, world_id, title, keyboard=False):
         if action == 'Open World':
             expect(page.get_by_role('heading', name='World Characters')).to_be_focused(timeout=30000)
             expect(page.get_by_role('heading', name='No characters in this World')).to_be_visible()
-    scope = page.get_by_role('region', name='Selected World')
-    expect(scope.get_by_role('heading', name=title, exact=True)).to_be_visible()
-    expect(scope.get_by_text(world_id, exact=True)).to_be_visible()
-    expect(page.get_by_role('navigation', name='Character creation steps')).to_be_visible()
+    scope = page.get_by_role('navigation', name='Creator context')
+    expect(scope.get_by_text(title, exact=True)).to_be_visible()
+    expect(page.get_by_text(world_id, exact=True)).to_be_visible()
+    expect(page.get_by_role('navigation', name='Creator stages')).to_be_visible()
 
 
-def edit_character_draft(page, world_id):
-    steps = page.get_by_role('navigation', name='Character creation steps')
-    finalize = steps.get_by_role('button', name=re.compile('Finalize$'))
-    for _ in range(24):
-        if finalize.is_enabled():
-            break
-        button(page, 'Randomize Character').click()
-    expect(finalize).to_be_enabled()
-    for label in ['Lineage', 'Identity', 'Continent', 'Region', 'Settlement', 'Backstory', 'Starting Bundle', 'Finalize']:
-        step = steps.get_by_role('button', name=re.compile(label + '$'))
-        if label == 'Backstory' and not step.is_enabled():
-            continue
-        step.press('Enter')
-        expect(step).to_have_attribute('aria-current', 'step')
-        expect(page.get_by_role('region', name='Selected World').get_by_text(world_id, exact=True)).to_be_visible()
-        if label == 'Identity':
-            page.get_by_role('textbox', name='Character name').fill('Selected World Wanderer')
-            expect(page.get_by_role('region', name='Character summary')).to_contain_text('Selected World Wanderer')
-            female = page.get_by_role('button', name='Female', exact=True)
-            female.press('Enter')
-            expect(page.get_by_role('region', name='Character summary')).to_contain_text(re.compile(r'\bfemale\b', re.I))
-            summary = page.get_by_role('region', name='Character summary')
-            focus = 'Learned' if 'martial focus' in summary.inner_text() else 'Martial'
-            page.get_by_role('button', name=re.compile(r'^' + focus + r'\b')).click()
-            expect(summary).to_contain_text(focus.lower() + ' focus')
-    expect(button(page, 'Begin Journey')).to_be_disabled()
-    expect(button(page, 'Begin Journey')).to_have_accessible_description(re.compile('linked to this World'))
-    button(page, 'Previous step').press('Enter')
-    expect(steps.get_by_role('button', name=re.compile('Starting Bundle$'))).to_have_attribute('aria-current', 'step')
+CREATOR_STAGES = ['Lineage', 'Identity', 'Continent', 'Region', 'Settlement', 'World Entry', 'Summary', 'Opening']
+CREATOR_VIEWPORTS = [(1440, 800), (768, 800), (375, 667), (667, 375)]
+
+
+def edit_character_draft(page, world_id, keyboard=False, evidence=None):
+    steps = page.get_by_role('navigation', name='Creator stages')
+    main = page.get_by_role('main', name=re.compile('|'.join(CREATOR_STAGES)))
+    assert steps.get_by_role('button').all_text_contents() == [
+        f'{index}{label}' for index, label in enumerate(CREATOR_STAGES, start=1)]
+    expect(steps.get_by_role('button', name=re.compile('Backstory|Starting Bundle|Finalize'))).to_have_count(0)
+    expect(steps.get_by_role('button', name='Summary')).to_be_disabled()
+
+    def activate(control):
+        if keyboard:
+            control.press('Enter')
+        else:
+            control.click()
+
+    def check_stage(label):
+        heading = main.get_by_role('heading', name=label, exact=True)
+        expect(heading).to_be_focused()
+        expect(steps.get_by_role('button', name=label, exact=True)).to_have_attribute('aria-current', 'step')
+        expect(page.get_by_text(world_id, exact=True)).to_be_visible()
+        width_check(page)
+
+    def check_art(label):
+        image = main.get_by_role('button', name=label, exact=True).locator('img')
+        image.scroll_into_view_if_needed()
+        assert image.evaluate('''async image => {
+            await image.decode();
+            const art = image.parentElement.getBoundingClientRect();
+            const photo = image.getBoundingClientRect();
+            return photo.width >= art.width - 1 && photo.height >= art.height - 1;
+        }'''), label
+
+    def capture(label):
+        if evidence is not None:
+            page.evaluate('''async () => {
+                window.scrollTo(0, 0);
+                await Promise.all([...document.querySelectorAll('.swc-card-art img')].map(img => {
+                    img.loading = 'eager';
+                    return img.decode();
+                }));
+            }''')
+            page.screenshot(path=evidence / f'{CREATOR_STAGES.index(label) + 1:02}-{label.lower().replace(" ", "-")}.png',
+                            full_page=True, animations='disabled')
+
+    check_stage('Lineage')
+    expect(main.get_by_role('group', name='Playable lineages').get_by_role('button')).to_have_count(10)
+    activate(main.get_by_role('button', name='Elf', exact=True))
+    capture('Lineage')
+    activate(button(page, 'Next'))
+    check_stage('Identity')
+    first = page.get_by_role('textbox', name='First name', exact=True)
+    last = page.get_by_role('textbox', name='Last name (optional)')
+    activate(button(page, 'Next'))
+    expect(first).to_be_focused()
+    expect(page.get_by_role('alert')).to_have_text('Enter a first name before continuing.')
+    for label in ('Build', 'Aptitude'):
+        expect(main.get_by_role('group', name=label, exact=True).get_by_role('button')).to_have_count(9)
+    activate(button(page, 'Female'))
+    activate(main.get_by_role('group', name='Build', exact=True).get_by_role('button', name=re.compile('^Lithe')))
+    activate(button(page, 'Randomize first and last name only'))
+    expect(button(page, 'Female')).to_have_attribute('aria-pressed', 'true')
+    expect(first).not_to_have_value('')
+    expect(last).not_to_have_value('')
+    first.fill('Aerin')
+    last.fill('Vale')
+    activate(button(page, 'Randomize Identity'))
+    expect(first).to_have_value('Aerin')
+    expect(last).to_have_value('Vale')
+    activate(button(page, 'Female'))
+    activate(main.get_by_role('group', name='Build', exact=True).get_by_role('button', name=re.compile('^Lithe')))
+    activate(main.get_by_role('group', name='Aptitude', exact=True).get_by_role('button', name=re.compile('^Analytical')))
+    for group in ('Negative conditions', 'Positive conditions'):
+        expect(main.get_by_role('group', name=group).get_by_role('button')).to_have_count(14)
+    activate(button(page, 'Sickly'))
+    activate(button(page, 'Quick Healer'))
+    for palette in ('Skin', 'Hair', 'Eyes'):
+        swatches = main.get_by_role('group', name=f'{palette} color options')
+        activate(swatches.get_by_role('button', name=re.compile(f'^{palette} ')).last)
+        swatches.get_by_role('slider', name=f'{palette} saturation').press('ArrowLeft')
+    activate(button(page, 'Generate portrait prompt'))
+    expect(main.get_by_role('textbox', name='Portrait prompt')).to_have_value(re.compile('Aerin Vale.*Elf'))
+    capture('Identity')
+    activate(button(page, 'Next'))
+    check_stage('Continent')
+    activate(main.get_by_role('button', name=re.compile('^Valtherion')))
+    check_art('Valtherion')
+    capture('Continent')
+    activate(button(page, 'Next'))
+    check_stage('Region')
+    activate(main.get_by_role('button', name=re.compile('^The Sapphire Rivers')))
+    check_art('The Sapphire Rivers')
+    capture('Region')
+    activate(button(page, 'Next'))
+    check_stage('Settlement')
+    activate(main.get_by_role('button', name=re.compile('^Highcrown')))
+    check_art('Highcrown')
+    capture('Settlement')
+    activate(button(page, 'Next'))
+    check_stage('World Entry')
+    activate(button(page, 'Hardcore Wilderness · Read only'))
+    expect(button(page, 'World-Stray · Prestige locked')).to_be_disabled()
+    activate(main.get_by_role('button', name=re.compile('The Broken Wagon')))
+    expect(main.get_by_text(re.compile('wagon frame leans'))).to_be_visible()
+    activate(button(page, 'Next'))
+    expect(steps.get_by_role('button', name='Summary')).to_be_disabled()
+    activate(button(page, 'Ordinary Core · 4'))
+    activate(main.get_by_role('button', name=re.compile('The Room Paid For')))
+    capture('World Entry')
+    activate(button(page, 'Next'))
+    check_stage('Summary')
+    for expected in ('Aerin Vale', 'Highcrown', 'The Room Paid For', 'Equipment & currency', '100 total'):
+        expect(main).to_contain_text(expected)
+    capture('Summary')
+    activate(button(page, 'Read Opening'))
+    check_stage('Opening')
+    expect(main.get_by_text(re.compile('Morning filters through the shutters'))).to_be_visible()
+    expect(button(page, 'Create Character')).to_be_disabled()
+    expect(button(page, 'Create Character')).to_have_accessible_description(re.compile('approved World–Character–Save owner'))
+    capture('Opening')
+    activate(button(page, 'Examine the parcel'))
+    expect(main.get_by_role('status')).to_contain_text('Examine the parcel')
+    expect(main.get_by_role('status')).to_be_focused()
+    activate(button(page, 'Revisit the first decision'))
+    expect(button(page, 'Examine the parcel')).to_be_focused()
+    activate(button(page, 'Ask the keeper'))
+    expect(main.get_by_role('status')).to_contain_text('Ask the keeper')
+    if evidence is not None:
+        page.screenshot(path=evidence / '08-opening-draft-decision.png', full_page=True, animations='disabled')
+    activate(button(page, 'Back to Summary'))
+    check_stage('Summary')
+    activate(button(page, 'Change World Entry'))
+    check_stage('World Entry')
+    activate(steps.get_by_role('button', name='Continent', exact=True))
+    check_stage('Continent')
+    alternate = main.get_by_role('group', name='Continent selections').get_by_role('button', name=re.compile(r'^(?!Valtherion)')).first
+    activate(alternate)
+    expect(steps.get_by_role('button', name='Settlement')).to_be_disabled()
+    expect(steps.get_by_role('button', name='World Entry')).to_be_disabled()
+    expect(steps.get_by_role('button', name='Opening')).to_be_disabled()
+    activate(main.get_by_role('button', name=re.compile('^Valtherion')))
+    activate(button(page, 'Next'))
+    check_stage('Region')
+    expect(main.locator('button[aria-pressed=true]')).to_have_count(0)
+    activate(main.get_by_role('button', name=re.compile('^The Sapphire Rivers')))
+    activate(button(page, 'Next'))
+    check_stage('Settlement')
+    expect(main.locator('button[aria-pressed=true]')).to_have_count(0)
+    activate(main.get_by_role('button', name=re.compile('^Highcrown')))
+    activate(button(page, 'Next'))
+    check_stage('World Entry')
+    expect(main.get_by_role('button', name=re.compile('The Room Paid For'))).to_have_attribute('aria-pressed', 'false')
 
 
 def persistent_restart_flow(playwright, origin):
@@ -179,7 +305,7 @@ def persistent_restart_flow(playwright, origin):
             assert ready(page, title) == world_id
             assert snapshot(page) == committed
             open_selected_creator(page, world_id, title, keyboard=True)
-            edit_character_draft(page, world_id)
+            edit_character_draft(page, world_id, keyboard=True)
             button(page, 'Back to World Characters').press('Enter')
             expect(page.get_by_role('heading', name='World Characters')).to_be_focused()
             expect(page.get_by_role('region', name='Selected World').get_by_text(world_id, exact=True)).to_be_visible()
@@ -195,8 +321,8 @@ def persistent_restart_flow(playwright, origin):
 def open_settings(page, profile):
     button(page, 'Open existing launcher').click()
     expect(page.get_by_role('region', name='Characters')).to_be_visible()
-    button(page, profile).click()
-    page.get_by_role('menuitem', name='Settings', exact=True).click()
+    button(page, profile).press('Enter')
+    page.get_by_role('menuitem', name='Settings', exact=True).press('Enter')
 
 
 def viewport_flow(browser, origin, width, height, theme):
@@ -260,15 +386,25 @@ def viewport_flow(browser, origin, width, height, theme):
         library(page)
         assert ready(page, title) == world_id
         assert snapshot(page)[PAIR[0]] == after[PAIR[0]]
-        if (width, height) in [(1440, 800), (320, 568)]:
-            open_selected_creator(page, world_id, title, keyboard=width == 320)
-            edit_character_draft(page, world_id)
+        if (width, height) in CREATOR_VIEWPORTS:
+            keyboard = width in (375, 768)
+            open_selected_creator(page, world_id, title, keyboard=keyboard)
+            evidence = None
+            if output := os.getenv('LINEAGE_CREATOR_EVIDENCE'):
+                evidence = Path(output) / f'{width}x{height}-{theme}'
+                evidence.mkdir(parents=True, exist_ok=True)
+            edit_character_draft(page, world_id, keyboard=keyboard, evidence=evidence)
             width_check(page)
             button(page, 'Back to World Characters').click()
             expect(page.get_by_role('heading', name='World Characters')).to_be_focused()
             button(page, 'Back to World Library').click()
             assert ready(page, title) == world_id
             assert snapshot(page) == after
+            open_selected_creator(page, world_id, title)
+            expect(page.get_by_role('main').get_by_role('heading', name='Lineage')).to_be_focused()
+            assert snapshot(page) == after
+            button(page, 'Back to World Characters').click()
+            button(page, 'Back to World Library').click()
             print(f'PASS {width}x{height} {theme}, selected World interactive Character Creator', flush=True)
         button(page, 'Home').click()
         button(page, 'Open existing launcher').click()
@@ -396,7 +532,7 @@ def selected_session_flow(browser, origin):
         open_selected_creator(page, world_id, title)
         button(page, 'Sign Out').click()
         expect(page.get_by_label('Account', exact=True)).to_be_visible()
-        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        expect(page.get_by_role('navigation', name='Creator stages')).to_have_count(0)
         button(page, 'Create Account').click()
         register(page, 'Other selected account')
         library(page)
@@ -417,7 +553,7 @@ def selected_session_flow(browser, origin):
         expect(peer.get_by_role('region', name='Characters')).to_be_visible()
         page.bring_to_front()
         expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible(timeout=15000)
-        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        expect(page.get_by_role('navigation', name='Creator stages')).to_have_count(0)
         assert all(not snapshot(page)[store] for store in PAIR)
 
         page.locator('summary').get_by_text(profile, exact=True).click()
@@ -436,7 +572,7 @@ def selected_session_flow(browser, origin):
         expect(peer.get_by_label('Account', exact=True)).to_be_visible()
         page.bring_to_front()
         expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible(timeout=15000)
-        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        expect(page.get_by_role('navigation', name='Creator stages')).to_have_count(0)
         assert all(not snapshot(page)[store] for store in PAIR)
         print('PASS remembered reauthentication, Creator logout, account isolation, generation reset and deletion',
               flush=True)
@@ -462,7 +598,7 @@ def classic_character_flow(browser, origin):
                 break
             button(page, 'Randomize Character').click()
         finalize.click()
-        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        expect(page.get_by_role('navigation', name='Creator stages')).to_have_count(0)
         expect(button(page, 'Begin Journey')).to_be_enabled()
         before = snapshot(page)
         button(page, 'Begin Journey').click()

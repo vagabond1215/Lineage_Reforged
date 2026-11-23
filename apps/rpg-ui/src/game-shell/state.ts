@@ -6,7 +6,7 @@ import type {
   CampaignSessionControl
 } from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import type { TagTone } from '../types.js';
-import { createDefaultCharacterCreationDraft, type CharacterCreationDraft, type CharacterCreationFormState } from './characterCreationForm.js';
+import type { CharacterCreationFormState } from './characterCreationForm.js';
 import type { SelectedWorld } from './worldPresentationState.js';
 import type {
   LauncherRuntimeSession,
@@ -120,7 +120,7 @@ export type WorldLibraryGateState = SignedInGameShellBaseState & {
 export type SelectedWorldState = SignedInGameShellBaseState & {
   screen: 'SELECTED_WORLD';
   world: SelectedWorld;
-  characterDraft: CharacterCreationDraft | null;
+  creatorOpen: boolean;
 };
 
 export type CharacterCreationState = SignedInGameShellBaseState & {
@@ -170,7 +170,6 @@ export type GameShellAction =
   | { type: 'LEAVE_SELECTED_WORLD' }
   | { type: 'OPEN_WORLD_CHARACTER_CREATOR' }
   | { type: 'CLOSE_WORLD_CHARACTER_CREATOR' }
-  | { type: 'UPDATE_WORLD_CHARACTER_DRAFT'; draft: Partial<CharacterCreationDraft> }
   | { type: 'RETURN_TO_AUTHENTICATED_WELCOME' }
   | {
       type: 'SHOW_ACCOUNT_ACCESS';
@@ -393,20 +392,17 @@ export function gameShellReducer(
       return state.screen === 'WORLD_LIBRARY_GATE' && action.world.accountId === state.accountProfile.accountId &&
         action.world.accountId === state.launcherSession.accountId &&
         String(action.world.generation) === state.launcherSession.metadata?.epochGeneration
-        ? { ...state, screen: 'SELECTED_WORLD', world: action.world, characterDraft: null, notice: null } : state;
+        ? { ...state, screen: 'SELECTED_WORLD', world: action.world, creatorOpen: false, notice: null } : state;
     case 'LEAVE_SELECTED_WORLD': {
       if (state.screen !== 'SELECTED_WORLD') return state;
       const { launcherSession, accountProfile, slots } = state;
       return { screen: 'WORLD_LIBRARY_GATE', launcherSession, accountProfile, slots, notice: null };
     }
     case 'OPEN_WORLD_CHARACTER_CREATOR':
-      return state.screen === 'SELECTED_WORLD' && state.characterDraft === null
-        ? { ...state, characterDraft: createDefaultCharacterCreationDraft() } : state;
+      return state.screen === 'SELECTED_WORLD' && !state.creatorOpen
+        ? { ...state, creatorOpen: true } : state;
     case 'CLOSE_WORLD_CHARACTER_CREATOR':
-      return state.screen === 'SELECTED_WORLD' ? { ...state, characterDraft: null } : state;
-    case 'UPDATE_WORLD_CHARACTER_DRAFT':
-      return state.screen === 'SELECTED_WORLD' && state.characterDraft
-        ? { ...state, characterDraft: { ...state.characterDraft, ...action.draft } } : state;
+      return state.screen === 'SELECTED_WORLD' ? { ...state, creatorOpen: false } : state;
     case 'RETURN_TO_AUTHENTICATED_WELCOME':
       return state.screen === 'WORLD_LIBRARY_GATE'
         ? { ...state, screen: 'WELCOME_AUTHENTICATED', notice: null } : state;
