@@ -1,3 +1,11 @@
+## 2026-11-23 — New UI master integration acceptance
+
+Unversioned run, no parent milestone. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, development impact `supports_current_band`, game-version impact `none`. Isolated `codex/new-ui-mainline-final-2026-11-23` fast-forwarded from master `20abe83c` through reviewed UX `3789c12b` to tested runtime and QA `cb01fcfd60355e40f555b6edf296045f6bc5b52b`. Suggested receipt commit `docs(ui): record final master integration acceptance hold`.
+
+- **Files and checks.** The [acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md) lists the runtime and QA delta, migration and Classic fallback evidence, compiled modes, exact diagnostic comparison, protected source pins and applied failure patterns.
+- **Disposition.** `MERGE_HELD`. The candidate reaches 65 added TypeScript diagnostics and removes one against master. The strict check and combined build exit 2. The affected engine files and registry are pinned. Keep the integrated branch local and retain both historical drafts.
+- **Next run.** Obtain a versioned source-pack repair decision and explicit v8 account owner approval. Reverify the candidate against then-current master before opening the single integration review. Production World writes and World-bound character and Save publication remain separate gates.
+
 ## 2026-11-23 — Selected World eight-stage Character Creator
 
 Unversioned presentation support on `codex/selected-world-entry-creator-2026-11-23` from exact reviewed head `f415c5c4`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, no parent milestone, development impact `supports_current_band`, game-version impact `none`.

@@ -1,3 +1,7 @@
+## 2026-11-23 — New UI master integration held
+
+Inspect local `codex/new-ui-mainline-final-2026-11-23` at tested runtime `cb01fcfd60355e40f555b6edf296045f6bc5b52b` and the [final acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md). The next decision is a bounded World source-pack repair and explicit approval of the forward-only v8 account owner. The branch retains tested v8 Classic and disposable cross-origin archive recovery. The reviewed UI and integration produce the same 183 diagnostics, versus 119 on master. Five pinned engine files account for the added entries. Retain PR #102 as owner-review evidence and PR #103 as visual provenance. No review PR or production activation is due from this pass.
+
 ## 2026-11-23 — Selected World eight-stage Creator presentation review
 
 Review `codex/selected-world-entry-creator-2026-11-23`, implementation `7d8971e80e1caaab5e91f094f8b8bbff3169c87b` from reviewed `f415c5c4`. The [execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md) records the exact pinned presentation, real Chromium navigation after World reopen, Classic regression, and explicit review-only boundaries. The next review is independent UI acceptance on that isolated branch. Durable publication needs an approved atomic World–Character–native-v3 Save association and lifecycle acceptance.

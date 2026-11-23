@@ -1,5 +1,7 @@
 # ACTIVE: Player-first World Creator → World Library → World-bound character/play (acceptance-first)
 
+**2026-11-23 New UI mainline status.** The [final acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md) governs this checkpoint. `MERGE_HELD` while the exact master-relative TypeScript delta reaches pinned civilization-engine source and the forward-only v8 account owner decision is pending. Continue from the isolated integration after those gates are resolved. Keep Classic fallback and the independent production and World-bound publication gates.
+
 **2026-11-22 selected World status.** The compiled loopback candidate opens the owner-verified World and supports interactive Character Creator drafting. See the [execution receipt](ui-selected-world-character-creator-receipt-2026-11-22.md). Character finalization is held pending an approved atomic World–Character–native-v3 Save owner contract. This status carries no rollout or owner migration authority.
 
 **2026-11-22 functional World preview status.** The isolated compiled-loopback candidate created and reopened the same World after a real browser restart. See the [execution and reachability receipt](ui-functional-world-integration-preview-2026-11-22.md). The next review is the narrow selected-World handoff and owner association boundary. World-bound downstream acceptance and production activation remain held.

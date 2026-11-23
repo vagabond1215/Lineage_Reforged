@@ -1,3 +1,9 @@
+## 2026-11-23 — New UI master integration
+
+Retain local `codex/new-ui-mainline-final-2026-11-23` with tested runtime and QA `cb01fcfd60355e40f555b6edf296045f6bc5b52b` as an exact descendant of reviewed candidate `3789c12b99af439ab401f282f8d0302f79f7f210` and master `20abe83c2aa97ba4699711a9815d9b95e0d3df44`. Fetched and pruned refs, inspected existing worktrees and open PRs, and reconciled Connector audit `b19fda8181f6117468ef6ba388af454fe902ce89`. The branch remains local. Review trigger is a versioned protected-source repair that clears the strict diagnostic delta and an explicit v8 account owner decision. The [final acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md) records evidence.
+
+Retain PR #102 for its separate World owner review decision and PR #103 for visual provenance until the named presentation review is satisfied. The reviewed UX source and Connector audit retain their evidence roles until an approved mainline review reconciles the same identities. Existing branches, worktrees, and master keep their prior dispositions.
+
 ## 2026-11-23 — Selected World eight-stage Character Creator
 
 Retain `codex/selected-world-entry-creator-2026-11-23` for independent presentation review of runtime/test `7d8971e80e1caaab5e91f094f8b8bbff3169c87b` against pinned prototype `da99a105`. Its reviewed base is `codex/selected-world-character-creator-2026-11-22` at `f415c5c4ab627b524b067189f289c70ee1fdb717`. Reinspect the candidate and require approved atomic World–Character–native-v3 Save authority before any durable activation. [Execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md).
