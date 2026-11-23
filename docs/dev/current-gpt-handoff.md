@@ -1,3 +1,7 @@
+## 2026-11-22 — Selected World and interactive Creator review
+
+Review `codex/selected-world-character-creator-2026-11-22`, runtime/test `7e07c9e2` from reviewed preview `bae33e65`. [Execution receipt](ui-selected-world-character-creator-receipt-2026-11-22.md) records actual owner-authenticated selection, Creator navigation after a real browser restart, and denial/cleanup. Keep the slotless draft boundary. Any final character publication needs explicit owner approval, an atomic World–Character–native-v3 Save association and lifecycle evidence.
+
 ## 2026-11-22 — Functional World integration preview
 
 Review `codex/functional-world-integration-preview-2026-11-22`, runtime/test `868595f1` from clean master-based `7d96447e`. The [receipt](ui-functional-world-integration-preview-2026-11-22.md) records compiled loopback invocation, real Create and password-authenticated reopening after full Chromium restart, and exact downstream caller inventory. Use the verified World identity as the boundary for a proposed read-only selection slice. Keep PR #102 draft and preserve Family Library, association writes and production holds.

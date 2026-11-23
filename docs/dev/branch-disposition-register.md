@@ -1,3 +1,7 @@
+## 2026-11-22 — Selected World to Character Creator
+
+Retain `codex/selected-world-character-creator-2026-11-22` for independent review of runtime/test `7e07c9e2` and its [receipt](ui-selected-world-character-creator-receipt-2026-11-22.md). The original preview `bae33e65`, source audit `f8649183`, owner draft PR #102 `e74f9e14`, visual draft PR #103 `d6fb21d3`, master `20abe83c` and separate UI/map work retain their existing dispositions. No merge, rebase, retarget, retirement or rollout is authorized by this pass.
+
 ## 2026-11-22 — Functional World integration preview review
 
 Retain `codex/functional-world-integration-preview-2026-11-22` for local preview and independent review of `868595f1`. The [functional receipt](ui-functional-world-integration-preview-2026-11-22.md) records the clean selective base `7d96447e`, exact reviewed runtime `7a46f577`, source audit `77afc6b5` and prior matrix `f705857c`. Master `20abe83c`, PR #102 `e74f9e14`, visual PR #103 `d6fb21d3` and the UI/map lanes remain separate with their existing integration/evidence gates. No merge, retarget, retirement, deployment or activation is due.

@@ -1,3 +1,11 @@
+## 2026-11-22 — Selected World to Character Creator
+
+Unversioned support on `codex/selected-world-character-creator-2026-11-22` from `bae33e65`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, no parent milestone, development impact `supports_current_band`, game-version impact `none`.
+
+- **Source and files** Runtime/test commit `7e07c9e2`, `feat(world): open the real character creator from a verified World`. Owner-verified World selection and ephemeral Creator state connect the existing Character Creator with no Save slot. [Execution receipt](ui-selected-world-character-creator-receipt-2026-11-22.md).
+- **Checks** Actual Chromium Create/restart/Open World/Creator, desktop and short mobile in both themes, ordinary Classic campaign publication, corruption and stale-session denial, 48 Node tests, seven render/entry tests, 55 source pins, Node typecheck and three direct builds. 183 existing TypeScript diagnostics on both exact base and candidate. The receipt maps FP-001/002/003/004/005/009/010/011/014/017/018/019.
+- **Review boundary** Finalization and gameplay need the versioned atomic association owner. PR #102 remains draft, PR #103 remains visual evidence. Review this isolated route next. No merge, deployment, branch deletion or version decision is due.
+
 ## 2026-11-22 — Functional World integration preview
 
 Unversioned validation on `codex/functional-world-integration-preview-2026-11-22` from the clean master-based selective candidate `7d96447e`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
