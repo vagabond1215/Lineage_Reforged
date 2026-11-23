@@ -195,12 +195,17 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       typeof __LINEAGE_WORLD_OWNER_REVIEW_BUILD__ !== 'undefined' && __LINEAGE_WORLD_OWNER_REVIEW_BUILD__,
       hostname, pathname);
   const worldOwnerReview = compiledWorldEntry && hasWorldReviewOptIn(search);
+  // The named Vite serve mode defaults only the bare loopback development entry.
+  const newUiDevelopmentDefault = nativeDevelopmentEntry && !stagingNativeV3 && !candidateNativeV3 &&
+    import.meta.env.MODE === 'new-ui-development';
+  const presentationSearch = newUiDevelopmentDefault && !search
+    ? '?welcomeL1=1&accountPresentation=1&worldPresentation=1' : search;
   // Ephemeral, loopback-only QA opt-in. No account or Save preference is persisted.
   const welcomeEnabled = worldOwnerReview || (nativeCandidate && import.meta.env.DEV &&
     (hostname === '127.0.0.1' || hostname === 'localhost') &&
-    new URLSearchParams(search).get('welcomeL1') === '1');
-  const accountPresentation = worldOwnerReview || isAccountPresentationEnabled(import.meta.env.DEV, welcomeEnabled, hostname, search);
-  const worldPresentation = worldOwnerReview || isWorldPresentationEnabled(import.meta.env.DEV, welcomeEnabled, hostname, search);
+    new URLSearchParams(presentationSearch).get('welcomeL1') === '1');
+  const accountPresentation = worldOwnerReview || isAccountPresentationEnabled(import.meta.env.DEV, welcomeEnabled, hostname, presentationSearch);
+  const worldPresentation = worldOwnerReview || isWorldPresentationEnabled(import.meta.env.DEV, welcomeEnabled, hostname, presentationSearch);
   const splashUiVersionAvailable = canSelectSplashUiVersion(
     nativeDevelopmentEntry || compiledWorldEntry, hostname, stagingNativeV3, candidateNativeV3);
   const [state, dispatch] = useReducer(gameShellReducer, createAccountAccessState('create_first_account', [], null));
@@ -924,6 +929,10 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     if (!splashUiVersionAvailable || state.screen !== 'ACCOUNT_ACCESS' || actionPending.current) return;
     const currentUrl = new URL(window.location.href);
     const target = splashUiVersionUrl(currentUrl, version);
+    if (newUiDevelopmentDefault) {
+      if (version === 'classic') target.searchParams.set('classicUi', '1');
+      else target.searchParams.delete('classicUi');
+    }
     if (target.href !== currentUrl.href) window.location.replace(target.href);
   };
   const dismissNotice = () => dispatch({ type: 'SET_NOTICE', notice: null });

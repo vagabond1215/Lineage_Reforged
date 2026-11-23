@@ -81,10 +81,16 @@ def raw_change(page, name, account, intent, fault):
     }""", {'name': name, 'account': account, 'intent': intent, 'fault': fault})
 
 
-def run(review, ordinary):
+def run(review, ordinary, restore_origin=None):
     for url, variable in [(review, 'LINEAGE_TASK_OWNED_ORIGIN'), (ordinary, 'LINEAGE_TASK_OWNED_DEFAULT_ORIGIN')]:
         parsed = urlsplit(url)
         assert url == os.environ.get(variable) and parsed.hostname == '127.0.0.1' and parsed.port
+    if restore_origin:
+        parsed = urlsplit(restore_origin)
+        assert restore_origin == os.environ.get('LINEAGE_MAINLINE_RESTORE')
+        assert parsed.scheme == 'http' and parsed.hostname == '127.0.0.1' and parsed.port and not parsed.path
+        assert not (parsed.query or parsed.fragment or parsed.username or parsed.password)
+        assert restore_origin not in (review, ordinary)
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(executable_path=os.environ['CHROMIUM_EXECUTABLE'])
         try:
@@ -141,7 +147,7 @@ def run(review, ordinary):
             sizes = active.evaluate("""({world, receipt}) => [world, receipt].map(value =>
               new TextEncoder().encode(JSON.stringify(value)).byteLength)""", reopened)
             assert call(active, 'create', intent)['status'] == 'same_source_retry'
-            restored = open_page(context, review, 'a2b-review-restored')
+            restored = open_page(context, restore_origin or review, 'a2b-review-restored')
             call(restored, 'restoreArchive', after)
             assert call(restored, 'authenticate', account, False) == revision
             assert call(restored, 'reopen') == reopened
@@ -262,7 +268,11 @@ def run(review, ordinary):
             legacy_name = 'a2b-review-original-v7'
             legacy_account = 'account.world.review.v7'
             legacy_archive = legacy_page.evaluate('args => worldOwnerReview.seedOriginalV7(...args)', [legacy_name, legacy_account])
-            assert len(json.loads(legacy_archive)['families']) == 14
+            legacy_families = {item['name']: item for item in json.loads(legacy_archive)['families']}
+            assert len(legacy_families) == 14
+            assert legacy_families['artifacts']['count'] >= 2
+            assert legacy_families['terminalLifecycleRecoveries']['count'] > 0
+            assert any(row['kind'] == 'delete' for row in legacy_families['accountLifecycle']['rows'])
             legacy_page.evaluate("""async name => {
               window.blocker = await new Promise((resolve, reject) => {
                 const pending = indexedDB.open(name, 7);
@@ -285,7 +295,7 @@ def run(review, ordinary):
             call(target, 'restoreArchive', legacy_archive)
             compare_families(call(target, 'exportArchive'), legacy_archive, 14)
             call(target, 'close')
-            print('PASS original v7 blocked upgrade, migration and archive restore; feature-off app')
+            print('PASS original v7 native-v3 ready/retired history, blocked upgrade, migration and archive restore; feature-off app')
             context.close()
             print(json.dumps({'status': 'PASS', 'archive_delta': len(after.encode()) - len(before.encode()),
                               'world_bytes': sizes[0], 'receipt_bytes': sizes[1],

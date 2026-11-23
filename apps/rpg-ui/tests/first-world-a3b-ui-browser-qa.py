@@ -199,14 +199,22 @@ def edit_character_draft(page, world_id, keyboard=False, evidence=None):
 
     def select_fixed_tile(label):
         card = main.locator('.swc-card').filter(has=page.get_by_role('button', name=label, exact=True))
-        before = main.locator('.swc-card').evaluate_all('cards => cards.map(card => [card.offsetTop, card.offsetHeight])')
+        # A lineage change can move the whole grid when the mobile header reflows.
+        grid_geometry = '''cards => cards.map(card => [
+            card.getBoundingClientRect().top - cards[0].getBoundingClientRect().top,
+            card.getBoundingClientRect().height
+        ])'''
+        before = main.locator('.swc-card').evaluate_all(grid_geometry)
         activate(card_choice(label))
         overlay = main.get_by_role('region', name=f'{label} description')
         expect(overlay).to_be_visible()
         if overlay.evaluate('el => el.scrollHeight > el.clientHeight + 1'):
             overlay.press('End')
             page.wait_for_function("el => el.scrollTop > 0", arg=overlay.element_handle())
-        assert main.locator('.swc-card').evaluate_all('cards => cards.map(card => [card.offsetTop, card.offsetHeight])') == before
+        after = main.locator('.swc-card').evaluate_all(grid_geometry)
+        assert len(after) == len(before) and all(
+            abs(old - new) < 0.5 for a, b in zip(before, after) for old, new in zip(a, b)
+        ), (label, before, after)
         assert card.evaluate("el => { const overlay = el.querySelector('.swc-card-description'); const picture = el.querySelector('.swc-card-art'); return picture.contains(overlay) && overlay.getBoundingClientRect().bottom <= picture.getBoundingClientRect().bottom + 1; }")
         return card
 
