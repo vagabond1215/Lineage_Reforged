@@ -1,3 +1,11 @@
+## 2026-11-23 — Selected World eight-stage Character Creator
+
+Unversioned presentation support on `codex/selected-world-entry-creator-2026-11-23` from exact reviewed head `f415c5c4`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, no parent milestone, development impact `supports_current_band`, game-version impact `none`.
+
+- **Files and scope.** Runtime and tests in `7d8971e80e1caaab5e91f094f8b8bbff3169c87b`, `feat(world): use the eight-stage selected World creator`. The verified World route mounts its dedicated Lineage through Opening review. The [execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md) lists the files, compiled startup command, owner holds and evidence.
+- **Checks.** Chromium World restart and all 16 World-creation / eight creator viewport-theme cases passed, with stable World, receipt and unrelated stores. Classic starts its campaign. 44 focused Node tests, 810 allocations, all 55 World-owner pins, the exact prototype and 114 assets, Node typecheck, no-new-hex and three direct builds passed. The UI typecheck baseline remains 183 diagnostics with no delta. The receipt maps applicable failure patterns.
+- **Disposition.** Retain this isolated branch for independent presentation review. Preserve draft PRs #102 and #103 and the earlier reviewed base. Atomic publication, production activation, integration and game-version advancement remain held.
+
 ## 2026-11-22 — Selected World to Character Creator
 
 Unversioned support on `codex/selected-world-character-creator-2026-11-22` from `bae33e65`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, no parent milestone, development impact `supports_current_band`, game-version impact `none`.

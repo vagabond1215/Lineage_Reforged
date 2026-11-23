@@ -1,3 +1,7 @@
+## 2026-11-23 — Selected World eight-stage Creator presentation review
+
+Review `codex/selected-world-entry-creator-2026-11-23`, implementation `7d8971e80e1caaab5e91f094f8b8bbff3169c87b` from reviewed `f415c5c4`. The [execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md) records the exact pinned presentation, real Chromium navigation after World reopen, Classic regression, and explicit review-only boundaries. The next review is independent UI acceptance on that isolated branch. Durable publication needs an approved atomic World–Character–native-v3 Save association and lifecycle acceptance.
+
 ## 2026-11-22 — Selected World and interactive Creator review
 
 Review `codex/selected-world-character-creator-2026-11-22`, runtime/test `7e07c9e2` from reviewed preview `bae33e65`. [Execution receipt](ui-selected-world-character-creator-receipt-2026-11-22.md) records actual owner-authenticated selection, Creator navigation after a real browser restart, and denial/cleanup. Keep the slotless draft boundary. Any final character publication needs explicit owner approval, an atomic World–Character–native-v3 Save association and lifecycle evidence.

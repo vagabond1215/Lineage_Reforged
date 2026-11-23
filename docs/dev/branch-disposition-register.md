@@ -1,3 +1,9 @@
+## 2026-11-23 — Selected World eight-stage Character Creator
+
+Retain `codex/selected-world-entry-creator-2026-11-23` for independent presentation review of runtime/test `7d8971e80e1caaab5e91f094f8b8bbff3169c87b` against pinned prototype `da99a105`. Its reviewed base is `codex/selected-world-character-creator-2026-11-22` at `f415c5c4ab627b524b067189f289c70ee1fdb717`. Reinspect the candidate and require approved atomic World–Character–native-v3 Save authority before any durable activation. [Execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md).
+
+Fetched/pruned refs and inspected the open PR inventory. Master `20abe83c`, owner draft PR #102 `e74f9e14`, presentation draft PR #103 `d6fb21d3`, and the separate UI and geography lanes keep their existing review triggers. No integration, draft PR update, branch deletion or deployment occurred.
+
 ## 2026-11-22 — Selected World to Character Creator
 
 Retain `codex/selected-world-character-creator-2026-11-22` for independent review of runtime/test `7e07c9e2` and its [receipt](ui-selected-world-character-creator-receipt-2026-11-22.md). The original preview `bae33e65`, source audit `f8649183`, owner draft PR #102 `e74f9e14`, visual draft PR #103 `d6fb21d3`, master `20abe83c` and separate UI/map work retain their existing dispositions. No merge, rebase, retarget, retirement or rollout is authorized by this pass.
