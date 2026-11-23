@@ -22,6 +22,7 @@ type Props = {
   onCreateWorld?: (intent: WorldCreationIntent) => Promise<WorldCreationResult>;
   pendingIntent?: WorldCreationIntent;
   onSignInAgain?: () => void;
+  onOpenWorld?: (worldInstanceId: string) => void;
   onReopenLibrary?: () => void;
 };
 
@@ -30,7 +31,7 @@ const control = 'launcher-control min-h-11 px-3 py-2 text-sm disabled:cursor-not
 /** Presentation only, mounted after the existing authenticated Welcome/gate owner. */
 export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, clockTitle,
   themeMode, onToggleThemeMode, onContinue, onOpenExistingLauncher, onBack, onLogout,
-  inventory = { status: 'preview' }, onCreateWorld, pendingIntent, onSignInAgain, onReopenLibrary }: Props) {
+  inventory = { status: 'preview' }, onCreateWorld, pendingIntent, onSignInAgain, onOpenWorld, onReopenLibrary }: Props) {
   const [review, dispatch] = useReducer(worldReviewReducer, undefined, createWorldReviewState);
   const [creating, setCreating] = useState(false);
   const heading = useRef<HTMLHeadingElement>(null);
@@ -105,9 +106,12 @@ export function WelcomeWorldPresentation({ profile, worlds, busy, clockLabel, cl
               onCreate={inventory.status === 'empty' ? onCreateWorld : undefined}
               pendingIntent={pendingIntent}
               onVerified={worldInstanceId => dispatch({ type: 'VERIFIED', worldInstanceId })} />
-          : <WorldLibrary inventory={inventory} highlightedWorldId={review.highlightedWorldId} />}
+          : <WorldLibrary inventory={inventory} highlightedWorldId={review.highlightedWorldId}
+              onOpenWorld={onOpenWorld} opening={pending} />}
         {!configuring && inventory.status === 'empty' && onSignInAgain && <button type="button"
           className={control} disabled={pending} onClick={onSignInAgain}>Sign in again to create a World</button>}
+        {!configuring && inventory.status === 'ready' && onSignInAgain && <button type="button"
+          className={control} disabled={pending} onClick={onSignInAgain}>Sign in again to open this World</button>}
       </>}
     </div>
   </AppShell>;

@@ -67,7 +67,7 @@ export type CharacterCreationField =
   | "sourceRunId"
   | "saveSlotId";
 
-export interface CharacterCreationFormState {
+export interface CharacterCreationDraft {
   playerName: string;
   sexId: CharacterCreationSexId;
   lineageId: string;
@@ -86,6 +86,9 @@ export interface CharacterCreationFormState {
   regionId: string;
   startingSettlementId: string;
   sourceRunId: string;
+}
+
+export interface CharacterCreationFormState extends CharacterCreationDraft {
   saveSlotId: ManualSaveSlotId;
 }
 
@@ -222,9 +225,7 @@ export const CHARACTER_CREATION_STEPS: CharacterCreationStepDefinition[] = [
 
 const CHARACTER_CREATION_STEP_SEQUENCE = CHARACTER_CREATION_STEPS.map((step) => step.id);
 
-export function createDefaultCharacterCreationFormState(
-  saveSlotId: ManualSaveSlotId
-): CharacterCreationFormState {
+export function createDefaultCharacterCreationDraft(): CharacterCreationDraft {
   return {
     playerName: "",
     sexId: "male",
@@ -243,19 +244,22 @@ export function createDefaultCharacterCreationFormState(
     continentId: "",
     regionId: "",
     startingSettlementId: "",
-    sourceRunId: "",
-    saveSlotId
+    sourceRunId: ""
   };
+}
+
+export function createDefaultCharacterCreationFormState(saveSlotId: ManualSaveSlotId): CharacterCreationFormState {
+  return { ...createDefaultCharacterCreationDraft(), saveSlotId };
 }
 
 function isBackstoryRequired(options: CharacterCreationValidationOptions = {}): boolean {
   return options.hasSelectableBackstories ?? true;
 }
 
-export function hasCompleteCharacterCreationSelections(
-  form: CharacterCreationFormState,
+export function hasCompleteCharacterCreationSelections<T extends CharacterCreationDraft>(
+  form: T,
   options: CharacterCreationValidationOptions = {}
-): form is CompleteCharacterCreationFormState {
+): form is T & Omit<CompleteCharacterCreationFormState, 'saveSlotId'> {
   const backstoryRequired = isBackstoryRequired(options);
 
   return Boolean(
@@ -405,7 +409,7 @@ export function getPreviousAvailableCharacterCreationStepId(
 }
 
 export function validateCharacterCreationForm(
-  form: CharacterCreationFormState,
+  form: CharacterCreationDraft,
   options: CharacterCreationValidationOptions = {}
 ): CharacterCreationValidationResult {
   const errors: Partial<Record<CharacterCreationField, string>> = {};
@@ -565,7 +569,7 @@ export function validateCharacterCreationForm(
 }
 
 export function validateCharacterCreationStep(
-  form: CharacterCreationFormState,
+  form: CharacterCreationDraft,
   stepId: CharacterCreationStepId,
   options: CharacterCreationValidationOptions = {}
 ): CharacterCreationValidationResult {

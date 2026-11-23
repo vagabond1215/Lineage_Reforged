@@ -7,6 +7,13 @@ export type WorldLibraryCard = {
   scenario: { id: string; version: number };
 };
 
+export type SelectedWorld = Pick<WorldLibraryCard, 'worldInstanceId' | 'displayName'> & {
+  accountId: string;
+  generation: number;
+  creationIntentId: string;
+  projectionFingerprint: string;
+};
+
 export type WorldLibraryState =
   | { status: 'preview' | 'loading' | 'empty' }
   | { status: 'ready'; world: WorldLibraryCard }

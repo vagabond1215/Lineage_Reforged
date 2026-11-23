@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { hasWorldReviewOptIn, isCompiledWorldReviewEntry } from '../../apps/rpg-ui/src/game-shell/accountPresentationGate.ts';
-import { confirmWorldCreation, projectWorldCard } from '../../apps/rpg-ui/src/game-shell/worldCreatorOwner.ts';
+import { confirmWorldCreation, projectWorldCard, selectVerifiedWorld } from '../../apps/rpg-ui/src/game-shell/worldCreatorOwner.ts';
+import { gameShellReducer } from '../../apps/rpg-ui/src/game-shell/state.ts';
 import manifest from '../../docs/design/first-world-economy-source-manifest-v3.json' with { type: 'json' };
 
 test('compiled pilot admission requires the review mode, compiled owner, loopback splash and exact opt-ins', () => {
@@ -27,6 +28,7 @@ test('creation success requires a scoped World, receipt and identical fresh inve
     displayName: 'World QA', expectedAccountRevision: 4 };
   const projectionFingerprint = 'sha256:' + 'f'.repeat(64);
   const world = { version: 2, accountId: scope.accountId, accountLifecycleGeneration: scope.generation,
+    worldRevision: 0, characterAssociations: [], campaignSaveAssociations: [],
     worldInstanceId: request.proposedWorldInstanceId, displayName: request.displayName,
     creationIntentId: request.creationIntentId, createdAt: '2026-11-22T00:00:00.000Z', projectionFingerprint,
     binding: { sourceFingerprint: manifest.runtimeFingerprint, economySourceFingerprint: manifest.parentFingerprint,
@@ -47,4 +49,36 @@ test('creation success requires a scoped World, receipt and identical fresh inve
   assert.throws(() => confirmWorldCreation(committed, reopened, world, scope, { ...request, expectedAccountRevision: 5 }));
   assert.throws(() => confirmWorldCreation(committed, { ...reopened, projectionFingerprint: 'wrong' }, world, scope, request));
   assert.throws(() => projectWorldCard({ ...world, binding: { ...world.binding, sourceFingerprint: 'wrong' } }, scope));
+  const selected = selectVerifiedWorld(reopened, scope, world.worldInstanceId);
+  assert.deepEqual(selected, { ...scope, worldInstanceId: world.worldInstanceId, displayName: world.displayName,
+    creationIntentId: world.creationIntentId, projectionFingerprint });
+  assert.throws(() => selectVerifiedWorld(null, scope, world.worldInstanceId));
+  assert.throws(() => selectVerifiedWorld(reopened, scope, 'world.instance.other'));
+  assert.throws(() => selectVerifiedWorld(reopened, { ...scope, accountId: 'account.other' }, world.worldInstanceId));
+  assert.throws(() => selectVerifiedWorld(reopened, { ...scope, generation: 3 }, world.worldInstanceId));
+  assert.throws(() => selectVerifiedWorld({ ...reopened, receipt: { ...receipt, creationIntentId: 'other' } },
+    scope, world.worldInstanceId));
+  assert.throws(() => selectVerifiedWorld({ ...reopened, world: { ...world, characterAssociations: [{}] } },
+    scope, world.worldInstanceId));
+});
+
+test('selected World state keeps the draft and scope ephemeral and never allocates a Save slot', () => {
+  const accountId = 'account.qa';
+  const library = { screen: 'WORLD_LIBRARY_GATE', accountProfile: { accountId },
+    launcherSession: { accountId, metadata: { epochGeneration: '2' } }, slots: [], notice: null };
+  const world = { accountId, generation: 2, worldInstanceId: 'world.instance.qa', displayName: 'QA',
+    creationIntentId: 'world.create.qa', projectionFingerprint: 'sha256:' + 'f'.repeat(64) };
+  assert.equal(gameShellReducer(library, { type: 'SELECT_WORLD', world: { ...world, accountId: 'other' } }), library);
+  assert.equal(gameShellReducer(library, { type: 'SELECT_WORLD', world: { ...world, generation: 1 } }), library);
+  const selected = gameShellReducer(library, { type: 'SELECT_WORLD', world });
+  const creator = gameShellReducer(selected, { type: 'OPEN_WORLD_CHARACTER_CREATOR' });
+  const edited = gameShellReducer(creator, { type: 'UPDATE_WORLD_CHARACTER_DRAFT', draft: { playerName: 'Edited' } });
+  assert.equal(edited.world, world);
+  assert.equal(edited.characterDraft.playerName, 'Edited');
+  assert.equal(Object.hasOwn(edited.characterDraft, 'saveSlotId'), false);
+  assert.equal(gameShellReducer(edited, { type: 'CLOSE_WORLD_CHARACTER_CREATOR' }).world, world);
+  assert.deepEqual(gameShellReducer(edited, { type: 'LEAVE_SELECTED_WORLD' }), library);
+  assert.equal(Object.hasOwn(gameShellReducer(edited, {
+    type: 'SHOW_ACCOUNT_ACCESS', accessMode: 'pick_account', accounts: [], notice: null,
+  }), 'world'), false);
 });

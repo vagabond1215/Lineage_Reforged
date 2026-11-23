@@ -1,5 +1,5 @@
 import type { AccountProfileState } from "../../../../packages/shared/types/src/index.js";
-import type { CharacterCreationFormState } from "./characterCreationForm.js";
+import type { CharacterCreationDraft, CharacterCreationFormState } from "./characterCreationForm.js";
 import {
   createDefaultStartingBundleChoiceSelections,
   generateRandomCharacterName,
@@ -18,7 +18,7 @@ import {
 } from "./worldSelectionCatalog.js";
 
 export interface GenerateRandomCharacterCreationFormStateInput {
-  currentForm: CharacterCreationFormState;
+  currentForm: CharacterCreationDraft;
   accountProfile?: AccountProfileState | null;
   rng?: () => number;
   backstoryOptions?: readonly Pick<StarterBackstoryPresentation, "id" | "selectable">[];
@@ -48,12 +48,18 @@ function randomizeBundleChoices(
   );
 }
 
+export function generateRandomCharacterCreationFormState(
+  input: GenerateRandomCharacterCreationFormStateInput & { currentForm: CharacterCreationFormState }
+): CharacterCreationFormState;
+export function generateRandomCharacterCreationFormState(
+  input: GenerateRandomCharacterCreationFormStateInput
+): CharacterCreationDraft;
 export function generateRandomCharacterCreationFormState({
   currentForm,
   accountProfile = null,
   rng = Math.random,
   backstoryOptions
-}: GenerateRandomCharacterCreationFormStateInput): CharacterCreationFormState {
+}: GenerateRandomCharacterCreationFormStateInput): CharacterCreationDraft {
   const lineage = pickRandomValue(lineageOptions, rng) ?? lineageOptions[0];
   const lineageId = (lineage?.id ?? currentForm.lineageId) || "lineage.human";
   const identityCatalog =

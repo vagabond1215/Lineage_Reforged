@@ -1,9 +1,11 @@
 import { Card } from '../../components/ui/Card.js';
 import type { WorldLibraryState } from '../worldPresentationState.js';
 
-export function WorldLibrary({ inventory, highlightedWorldId }: {
+export function WorldLibrary({ inventory, highlightedWorldId, onOpenWorld, opening }: {
   inventory: WorldLibraryState;
   highlightedWorldId: string | undefined;
+  onOpenWorld?: ((worldInstanceId: string) => void) | undefined;
+  opening?: boolean;
 }) {
   if (inventory.status === 'preview') {
     return <Card title="World inventory unavailable">
@@ -30,5 +32,7 @@ export function WorldLibrary({ inventory, highlightedWorldId }: {
       <div><dt>Rules</dt><dd className="capitalize">{world.rules.progressionMode} · {world.rules.worldKind} · {world.rules.difficulty}</dd></div>
       <div><dt>Scenario</dt><dd className="break-all">{world.scenario.id} · version {world.scenario.version}</dd></div>
     </dl>
+    {onOpenWorld && <button type="button" className="launcher-control mt-4 min-h-11 px-3 py-2"
+      disabled={opening} onClick={() => onOpenWorld(world.worldInstanceId)}>Open World</button>}
   </Card>;
 }

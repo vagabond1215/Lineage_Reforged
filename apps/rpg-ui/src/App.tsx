@@ -2668,6 +2668,9 @@ function LegacyApp() {
         clockNow={clockNow}
       />
     );
+  } else if (state.screen === 'SELECTED_WORLD') {
+    // Selected World is mounted by EpochApp in the compiled review only.
+    content = null;
   } else {
     content = (
       <InGameShell

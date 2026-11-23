@@ -98,6 +98,53 @@ def width_check(page):
     assert page.evaluate('document.documentElement.scrollWidth <= innerWidth + 1')
 
 
+def open_selected_creator(page, world_id, title, keyboard=False):
+    for action in ['Open World', 'Create Character']:
+        control = button(page, action)
+        if keyboard:
+            control.press('Enter')
+        else:
+            control.click()
+        if action == 'Open World':
+            expect(page.get_by_role('heading', name='World Characters')).to_be_focused(timeout=30000)
+            expect(page.get_by_role('heading', name='No characters in this World')).to_be_visible()
+    scope = page.get_by_role('region', name='Selected World')
+    expect(scope.get_by_role('heading', name=title, exact=True)).to_be_visible()
+    expect(scope.get_by_text(world_id, exact=True)).to_be_visible()
+    expect(page.get_by_role('navigation', name='Character creation steps')).to_be_visible()
+
+
+def edit_character_draft(page, world_id):
+    steps = page.get_by_role('navigation', name='Character creation steps')
+    finalize = steps.get_by_role('button', name=re.compile('Finalize$'))
+    for _ in range(24):
+        if finalize.is_enabled():
+            break
+        button(page, 'Randomize Character').click()
+    expect(finalize).to_be_enabled()
+    for label in ['Lineage', 'Identity', 'Continent', 'Region', 'Settlement', 'Backstory', 'Starting Bundle', 'Finalize']:
+        step = steps.get_by_role('button', name=re.compile(label + '$'))
+        if label == 'Backstory' and not step.is_enabled():
+            continue
+        step.press('Enter')
+        expect(step).to_have_attribute('aria-current', 'step')
+        expect(page.get_by_role('region', name='Selected World').get_by_text(world_id, exact=True)).to_be_visible()
+        if label == 'Identity':
+            page.get_by_role('textbox', name='Character name').fill('Selected World Wanderer')
+            expect(page.get_by_role('region', name='Character summary')).to_contain_text('Selected World Wanderer')
+            female = page.get_by_role('button', name='Female', exact=True)
+            female.press('Enter')
+            expect(page.get_by_role('region', name='Character summary')).to_contain_text(re.compile(r'\bfemale\b', re.I))
+            summary = page.get_by_role('region', name='Character summary')
+            focus = 'Learned' if 'martial focus' in summary.inner_text() else 'Martial'
+            page.get_by_role('button', name=re.compile(r'^' + focus + r'\b')).click()
+            expect(summary).to_contain_text(focus.lower() + ' focus')
+    expect(button(page, 'Begin Journey')).to_be_disabled()
+    expect(button(page, 'Begin Journey')).to_have_accessible_description(re.compile('linked to this World'))
+    button(page, 'Previous step').press('Enter')
+    expect(steps.get_by_role('button', name=re.compile('Starting Bundle$'))).to_have_attribute('aria-current', 'step')
+
+
 def persistent_restart_flow(playwright, origin):
     profile = 'Browser Restart Review'
     title = 'Persisted Chronicle'
@@ -131,10 +178,15 @@ def persistent_restart_flow(playwright, origin):
             library(page)
             assert ready(page, title) == world_id
             assert snapshot(page) == committed
-            downstream = re.compile(r'^(Open( World)?|Play|Continue|World Overview|Character Library|Create Character)$')
-            for role in ('button', 'link'):
-                expect(page.get_by_role(role, name=downstream)).to_have_count(0)
-            print(f'PASS real Create and browser restart, same World and receipt {world_id}; Library has no downstream entry',
+            open_selected_creator(page, world_id, title, keyboard=True)
+            edit_character_draft(page, world_id)
+            button(page, 'Back to World Characters').press('Enter')
+            expect(page.get_by_role('heading', name='World Characters')).to_be_focused()
+            expect(page.get_by_role('region', name='Selected World').get_by_text(world_id, exact=True)).to_be_visible()
+            button(page, 'Back to World Library').click()
+            assert ready(page, title) == world_id
+            assert snapshot(page) == committed
+            print(f'PASS real Create, full browser restart, selected World {world_id}, editable Creator and Back',
                   flush=True)
         finally:
             restarted.close()
@@ -208,6 +260,16 @@ def viewport_flow(browser, origin, width, height, theme):
         library(page)
         assert ready(page, title) == world_id
         assert snapshot(page)[PAIR[0]] == after[PAIR[0]]
+        if (width, height) in [(1440, 800), (320, 568)]:
+            open_selected_creator(page, world_id, title, keyboard=width == 320)
+            edit_character_draft(page, world_id)
+            width_check(page)
+            button(page, 'Back to World Characters').click()
+            expect(page.get_by_role('heading', name='World Characters')).to_be_focused()
+            button(page, 'Back to World Library').click()
+            assert ready(page, title) == world_id
+            assert snapshot(page) == after
+            print(f'PASS {width}x{height} {theme}, selected World interactive Character Creator', flush=True)
         button(page, 'Home').click()
         button(page, 'Open existing launcher').click()
         expect(page.get_by_role('region', name='Characters')).to_be_visible()
@@ -241,12 +303,18 @@ def fault_flow(browser, origin):
         after = snapshot(page)
         assert split_graph(before) == split_graph(after)
         context.route(SOURCE, lambda route: route.fulfill(status=200, body='{}'))
+        button(page, 'Open World').click()
+        expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible(timeout=30000)
+        expect(button(page, 'Create Character')).to_have_count(0)
         button(page, 'Home').click()
         library(page)
         expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible(timeout=30000)
         expect(page.get_by_role('heading', name='No Worlds yet')).to_have_count(0)
         assert snapshot(page) == after
         context.unroute(SOURCE)
+        button(page, 'Home').click()
+        library(page)
+        ready(page, 'Retried World')
         page.evaluate("""async name => {
           const db = await new Promise((resolve, reject) => {
             const open = indexedDB.open(name);
@@ -262,12 +330,11 @@ def fault_flow(browser, origin):
             });
           } finally { db.close(); }
         }""", DATABASE)
-        button(page, 'Home').click()
-        library(page)
+        button(page, 'Open World').click()
         expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible()
         expect(page.get_by_role('heading', name='No Worlds yet')).to_have_count(0)
         assert snapshot(page)[PAIR[0]] == after[PAIR[0]]
-        print('PASS unavailable and tampered source, retained intent through Home, and missing receipt', flush=True)
+        print('PASS unavailable/tampered source and missing receipt deny World selection', flush=True)
     finally:
         context.close()
 
@@ -303,6 +370,106 @@ def stale_flow(browser, origin):
         expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible()
         assert all(not snapshot(page)[store] for store in PAIR)
         print('PASS remembered-session logout and account generation reset invalidate the old Creator', flush=True)
+    finally:
+        context.close()
+
+
+def selected_session_flow(browser, origin):
+    context = browser.new_context()
+    try:
+        page = context.new_page()
+        page.goto(origin + FLAGS)
+        profile = 'Selected session review'
+        title = 'Protected Chronicle'
+        register(page, profile, remember=True)
+        library(page)
+        creator(page, title).click()
+        world_id = ready(page, title, success=True)
+        page.reload()
+        welcome(page, profile)
+        library(page)
+        assert ready(page, title) == world_id
+        expect(button(page, 'Open World')).to_have_count(0)
+        button(page, 'Sign in again to open this World').click()
+        sign_in(page, profile)
+        library(page)
+        open_selected_creator(page, world_id, title)
+        button(page, 'Sign Out').click()
+        expect(page.get_by_label('Account', exact=True)).to_be_visible()
+        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        button(page, 'Create Account').click()
+        register(page, 'Other selected account')
+        library(page)
+        expect(page.get_by_role('heading', name='No Worlds yet')).to_be_visible()
+        expect(button(page, 'Open World')).to_have_count(0)
+        button(page, 'Home').click()
+        button(page, 'Sign Out').click()
+        sign_in(page, profile)
+        library(page)
+        open_selected_creator(page, world_id, title)
+        peer = context.new_page()
+        peer.goto(origin + FLAGS)
+        sign_in(peer, profile)
+        open_settings(peer, profile)
+        button(peer, 'Reset Account').click()
+        peer.get_by_placeholder('Account password', exact=True).fill(PASSWORD)
+        button(peer, 'Reset Account').last.click()
+        expect(peer.get_by_role('region', name='Characters')).to_be_visible()
+        page.bring_to_front()
+        expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible(timeout=15000)
+        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        assert all(not snapshot(page)[store] for store in PAIR)
+
+        page.locator('summary').get_by_text(profile, exact=True).click()
+        button(page, 'Logout').click()
+        sign_in(page, profile)
+        library(page)
+        creator(page, 'Deletion review World').click()
+        world_id = ready(page, 'Deletion review World', success=True)
+        open_selected_creator(page, world_id, 'Deletion review World')
+        peer.reload()
+        sign_in(peer, profile)
+        open_settings(peer, profile)
+        button(peer, 'Delete Account').click()
+        peer.get_by_placeholder('Account password', exact=True).fill(PASSWORD)
+        button(peer, 'Delete Account').last.click()
+        expect(peer.get_by_label('Account', exact=True)).to_be_visible()
+        page.bring_to_front()
+        expect(page.get_by_role('heading', name='World inventory blocked')).to_be_visible(timeout=15000)
+        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        assert all(not snapshot(page)[store] for store in PAIR)
+        print('PASS remembered reauthentication, Creator logout, account isolation, generation reset and deletion',
+              flush=True)
+    finally:
+        context.close()
+
+
+def classic_character_flow(browser, origin):
+    context = browser.new_context()
+    try:
+        page = context.new_page()
+        page.goto(origin + FLAGS)
+        page.get_by_label('Display Name', exact=True).fill('Classic Character Review')
+        page.get_by_label('Password', exact=True).fill(PASSWORD)
+        page.get_by_label('Confirm Password', exact=True).fill(PASSWORD)
+        button(page, 'Create Account').click()
+        characters = page.get_by_role('region', name='Characters')
+        characters.get_by_role('button', name=re.compile(r'^1\s*Empty')).click()
+        steps = page.get_by_role('navigation', name='Character creation steps')
+        finalize = steps.get_by_role('button', name=re.compile('Finalize$'))
+        for _ in range(24):
+            if finalize.is_enabled():
+                break
+            button(page, 'Randomize Character').click()
+        finalize.click()
+        expect(page.get_by_role('region', name='Selected World')).to_have_count(0)
+        expect(button(page, 'Begin Journey')).to_be_enabled()
+        before = snapshot(page)
+        button(page, 'Begin Journey').click()
+        expect(button(page, 'Inventory')).to_be_visible(timeout=30000)
+        assert split_graph(snapshot(page)) != split_graph(before)
+        assert all(not snapshot(page)[store] for store in PAIR)
+        print('PASS compiled Classic starts its ordinary campaign and leaves the World stores empty', flush=True)
     finally:
         context.close()
 
@@ -464,9 +631,11 @@ def run(review, ordinary):
                     viewport_flow(browser, review, width, height, theme)
             fault_flow(browser, review)
             stale_flow(browser, review)
+            selected_session_flow(browser, review)
             retry_flow(browser, review)
             competing_flow(browser, review)
             backup_flow(browser, review)
+            classic_character_flow(browser, ordinary)
             context = browser.new_context()
             try:
                 page = context.new_page()
@@ -474,6 +643,7 @@ def run(review, ordinary):
                     page.goto(url)
                     expect(page.get_by_label('Display Name', exact=True)).to_be_visible()
                     expect(page.locator('[data-world-presentation]')).to_have_count(0)
+                    expect(button(page, 'Open World')).to_have_count(0)
                     assert not any(snapshot(page)[store] for store in PAIR)
                     if url.startswith(ordinary):
                         assert page.evaluate('typeof window.worldOwnerReview === "undefined"')

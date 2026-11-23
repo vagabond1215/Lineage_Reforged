@@ -46,6 +46,7 @@ import { createInitialClock } from '../../../../packages/shared/time/src/index.j
 import {
   hasCompleteCharacterCreationSelections,
   validateCharacterCreationForm,
+  type CharacterCreationDraft,
   type CharacterCreationFormState,
   type CompleteCharacterCreationFormState
 } from './characterCreationForm.js';
@@ -350,7 +351,7 @@ function buildAttributeMetrics(attributes: PlayerAttributes | null): CharacterCr
 }
 
 function buildLegacyPreparationAttributeAdjustments(
-  form: CharacterCreationFormState,
+  form: CharacterCreationDraft,
   options: CharacterCreationPreviewOptions
 ) {
   if ((options.appliedLegacyPreparationIds ?? []).length === 0) {
@@ -402,7 +403,7 @@ function addAttributeAdjustments(
 }
 
 export function buildCharacterCreationAttributePreviewRows(
-  form: CharacterCreationFormState,
+  form: CharacterCreationDraft,
   options: CharacterCreationPreviewOptions = {}
 ): CharacterCreationAttributePreviewRow[] {
   const lineageId = form.lineageId.trim() || "lineage.human";
@@ -589,7 +590,7 @@ function buildStarterInventory(stacks: InventoryStack[], equipment: EquipmentSta
 
 function buildSessionState(
   playerName: string,
-  form: CharacterCreationFormState,
+  form: CharacterCreationDraft,
   selectedWorld: NonNullable<ReturnType<typeof resolveWorldSelection>>,
   backstoryLabel: string | null,
   bundleLabel: string
@@ -664,7 +665,7 @@ function buildReviewNarrative(params: {
 }
 
 function buildPlaceholderPreview(
-  form: CharacterCreationFormState,
+  form: CharacterCreationDraft,
   options: CharacterCreationPreviewOptions = {}
 ): CharacterCreationPreview {
   const attributes = resolveWorkingCharacterAttributes(form);
@@ -749,7 +750,7 @@ function buildPlaceholderPreview(
 }
 
 function deriveCharacterCreationState(
-  form: CompleteCharacterCreationFormState,
+  form: Omit<CompleteCharacterCreationFormState, 'saveSlotId'>,
   options: CharacterCreationPreviewOptions = {}
 ): DerivedCharacterCreationState {
   const hasBackstorySelection =
@@ -995,7 +996,7 @@ function deriveCharacterCreationState(
 }
 
 export function buildCharacterCreationPreview(
-  form: CharacterCreationFormState,
+  form: CharacterCreationDraft,
   options: CharacterCreationPreviewOptions = {}
 ): CharacterCreationPreview {
   if (!hasCompleteCharacterCreationSelections(form, options)) return buildPlaceholderPreview(form, options);

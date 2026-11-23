@@ -21,7 +21,8 @@ import { LocalAccountAccessScreen } from './game-shell/components/LocalAccountAc
 import { canSelectSplashUiVersion, hasWorldReviewOptIn, isAccountPresentationEnabled, isCompiledWorldReviewEntry,
   isWorldPresentationEnabled, splashUiVersionUrl, type SplashUiVersion } from './game-shell/accountPresentationGate.js';
 import { WelcomeWorldPresentation } from './game-shell/components/WelcomeWorldPresentation.js';
-import { confirmWorldCreation, projectWorldCard, type WorldAccountScope } from './game-shell/worldCreatorOwner.js';
+import { WorldCharactersScreen } from './game-shell/components/WorldCharactersScreen.js';
+import { confirmWorldCreation, projectWorldCard, selectVerifiedWorld, type WorldAccountScope } from './game-shell/worldCreatorOwner.js';
 import type { WorldCreationIntent, WorldCreationResult, WorldLibraryState } from './game-shell/worldPresentationState.js';
 import type { WorldPilotCreateInput } from './game-shell/world-source/pilot.js';
 import { WelcomeScreen } from './game-shell/components/WelcomeScreen.js';
@@ -215,7 +216,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
   const clockLabel = formatClock(clockNow, timeSettings.timeZone, timeSettings.hourFormat);
   const actionPending = useRef(false);
   const [worldInventory, setWorldInventory] = useState<WorldLibraryState>({ status: 'loading' });
-  const [worldCanCreate, setWorldCanCreate] = useState(false);
+  const [worldCredentialVerified, setWorldCredentialVerified] = useState(false);
   const worldUiEpoch = useRef(0);
   const worldIntent = useRef<{ scope: WorldAccountScope; request: WorldPilotCreateInput } | null>(null);
   const accountIdForRegistration = useRef<string | null>(null);
@@ -278,7 +279,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     ++worldUiEpoch.current;
     worldIntent.current = null;
     setWorldInventory({ status: 'loading' });
-    setWorldCanCreate(false);
+    setWorldCredentialVerified(false);
     activeOwner.current?.close();
     activeOwner.current = null;
     setServices(null);
@@ -666,11 +667,12 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       throw new Error('Epoch session hint could not be cleared.');
     sourceSlot.current = null; observedAccountRevision.current = null;
     menuAccountRevision.current = null; observedAddresses.current = {};
+    dispatch({ type: 'LEAVE_SELECTED_WORLD' });
     await initialize();
-  }, undefined);
+  }, undefined, !worldOwnerReview);
 
-  const readWorldAccount = async (next: Services, session: LauncherRuntimeSession, accountId: string, write = false) => {
-    const account = await (write ? next.accounts.validateWorldSession(session, next.owner)
+  const readWorldAccount = async (next: Services, session: LauncherRuntimeSession, accountId: string, requireCredential = false) => {
+    const account = await (requireCredential ? next.accounts.validateWorldSession(session, next.owner)
       : next.accounts.validateSession(session));
     if (session.stayLoggedIn) {
       const retained = await next.accounts.selectSession();
@@ -683,29 +685,108 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
     return account;
   };
 
+  const invalidateWorldSelection = (message: string) => {
+    ++worldUiEpoch.current;
+    setWorldCredentialVerified(false);
+    setWorldInventory({ status: 'blocked', message });
+    dispatch({ type: 'LEAVE_SELECTED_WORLD' });
+  };
+
   const worldSession = state.screen === 'ACCOUNT_ACCESS' ? null : state.launcherSession;
+  const selectedWorld = state.screen === 'SELECTED_WORLD' ? state.world : null;
   useEffect(() => {
     if (!worldOwnerReview || !worldSession?.stayLoggedIn) return;
     const invalidateWorldView = (event: StorageEvent) => {
       if (event.storageArea !== window.localStorage ||
           (event.key !== null && event.key !== CLEAN_EPOCH_SESSION_STORAGE_KEY)) return;
-      ++worldUiEpoch.current;
-      setWorldCanCreate(false);
-      setWorldInventory({ status: 'blocked', message: 'The retained session changed. Reload to return to account access.' });
+      invalidateWorldSelection('The retained session changed. Reload or sign out to return to account access.');
     };
     window.addEventListener('storage', invalidateWorldView);
     return () => window.removeEventListener('storage', invalidateWorldView);
   }, [worldOwnerReview, worldSession]);
 
+  useEffect(() => {
+    if (!worldOwnerReview || !services || !worldSession || !selectedWorld) return;
+    const epoch = worldUiEpoch.current;
+    let active = true;
+    let checking = false;
+    const check = async () => {
+      if (checking || !active || document.visibilityState === 'hidden') return;
+      checking = true;
+      try {
+        const account = await readWorldAccount(services, worldSession, selectedWorld.accountId, true);
+        if (accountLifecycleGeneration(account) !== selectedWorld.generation)
+          throw new Error('The account generation changed.');
+      } catch {
+        if (active && epoch === worldUiEpoch.current)
+          invalidateWorldSelection('The account session changed. Sign out and sign in again to open a World.');
+      } finally { checking = false; }
+    };
+    const refresh = () => void check();
+    const timer = window.setInterval(refresh, 3000);
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
+    return () => {
+      active = false;
+      window.clearInterval(timer);
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', refresh);
+    };
+  }, [services, worldOwnerReview, worldSession, selectedWorld]);
+
+  const verifyWorldSelection = async (next: Services, session: LauncherRuntimeSession, accountId: string,
+    worldInstanceId: string, epoch: number) => {
+    const account = await readWorldAccount(next, session, accountId, true);
+    const scope = { accountId, generation: accountLifecycleGeneration(account) };
+    const reopened = await next.owner.reopenChronicleWorld({ adapter: next.accounts, session });
+    const verified = selectVerifiedWorld(reopened, scope, worldInstanceId);
+    const checked = await readWorldAccount(next, session, accountId, true);
+    if (epoch !== worldUiEpoch.current || activeOwner.current !== next.owner) return null;
+    if (accountLifecycleGeneration(checked) !== scope.generation) throw new Error('The account generation changed.');
+    return verified;
+  };
+
+  const openWorld = (worldInstanceId: string) => void guarded(async () => {
+    if (!worldOwnerReview || !worldCredentialVerified || !services || state.screen !== 'WORLD_LIBRARY_GATE' ||
+        worldInventory.status !== 'ready' || worldInventory.world.worldInstanceId !== worldInstanceId) return;
+    const epoch = worldUiEpoch.current;
+    try {
+      const world = await verifyWorldSelection(services, state.launcherSession, state.accountProfile.accountId,
+        worldInstanceId, epoch);
+      if (world) dispatch({ type: 'SELECT_WORLD', world });
+    } catch {
+      if (epoch === worldUiEpoch.current)
+        invalidateWorldSelection('The requested World could not be verified. Return to Welcome and try again.');
+    }
+  }, undefined, false);
+
+  const changeWorldCreator = (open: boolean) => void guarded(async () => {
+    if (!worldOwnerReview || !services || state.screen !== 'SELECTED_WORLD' ||
+        open === (state.characterDraft !== null)) return;
+    const epoch = worldUiEpoch.current;
+    try {
+      const world = await verifyWorldSelection(services, state.launcherSession, state.world.accountId,
+        state.world.worldInstanceId, epoch);
+      if (!world) return;
+      if (world.generation !== state.world.generation || world.creationIntentId !== state.world.creationIntentId ||
+          world.projectionFingerprint !== state.world.projectionFingerprint || world.displayName !== state.world.displayName)
+        throw new Error('The selected World changed.');
+      dispatch({ type: open ? 'OPEN_WORLD_CHARACTER_CREATOR' : 'CLOSE_WORLD_CHARACTER_CREATOR' });
+    } catch {
+      if (epoch === worldUiEpoch.current)
+        invalidateWorldSelection('The selected World could not be verified. Return to Welcome and try again.');
+    }
+  }, undefined, false);
+
   const continueToWorlds = () => void guarded(async () => {
     if (!welcomeEnabled || !services || (state.screen !== 'WELCOME_AUTHENTICATED' &&
-        !(worldOwnerReview && state.screen === 'WORLD_LIBRARY_GATE'))) return;
+        !(worldOwnerReview && (state.screen === 'WORLD_LIBRARY_GATE' || state.screen === 'SELECTED_WORLD')))) return;
     if (worldOwnerReview) {
       const epoch = ++worldUiEpoch.current;
       const { launcherSession, accountProfile } = state;
       setWorldInventory({ status: 'loading' });
-      setWorldCanCreate(false);
-      dispatch({ type: 'OPEN_WORLD_LIBRARY_GATE' });
+      setWorldCredentialVerified(false);
+      dispatch({ type: state.screen === 'SELECTED_WORLD' ? 'LEAVE_SELECTED_WORLD' : 'OPEN_WORLD_LIBRARY_GATE' });
       try {
         const account = await readWorldAccount(services, launcherSession, accountProfile.accountId);
         const scope = { accountId: account.accountId, generation: accountLifecycleGeneration(account) };
@@ -713,14 +794,12 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
         const [retained] = listed;
         if (listed.length > 1) throw new Error('World inventory exceeds pilot capacity.');
         const card = retained ? projectWorldCard(retained, scope) : null;
-        let mayCreate = false;
-        if (!card) {
-          try {
-            await readWorldAccount(services, launcherSession, scope.accountId, true);
-            mayCreate = true;
-          } catch (error) {
-            if (!(error instanceof CampaignStoreError) || error.code !== 'invalid_record') throw error;
-          }
+        let credentialVerified = false;
+        try {
+          await readWorldAccount(services, launcherSession, scope.accountId, true);
+          credentialVerified = true;
+        } catch (error) {
+          if (!(error instanceof CampaignStoreError) || error.code !== 'invalid_record') throw error;
         }
         const checked = await readWorldAccount(services, launcherSession, scope.accountId);
         if (accountLifecycleGeneration(checked) !== scope.generation || epoch !== worldUiEpoch.current) return;
@@ -729,7 +808,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
             pending.scope.generation !== scope.generation || pending.request.expectedAccountRevision !== checked.revision))
           worldIntent.current = null;
         setWorldInventory(card ? { status: 'ready', world: card } : { status: 'empty' });
-        setWorldCanCreate(mayCreate);
+        setWorldCredentialVerified(credentialVerified);
       } catch {
         if (epoch === worldUiEpoch.current)
           setWorldInventory({ status: 'blocked',
@@ -753,7 +832,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
 
   const createWorld = (intent: WorldCreationIntent) => guarded<WorldCreationResult>(async () => {
     const unavailable = { status: 'blocked', message: 'World creation is unavailable for this session.' } as const;
-    if (!worldOwnerReview || !worldCanCreate || worldInventory.status !== 'empty' ||
+    if (!worldOwnerReview || !worldCredentialVerified || worldInventory.status !== 'empty' ||
         state.screen !== 'WORLD_LIBRARY_GATE' || !services) return unavailable;
     const epoch = worldUiEpoch.current;
     const { launcherSession: session, accountProfile } = state;
@@ -774,7 +853,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       worldIntent.current = { scope, request };
     } catch {
       if (epoch === worldUiEpoch.current) {
-        setWorldCanCreate(false);
+        setWorldCredentialVerified(false);
         setWorldInventory({ status: 'blocked', message: 'This session changed. Return to Welcome to verify the account.' });
       }
       return unavailable;
@@ -799,7 +878,7 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       const card = confirmWorldCreation(committed, reopened, retained, scope, request);
       worldIntent.current = null;
       setWorldInventory({ status: 'ready', world: card });
-      setWorldCanCreate(false);
+      setWorldCredentialVerified(true);
       return { status: 'verified', worldInstanceId: card.worldInstanceId };
     } catch {
       return { status: 'readback-failed',
@@ -905,14 +984,24 @@ export function EpochApp({ candidateNativeV3 = false, stagingNativeV3 = false,
       onContinue={continueToWorlds} onBack={returnFromWorlds}
       onOpenExistingLauncher={openExistingLauncher} onLogout={logout}
       {...(worldOwnerReview ? { inventory: worldInventory } : {})}
-      {...(worldOwnerReview && worldCanCreate ? { onCreateWorld: createWorld } : {})}
+      {...(worldOwnerReview && worldCredentialVerified ? { onCreateWorld: createWorld, onOpenWorld: openWorld } : {})}
       {...(worldOwnerReview && worldIntent.current ? { pendingIntent: worldIntent.current.request } : {})}
-      {...(worldOwnerReview && !worldCanCreate ? { onSignInAgain: logout } : {})}
+      {...(worldOwnerReview && !worldCredentialVerified ? { onSignInAgain: logout } : {})}
       {...(worldOwnerReview ? { onReopenLibrary: continueToWorlds } : {})}
     /> : <WelcomeScreen profile={current.accountProfile} worlds={current.screen === 'WORLD_LIBRARY_GATE'}
       busy={busy} onContinue={continueToWorlds}
       onBack={() => dispatch({ type: 'RETURN_TO_AUTHENTICATED_WELCOME' })} onLogout={logout} />;
-  else if (current.screen === 'MAIN_MENU') content = <MainMenuScreen {...common}
+  else if (current.screen === 'SELECTED_WORLD') {
+    const toggleTheme = () => setThemePreference(themeMode === 'dark' ? 'light' : 'dark');
+    content = current.characterDraft ? <CharacterCreationScreen {...common}
+      selectedWorld={current.world} form={current.characterDraft} accountProfile={current.accountProfile}
+      onReturnToMainMenu={() => changeWorldCreator(false)} onSignOut={logout}
+      onChange={draft => dispatch({ type: 'UPDATE_WORLD_CHARACTER_DRAFT', draft })}
+      themeMode={themeMode} onToggleThemeMode={toggleTheme} />
+      : <WorldCharactersScreen world={current.world} busy={busy} themeMode={themeMode}
+          onToggleTheme={toggleTheme} onBack={continueToWorlds} onSignOut={logout}
+          onCreateCharacter={() => changeWorldCreator(true)} />;
+  } else if (current.screen === 'MAIN_MENU') content = <MainMenuScreen {...common}
     accountProfile={current.accountProfile} slots={current.slots} activeSection={launcherSection}
     allowDeleteSlot addressOnlyDeletion
     onActiveSectionChange={setLauncherSection} onActivateSlot={slotId => void activateSlot(slotId)}
