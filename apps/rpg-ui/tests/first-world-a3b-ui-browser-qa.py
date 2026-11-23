@@ -109,27 +109,43 @@ def open_selected_creator(page, world_id, title, keyboard=False):
         if action == 'Open World':
             expect(page.get_by_role('heading', name='World Characters')).to_be_focused(timeout=30000)
             expect(page.get_by_role('heading', name='No characters in this World')).to_be_visible()
-    scope = page.get_by_role('navigation', name='Creator context')
-    expect(scope.get_by_text(title, exact=True)).to_be_visible()
-    expect(page.get_by_text(world_id, exact=True)).to_be_visible()
+    expect(page.get_by_role('main').get_by_role('heading', name='Lineage', exact=True)).to_be_focused()
+    options = button(page, 'Creator options')
+    options.press('Enter')
+    expect(options).to_have_attribute('aria-expanded', 'true')
+    expect(page.get_by_role('group', name='Creator options').get_by_text(title, exact=True)).to_be_visible()
+    identifier = page.get_by_role('textbox', name='World instance ID')
+    expect(identifier).to_have_value(world_id)
+    identifier.focus()
+    assert identifier.evaluate('el => el.value.slice(el.selectionStart, el.selectionEnd)') == world_id
+    identifier.press('Escape')
+    expect(options).to_be_focused()
+    expect(options).to_have_attribute('aria-expanded', 'false')
     expect(page.get_by_role('navigation', name='Creator stages')).to_be_visible()
 
 
 CREATOR_STAGES = ['Lineage', 'Identity', 'Continent', 'Region', 'Settlement', 'World Entry', 'Summary', 'Opening']
-CREATOR_VIEWPORTS = [(1440, 800), (768, 800), (375, 667), (667, 375)]
+CREATOR_VIEWPORTS = [(1440, 800), (1280, 800), (768, 800), (375, 667), (320, 568), (667, 375)]
 
 
 def edit_character_draft(page, world_id, keyboard=False, evidence=None):
     steps = page.get_by_role('navigation', name='Creator stages')
     main = page.get_by_role('main', name=re.compile('|'.join(CREATOR_STAGES)))
-    assert steps.get_by_role('button').all_text_contents() == [
+    assert steps.locator('.swc-stage-link').all_text_contents() == [
         f'{index}{label}' for index, label in enumerate(CREATOR_STAGES, start=1)]
     expect(steps.get_by_role('button', name=re.compile('Backstory|Starting Bundle|Finalize'))).to_have_count(0)
     expect(steps.get_by_role('button', name='Summary')).to_be_disabled()
 
+    has_touch = page.evaluate('navigator.maxTouchPoints > 0')
+    controls = page.get_by_role('navigation', name='Creator controls')
+    forward = controls.get_by_role('button', name='Next', exact=True)
+    metrics = {}
+
     def activate(control):
         if keyboard:
             control.press('Enter')
+        elif has_touch:
+            control.tap()
         else:
             control.click()
 
@@ -137,11 +153,11 @@ def edit_character_draft(page, world_id, keyboard=False, evidence=None):
         heading = main.get_by_role('heading', name=label, exact=True)
         expect(heading).to_be_focused()
         expect(steps.get_by_role('button', name=label, exact=True)).to_have_attribute('aria-current', 'step')
-        expect(page.get_by_text(world_id, exact=True)).to_be_visible()
+        assert main.evaluate('el => el.scrollTop') == 0
         width_check(page)
 
     def check_art(label):
-        image = main.get_by_role('button', name=label, exact=True).locator('img')
+        image = main.locator('.swc-card').filter(has=page.get_by_role('button', name=label, exact=True)).locator('img')
         image.scroll_into_view_if_needed()
         assert image.evaluate('''async image => {
             await image.decode();
@@ -153,26 +169,138 @@ def edit_character_draft(page, world_id, keyboard=False, evidence=None):
     def capture(label):
         if evidence is not None:
             page.evaluate('''async () => {
-                window.scrollTo(0, 0);
-                await Promise.all([...document.querySelectorAll('.swc-card-art img')].map(img => {
-                    img.loading = 'eager';
-                    return img.decode();
-                }));
+                document.querySelector('.swc-main').scrollTop = 0;
+                document.querySelector('.swc-rail').scrollTop = 0;
+                const pane = document.querySelector('.swc-main').getBoundingClientRect();
+                const visible = [...document.querySelectorAll('.swc-card-art img')].filter(img => {
+                    const bounds = img.getBoundingClientRect();
+                    return bounds.bottom > pane.top && bounds.top < pane.bottom;
+                });
+                await Promise.allSettled(visible.map(img => img.decode()));
             }''')
             page.screenshot(path=evidence / f'{CREATOR_STAGES.index(label) + 1:02}-{label.lower().replace(" ", "-")}.png',
                             full_page=True, animations='disabled')
 
-    check_stage('Lineage')
-    expect(main.get_by_role('group', name='Playable lineages').get_by_role('button')).to_have_count(10)
-    activate(main.get_by_role('button', name='Elf', exact=True))
+    def check_scroll(label, last_control):
+        size = main.evaluate('el => ({visible: el.clientHeight, total: el.scrollHeight, width: el.clientWidth, contentWidth: el.scrollWidth})')
+        assert size['contentWidth'] <= size['width'] + 1, (label, size)
+        if size['total'] > size['visible'] + 1:
+            main.press('End')
+            page.wait_for_function("el => el.scrollTop >= el.scrollHeight - el.clientHeight - 2", arg=main.element_handle())
+        last_control.scroll_into_view_if_needed()
+        expect(last_control).to_be_in_viewport()
+        size['reached'] = main.evaluate('el => el.scrollTop')
+        metrics[label] = size
+        main.press('Home')
+        page.wait_for_function("el => el.scrollTop === 0", arg=main.element_handle())
+
+    def card_choice(label):
+        return main.get_by_role('button', name=label, exact=True)
+
+    def select_fixed_tile(label):
+        card = main.locator('.swc-card').filter(has=page.get_by_role('button', name=label, exact=True))
+        before = main.locator('.swc-card').evaluate_all('cards => cards.map(card => [card.offsetTop, card.offsetHeight])')
+        activate(card_choice(label))
+        overlay = main.get_by_role('region', name=f'{label} description')
+        expect(overlay).to_be_visible()
+        if overlay.evaluate('el => el.scrollHeight > el.clientHeight + 1'):
+            overlay.press('End')
+            page.wait_for_function("el => el.scrollTop > 0", arg=overlay.element_handle())
+        assert main.locator('.swc-card').evaluate_all('cards => cards.map(card => [card.offsetTop, card.offsetHeight])') == before
+        assert card.evaluate("el => { const overlay = el.querySelector('.swc-card-description'); const picture = el.querySelector('.swc-card-art'); return picture.contains(overlay) && overlay.getBoundingClientRect().bottom <= picture.getBoundingClientRect().bottom + 1; }")
+        return card
+
+    def inline_next(label):
+        activate(main.get_by_role('button', name=f'Next from {label}', exact=True))
+
+    stage_menu = button(page, 'Creator options')
+    controls.evaluate("""el => {
+        const [left, center, right] = el.children;
+        if (!(left.offsetLeft < center.offsetLeft && center.offsetLeft < right.offsetLeft)) throw Error('Unexpected sub-bar order');
+    }""")
+    assert page.locator('.swc-header').evaluate("""el => {
+        const header = el.getBoundingClientRect();
+        const actions = el.querySelector('.swc-header-actions').getBoundingClientRect();
+        return Math.abs((header.left + header.right - actions.left - actions.right) / 2) <= 1;
+    }""")
+    expect(page.get_by_role('navigation', name='Creator context')).to_have_count(0)
+    expect(button(page, 'Back to World Characters')).to_have_count(0)
+    assert stage_menu.evaluate("el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(el).borderTopWidth === '0px'")
+    activate(stage_menu)
+    theme = page.locator('html').get_attribute('data-theme')
+    opposite = 'light' if theme == 'dark' else 'dark'
+    activate(button(page, f'Switch to {opposite} mode'))
+    expect(page.locator('html')).to_have_attribute('data-theme', opposite)
+    activate(button(page, f'Switch to {theme} mode'))
+    expect(page.locator('html')).to_have_attribute('data-theme', theme)
+    if has_touch:
+        page.locator('.swc-header-profile').tap()
+    else:
+        page.locator('.swc-header-profile').click()
+    expect(stage_menu).to_have_attribute('aria-expanded', 'false')
+    expect(steps.locator('.swc-stage-dice')).to_have_count(6)
+    expect(button(page, 'Randomize Summary')).to_have_count(0)
+    expect(button(page, 'Randomize Opening')).to_have_count(0)
+    for label in ('HP', 'MP', 'Stamina'):
+        bar = page.get_by_role('progressbar', name=f'Starting {label}')
+        expect(bar).to_be_visible()
+        assert bar.evaluate("el => el.value === el.max && el.max === Number(el.closest('[data-resource]').querySelector('dd').textContent) && el.max > 0")
+    assert page.locator('.swc-rail .swc-attributes abbr').count() == 9
+    if page.locator('.swc-rail').evaluate('el => el.scrollHeight > el.clientHeight + 1'):
+        page.locator('.swc-rail').press('End')
+        page.wait_for_function("el => el.scrollTop > 0", arg=page.locator('.swc-rail').element_handle())
+        assert main.evaluate('el => el.scrollTop') == 0
+        page.locator('.swc-rail').press('Home')
+        page.wait_for_function("el => el.scrollTop === 0", arg=page.locator('.swc-rail').element_handle())
+
+    expect(steps.get_by_role('button', name='Lineage', exact=True)).to_have_attribute('aria-current', 'step')
+    width_check(page)
+    expect(main.get_by_role('group', name='Playable lineages').locator('.swc-card-target')).to_have_count(10)
+    activate(button(page, 'Randomize Lineage'))
+    expect(steps.get_by_role('button', name='Lineage', exact=True)).to_have_attribute('aria-current', 'step')
+    expect(card_choice('Human')).to_have_attribute('aria-pressed', 'false')
+    if card_choice('Elf').get_attribute('aria-pressed') == 'true':
+        activate(card_choice('Human'))
+    select_fixed_tile('Elf')
+    assert page.locator('.swc-rail').evaluate('''el => {
+        const stats = Object.fromEntries([...el.querySelectorAll('abbr')].map(label =>
+            [label.textContent, Number(label.closest('dt').nextElementSibling.textContent)]));
+        const limits = Object.fromEntries([...el.querySelectorAll('progress')].map(bar =>
+            [bar.closest('[data-resource]').dataset.resource, bar.max]));
+        return limits.HP === 112 + 4 * (stats.CON + stats.VIT - 20)
+            && limits.MP === 70 + 4 * (stats.INT + stats.SPT - 20)
+            && limits.Stamina === 96 + 3 * (stats.AGI + stats.CON + stats.VIT - 30);
+    }''')
+    expect(main.get_by_text('Playable ancestry')).to_have_count(0)
+    check_scroll('Lineage', card_choice('Half Merfolk'))
     capture('Lineage')
-    activate(button(page, 'Next'))
+    if has_touch or keyboard:
+        inline_next('Elf')
+    else:
+        card_choice('Elf').dblclick(position={'x': 12, 'y': 12})
     check_stage('Identity')
     first = page.get_by_role('textbox', name='First name', exact=True)
-    last = page.get_by_role('textbox', name='Last name (optional)')
-    activate(button(page, 'Next'))
+    last = page.get_by_role('textbox', name='Last name', exact=True)
+    activate(forward)
     expect(first).to_be_focused()
-    expect(page.get_by_role('alert')).to_have_text('Enter a first name before continuing.')
+    expect(page.get_by_role('alert')).to_have_text('Enter a first and last name before continuing.')
+    expect(first).to_have_attribute('aria-invalid', 'true')
+    expect(last).to_have_attribute('aria-invalid', 'true')
+    first.fill('Aerin')
+    last.fill('   ')
+    activate(forward)
+    expect(last).to_be_focused()
+    expect(first).to_have_attribute('aria-invalid', 'false')
+    expect(page.get_by_role('alert')).to_have_text('Enter a last name before continuing.')
+    expect(steps.get_by_role('button', name='Continent', exact=True)).to_be_disabled()
+    detail = controls.get_by_role('button', name='Detail Hide')
+    activate(detail)
+    expect(main.locator('.swc-option-delta').first).to_be_hidden()
+    expect(main.get_by_text('Attribute guide', exact=True)).to_be_hidden()
+    expect(first).to_have_attribute('required', '')
+    activate(controls.get_by_role('button', name='Detail Show'))
+    expect(main.locator('.swc-option-delta').first).to_be_visible()
+    expect(main.get_by_text('Attribute guide', exact=True)).to_be_visible()
     for label in ('Build', 'Aptitude'):
         expect(main.get_by_role('group', name=label, exact=True).get_by_role('button')).to_have_count(9)
     activate(button(page, 'Female'))
@@ -186,6 +314,10 @@ def edit_character_draft(page, world_id, keyboard=False, evidence=None):
     activate(button(page, 'Randomize Identity'))
     expect(first).to_have_value('Aerin')
     expect(last).to_have_value('Vale')
+    expect(steps.get_by_role('button', name='Identity', exact=True)).to_have_attribute('aria-current', 'step')
+    activate(controls.get_by_role('button', name='Randomize current Identity'))
+    expect(last).to_have_value('Vale')
+    expect(first).to_have_value('Aerin')
     activate(button(page, 'Female'))
     activate(main.get_by_role('group', name='Build', exact=True).get_by_role('button', name=re.compile('^Lithe')))
     activate(main.get_by_role('group', name='Aptitude', exact=True).get_by_role('button', name=re.compile('^Analytical')))
@@ -199,43 +331,105 @@ def edit_character_draft(page, world_id, keyboard=False, evidence=None):
         swatches.get_by_role('slider', name=f'{palette} saturation').press('ArrowLeft')
     activate(button(page, 'Generate portrait prompt'))
     expect(main.get_by_role('textbox', name='Portrait prompt')).to_have_value(re.compile('Aerin Vale.*Elf'))
+    check_scroll('Identity', main.get_by_role('textbox', name='Portrait prompt'))
+    def reset_main():
+        main.press('Home')
+        page.wait_for_function("el => el.scrollTop === 0", arg=main.element_handle())
+
+    def wait_for_scroll():
+        page.wait_for_function("el => el.scrollTop > 0", arg=main.element_handle())
+        return main.evaluate('el => el.scrollTop')
+
+    main.press('PageDown')
+    metrics['Identity']['pageDown'] = wait_for_scroll()
+    reset_main()
+    box = main.bounding_box()
+    page.mouse.move(box['x'] + 5, box['y'] + box['height'] / 2)
+    page.mouse.wheel(0, 450)
+    metrics['Identity']['wheel'] = wait_for_scroll()
+    reset_main()
+    if has_touch:
+        cdp = page.context.new_cdp_session(page)
+        x, y = box['x'] + 8, box['y'] + box['height'] * .75
+        cdp.send('Input.dispatchTouchEvent', {'type': 'touchStart', 'touchPoints': [{'x': x, 'y': y}]})
+        for step in range(1, 8):
+            cdp.send('Input.dispatchTouchEvent', {'type': 'touchMove', 'touchPoints': [{'x': x, 'y': y - step * 15}]})
+        main.evaluate('''el => {
+            el.addEventListener('scrollend', () => { el.dataset.touchSettled = 'true'; }, {once: true});
+        }''')
+        cdp.send('Input.dispatchTouchEvent', {'type': 'touchEnd', 'touchPoints': []})
+        metrics['Identity']['touch'] = wait_for_scroll()
+        page.wait_for_function("el => el.dataset.touchSettled === 'true'", arg=main.element_handle())
+        cdp.detach()
+        reset_main()
+    else:
+        gutter = main.evaluate('el => el.offsetWidth - el.clientWidth')
+        if gutter > 4:
+            x = box['x'] + box['width'] - gutter / 2
+            y = box['y'] + 24
+            page.mouse.move(x, y)
+            page.mouse.down()
+            page.mouse.move(x, y + min(100, box['height'] / 4), steps=8)
+            page.mouse.up()
+            page.wait_for_function("el => el.scrollTop > 70", arg=main.element_handle())
+            metrics['Identity']['scrollbarDrag'] = main.evaluate('el => el.scrollTop')
+            reset_main()
     capture('Identity')
-    activate(button(page, 'Next'))
+    activate(forward)
     check_stage('Continent')
-    activate(main.get_by_role('button', name=re.compile('^Valtherion')))
+    select_fixed_tile('Valtherion')
     check_art('Valtherion')
+    check_scroll('Continent', main.locator('.swc-card-target').last)
     capture('Continent')
-    activate(button(page, 'Next'))
+    if has_touch or keyboard:
+        inline_next('Valtherion')
+    else:
+        card_choice('Valtherion').dblclick(position={'x': 12, 'y': 12})
     check_stage('Region')
-    activate(main.get_by_role('button', name=re.compile('^The Sapphire Rivers')))
+    expect(main.get_by_text('Valtherion', exact=True)).to_be_visible()
+    select_fixed_tile('The Sapphire Rivers')
     check_art('The Sapphire Rivers')
+    check_scroll('Region', main.locator('.swc-card-target').last)
     capture('Region')
-    activate(button(page, 'Next'))
+    if has_touch or keyboard:
+        inline_next('The Sapphire Rivers')
+    else:
+        activate(button(page, 'Clear The Sapphire Rivers selection'))
+        expect(card_choice('The Sapphire Rivers')).to_have_attribute('aria-pressed', 'false')
+        card_choice('The Sapphire Rivers').dblclick(position={'x': 12, 'y': 12})
     check_stage('Settlement')
-    activate(main.get_by_role('button', name=re.compile('^Highcrown')))
+    expect(main.get_by_text('The Sapphire Rivers', exact=True)).to_be_visible()
+    select_fixed_tile('Highcrown')
     check_art('Highcrown')
+    check_scroll('Settlement', main.locator('.swc-card-target').last)
     capture('Settlement')
-    activate(button(page, 'Next'))
+    if has_touch or keyboard:
+        inline_next('Highcrown')
+    else:
+        card_choice('Highcrown').dblclick(position={'x': 12, 'y': 12})
     check_stage('World Entry')
     activate(button(page, 'Hardcore Wilderness · Read only'))
     expect(button(page, 'World-Stray · Prestige locked')).to_be_disabled()
     activate(main.get_by_role('button', name=re.compile('The Broken Wagon')))
     expect(main.get_by_text(re.compile('wagon frame leans'))).to_be_visible()
-    activate(button(page, 'Next'))
+    activate(forward)
     expect(steps.get_by_role('button', name='Summary')).to_be_disabled()
     activate(button(page, 'Ordinary Core · 4'))
     activate(main.get_by_role('button', name=re.compile('The Room Paid For')))
     capture('World Entry')
-    activate(button(page, 'Next'))
+    activate(forward)
     check_stage('Summary')
     for expected in ('Aerin Vale', 'Highcrown', 'The Room Paid For', 'Equipment & currency', '100 total'):
         expect(main).to_contain_text(expected)
+    check_scroll('Summary', button(page, 'Change World Entry'))
     capture('Summary')
     activate(button(page, 'Read Opening'))
     check_stage('Opening')
     expect(main.get_by_text(re.compile('Morning filters through the shutters'))).to_be_visible()
     expect(button(page, 'Create Character')).to_be_disabled()
     expect(button(page, 'Create Character')).to_have_accessible_description(re.compile('approved World–Character–Save owner'))
+    expect(main).to_contain_text('Aerin Vale')
+    check_scroll('Opening', button(page, 'Create Character'))
     capture('Opening')
     activate(button(page, 'Examine the parcel'))
     expect(main.get_by_role('status')).to_contain_text('Examine the parcel')
@@ -246,29 +440,68 @@ def edit_character_draft(page, world_id, keyboard=False, evidence=None):
     expect(main.get_by_role('status')).to_contain_text('Ask the keeper')
     if evidence is not None:
         page.screenshot(path=evidence / '08-opening-draft-decision.png', full_page=True, animations='disabled')
-    activate(button(page, 'Back to Summary'))
+    activate(controls.get_by_role('button', name='Back', exact=True))
     check_stage('Summary')
     activate(button(page, 'Change World Entry'))
     check_stage('World Entry')
     activate(steps.get_by_role('button', name='Continent', exact=True))
     check_stage('Continent')
-    alternate = main.get_by_role('group', name='Continent selections').get_by_role('button', name=re.compile(r'^(?!Valtherion)')).first
-    activate(alternate)
-    expect(steps.get_by_role('button', name='Settlement')).to_be_disabled()
-    expect(steps.get_by_role('button', name='World Entry')).to_be_disabled()
-    expect(steps.get_by_role('button', name='Opening')).to_be_disabled()
-    activate(main.get_by_role('button', name=re.compile('^Valtherion')))
-    activate(button(page, 'Next'))
+    activate(button(page, 'Randomize Continent'))
+    expect(steps.get_by_role('button', name='Continent', exact=True)).to_have_attribute('aria-current', 'step')
+    expect(card_choice('Valtherion')).to_have_attribute('aria-pressed', 'false')
+    expect(steps.get_by_role('button', name='Settlement', exact=True)).to_be_disabled()
+    expect(steps.get_by_role('button', name='World Entry', exact=True)).to_be_disabled()
+    activate(card_choice('Valtherion'))
+    activate(forward)
     check_stage('Region')
     expect(main.locator('button[aria-pressed=true]')).to_have_count(0)
-    activate(main.get_by_role('button', name=re.compile('^The Sapphire Rivers')))
-    activate(button(page, 'Next'))
+    activate(button(page, 'Randomize Region'))
+    expect(main.locator('button[aria-pressed=true]')).to_have_count(1)
+    expect(steps.get_by_role('button', name='Region', exact=True)).to_have_attribute('aria-current', 'step')
+    if card_choice('The Sapphire Rivers').get_attribute('aria-pressed') != 'true':
+        activate(card_choice('The Sapphire Rivers'))
+    activate(forward)
     check_stage('Settlement')
     expect(main.locator('button[aria-pressed=true]')).to_have_count(0)
-    activate(main.get_by_role('button', name=re.compile('^Highcrown')))
-    activate(button(page, 'Next'))
+    activate(button(page, 'Randomize Settlement'))
+    expect(main.locator('button[aria-pressed=true]')).to_have_count(1)
+    expect(steps.get_by_role('button', name='Settlement', exact=True)).to_have_attribute('aria-current', 'step')
+    activate(forward)
     check_stage('World Entry')
     expect(main.get_by_role('button', name=re.compile('The Room Paid For'))).to_have_attribute('aria-pressed', 'false')
+    activate(button(page, 'Hardcore Wilderness · Read only'))
+    activate(button(page, 'Randomize World Entry'))
+    expect(button(page, 'Ordinary Core · 4')).to_have_attribute('aria-pressed', 'true')
+    expect(main.locator('.swc-story[aria-pressed=true]')).to_have_count(1)
+    expect(steps.get_by_role('button', name='World Entry', exact=True)).to_have_attribute('aria-current', 'step')
+    activate(button(page, 'Randomize All'))
+    expect(steps.get_by_role('button', name='World Entry', exact=True)).to_have_attribute('aria-current', 'step')
+    activate(forward)
+    check_stage('Summary')
+    expect(main).not_to_contain_text('Aerin Vale')
+    activate(button(page, 'Read Opening'))
+    check_stage('Opening')
+    expect(main.get_by_text('Draft decision recorded')).to_have_count(0)
+    activate(main.get_by_role('region', name='First World Entry decision').get_by_role('button').first)
+    activate(button(page, 'Randomize All'))
+    check_stage('Summary')
+    activate(button(page, 'Read Opening'))
+    check_stage('Opening')
+    expect(main.get_by_text('Draft decision recorded')).to_have_count(0)
+    activate(stage_menu)
+    expect(page.get_by_role('textbox', name='World instance ID')).to_have_value(world_id)
+    stage_menu.press('Escape')
+    if evidence is not None:
+        metrics['ancestors'] = main.evaluate('''el => {
+            const rows = {};
+            for (let node = el; node; node = node.parentElement) {
+                const key = node.id || [...node.classList].find(name => name.startsWith('swc')) || node.tagName;
+                rows[key] = { overflowY: getComputedStyle(node).overflowY, height: node.clientHeight,
+                    contentHeight: node.scrollHeight, width: node.clientWidth, contentWidth: node.scrollWidth };
+            }
+            return rows;
+        }''')
+        (evidence / 'scroll.json').write_text(json.dumps(metrics, indent=2), encoding='utf-8')
 
 
 def persistent_restart_flow(playwright, origin):
@@ -276,7 +509,7 @@ def persistent_restart_flow(playwright, origin):
     title = 'Persisted Chronicle'
     executable = os.environ['CHROMIUM_EXECUTABLE']
     with TemporaryDirectory(prefix='lineage-world-browser-') as data_directory:
-        first = playwright.chromium.launch_persistent_context(data_directory, executable_path=executable)
+        first = playwright.chromium.launch_persistent_context(data_directory, executable_path=executable, ignore_default_args=['--hide-scrollbars'])
         try:
             page = first.new_page()
             page.goto(origin + FLAGS)
@@ -296,7 +529,7 @@ def persistent_restart_flow(playwright, origin):
         finally:
             first.close()
 
-        restarted = playwright.chromium.launch_persistent_context(data_directory, executable_path=executable)
+        restarted = playwright.chromium.launch_persistent_context(data_directory, executable_path=executable, ignore_default_args=['--hide-scrollbars'])
         try:
             page = restarted.new_page()
             page.goto(origin + FLAGS)
@@ -306,7 +539,7 @@ def persistent_restart_flow(playwright, origin):
             assert snapshot(page) == committed
             open_selected_creator(page, world_id, title, keyboard=True)
             edit_character_draft(page, world_id, keyboard=True)
-            button(page, 'Back to World Characters').press('Enter')
+            button(page, 'Cancel').press('Enter')
             expect(page.get_by_role('heading', name='World Characters')).to_be_focused()
             expect(page.get_by_role('region', name='Selected World').get_by_text(world_id, exact=True)).to_be_visible()
             button(page, 'Back to World Library').click()
@@ -326,7 +559,7 @@ def open_settings(page, profile):
 
 
 def viewport_flow(browser, origin, width, height, theme):
-    context = browser.new_context(viewport={'width': width, 'height': height}, color_scheme=theme)
+    context = browser.new_context(viewport={'width': width, 'height': height}, color_scheme=theme, has_touch=width < 700)
     try:
         page = context.new_page()
         page.goto(origin + FLAGS)
@@ -395,15 +628,17 @@ def viewport_flow(browser, origin, width, height, theme):
                 evidence.mkdir(parents=True, exist_ok=True)
             edit_character_draft(page, world_id, keyboard=keyboard, evidence=evidence)
             width_check(page)
-            button(page, 'Back to World Characters').click()
+            button(page, 'Cancel').click()
             expect(page.get_by_role('heading', name='World Characters')).to_be_focused()
             button(page, 'Back to World Library').click()
             assert ready(page, title) == world_id
             assert snapshot(page) == after
             open_selected_creator(page, world_id, title)
-            expect(page.get_by_role('main').get_by_role('heading', name='Lineage')).to_be_focused()
+            expect(page.get_by_role('main').get_by_role('heading', name='Lineage')).to_be_visible()
+            expect(page.locator('.swc-header-profile')).to_contain_text('Unnamed Wanderer')
             assert snapshot(page) == after
-            button(page, 'Back to World Characters').click()
+            page.get_by_role('navigation', name='Creator controls').get_by_role('button', name='Back', exact=True).click()
+            expect(page.get_by_role('heading', name='World Characters')).to_be_focused()
             button(page, 'Back to World Library').click()
             print(f'PASS {width}x{height} {theme}, selected World interactive Character Creator', flush=True)
         button(page, 'Home').click()
@@ -530,6 +765,7 @@ def selected_session_flow(browser, origin):
         sign_in(page, profile)
         library(page)
         open_selected_creator(page, world_id, title)
+        button(page, 'Creator options').click()
         button(page, 'Sign Out').click()
         expect(page.get_by_label('Account', exact=True)).to_be_visible()
         expect(page.get_by_role('navigation', name='Creator stages')).to_have_count(0)
@@ -760,7 +996,8 @@ def run(review, ordinary):
         assert url == os.environ[variable] and parsed.hostname == '127.0.0.1' and parsed.port and not parsed.path
     with sync_playwright() as playwright:
         persistent_restart_flow(playwright, review)
-        browser = playwright.chromium.launch(executable_path=os.environ['CHROMIUM_EXECUTABLE'])
+        browser = playwright.chromium.launch(executable_path=os.environ['CHROMIUM_EXECUTABLE'],
+                                               ignore_default_args=['--hide-scrollbars'])
         try:
             for width, height in VIEWPORTS:
                 for theme in ('dark', 'light'):
