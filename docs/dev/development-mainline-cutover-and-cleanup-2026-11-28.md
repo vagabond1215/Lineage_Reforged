@@ -31,6 +31,14 @@ This is the current source-of-truth update for the November New UI integration, 
 | Historical owner-private `lineage-reforged-preview.vagabond1215.chatgpt.site` | Possible obsolete parallel hosted preview | No Sites control available in the GitHub Connector; do not claim deletion or deploy. Verify Site configuration and any unique assets before disabling it |
 | Windows `C:\Codex` / local backup roots and sibling Git repos | Not accessible to GitHub Connector | Require a local read-only inventory, path/remote check and clean-state test; never recursive-delete by name or wildcard |
 
+## Codex executable cleanup handoff
+
+The approved local cleanup instructions are now checked into this repository, not dependent on a downloaded chat attachment:
+
+- [Codex post-mainline cleanup work order](codex-post-mainline-cleanup-work-order-2026-11-28.md) contains the exact scope, repo boundaries, application/QA/backup/Sites classification process, verification and execution receipts.
+- [Guarded local cleanup utility](../../scripts/dev/lineage-mainline-local-cleanup.ps1) defaults to an inventory-only dry run. Its `-Apply` mode removes only verified clean fully merged review worktrees; exact remote integration branch deletion is an additional optional flag.
+- Launch Codex from `C:\Codex\EoL` after `git pull --ff-only origin master`; instruct it to follow the work order and record actual actions. Do not confuse a repo-published script with a local execution.
+
 ## Local cleanup procedure
 
 Use a normal PowerShell terminal on the machine that owns the local worktrees. `git -C C:\Codex\EoL worktree list --porcelain` and `git -C C:\Codex\EoL branch -vv` identify local references. Check the exact working-tree path with `git -C <path> status --porcelain=v1 --untracked-files=all`, `git -C <path> merge-base --is-ancestor HEAD origin/master`, and review ignored/untracked files before `git -C C:\Codex\EoL worktree remove <clean-fully-merged-path>`. Never use `--force` and do not prune the main checkout. The original branch refs can be retained until all named PR/evidence consumers are reconciled. Record reclaimed bytes and exact paths only after real deletion.
