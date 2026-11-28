@@ -1,0 +1,779 @@
+{
+  "schema": "lineage.connector_asset_dedup_evidence.v1",
+  "asOf": "2026-11-28",
+  "basedOnMainlineCommit": "e71676461b27d3ca34ccff6012ed8f54c82e194f",
+  "repository": "vagabond1215/Lineage_Reforged",
+  "verificationMethod": "GitHub immutable Git tree SHA-1 blob identities within current master; size in logical tracked-file bytes, not physical Git storage. No local build/runtime validation.",
+  "immutableTreeRoots": {
+    "unused assets": "814b644fc8aa8c46c2843580f7dea782ebcdbddd",
+    "apps/rpg-ui": "ff5b26fadd4ae9e01708b371e88a1d2cd85ae5dd",
+    "packages": "0981392d74ebaa76bdc799946bd3acf5884a018b",
+    "assets": "5477b1290058414cae91e57d4d132bf981141bc5"
+  },
+  "policy": "Evidence-only. Do not directly delete assets, source art, archived originals, or named URLs. Connector has not proven every runtime and documentation consumer. Codex should reconcile references, manifests, build output, and visual selection before making binary changes.",
+  "counts": {
+    "archiveTotalFiles": 88,
+    "archiveLogicalBytes": 231631599,
+    "archiveFilesIdenticalToOtherTrackedTrees": 52,
+    "archiveDuplicateLogicalBytes": 147672320,
+    "archiveFilesWithoutOtherTrackedBlobMatch": 36,
+    "archiveUnmatchedLogicalBytes": 83959279,
+    "selectedContinentPairs": 9,
+    "selectedIdenticalPairs": 9,
+    "selectedVariantLogicalBytes": 33372361,
+    "combinedPotentialLogicalDuplicateBytes": 181044681
+  },
+  "archivedFilesWithIdenticalActiveOrCanonicalBlobs": [
+    {
+      "path": "unused assets/Theme Images/Backgrounds/Dark Background.png",
+      "gitBlobSha": "77c84810c0687e2d339a55089e0af05b2b380448",
+      "bytes": 1573863,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/dark-background.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Backgrounds/Dark_Background_Horizontal_Bottom_Slim.png",
+      "gitBlobSha": "4ebded4856b0e750a72bc81a069c65f21f793995",
+      "bytes": 106347,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/dark-background-horizontal-bottom-slim.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Backgrounds/Dark_Background_Horizontal_Mid.png",
+      "gitBlobSha": "dcbb379a2ea4c1bcb34eba1cacabe3962a3a64d8",
+      "bytes": 286718,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/dark-background-horizontal-mid.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Backgrounds/Dark_Background_Vertical_Mid.png",
+      "gitBlobSha": "5e4ada080a6e886331a63e7154dbb95f99500503",
+      "bytes": 647975,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/dark-background-vertical-mid.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Active_Character.png",
+      "gitBlobSha": "2aa955bbf9c9b2e5694b6fa377cf102515add0d5",
+      "bytes": 241411,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/character-active-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Active_Chronicles.png",
+      "gitBlobSha": "4bd1c496cc8786f5a2f711295f6c893ccb700a21",
+      "bytes": 246099,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/chronicles-active-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Active_Settings.png",
+      "gitBlobSha": "876424c911a6dd678c05dd1cfe98bbdb7e97cacf",
+      "bytes": 240742,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/settings-active-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Active_legacy.png",
+      "gitBlobSha": "d91f275aeb334767e3d8b5beb6b677ec19342f81",
+      "bytes": 247722,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/legacy-active-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Inactive_Character.png",
+      "gitBlobSha": "0ce2da3c37d629c8a1fdcd806ee14a21f7459ad4",
+      "bytes": 240381,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/character-inactive-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Inactive_Chronicles.png",
+      "gitBlobSha": "1d44cae5d249cd8d4c64c3fa143d233de5dfc3e6",
+      "bytes": 244202,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/chronicles-inactive-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Inactive_Legacy.png",
+      "gitBlobSha": "409ad02ba993d8261a93fc0efca3ef3b271d221f",
+      "bytes": 245983,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/legacy-inactive-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Inactive_Settings.png",
+      "gitBlobSha": "0aeb271874f2d9e503b5edd0a0526e89cdc85640",
+      "bytes": 239446,
+      "identicalLocations": [
+        "apps/rpg-ui/public/launcher/settings-inactive-soft.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Font Tiles/number_tile_dark.png",
+      "gitBlobSha": "7493a22ca0e56f048c2dcfcc36e6556ca6494420",
+      "bytes": 2381836,
+      "identicalLocations": [
+        "apps/rpg-ui/public/clock/number-tile-dark.png"
+      ]
+    },
+    {
+      "path": "unused assets/Theme Images/Logos/Logo_no-icon_Dark_Framed.png",
+      "gitBlobSha": "7ff6b64397464b61c71758ee1682d6e85a8fe3e9",
+      "bytes": 1837343,
+      "identicalLocations": [
+        "apps/rpg-ui/public/branding/lineage-reforged-logo-dark-no-icon-framed.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-dawnreach-isles-selected.png",
+      "gitBlobSha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "bytes": 3447850,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-dawnreach-isles.png",
+      "gitBlobSha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "bytes": 3447850,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-draemor-selected.png",
+      "gitBlobSha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "bytes": 4020839,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-draemor.png",
+      "gitBlobSha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "bytes": 4020839,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-kaelvar-selected.png",
+      "gitBlobSha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "bytes": 3702529,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-kaelvar.png",
+      "gitBlobSha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "bytes": 3702529,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-lantern-isles-selected.png",
+      "gitBlobSha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "bytes": 3134923,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-lantern-isles.png",
+      "gitBlobSha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "bytes": 3134923,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-myridian-chain-selected.png",
+      "gitBlobSha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "bytes": 4134968,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-myridian-chain.png",
+      "gitBlobSha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "bytes": 4134968,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-serathyl-selected.png",
+      "gitBlobSha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "bytes": 3886699,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-serathyl.png",
+      "gitBlobSha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "bytes": 3886699,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-serpents-wake-selected.png",
+      "gitBlobSha": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "bytes": 3649255,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-serpents-wake.png",
+      "gitBlobSha": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "bytes": 3649255,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-talmyra-selected.png",
+      "gitBlobSha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "bytes": 3764727,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-talmyra.png",
+      "gitBlobSha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "bytes": 3764727,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-valtherion-selected.png",
+      "gitBlobSha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "bytes": 3630571,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-dist/continent-valtherion.png",
+      "gitBlobSha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "bytes": 3630571,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-dawnreach-isles-selected.png",
+      "gitBlobSha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "bytes": 3447850,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-dawnreach-isles.png",
+      "gitBlobSha": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "bytes": 3447850,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-draemor-selected.png",
+      "gitBlobSha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "bytes": 4020839,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-draemor.png",
+      "gitBlobSha": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "bytes": 4020839,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-draemor.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-kaelvar-selected.png",
+      "gitBlobSha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "bytes": 3702529,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-kaelvar.png",
+      "gitBlobSha": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "bytes": 3702529,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-lantern-isles-selected.png",
+      "gitBlobSha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "bytes": 3134923,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-lantern-isles.png",
+      "gitBlobSha": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "bytes": 3134923,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-myridian-chain-selected.png",
+      "gitBlobSha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "bytes": 4134968,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-myridian-chain.png",
+      "gitBlobSha": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "bytes": 4134968,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-serathyl-selected.png",
+      "gitBlobSha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "bytes": 3886699,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-serathyl.png",
+      "gitBlobSha": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "bytes": 3886699,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-serpents-wake-selected.png",
+      "gitBlobSha": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "bytes": 3649255,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-serpents-wake.png",
+      "gitBlobSha": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "bytes": 3649255,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-talmyra-selected.png",
+      "gitBlobSha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "bytes": 3764727,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-talmyra.png",
+      "gitBlobSha": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "bytes": 3764727,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-valtherion-selected.png",
+      "gitBlobSha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "bytes": 3630571,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/2026-03-30-active-public/continent-valtherion.png",
+      "gitBlobSha": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "bytes": 3630571,
+      "identicalLocations": [
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+        "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/First World Biome.png",
+      "gitBlobSha": "aad25d02340e3794df0495a1c79bc5a1929eae23",
+      "bytes": 2562408,
+      "identicalLocations": [
+        "packages/content/base/world/map_assets/First World Biome.png"
+      ]
+    },
+    {
+      "path": "unused assets/continents/First World Elevation.png",
+      "gitBlobSha": "40a42dcd10d72e31c93f48fe5dd0c1f593784ac1",
+      "bytes": 2840400,
+      "identicalLocations": [
+        "packages/content/base/world/map_assets/First World Elevation.png"
+      ]
+    }
+  ],
+  "archivedFilesWithoutIdenticalActiveOrCanonicalBlobs": [
+    {
+      "path": "unused assets/ChatGPT Image Apr 8, 2026, 04_57_37 PM.png",
+      "gitBlobSha": "d0eafcf4ee48dbd3bfce824feb8c08547b7615a8",
+      "bytes": 3094545,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/ChatGPT Image Apr 8, 2026, 04_58_57 PM.png",
+      "gitBlobSha": "a43a0ca96c087e9b3acf33475359580c775cf563",
+      "bytes": 3237830,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/834bf13c-483b-4d56-84c7-be8a9b5f456e.png",
+      "gitBlobSha": "bb13fa3bd280be9e9253aac6656356beaace19ad",
+      "bytes": 2819970,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Backgrounds/Dark_Background_Horizontal_Bottom.png",
+      "gitBlobSha": "8bfe843a58ffeb34ec93f880d2ed16728cc9e8b5",
+      "bytes": 245604,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Backgrounds/Dark_Background_Vertical_Right.png",
+      "gitBlobSha": "d84c9797400e4ced02c34d8219898994214fe3b6",
+      "bytes": 418048,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/109057da-9180-4546-9b01-de2851a46245.png",
+      "gitBlobSha": "c1edadeaa87e30ecb47c308a04aecb1a61bc13b0",
+      "bytes": 2272581,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/36ce8ee3-aa78-413e-b7fa-fd4bfd5a5ad9.png",
+      "gitBlobSha": "fbf0acf71b26ecba0eda263427c241d6a90ef123",
+      "bytes": 2100802,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/7ec767f2-acde-41c6-a750-c12914a7e910.png",
+      "gitBlobSha": "230e0ec43f527fdf938f7a0bb9de3c0312c382f6",
+      "bytes": 2317665,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/89b8c4a6-b9a8-4d6d-a0ab-7944b0b61f90.png",
+      "gitBlobSha": "1e54d2a84e87a14d61296fb1fea9b9ca2f8ac15c",
+      "bytes": 2245510,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/930e0a2c-936f-4027-9603-b71c0cee2462.png",
+      "gitBlobSha": "22595547760aa5c9408154870315baafdf044db1",
+      "bytes": 1934917,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Active_Sheet.png",
+      "gitBlobSha": "caf5d408228ad8ceea22ee266e3bdb1b4b7c86d6",
+      "bytes": 982112,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Icon Tile Sheet.png",
+      "gitBlobSha": "4c7f242dfc1915603e8a5bc6197343c261655b81",
+      "bytes": 2241468,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Inactive_Sheet.png",
+      "gitBlobSha": "c43059b33abc287880327b43091c62661941c42d",
+      "bytes": 975223,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/Main Menu Button Sheet.png",
+      "gitBlobSha": "a04025f76a7b2ab418072153b3bc4644980da080",
+      "bytes": 2069667,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Elements/f1c5d8ff-9526-4947-a32b-5ebb3c122437.png",
+      "gitBlobSha": "37bb169f9d15aa7eccc1c7a92cd5bdddcb4d09af",
+      "bytes": 2029552,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Font Tiles/Font_Dark.png",
+      "gitBlobSha": "c314cf407e9abf75bcc399af9652f9603b540bd1",
+      "bytes": 2362492,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Font Tiles/Font_Light.png",
+      "gitBlobSha": "7140b7cc66baa5bd1768cbc5b2a80dc17e8f1ead",
+      "bytes": 2472243,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Font Tiles/b1956c05-c71f-4210-8d26-88de96809879.png",
+      "gitBlobSha": "db6aaf1943c339fefbf6ddc400fb56815c0f8df4",
+      "bytes": 2629933,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Logos/Logo_Icon_Dark.png",
+      "gitBlobSha": "7cf603b27ce4ca45bd1b9e11b58507ee65dcbd8f",
+      "bytes": 1904791,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Logos/Logo_Icon_Dark_Framed.png",
+      "gitBlobSha": "4da7b1cb9acda7abb1e709f220c161289ec86a1b",
+      "bytes": 2520295,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Logos/Logo_no-icon_framed_light.png",
+      "gitBlobSha": "763fbed32ee7ab6577be84a41324bfcce944430d",
+      "bytes": 2499609,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/471efe2e-0fa8-48f3-93d3-779c84c5590a.png",
+      "gitBlobSha": "a96e31124893bffc12ab1240ed9e01fa1ce33ee3",
+      "bytes": 2545609,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/5aa16faa-f37e-4471-9df4-20700586e12d.png",
+      "gitBlobSha": "1a2f9eb8718258521c8017a2f722d04f79fa1ec9",
+      "bytes": 2595101,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/Theme_Dark_Expanded.png",
+      "gitBlobSha": "de9bac67f3bda0c9d34e3ce7bafc465824510206",
+      "bytes": 2455132,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/Theme_Light Mode.png",
+      "gitBlobSha": "c9ebe7bd7be550183fb813b133c2ce6fa1602985",
+      "bytes": 2647610,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/Theme_Light_Expanded.png",
+      "gitBlobSha": "1a2f9eb8718258521c8017a2f722d04f79fa1ec9",
+      "bytes": 2595101,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/Theme_dark mode.png",
+      "gitBlobSha": "3b5d2a724fa300010d487b8a181effbc59380c3d",
+      "bytes": 2949170,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/ac5a3e10-5dfd-4b86-b34b-3a745af308ab - Copy.png",
+      "gitBlobSha": "fdea37e70d06b769c0694c95f787a213169daec4",
+      "bytes": 2825696,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/ac5a3e10-5dfd-4b86-b34b-3a745af308ab.png",
+      "gitBlobSha": "fdea37e70d06b769c0694c95f787a213169daec4",
+      "bytes": 2825696,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/Theme Images/Theme Page/e66bb152-f957-4d7c-83b1-6cde9ed17bf1.png",
+      "gitBlobSha": "de9bac67f3bda0c9d34e3ce7bafc465824510206",
+      "bytes": 2455132,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/continents/ChatGPT Image Apr 8, 2026, 01_02_34 PM.png",
+      "gitBlobSha": "28f1bea9acceff05303a57b9e1f7f8becc2f5dd6",
+      "bytes": 2606105,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/continents/ChatGPT Image Apr 8, 2026, 01_02_40 PM.png",
+      "gitBlobSha": "5882a00ae4b83b0136808cfbdbefeddeb3124b47",
+      "bytes": 1282987,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/lineages/2026-04-06-human-selected-replaced/lineage-human-selected.png",
+      "gitBlobSha": "fb3fa745e768238cf98ad5a0b443fcc7f0461586",
+      "bytes": 2656740,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/lineages/4d57e7f3-d84d-4e58-b19c-541cca485789.png",
+      "gitBlobSha": "0fdc9fe808404a712ed97e67ed8e800804741e1e",
+      "bytes": 2507166,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/settlements/2026-04-06-unmatched-intake/Mossfen.png",
+      "gitBlobSha": "76ea152919c48e9290e36ed9e5ba9c98af9dd19e",
+      "bytes": 4229989,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    },
+    {
+      "path": "unused assets/settlements/Confederate Ford.png",
+      "gitBlobSha": "e92e81582504754dcc6a6b1906c5ffb13e5d3270",
+      "bytes": 3407188,
+      "disposition": "RETAIN_PENDING_ORIGINAL_ART_AND_CONSUMER_REVIEW"
+    }
+  ],
+  "selectedContinentVariantPairs": [
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-dawnreach-isles.png",
+      "selectedBlob": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "normalBlob": "9c4febae17e4979250ce1e5880a697e5c024bd89",
+      "bytesEach": 3447850,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-draemor-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-draemor.png",
+      "selectedBlob": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "normalBlob": "ba53bfb1ee60f9e689b441bdf12194e63b82fdd0",
+      "bytesEach": 4020839,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-kaelvar-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-kaelvar.png",
+      "selectedBlob": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "normalBlob": "c5ae16e855c75c5c8d2c1aa815249539373eff8b",
+      "bytesEach": 3702529,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-lantern-isles.png",
+      "selectedBlob": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "normalBlob": "b93d5e889ef409c3c4f4b2b9f63d07a841780214",
+      "bytesEach": 3134923,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-myridian-chain.png",
+      "selectedBlob": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "normalBlob": "f26c635152faa26f5cc8941b9e24f956447443b0",
+      "bytesEach": 4134968,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-serathyl-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-serathyl.png",
+      "selectedBlob": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "normalBlob": "55bb267a740a9ed32e5ea589ee635309d0a45d39",
+      "bytesEach": 3886699,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-serpents-wake.png",
+      "selectedBlob": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "normalBlob": "41463961513046fe9a96be1ae69325b69ff41eed",
+      "bytesEach": 3649255,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-talmyra-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-talmyra.png",
+      "selectedBlob": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "normalBlob": "6d601856872c736b7cd400d9dfc12801844a9abb",
+      "bytesEach": 3764727,
+      "byteIdentical": true
+    },
+    {
+      "selectedPath": "apps/rpg-ui/public/character-creator/continents/continent-valtherion-selected.png",
+      "normalPath": "apps/rpg-ui/public/character-creator/continents/continent-valtherion.png",
+      "selectedBlob": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "normalBlob": "192a2f317713a69f7598d9b60e456b1f7fb48a12",
+      "bytesEach": 3630571,
+      "byteIdentical": true
+    }
+  ],
+  "holds": [
+    "Archive contains user-supplied original art; byte identical copies do not establish deletion safety until source provenance and all references are confirmed.",
+    "Some archived files are duplicated within the archive and have historical naming/meaning even if their Git blobs match.",
+    "Selected images have first-class selectedImageUrl references in worldSelectionCatalog.ts; remove the variant field or rewrite URL consumers only after confirming CSS/semantic state is adequate.",
+    "Standalone preview manifest references 100 artwork files, including selected duplicates; adjust its paths/hashes and run its verifier only if changed.",
+    "Avoid modifying pinned world-source data/manifests or current runtime without local Codex validation."
+  ]
+}
