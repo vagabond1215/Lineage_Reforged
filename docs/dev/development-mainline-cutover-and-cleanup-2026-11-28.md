@@ -24,7 +24,7 @@ This is the current source-of-truth update for the November New UI integration, 
 | Old `MERGE_HELD` instructions for PR #104 in “current” documents | Superseded pointers | Override via this register and a current-top note; retain prior dated entries as historical records |
 | `codex/new-ui-mainline-final-2026-11-23` and intermediate New UI worktrees | Merged implementation, potential local copies | Candidate to remove *only after* verifying exact `origin/master` ancestry, clean worktree, no running process, and no untracked/ignored evidence; never `--force` |
 | `.codex-local/new-ui-mainline-final-20261123`, Chromium shots/logs, throwaway temp output | Potential redundant QA artifacts | Inspect owner, size and cross-links first. May be removed after confirming needed acceptance is recorded in Git; do not delete entire shared `.codex-local` |
-| PRs #102 and #103 | Retained distinct World-owner/prototype provenance | Keep until their unique unmerged source/evidence is reconciled; not automatically merged or closed by #104 |
+| PRs #102 and #103 | **Closed as superseded on 2026-11-28**, NOT merged | Each PR has an explanatory disposition comment. Its unique legacy QA or visual-preview bytes remain preserved in its branch/PR history; neither was copied wholesale into master or branch-deleted |
 | Other open geography, engine, Character, and Save PRs/branches | Unresolved source/evidence until individually compared | Do not mass-close or delete based on age; distinct unmerged records may still have future consumers |
 | `vagabond1215/ffxi-text-rpg` | Different project, Hearth & Horizon (`0.9.500`) | Not a Lineage backup; do **not** modify or delete |
 | `vagabond1215/cloudflare_artifact` | Private Codex control/mirror for separate hosted Sites source | README says actual source is on `git.chatgpt-team.site`. Do not delete until the configured Site/source and replacement workflow are checked |
@@ -43,4 +43,4 @@ Audit all suspected backup repositories by their **Git remote URL, latest commit
 - Run a short *local* New UI/Classic smoke test after pulling master. This Connector has not run browser or Windows commands.
 - The next main engineering milestone is the first actual World-bound Character/gameplay/Save/resume loop, rather than more preview branches.
 
-**Cleanup status:** GitHub mainline merged and dev-start scripts consolidated. Remote branch/PR retirement, local folder deletion and hosted Site removal require separate evidence from their corresponding systems. Do not report those as completed.
+**Cleanup status:** GitHub mainline merged and dev-start scripts consolidated. PRs #102/#103 are closed as superseded, while their source branches and unique historical evidence remain. Remote branch deletion, local folder deletion and hosted Site removal require their own validated system access. Do not report those as completed.
