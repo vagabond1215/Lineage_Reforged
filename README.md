@@ -20,7 +20,13 @@ Strategic continuity lives in:
 - `docs/design/future-system-design-ledger.md` for durable system criteria and vocabulary.
 - `docs/dev/project-vision-and-continuity-brief.md` for the strategic source map.
 
-## Interactive UI Preview (new ChatGPT threads)
+## Current development UI (2026-11-28)
+
+The functional New UI integration [PR #104](https://github.com/vagabond1215/Lineage_Reforged/pull/104) is merged into `master`. From the repository root, `npm run ui:dev` starts the **New UI development presentation** on loopback; `npm run ui:dev:classic` explicitly starts the Classic fallback. Real World creation remains in the deliberately gated compiled `world-owner-review` build, and durable World-bound Character/Save publication is unfinished. This is pre-alpha development, not a production rollout.
+
+The inherited broad TypeScript baseline remains red: the reviewed candidate had 118 existing diagnostics against the former master baseline of 119, with no new normalized entries. `npm run ui:build` **still fails**; direct Vite builds were previously tested separately. See [mainline cutover and cleanup register](docs/dev/development-mainline-cutover-and-cleanup-2026-11-28.md). Existing experimental local accounts/Saves are disposable; versioned historical source manifests are preserved for reproducibility.
+
+## Historical standalone UI preview (reference only)
 
 The **complete current interactive preview** is preserved on `master` as [the standalone HTML snapshot](docs/prototypes/lineage-reforged-current-interactive-preview.html), with the [full file-and-art manifest](docs/prototypes/lineage-reforged-current-preview.manifest.json), [integrity checker](docs/prototypes/verify-current-preview.mjs), and [optional browser/screenshot checker](docs/prototypes/preview-browser-smoke.py). The historical November 18 HTML remains as a baseline; draft PR #103 carries ongoing review work. For exact source selection, attaching the **actual HTML inside ChatGPT** or uploading the identical file as a native interactive Page visualization (not a blocked external iframe), artwork source paths, and cross-thread handoff, read [docs/prototypes/README.md](docs/prototypes/README.md) first. The snapshot and archived assets are review resources, not production gameplay or a Save owner. A request to continue the new UI preview should start at that guide; the current sample family/character review and demo login instructions are recorded there.
 
