@@ -70,9 +70,9 @@ foreach ($line in @($worktreeLines) + @('')) {
         $current.head = $line.Substring(5)
     } elseif ($line.StartsWith('branch ')) {
         $current.branch = $line.Substring(7)
-    } elseif ($line -eq 'locked') {
+    } elseif ($line -match '^locked(?: |$)') {
         $current.locked = $true
-    } elseif ($line -eq 'prunable') {
+    } elseif ($line -match '^prunable(?: |$)') {
         $current.prunable = $true
     }
 }
@@ -97,7 +97,8 @@ foreach ($wt in $worktrees) {
             continue
         }
     }
-    if ($path -notmatch $names -and [string]$wt.branch -notmatch $names) {
+    $branchName = if ($wt.PSObject.Properties['branch']) { [string]$wt.branch } else { '' }
+    if ($path -notmatch $names -and $branchName -notmatch $names) {
         Write-Host "HOLD other worktree (not targeted): $path"
         continue
     }
