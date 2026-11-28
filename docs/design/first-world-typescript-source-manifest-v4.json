@@ -1,0 +1,43 @@
+{
+  "format": "lineage.first-world-typescript-source.v4",
+  "parentFingerprint": "sha256:90d19ed5fa6f9c06bc093d6f775b65a5b69ad12b66a40362bd42a3bf948cfe33",
+  "pins": [
+    {
+      "path": "apps/rpg-ui/build/first-world-source-v4.mjs",
+      "gitBlobSha1": "547aeaf347e50a0aed648645a260c088a7ddb4ba"
+    },
+    {
+      "path": "apps/rpg-ui/build/first-world-source-worker.mjs",
+      "gitBlobSha1": "46b07f877fc9442a58692adea06a1acdc8eca80f"
+    },
+    {
+      "path": "apps/rpg-ui/vite.config.ts",
+      "gitBlobSha1": "ceeaaccd8fd2ef0726a1315790b7b5b58a768993"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/economy.ts",
+      "gitBlobSha1": "c4414087c750334077116ec998bdd01901a7498c"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/runtime-economy.ts",
+      "gitBlobSha1": "7e04f0155b3fa4b5680e590758f45d49e4491a68"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/settlement-simulation.ts",
+      "gitBlobSha1": "348c5d79f5fa12b1308c1a5c614f1aa07634d8b5"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/spatial-world.ts",
+      "gitBlobSha1": "212e697ef212a5432bb893e751825863f2463d0d"
+    },
+    {
+      "path": "packages/engines/civilization-engine/src/transport-runtime.ts",
+      "gitBlobSha1": "0c43a346d14571765057f891887f52e73d861568"
+    },
+    {
+      "path": "packages/shared/types/src/contracts.ts",
+      "gitBlobSha1": "d4d3372c60977f3a983ddeb3236a75c9b2650119"
+    }
+  ],
+  "sourceFingerprint": "sha256:bc1620c7b63ca410aa38f3962ca958b3130289922ee52f9208221abd1b1e0370"
+}

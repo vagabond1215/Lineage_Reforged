@@ -1,3 +1,47 @@
+## 2026-11-23 — First World TypeScript source-pack repair
+
+The [First World TypeScript source-pack repair](first-world-typescript-source-pack-repair-2026-11-23.md) records the approved five-file correction, historical and successor fingerprints, exact projection equivalence, and disposable v7/v8 browser evidence. Full UI TypeScript is 118 against 119 on master and 183 on the reviewed runtime. Node typecheck and direct builds pass. The same five affected engine assertions fail on both runtimes. MERGE_HELD for the explicit v8 owner decision.
+
+## 2026-11-23 — New UI master integration acceptance
+
+Unversioned run, no parent milestone. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, development impact `supports_current_band`, game-version impact `none`. Isolated `codex/new-ui-mainline-final-2026-11-23` fast-forwarded from master `20abe83c` through reviewed UX `3789c12b` to tested runtime and QA `cb01fcfd60355e40f555b6edf296045f6bc5b52b`. Suggested receipt commit `docs(ui): record final master integration acceptance hold`.
+
+- **Files and checks.** The [acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md) lists the runtime and QA delta, migration and Classic fallback evidence, compiled modes, exact diagnostic comparison, protected source pins and applied failure patterns.
+- **Disposition.** `MERGE_HELD`. The candidate reaches 65 added TypeScript diagnostics and removes one against master. The strict check and combined build exit 2. The affected engine files and registry are pinned. Keep the integrated branch local and retain both historical drafts.
+- **Next run.** Obtain a versioned source-pack repair decision and explicit v8 account owner approval. Reverify the candidate against then-current master before opening the single integration review. Production World writes and World-bound character and Save publication remain separate gates.
+
+## 2026-11-23 — Selected World eight-stage Character Creator
+
+Unversioned presentation support on `codex/selected-world-entry-creator-2026-11-23` from exact reviewed head `f415c5c4`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, no parent milestone, development impact `supports_current_band`, game-version impact `none`.
+
+- **Files and scope.** Runtime and tests in `7d8971e80e1caaab5e91f094f8b8bbff3169c87b`, `feat(world): use the eight-stage selected World creator`. The verified World route mounts its dedicated Lineage through Opening review. The [execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md) lists the files, compiled startup command, owner holds and evidence.
+- **Checks.** Chromium World restart and all 16 World-creation / eight creator viewport-theme cases passed, with stable World, receipt and unrelated stores. Classic starts its campaign. 44 focused Node tests, 810 allocations, all 55 World-owner pins, the exact prototype and 114 assets, Node typecheck, no-new-hex and three direct builds passed. The UI typecheck baseline remains 183 diagnostics with no delta. The receipt maps applicable failure patterns.
+- **Disposition.** Retain this isolated branch for independent presentation review. Preserve draft PRs #102 and #103 and the earlier reviewed base. Atomic publication, production activation, integration and game-version advancement remain held.
+
+## 2026-11-22 — Selected World to Character Creator
+
+Unversioned support on `codex/selected-world-character-creator-2026-11-22` from `bae33e65`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, no parent milestone, development impact `supports_current_band`, game-version impact `none`.
+
+- **Source and files** Runtime/test commit `7e07c9e2`, `feat(world): open the real character creator from a verified World`. Owner-verified World selection and ephemeral Creator state connect the existing Character Creator with no Save slot. [Execution receipt](ui-selected-world-character-creator-receipt-2026-11-22.md).
+- **Checks** Actual Chromium Create/restart/Open World/Creator, desktop and short mobile in both themes, ordinary Classic campaign publication, corruption and stale-session denial, 48 Node tests, seven render/entry tests, 55 source pins, Node typecheck and three direct builds. 183 existing TypeScript diagnostics on both exact base and candidate. The receipt maps FP-001/002/003/004/005/009/010/011/014/017/018/019.
+- **Review boundary** Finalization and gameplay need the versioned atomic association owner. PR #102 remains draft, PR #103 remains visual evidence. Review this isolated route next. No merge, deployment, branch deletion or version decision is due.
+
+## 2026-11-22 — Functional World integration preview
+
+Unversioned validation on `codex/functional-world-integration-preview-2026-11-22` from the clean master-based selective candidate `7d96447e`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
+
+- **Files and scope** The compiled review gates, launcher/Creator handlers, exact A3b owner/Worker and manifests, and focused tests are in `868595f17a2d32bff7a3101a0755098831cc9cdf`, `feat(world): reconcile guarded functional launcher preview`. [Execution and reachability receipt](ui-functional-world-integration-preview-2026-11-22.md).
+- **Checks** Real Create through the app and password-authenticated reopening in a restarted browser passed. Both Chromium suites, all 16 viewport/theme combinations, ordinary DEV and compiled admission checks, 47 Node and seven render cases, 55 source pins, three direct build modes and delivered canonical assets passed. The combined build remains red at 183 diagnostics, exact A3b and 65 above the selective presentation base. The receipt maps FP-001/002/004/005/009/010/011/014/017/018/019 to evidence.
+- **Next gate** A verified World is visible in the Library. World-bound Overview, Character Library, Creator and gameplay are NOT TESTABLE. Review the selected-World read-only handoff next. PR #102 remains draft and no master integration, rollout, branch deletion or gameplay writes are due.
+
+## 2026-11-22 — Selective New UI consolidation
+
+Unversioned UI support from `20abe83c` on isolated `codex/selective-ui-consolidation-2026-11-22`. Game `0.1.1-prealpha`, posture `INTEGRATED_LOOP`, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`.
+
+- **Files and summary** The 15 reviewed A3a runtime/test blobs match exactly in `b39233997968ce36bb378580c78c460a5ca61985`, `feat(ui): consolidate reviewed development launcher presentation`. DEV Account Access selector, authenticated presentation and the read-only World Creator are available through master’s account/Save owner. [Execution receipt](ui-selective-consolidation-receipt-2026-11-22.md).
+- **Checks** Three Chromium suites at five widths, positive account lifecycle/backup and compiled Classic smoke, 39 Node/render tests, 41 pinned sources, Node typecheck, no-new-hex and both direct Vite builds passed. Same-checkout diagnostics improved from 119 to 118 solely by the reviewed AppShell repair. The combined build remains blocked. FP-001/002/009/010/017/018/019 evidence is recorded in the receipt.
+- **Follow-up** The pre-existing 5240 listener was preserved. Candidate verification used 5241. The review branch remains separate. Draft PR #102 and visual PR #103, the UI/map lanes and all broader rollout gates retain their existing dispositions. Independent review is next.
+
 ## 2026-10-26 — Stage 2 durable item-location owner gate
 
 **Source run:** unversioned Character equipment owner support; fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`, source/test/decision commit `dae9e6e6`. Game `0.1.1-prealpha`, playability `INTEGRATED_LOOP`; label class unversioned, parent milestone n/a, development impact `supports_current_band`, game-version impact `none`. [Focused Stage 2 decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).

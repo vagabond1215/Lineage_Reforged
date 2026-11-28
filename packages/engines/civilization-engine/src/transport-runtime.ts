@@ -819,6 +819,7 @@ export function advanceTransportState(input: {
     }
   }
 
+  const lastProcessedTick = input.tick ?? input.transportState.lastProcessedTick;
   return {
     transportState: {
       ...input.transportState,
@@ -826,7 +827,7 @@ export function advanceTransportState(input: {
       stockAdjustments,
       assetReservations,
       lastEvaluatedOpportunities: [...input.transportState.lastEvaluatedOpportunities],
-      lastProcessedTick: input.tick ?? input.transportState.lastProcessedTick
+      lastProcessedTick
     },
     marketStates: workingStates,
     results

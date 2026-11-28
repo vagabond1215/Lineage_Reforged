@@ -123,10 +123,10 @@ export interface EconomyLedgerSnapshot {
   nodeId: string;
   displayName: string;
   parentNodeId: string | null;
-  settlementId?: string;
-  regionId?: string;
-  sourceRecordType?: EconomyNodeSourceType;
-  sourceRecordId?: string;
+  settlementId?: string | undefined;
+  regionId?: string | undefined;
+  sourceRecordType?: EconomyNodeSourceType | undefined;
+  sourceRecordId?: string | undefined;
   totalSupplyPerTick: number;
   totalDemandPerTick: number;
   totalSurplusPerTick: number;
@@ -654,7 +654,7 @@ export interface CivilizationTransportState {
   nextCaravanOrdinal: number;
   assetReservations: TransportAssetReservationState[];
   lastEvaluatedOpportunities: TradeOpportunityState[];
-  lastProcessedTick?: number;
+  lastProcessedTick?: number | undefined;
 }
 
 export interface SimulationConsistencyGoodsCoverageState {

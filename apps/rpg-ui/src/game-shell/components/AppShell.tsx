@@ -302,7 +302,8 @@ export function AppShell({
             {sidebar}
           </aside>
         )}
-        <ShellContent className={contentClassName ?? ''} innerClassName={contentInnerClassName}>
+        <ShellContent className={contentClassName ?? ''}
+          {...(contentInnerClassName === undefined ? {} : { innerClassName: contentInnerClassName })}>
           {notice && <div className="mb-4">{notice}</div>}
           {children}
         </ShellContent>

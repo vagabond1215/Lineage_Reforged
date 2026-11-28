@@ -28,14 +28,24 @@ export const legacyHexLines = text => String(text).split(/\r?\n/).
  * a legacy token is intentionally treated as a new coupling pending review.
  * A multiset stops moving a single old line to cover many new references.
  */
-export function addedLegacyHexLines(currentText,oldText) {
+// Approved source-pack v4 type assertions on three existing route indices.
+const typedIndexRepairs = new Map([
+  ['const hex = context.hexesById.get(orderedHexIds[0]!);', 'const hex = context.hexesById.get(orderedHexIds[0]);'],
+  ['const fromHexId = orderedHexIds[index]!;', 'const fromHexId = orderedHexIds[index];'],
+  ['const toHexId = orderedHexIds[index + 1]!;', 'const toHexId = orderedHexIds[index + 1];'],
+]);
+
+export function addedLegacyHexLines(currentText,oldText,path) {
   const old=new Map();
   for(const item of legacyHexLines(oldText))
     old.set(item.text,(old.get(item.text)||0)+1);
   const added=[];
   for(const item of legacyHexLines(currentText)) {
-    const left=old.get(item.text)||0;
-    if(left)old.set(item.text,left-1);
+    const comparable = path === 'packages/engines/civilization-engine/src/spatial-world.ts'
+      ? typedIndexRepairs.get(item.text) ?? item.text
+      : item.text;
+    const left=old.get(comparable)||0;
+    if(left)old.set(comparable,left-1);
     else added.push(item);
   }
   return added;
@@ -72,7 +82,7 @@ export function inspectNewLegacyHexDependencies({
     let old='';
     try{old=git(cwd,'show',baseline+':'+path);}
     catch{old='';} // File was introduced after the frozen ancestor.
-    const added=addedLegacyHexLines(content,old);
+    const added=addedLegacyHexLines(content,old,path);
     if(added.length)findings.push({
       path,addedLines:added.map(x=>({
         line:x.line,text:x.text.slice(0,240),

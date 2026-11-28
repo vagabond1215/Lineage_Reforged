@@ -1,3 +1,31 @@
+## 2026-11-23 — First World TypeScript source-pack repair
+
+Retain local `codex/new-ui-mainline-final-2026-11-23` as the reviewed integration candidate. The [First World TypeScript source-pack repair](first-world-typescript-source-pack-repair-2026-11-23.md) records the TypeScript repair and unchanged historical identities. The remaining review trigger is the explicit v8 account-owner decision. Retain PR #102 for the separate owner review and PR #103 for visual provenance under their existing dispositions.
+
+## 2026-11-23 — New UI master integration
+
+Retain local `codex/new-ui-mainline-final-2026-11-23` with tested runtime and QA `cb01fcfd60355e40f555b6edf296045f6bc5b52b` as an exact descendant of reviewed candidate `3789c12b99af439ab401f282f8d0302f79f7f210` and master `20abe83c2aa97ba4699711a9815d9b95e0d3df44`. Fetched and pruned refs, inspected existing worktrees and open PRs, and reconciled Connector audit `b19fda8181f6117468ef6ba388af454fe902ce89`. The branch remains local. Review trigger is a versioned protected-source repair that clears the strict diagnostic delta and an explicit v8 account owner decision. The [final acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md) records evidence.
+
+Retain PR #102 for its separate World owner review decision and PR #103 for visual provenance until the named presentation review is satisfied. The reviewed UX source and Connector audit retain their evidence roles until an approved mainline review reconciles the same identities. Existing branches, worktrees, and master keep their prior dispositions.
+
+## 2026-11-23 — Selected World eight-stage Character Creator
+
+Retain `codex/selected-world-entry-creator-2026-11-23` for independent presentation review of runtime/test `7d8971e80e1caaab5e91f094f8b8bbff3169c87b` against pinned prototype `da99a105`. Its reviewed base is `codex/selected-world-character-creator-2026-11-22` at `f415c5c4ab627b524b067189f289c70ee1fdb717`. Reinspect the candidate and require approved atomic World–Character–native-v3 Save authority before any durable activation. [Execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md).
+
+Fetched/pruned refs and inspected the open PR inventory. Master `20abe83c`, owner draft PR #102 `e74f9e14`, presentation draft PR #103 `d6fb21d3`, and the separate UI and geography lanes keep their existing review triggers. No integration, draft PR update, branch deletion or deployment occurred.
+
+## 2026-11-22 — Selected World to Character Creator
+
+Retain `codex/selected-world-character-creator-2026-11-22` for independent review of runtime/test `7e07c9e2` and its [receipt](ui-selected-world-character-creator-receipt-2026-11-22.md). The original preview `bae33e65`, source audit `f8649183`, owner draft PR #102 `e74f9e14`, visual draft PR #103 `d6fb21d3`, master `20abe83c` and separate UI/map work retain their existing dispositions. No merge, rebase, retarget, retirement or rollout is authorized by this pass.
+
+## 2026-11-22 — Functional World integration preview review
+
+Retain `codex/functional-world-integration-preview-2026-11-22` for local preview and independent review of `868595f1`. The [functional receipt](ui-functional-world-integration-preview-2026-11-22.md) records the clean selective base `7d96447e`, exact reviewed runtime `7a46f577`, source audit `77afc6b5` and prior matrix `f705857c`. Master `20abe83c`, PR #102 `e74f9e14`, visual PR #103 `d6fb21d3` and the UI/map lanes remain separate with their existing integration/evidence gates. No merge, retarget, retirement, deployment or activation is due.
+
+## 2026-11-22 — Selective New UI candidate from master
+
+Retain `codex/selective-ui-consolidation-2026-11-22` for independent review of `b3923399` and its [execution receipt](ui-selective-consolidation-receipt-2026-11-22.md). Master `20abe83c`, A3a `7624adc2`, A3b matrix `f705857c`, Connector audit `77afc6b5`, draft PR #102 `e74f9e14`, and visual draft PR #103 `d6fb21d3` were checked for the candidate. Retain their existing owner, evidence, and map-lane dispositions. No merge, retarget, deletion or deployment is due.
+
 ## 2026-10-26 Stage 2 item-location owner gate checkpoint
 
 Fetched/pruned synchronized `master`/`origin/master` `0d4fbbacda714a23e2b6a5922b8cc8f1a9ab3546`. GitHub returned open draft PRs #5–#17 with unchanged heads; #17 remains docs-only at `9f427961`. Source commit `dae9e6e6` is a read-only audit/test gate and consumes none of their named selected-client/evidence or design-integration triggers. #5–#16 retain `HOLD_NAMED_CONSUMER`; #17 stays draft design evidence pending owner contract review. Protected, creator, nutrition and administrative refs retain existing dispositions. No merge, rebase, retarget, PR closure, branch deletion or disposition change is due. Reinspect all exact heads before a later owner cutover or named evidence promotion. [Focused decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md).

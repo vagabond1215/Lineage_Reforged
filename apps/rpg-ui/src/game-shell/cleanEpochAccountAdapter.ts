@@ -93,7 +93,24 @@ export function createEpochAccountId(): string {
 
 /** Awaited caller adapter. The IndexedDB owner is the sole account and credential authority. */
 export class CleanEpochAccountAdapter {
+  #worldSessions = new WeakMap<LauncherRuntimeSession, { accountId: string; generation: string | undefined }>();
+
   constructor(private readonly owner: CleanEpochAccountStore, private readonly storage?: Storage) {}
+
+  #issueWorldSession(hint: EpochSessionHint, stayLoggedIn: boolean) {
+    const session = runtimeSession(hint, stayLoggedIn);
+    this.#worldSessions.set(session, { accountId: session.accountId, generation: session.metadata?.epochGeneration });
+    return session;
+  }
+
+  /** World pilot writes require a session issued by credential-verified entry in this realm. */
+  async validateWorldSession(session: LauncherRuntimeSession, owner: CleanEpochAccountStore) {
+    const identity = this.#worldSessions.get(session);
+    if (this.owner !== owner || !identity || identity.accountId !== session.accountId ||
+        identity.generation !== session.metadata?.epochGeneration)
+      throw new CampaignStoreError("invalid_record", "World pilot requires a credential-verified session from this account owner.");
+    return this.validateSession(session);
+  }
 
   async register(input: { accountId: string; displayName: string; password: string;
     confirmPassword: string; stayLoggedIn: boolean }): Promise<EpochAccountAdapterResult<{
@@ -129,7 +146,7 @@ export class CleanEpochAccountAdapter {
       }
       const hint = hintFor(account);
       storeHint(hintStorage(this.storage), input.stayLoggedIn ? hint : null);
-      return { status: "ready", value: { account, session: runtimeSession(hint, input.stayLoggedIn) } };
+      return { status: "ready", value: { account, session: this.#issueWorldSession(hint, input.stayLoggedIn) } };
     } catch (error) { return blocked(error, accountId); }
   }
 
@@ -153,7 +170,7 @@ export class CleanEpochAccountAdapter {
       const recordedAt = new Date().toISOString();
       const hint: EpochSessionHint = { ...hintFor(account), issuedAt: recordedAt };
       storeHint(hintStorage(this.storage), input.stayLoggedIn ? hint : null);
-      return { status: "ready", value: { account, session: runtimeSession(hint, input.stayLoggedIn) } };
+      return { status: "ready", value: { account, session: this.#issueWorldSession(hint, input.stayLoggedIn) } };
     } catch (error) { return blocked(error, accountId); }
   }
 

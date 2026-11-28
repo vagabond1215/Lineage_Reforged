@@ -7,6 +7,7 @@ import type {
 } from '../../../../packages/engines/game-engine/src/campaign-session.js';
 import type { TagTone } from '../types.js';
 import type { CharacterCreationFormState } from './characterCreationForm.js';
+import type { SelectedWorld } from './worldPresentationState.js';
 import type {
   LauncherRuntimeSession,
   LocalAccountPickerEntry
@@ -16,6 +17,7 @@ export type AppScreen =
   | 'ACCOUNT_ACCESS'
   | 'WELCOME_AUTHENTICATED'
   | 'WORLD_LIBRARY_GATE'
+  | 'SELECTED_WORLD'
   | 'MAIN_MENU'
   | 'CHARACTER_CREATION'
   | 'LOAD_GAME'
@@ -115,6 +117,12 @@ export type WorldLibraryGateState = SignedInGameShellBaseState & {
   screen: 'WORLD_LIBRARY_GATE';
 };
 
+export type SelectedWorldState = SignedInGameShellBaseState & {
+  screen: 'SELECTED_WORLD';
+  world: SelectedWorld;
+  creatorOpen: boolean;
+};
+
 export type CharacterCreationState = SignedInGameShellBaseState & {
   screen: 'CHARACTER_CREATION';
   form: CharacterCreationFormState;
@@ -143,6 +151,7 @@ export type GameShellState =
   | MainMenuState
   | WelcomeAuthenticatedState
   | WorldLibraryGateState
+  | SelectedWorldState
   | CharacterCreationState
   | LoadGameState
   | SettingsState
@@ -157,6 +166,10 @@ export type GameShellAction =
       notice: GameShellNotice | null;
     }
   | { type: 'OPEN_WORLD_LIBRARY_GATE' }
+  | { type: 'SELECT_WORLD'; world: SelectedWorld }
+  | { type: 'LEAVE_SELECTED_WORLD' }
+  | { type: 'OPEN_WORLD_CHARACTER_CREATOR' }
+  | { type: 'CLOSE_WORLD_CHARACTER_CREATOR' }
   | { type: 'RETURN_TO_AUTHENTICATED_WELCOME' }
   | {
       type: 'SHOW_ACCOUNT_ACCESS';
@@ -375,6 +388,21 @@ export function gameShellReducer(
     case 'OPEN_WORLD_LIBRARY_GATE':
       return state.screen === 'WELCOME_AUTHENTICATED'
         ? { ...state, screen: 'WORLD_LIBRARY_GATE', notice: null } : state;
+    case 'SELECT_WORLD':
+      return state.screen === 'WORLD_LIBRARY_GATE' && action.world.accountId === state.accountProfile.accountId &&
+        action.world.accountId === state.launcherSession.accountId &&
+        String(action.world.generation) === state.launcherSession.metadata?.epochGeneration
+        ? { ...state, screen: 'SELECTED_WORLD', world: action.world, creatorOpen: false, notice: null } : state;
+    case 'LEAVE_SELECTED_WORLD': {
+      if (state.screen !== 'SELECTED_WORLD') return state;
+      const { launcherSession, accountProfile, slots } = state;
+      return { screen: 'WORLD_LIBRARY_GATE', launcherSession, accountProfile, slots, notice: null };
+    }
+    case 'OPEN_WORLD_CHARACTER_CREATOR':
+      return state.screen === 'SELECTED_WORLD' && !state.creatorOpen
+        ? { ...state, creatorOpen: true } : state;
+    case 'CLOSE_WORLD_CHARACTER_CREATOR':
+      return state.screen === 'SELECTED_WORLD' ? { ...state, creatorOpen: false } : state;
     case 'RETURN_TO_AUTHENTICATED_WELCOME':
       return state.screen === 'WORLD_LIBRARY_GATE'
         ? { ...state, screen: 'WELCOME_AUTHENTICATED', notice: null } : state;

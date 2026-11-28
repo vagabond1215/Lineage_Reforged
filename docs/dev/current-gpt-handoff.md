@@ -1,3 +1,27 @@
+## 2026-11-23 — First World TypeScript source-pack repair
+
+Use the [First World TypeScript source-pack repair](first-world-typescript-source-pack-repair-2026-11-23.md) on the local integration branch. The protected TypeScript delta is cleared and the legacy World and receipt readback path passed. Review the forward-only v8 owner decision without repeating the completed UI matrix or changing the production and World-bound publication gates.
+
+## 2026-11-23 — New UI master integration held
+
+Inspect local `codex/new-ui-mainline-final-2026-11-23` at tested runtime `cb01fcfd60355e40f555b6edf296045f6bc5b52b` and the [final acceptance receipt](new-ui-mainline-final-acceptance-2026-11-23.md). The next decision is a bounded World source-pack repair and explicit approval of the forward-only v8 account owner. The branch retains tested v8 Classic and disposable cross-origin archive recovery. The reviewed UI and integration produce the same 183 diagnostics, versus 119 on master. Five pinned engine files account for the added entries. Retain PR #102 as owner-review evidence and PR #103 as visual provenance. No review PR or production activation is due from this pass.
+
+## 2026-11-23 — Selected World eight-stage Creator presentation review
+
+Review `codex/selected-world-entry-creator-2026-11-23`, implementation `7d8971e80e1caaab5e91f094f8b8bbff3169c87b` from reviewed `f415c5c4`. The [execution receipt](ui-selected-world-eight-stage-creator-2026-11-23.md) records the exact pinned presentation, real Chromium navigation after World reopen, Classic regression, and explicit review-only boundaries. The next review is independent UI acceptance on that isolated branch. Durable publication needs an approved atomic World–Character–native-v3 Save association and lifecycle acceptance.
+
+## 2026-11-22 — Selected World and interactive Creator review
+
+Review `codex/selected-world-character-creator-2026-11-22`, runtime/test `7e07c9e2` from reviewed preview `bae33e65`. [Execution receipt](ui-selected-world-character-creator-receipt-2026-11-22.md) records actual owner-authenticated selection, Creator navigation after a real browser restart, and denial/cleanup. Keep the slotless draft boundary. Any final character publication needs explicit owner approval, an atomic World–Character–native-v3 Save association and lifecycle evidence.
+
+## 2026-11-22 — Functional World integration preview
+
+Review `codex/functional-world-integration-preview-2026-11-22`, runtime/test `868595f1` from clean master-based `7d96447e`. The [receipt](ui-functional-world-integration-preview-2026-11-22.md) records compiled loopback invocation, real Create and password-authenticated reopening after full Chromium restart, and exact downstream caller inventory. Use the verified World identity as the boundary for a proposed read-only selection slice. Keep PR #102 draft and preserve Family Library, association writes and production holds.
+
+## 2026-11-22 — Selective master-based New UI candidate
+
+Review `codex/selective-ui-consolidation-2026-11-22` at its published head, source/test commit `b3923399` from master `20abe83c`. The [receipt](ui-selective-consolidation-receipt-2026-11-22.md) records source identity, DEV selector, Classic, account lifecycle, read-only Creator and pinned-source evidence. Preserve PR #102’s separate owner decision, PR #103 visual provenance, and production/Save/Family Library holds.
+
 ## 2026-10-26 — Stage 2 item-location owner gate handoff
 
 Fresh synchronized `master` base `0d4fbbac` produced read-only Stage 2 audit commit `dae9e6e6` and [the focused conversion decision](../design/character-durable-item-location-stage-2-decision-2026-10-26.md). Ordinary `unequipItem` merged a durable Composite Bow with an identical carried bow, leaving only quantity two plus an item-type stash flag; the physical durability association cannot be reconstructed from that Save. The audit therefore enumerates but does not mint IDs or activate a second owner. Final UI 41/41 and focused owner/persistence 99/99 pass; Node typecheck and direct Vite build pass; broad TypeScript equals clean master at 115 diagnostics. Combined `ui:build` remains baseline-blocked. No converted Save/restart, selected-client acceptance or Site deployment is claimed. The next installed prompt requires a complete versioned non-fungible gear owner/action/Save cutover on an isolated branch because a partial persisted cutover risks unrecoverable campaigns. PRs #5–#17, parked DEV-0.7.2.13 and Game `0.1.1-prealpha` remain held/unchanged.

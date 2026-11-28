@@ -11,10 +11,11 @@ import { Tooltip } from '../../components/ui/Tooltip';
 import {
   CHARACTER_CREATION_STEPS,
   buildCharacterCreationStepStates,
-  createDefaultCharacterCreationFormState,
+  createDefaultCharacterCreationDraft,
   getNextAvailableCharacterCreationStepId,
   getPreviousAvailableCharacterCreationStepId,
   type CharacterCreationStepId,
+  type CharacterCreationDraft,
   type CharacterCreationFormState,
   validateCharacterCreationForm,
   validateCharacterCreationStep
@@ -71,23 +72,29 @@ import { AppShell } from './AppShell.js';
 import { ShellBrandLogo } from './ShellBrandLogo.js';
 
 type Props = {
-  form: CharacterCreationFormState;
   accountProfile?: AccountProfileState | null;
   appliedLegacyPreparationIds?: string[];
   appliedLegacyPreparationChoices?: Record<string, string>;
   eligibleHeirSources?: AccountRunHistoryRecord[];
-  slots: SaveSlotSummary[];
   notice: GameShellNotice | null;
-  pendingOverwriteSlotId: ManualSaveSlotId | null;
   onDismissNotice: () => void;
   onReturnToMainMenu: () => void;
-  onChange: (form: Partial<CharacterCreationFormState>) => void;
+  onChange: (form: Partial<CharacterCreationDraft>) => void;
+  themeMode: 'dark' | 'light';
+  onToggleThemeMode: () => void;
+} & ({
+  selectedWorld?: never;
+  form: CharacterCreationFormState;
+  slots: SaveSlotSummary[];
+  pendingOverwriteSlotId: ManualSaveSlotId | null;
   onCreateGame: (options?: { hasSelectableBackstories: boolean }) => void;
   onConfirmOverwrite: (options?: { hasSelectableBackstories: boolean }) => void;
   onCancelOverwrite: () => void;
-  themeMode: 'dark' | 'light';
-  onToggleThemeMode: () => void;
-};
+} | {
+  selectedWorld: { displayName: string; worldInstanceId: string };
+  form: CharacterCreationDraft;
+  onSignOut: () => void;
+});
 
 const creatorCardBase =
   'creator-forged-card transition';
@@ -148,7 +155,7 @@ function parseResourceMetricValue(
 
 const DEFAULT_RESOURCE_BAR_BASELINE: Record<ResourceBarId, number> = (() => {
   const defaultPreview = buildCharacterCreationPreview(
-    createDefaultCharacterCreationFormState('slot-1')
+    createDefaultCharacterCreationDraft()
   );
 
   return {
@@ -553,24 +560,10 @@ function renderAttributeTooltip(
   );
 }
 
-export function CharacterCreationNarrativeScreen({
-  form,
-  accountProfile = null,
-  appliedLegacyPreparationIds = [],
-  appliedLegacyPreparationChoices = {},
-  eligibleHeirSources = [],
-  slots,
-  notice,
-  pendingOverwriteSlotId,
-  onDismissNotice,
-  onReturnToMainMenu,
-  onChange,
-  onCreateGame,
-  onConfirmOverwrite,
-  onCancelOverwrite,
-  themeMode,
-  onToggleThemeMode
-}: Props) {
+export function CharacterCreationNarrativeScreen(props: Props) {
+  const { form, accountProfile = null, appliedLegacyPreparationIds = [],
+    appliedLegacyPreparationChoices = {}, eligibleHeirSources = [], notice, onDismissNotice,
+    onReturnToMainMenu, onChange, selectedWorld: worldContext, themeMode, onToggleThemeMode } = props;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const selectedRegionDescriptionRef = useRef<HTMLDivElement | null>(null);
   const selectedSettlementDescriptionRef = useRef<HTMLDivElement | null>(null);
@@ -709,7 +702,8 @@ export function CharacterCreationNarrativeScreen({
     currentStepId,
     stepStates
   );
-  const selectedSlot = slots.find((slot) => slot.id === form.saveSlotId) ?? null;
+  const slotId = props.selectedWorld ? null : props.form.saveSlotId;
+  const selectedSlot = props.selectedWorld ? null : props.slots.find((slot) => slot.id === slotId) ?? null;
   const heirSourceOptions = useMemo(
     () => eligibleHeirSources.map(buildHeirSourceOption),
     [eligibleHeirSources]
@@ -720,9 +714,10 @@ export function CharacterCreationNarrativeScreen({
   const firstHeirSource = heirSourceOptions[0] ?? null;
   const heirStartSelected = selectedSourceRunId.length > 0;
   const needsOverwrite =
+    !props.selectedWorld &&
     selectedSlot?.kind === 'manual' &&
     selectedSlot.hasSave &&
-    pendingOverwriteSlotId === selectedSlot.id;
+    props.pendingOverwriteSlotId === selectedSlot.id;
   const summaryCharacterName = preview.characterName.trim() || 'Unnamed Wanderer';
   const summaryIdentityNarrative = formatIdentityNarrativeSummary(
     form,
@@ -886,7 +881,7 @@ export function CharacterCreationNarrativeScreen({
     stepId: CharacterCreationStepId,
     currentValue: string,
     nextValue: string,
-    nextForm: Partial<CharacterCreationFormState>,
+    nextForm: Partial<CharacterCreationDraft>,
     nextStep?: CharacterCreationStepId
   ) => {
     if (
@@ -908,7 +903,7 @@ export function CharacterCreationNarrativeScreen({
     }
   };
 
-  const setSelection = (nextForm: Partial<CharacterCreationFormState>) => {
+  const setSelection = (nextForm: Partial<CharacterCreationDraft>) => {
     onChange(nextForm);
     setShowValidation(false);
   };
@@ -1157,7 +1152,7 @@ export function CharacterCreationNarrativeScreen({
               <button
                 type="button"
                 onClick={() =>
-                  onChange({ [key]: option.id } as Partial<CharacterCreationFormState>)
+                  onChange({ [key]: option.id } as Partial<CharacterCreationDraft>)
                 }
                 className={`aspect-square w-full max-w-[2.7rem] justify-self-center rounded-full border-[3px] transition sm:max-w-[3rem] ${opacityClass}`}
                 style={{
@@ -2695,7 +2690,7 @@ export function CharacterCreationNarrativeScreen({
             )}
           </div>
         </Card>
-        {needsOverwrite && (
+        {needsOverwrite && !props.selectedWorld && (
           <Card>
             <div className="space-y-4">
               <div className={`${validationNoticeClass} leading-6`}>
@@ -2705,14 +2700,14 @@ export function CharacterCreationNarrativeScreen({
               <div className="flex flex-wrap gap-3">
                 <button
                   type="button"
-                  onClick={() => onConfirmOverwrite({ hasSelectableBackstories })}
+                  onClick={() => props.onConfirmOverwrite({ hasSelectableBackstories })}
                   className={`rounded-full border px-4 py-2 text-sm font-semibold transition ${dangerActionButtonClass}`}
                 >
                   Confirm Overwrite
                 </button>
                 <button
                   type="button"
-                  onClick={onCancelOverwrite}
+                  onClick={props.onCancelOverwrite}
                   className={`${topButtonClass} w-auto px-4 text-sm`}
                 >
                   Keep Existing Save
@@ -2721,17 +2716,22 @@ export function CharacterCreationNarrativeScreen({
             </div>
           </Card>
         )}
-        <div className="flex justify-end">
+        <div className="flex flex-wrap items-center justify-end gap-3">
+          {worldContext && <p id="world-character-finalization" className="text-sm">
+            Beginning a journey is unavailable until characters and Saves can be linked to this World by the owner.
+          </p>}
           <button
             type="button"
             onClick={() => {
+              if (props.selectedWorld) return;
               if (!fullValidation.isValid) {
                 setShowValidation(true);
                 return;
               }
-              onCreateGame({ hasSelectableBackstories });
+              props.onCreateGame({ hasSelectableBackstories });
             }}
-            disabled={needsOverwrite}
+            disabled={!!worldContext || needsOverwrite}
+            aria-describedby={worldContext ? 'world-character-finalization' : undefined}
             className={`rounded-full border px-5 py-3 text-sm font-semibold transition disabled:opacity-50 ${primaryActionButtonClass}`}
           >
             Begin Journey
@@ -2742,7 +2742,7 @@ export function CharacterCreationNarrativeScreen({
   }
 
   const creatorSidebar = (
-    <div className="flex h-full flex-col gap-4 overflow-y-auto p-4">
+    <div className={`flex h-full flex-col gap-4 overflow-y-auto p-4 ${worldContext ? 'max-md:max-h-[30dvh]' : ''}`}>
       <section className={summaryBlockClass} aria-label="Character summary">
         <div className="text-2xl font-semibold text-[color:var(--color-text-strong)]">
           {summaryCharacterName}
@@ -2852,7 +2852,8 @@ export function CharacterCreationNarrativeScreen({
             type="button"
             onClick={onReturnToMainMenu}
             className={topButtonClass}
-            title="Return to main menu"
+            title={worldContext ? 'Back to World Characters' : 'Return to main menu'}
+            aria-label={worldContext ? 'Back to World Characters' : undefined}
           >
             <Icon name="menu" className="h-5 w-5" />
           </button>
@@ -2870,6 +2871,11 @@ export function CharacterCreationNarrativeScreen({
       notice={notice ? <NoticeBanner notice={notice} onDismiss={onDismissNotice} /> : null}
     >
       <div ref={containerRef} className="space-y-4">
+        {props.selectedWorld && <section aria-label="Selected World" className={summaryBlockClass}>
+          <h2 className="break-words text-lg font-semibold">{props.selectedWorld.displayName}</h2>
+          <p className="break-all text-sm">{props.selectedWorld.worldInstanceId}</p>
+          <button type="button" className={topPillButtonClass} onClick={props.onSignOut}>Sign Out</button>
+        </section>}
         {mainContent}
         {showValidation &&
           !currentValidation.isValid &&

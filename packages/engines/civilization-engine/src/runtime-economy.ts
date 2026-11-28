@@ -372,7 +372,8 @@ function resolveVariant(
 
 function getFallbackStageInputs(chain: ProductionChainRecord, targetOutputItemKey: string | undefined): string[] {
   if (targetOutputItemKey && chain.primaryOutput === targetOutputItemKey) {
-    return chain.recipeProfile.intermediateItems.length > 0 ? [chain.recipeProfile.intermediateItems.at(-1) ?? chain.primaryOutput] : chain.recipeProfile.externalInputs;
+    const { intermediateItems, externalInputs } = chain.recipeProfile;
+    return intermediateItems.length > 0 ? [intermediateItems[intermediateItems.length - 1] ?? chain.primaryOutput] : externalInputs;
   }
   return chain.recipeProfile.externalInputs;
 }
@@ -446,12 +447,12 @@ function chooseAlternativeInputKeys(
 
   const chooseBest = (entries: WorkplaceIoItemRecord[]): WorkplaceIoItemRecord => {
     if (entries.length === 1) {
-      return entries[0];
+      return entries[0]!;
     }
 
     const exactMatch = entries.find((entry) => {
       const normalized = entry.itemKey.toLowerCase();
-      return targetLower.includes(normalized) || targetLower.includes(normalized.split("_")[0]);
+      return targetLower.includes(normalized) || targetLower.includes(normalized.split("_")[0]!);
     });
     if (exactMatch) {
       return exactMatch;
@@ -465,7 +466,7 @@ function chooseAlternativeInputKeys(
         const leftBase = getSourceValueAnchor(leftItem, indexes.marketByItemKey.get(left.itemKey));
         const rightBase = getSourceValueAnchor(rightItem, indexes.marketByItemKey.get(right.itemKey));
         return leftBase - rightBase || left.itemKey.localeCompare(right.itemKey);
-      })[0];
+      })[0]!;
   };
 
   return [...grouped.values()].map((entries) => chooseBest(entries));
@@ -876,9 +877,7 @@ function resolveItemRuntimeValue(
         settlementId,
         marketState,
         targetOutputItemKey: request.itemKey,
-        variantId: candidate.variantId ?? undefined,
-        workerSkills: undefined,
-        availableToolTags: undefined,
+        ...(candidate.variantId != null ? { variantId: candidate.variantId } : {}),
         fuelAvailable: true
       });
       const primaryOutput = craft.outputs.find((output) => output.itemKey === request.itemKey && output.role === "primary") ?? craft.outputs[0];
@@ -894,7 +893,7 @@ function resolveItemRuntimeValue(
 
     const chosen = candidateResolutions.sort(
       (left, right) => left.effectiveProductionCost - right.effectiveProductionCost || left.craft.chainId.localeCompare(right.craft.chainId)
-    )[0];
+    )[0]!;
     resolved = {
       itemKey: request.itemKey,
       baseProductionCost: roundNumber(chosen.baseProductionCost),
@@ -1054,7 +1053,8 @@ function estimateCraftResolution(
     quantityFactors.length > 0
       ? roundNumber(quantityFactors.reduce((sum, value) => sum + value, 0) / quantityFactors.length)
       : 1;
-  const lastStep = chain.recipeProfile.processingSteps.at(-1);
+  const { processingSteps } = chain.recipeProfile;
+  const lastStep = processingSteps[processingSteps.length - 1];
   const lastWorkplace = lastStep?.stageRef.startsWith("workplace.") ? indexes.workplaceById.get(lastStep.stageRef) : undefined;
   const finalOutputs = lastStep
     ? resolveStepOutputs(lastStep, lastWorkplace, variant, request.targetOutputItemKey, indexes)
@@ -1127,7 +1127,7 @@ function resolveAssociatedSkillId(itemKey: string, indexes: RuntimeIndexes): str
   if (outputCandidates.length === 0) {
     return null;
   }
-  return outputCandidates[0].chain.recipeProfile.primarySkillId;
+  return outputCandidates[0]!.chain.recipeProfile.primarySkillId;
 }
 
 function resolveLocalMarketPriceInternal(
@@ -1216,7 +1216,7 @@ export function buildSettlementMarketStates(options: BuildMarketStatesOptions): 
   );
 
   const skeletonStates = options.settlementIds
-    .map((settlementId) => {
+    .map((settlementId): SettlementMarketState => {
       const settlement = indexes.settlementById.get(settlementId);
       const snapshot = snapshotsBySettlementId.get(settlementId);
       return {
@@ -1226,7 +1226,7 @@ export function buildSettlementMarketStates(options: BuildMarketStatesOptions): 
         stock: buildStockPressureEntries(snapshot),
         laborPressure: buildLaborPressureEntries(settlement, snapshot, indexes),
         priceView: []
-      } satisfies SettlementMarketState;
+      };
     })
     .sort((left, right) => left.settlementId.localeCompare(right.settlementId));
 
