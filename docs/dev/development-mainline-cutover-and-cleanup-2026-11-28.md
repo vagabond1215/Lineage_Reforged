@@ -39,6 +39,16 @@ The approved local cleanup instructions are now checked into this repository, no
 - [Guarded local cleanup utility](../../scripts/dev/lineage-mainline-local-cleanup.ps1) defaults to an inventory-only dry run. Its `-Apply` mode removes only verified clean fully merged review worktrees; exact remote integration branch deletion is an additional optional flag.
 - Launch Codex from `C:\Codex\EoL` after `git pull --ff-only origin master`; instruct it to follow the work order and record actual actions. Do not confuse a repo-published script with a local execution.
 
+## Connector-only follow-up preflight (2026-11-28)
+
+The post-merge Connector pass independently verified the already-pushed Codex cleanup commit and added a read-only, evidence-backed next-step queue, without changing application source or deleting assets:
+
+- [Exact asset-duplicate evidence manifest](connector-asset-duplication-evidence-2026-11-28.json) pins every matched Git blob and canonical counterpart: 52 archived entries (147,672,320 logical bytes) duplicated in checked active/canonical asset trees; 36 unmatched archived entries retained; nine byte-identical active continent selected/default pairs (33,372,361 logical selected-variant bytes). Do not interpret those logical sizes as physical Git storage savings.
+- [Connector branch and asset preflight](connector-post-mainline-cleanup-preflight-2026-11-28.md) classifies 7 named historical New UI branch heads as contained in `master`, versus 4 with unique unmerged history. The prior Codex dry run found **zero worktrees automatically eligible for removal** because of local ignored content/branch status.
+- The root README and the historical standalone UI-preview instructions now correctly describe PR #103 as **closed without merge**, not an active draft. Their historical preview bytes and pinned art remain unchanged.
+
+**Disposition:** connector evidence and document-pointer repairs complete; binary asset edits, worktree cleanup, and remote branch retirement require Codex validation after its local execution access is available.
+
 ## Local cleanup procedure
 
 Use a normal PowerShell terminal on the machine that owns the local worktrees. `git -C C:\Codex\EoL worktree list --porcelain` and `git -C C:\Codex\EoL branch -vv` identify local references. Check the exact working-tree path with `git -C <path> status --porcelain=v1 --untracked-files=all`, `git -C <path> merge-base --is-ancestor HEAD origin/master`, and review ignored/untracked files before `git -C C:\Codex\EoL worktree remove <clean-fully-merged-path>`. Never use `--force` and do not prune the main checkout. The original branch refs can be retained until all named PR/evidence consumers are reconciled. Record reclaimed bytes and exact paths only after real deletion.
